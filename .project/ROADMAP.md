@@ -1,143 +1,285 @@
 # Roadmap — Système D100 Interface pour Foundry VTT
 
 **Dernière mise à jour :** 4 août 2026  
-**Statut :** première roadmap de cadrage  
-**Principe :** les phases restent adaptables ; une phase prévue ne prouve pas qu’elle est réalisée.
+**Statut :** validée par l’utilisateur  
+**Identifiant technique :** `interface`  
+**Principe :** une phase planifiée ne prouve pas qu’elle est produite, testée ou validée.
 
-## Phase 00 — Cadrage général
+## Phase 00A — Résolution des jets
 
-**Statut :** en cours
+**Statut :** VALIDÉE
 
-Objectifs :
+### Objectif
 
-- définir la finalité et le périmètre du système Foundry ;
-- organiser la mémoire du projet ;
-- identifier les sources historiques et les bases d’autorité ;
-- préparer les phases de consolidation fonctionnelle.
+Consolider le noyau D100 avant toute architecture Foundry.
 
-## Phase 00A — Noyau de résolution des jets
-
-**Statut :** validée fonctionnellement
-
-Livrable :
+### Livrable d’autorité
 
 ```text
 .project/specification/TRANSMISSION_FOUNDRY_ARBRE_RESOLUTION_JETS_INTERFACE.md
 ```
 
-Résultat :
+### Résultat
 
-- arbre de résolution consolidé ;
-- paramètres de base validés ;
-- vingt cas de test fonctionnels définis ;
-- points encore ouverts explicitement séparés.
+- arbre complet de résolution consolidé ;
+- résultats automatiques, critiques et super-critiques définis ;
+- avantage et désavantage définis au niveau du moteur ;
+- Blessures, Stress et Destin définis avec valeurs par défaut configurables ;
+- marges et données intermédiaires précisées ;
+- cas de test fonctionnels minimaux définis.
 
-## Phase 00B — Consolidation des autres règles
+---
 
-**Statut :** à ouvrir
+## Phase 00B — Cadrage produit et dépôt
 
-Périmètre pressenti :
+**Statut :** VALIDÉE
 
-- création de personnage ;
-- compétences et talents ;
-- spécialisations ;
-- progression et expérience ;
-- initiative ;
-- combat ;
-- dégâts ;
-- blessures et stress hors calcul déjà validé ;
-- inventaire et équipement ;
-- autres règles issues de la pratique réelle.
+### Objectif
 
-Livrable attendu :
+Définir le périmètre de la première version jouable, l’organisation documentaire et le mode de travail.
+
+### Résultat
+
+- identifiant technique Foundry fixé à `interface` ;
+- dépôt de développement nommé `DEV-interface` ;
+- première version jouable cadrée ;
+- absence de moteur de combat tactique complet confirmée ;
+- armes prévues comme Items portant les dégâts ;
+- réglages MJ limités aux valeurs numériques prévues par les règles ;
+- organisation documentaire légère autour de `.project/` ;
+- échanges de travail par archives ZIP complètes, hors `.git/` et `.gitignore`.
+
+### Livrable de décision
 
 ```text
-un ou plusieurs fichiers de spécification fonctionnelle validés
+.project/decisions/PHASE_00B_CADRAGE_PRODUIT_ET_DEPOT.md
 ```
 
-## Phase 01 — Architecture fonctionnelle Foundry
+---
 
-**Statut :** future
+## Phase 01 — Personnage, équipement et conflits
 
-Objectifs :
+**Statut :** PROCHAINE
 
-- identifier les types de Documents nécessaires ;
-- définir les données à stocker et les données calculées ;
-- définir le périmètre d’une première version utile ;
-- relever les dépendances entre règles, fiches, jets et paramètres MJ ;
-- choisir la version cible de Foundry après vérification de la documentation officielle.
+**GPT principal métier :** GPT JdR  
+**Consolidation :** GPT Pilote
 
-GPT principal : GPT Foundry.
+### Objectif
 
-## Phase 02 — Socle technique
+Consolider toutes les règles fonctionnelles encore nécessaires à la première version jouable avant de définir leur structure Foundry.
 
-**Statut :** future
+### Périmètre
 
-Objectifs pressentis :
+- création du personnage ;
+- compétences et talents ;
+- spécialisations et attribution éventuelle de l’avantage ;
+- données modifiables du personnage ;
+- trois statistiques dérivées utilisées dans les conflits ;
+- initiative simple ;
+- équipement essentiel ;
+- armes comme Items ;
+- données et calcul des dégâts ;
+- récupération ou évolution des Blessures et du Stress ;
+- progression du personnage, uniquement si elle appartient à la première version.
 
-- créer le manifeste du système ;
-- poser l’arborescence technique minimale ;
-- définir les modèles de données ;
-- préparer les migrations et réglages nécessaires ;
-- mettre en place le noyau de résolution testable.
+### Hors périmètre
 
-## Phase 03 — Fiches et interactions principales
+- architecture des Actor, Item, DataModels ou Applications ;
+- design définitif des feuilles ;
+- ciblage et moteur de combat tactique ;
+- automatisation narrative ;
+- publication.
 
-**Statut :** future
+### Livrable attendu
 
-Objectifs pressentis :
+Une ou plusieurs spécifications fonctionnelles validées, suffisamment précises pour permettre l’architecture Foundry sans interprétation silencieuse.
 
-- fiche de personnage ;
-- actions de jet ;
-- états Blessure et Stress ;
-- Destin ;
-- affichage dans le chat ;
-- paramètres MJ.
+---
 
-## Phase 04 — Sous-systèmes complémentaires
+## Phase 02 — Architecture Foundry
 
-**Statut :** future
+**Statut :** PLANIFIÉE
 
-Périmètre à définir selon les règles consolidées :
+**GPT principal :** GPT Foundry
 
-- combat et dégâts ;
-- initiative ;
-- inventaire ;
-- progression ;
-- spécialisations ;
-- autres automatismes validés.
+### Objectif
 
-## Phase 05 — Direction visuelle et ergonomie
+Définir l’architecture technique à partir des règles validées.
 
-**Statut :** future
+### Périmètre pressenti
 
-GPT principal pressenti : GPT Visuel ou GPT Foundry selon le sous-chantier.
+- version cible de Foundry après vérification de la documentation officielle ;
+- Actor et Item nécessaires ;
+- données stockées et calculées ;
+- paramètres MJ ;
+- service ou API interne de jets ;
+- cartes de chat ;
+- permissions ;
+- stratégie minimale de migrations ;
+- arborescence technique du système.
 
-Le travail visuel partira des besoins validés et des références Roll20, sans porter automatiquement les contraintes de l’ancienne fiche.
+### Livrable attendu
 
-## Phase 06 — Tests et stabilisation
+Architecture technique validée avant développement substantiel.
 
-**Statut :** future
+---
 
-Objectifs :
+## Phase 03 — Première tranche jouable
+
+**Statut :** PLANIFIÉE
+
+**GPT principal :** GPT Foundry
+
+### Objectif
+
+Créer un système minimal installable permettant de créer et gérer un personnage puis de lancer les jets principaux.
+
+### Résultat attendu
+
+- `system.json` fonctionnel ;
+- modèle de personnage minimal ;
+- fiche de personnage fonctionnelle ;
+- données sauvegardées ;
+- compétences, talents et jets principaux utilisables ;
+- première carte de chat exploitable.
+
+---
+
+## Phase 04 — États, Destin et réglages MJ
+
+**Statut :** PLANIFIÉE
+
+**GPT principal :** GPT Foundry
+
+### Objectif
+
+Implémenter le noyau complet de Blessures, Stress et Destin ainsi que les valeurs configurables par le MJ.
+
+### Résultat attendu
+
+- états sauvegardés ;
+- malus calculés ;
+- Destin résolu selon la spécification ;
+- paramètres MJ modifiables ;
+- valeurs par défaut identifiables et rétablissables ;
+- cas de test du noyau exécutables.
+
+---
+
+## Phase 05 — Conflits, initiative et armes
+
+**Statut :** PLANIFIÉE
+
+**GPT principal :** GPT Foundry
+
+### Objectif
+
+Permettre une scène de conflit simple sans créer de moteur tactique complet.
+
+### Périmètre pressenti
+
+- trois statistiques dérivées ;
+- initiative simple ;
+- Item d’arme ;
+- valeurs ou formules de dégâts ;
+- jet de conflit par le moteur de jets ordinaire ;
+- étude d’un bouton de dégâts dans la carte de chat après une attaque réussie.
+
+### Hors périmètre
+
+- ciblage ;
+- défense automatisée ;
+- résistance ;
+- armure calculée ;
+- portée tactique ;
+- positionnement automatisé.
+
+---
+
+## Phase 06 — Ergonomie et identité visuelle
+
+**Statut :** PLANIFIÉE
+
+**GPT principal technique :** GPT Foundry  
+**Contributeur visuel :** GPT Visuel
+
+### Objectif
+
+Améliorer la fluidité des feuilles et des cartes de chat sans alourdir l’usage.
+
+### Périmètre pressenti
+
+- hiérarchie des informations ;
+- navigation de la fiche ;
+- interactions de jet ;
+- cartes de chat ;
+- paramètres MJ ;
+- identité graphique ;
+- accessibilité et lisibilité ;
+- adaptation raisonnée des références Roll20.
+
+---
+
+## Phase 07 — Tests et stabilisation
+
+**Statut :** PLANIFIÉE
+
+**GPT principal :** GPT Foundry  
+**Tests réels :** utilisateur
+
+### Objectif
+
+Obtenir une candidate stable et jouable.
+
+### Périmètre
 
 - tests fonctionnels ;
 - tests Foundry ;
+- permissions ;
+- sauvegarde et rechargement ;
 - non-régression ;
-- tests utilisateur ;
-- documentation des limites ;
-- préparation d’une version candidate.
+- tests utilisateur en partie ;
+- correction des blocages ;
+- documentation des limites connues.
 
-## Phase 07 — Préparation de publication
+---
 
-**Statut :** future et non engagée
+## Phase 08 — Préparation de diffusion
 
-Cette phase traitera seulement lorsque nécessaire :
+**Statut :** PLANIFIÉE, NON ENGAGÉE
+
+**GPT principal :** GPT Foundry
+
+### Objectif
+
+Préparer une première version publiable seulement lorsque le système est stabilisé.
+
+### Périmètre futur
 
 - nettoyage de l’archive ;
-- exclusion de `.project/`;
+- exclusion de `.project/` ;
 - versionnement ;
 - manifeste de distribution ;
 - licences et droits ;
-- dépôt ou branche publique ;
-- release et publication.
+- documentation utilisateur ;
+- archive candidate ;
+- dépôt, branche ou release de diffusion selon décision utilisateur.
+
+---
+
+## Dépendances principales
+
+```text
+00A Résolution des jets
++ 00B Cadrage produit
+→ 01 Règles personnage, équipement et conflits
+→ 02 Architecture Foundry
+→ 03 Première tranche jouable
+→ 04 États, Destin et réglages MJ
+→ 05 Conflits, initiative et armes
+→ 06 Ergonomie et identité visuelle
+→ 07 Tests et stabilisation
+→ 08 Préparation de diffusion
+```
+
+Certaines tâches des phases 04 à 06 pourront être réordonnées si GPT Foundry identifie une dépendance technique concrète. Toute modification importante de la roadmap reste soumise à validation utilisateur.
