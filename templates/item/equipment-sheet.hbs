@@ -1,0 +1,73 @@
+<div class="interface-sheet__content interface-equipment">
+  <header class="interface-equipment__header">
+    <label class="interface-character__name">
+      <span>{{localize "INTERFACE.Common.Name"}}</span>
+      <input
+        id="{{rootId}}-name"
+        type="text"
+        name="name"
+        value="{{item.name}}"
+        autocomplete="off"
+      >
+    </label>
+    <span class="interface-equipment__type">{{localize "INTERFACE.Item.Equipment"}}</span>
+  </header>
+
+  <div class="interface-sheet__body">
+    <section class="interface-panel interface-panel--equipment">
+      <div class="interface-form-grid interface-form-grid--equipment">
+        <label class="interface-field">
+          <span>{{localize "INTERFACE.Equipment.Category"}}</span>
+          <select name="system.category">
+            {{#each categories}}
+              <option value="{{value}}" {{#if selected}}selected{{/if}}>
+                {{localize label}}
+              </option>
+            {{/each}}
+          </select>
+        </label>
+
+        <label class="interface-field">
+          <span>{{localize "INTERFACE.Equipment.Quantity"}}</span>
+          <input
+            type="number"
+            name="system.quantity"
+            value="{{system.quantity}}"
+            min="1"
+            step="1"
+          >
+        </label>
+      </div>
+
+      {{#if isWeapon}}
+        <label class="interface-field interface-field--damage">
+          <span>{{localize "INTERFACE.Equipment.DamageFormula"}}</span>
+          <input
+            type="text"
+            name="system.damage.formula"
+            value="{{system.damage.formula}}"
+            placeholder="1d6"
+          >
+        </label>
+      {{else}}
+        <p class="hint">{{localize "INTERFACE.Equipment.HiddenDamageHint"}}</p>
+      {{/if}}
+
+      <label class="interface-field">
+        <span>{{localize "INTERFACE.Equipment.Description"}}</span>
+        <textarea name="system.description" rows="12">{{system.description}}</textarea>
+      </label>
+    </section>
+  </div>
+
+  <footer class="interface-sheet__footer">
+    <span class="interface-autosave">
+      <i class="fa-solid fa-arrows-rotate" aria-hidden="true"></i>
+      {{localize "INTERFACE.Common.AutoSaveActive"}}
+    </span>
+    <button type="submit">
+      <i class="fa-solid fa-floppy-disk" aria-hidden="true"></i>
+      {{localize "INTERFACE.Common.Save"}}
+    </button>
+  </footer>
+</div>

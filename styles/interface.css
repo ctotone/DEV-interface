@@ -1,0 +1,816 @@
+.interface {
+  --interface-gap: 0.75rem;
+  --interface-border: 1px solid rgba(25, 25, 25, 0.24);
+  --interface-paper: #f4f1e9;
+  --interface-paper-strong: #e7e1d5;
+  --interface-ink: #242424;
+  --interface-muted: #6a675f;
+  --interface-black: #171717;
+  --interface-white: #f8f8f6;
+  --interface-corps: #b72d2d;
+  --interface-ame: #a98700;
+  --interface-esprit: #2f6794;
+  --interface-neutral: #5c5c5c;
+  min-width: 0;
+  color: var(--interface-ink);
+}
+
+.interface.interface-sheet,
+.interface.interface-settings {
+  display: flex;
+  flex-direction: column;
+  gap: var(--interface-gap);
+}
+
+.interface .interface-sheet__content,
+.interface .interface-settings__content {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--interface-gap);
+  min-height: 0;
+}
+
+.interface .interface-sheet__body,
+.interface .interface-settings__body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--interface-gap);
+  min-height: 0;
+  overflow: auto;
+  padding-right: 0.25rem;
+}
+
+.interface input,
+.interface select,
+.interface textarea,
+.interface button {
+  width: 100%;
+}
+
+.interface input,
+.interface select,
+.interface textarea {
+  border: 1px solid rgba(25, 25, 25, 0.35);
+  background: rgba(255, 255, 255, 0.78);
+  color: var(--interface-ink);
+}
+
+.interface input:focus,
+.interface select:focus,
+.interface textarea:focus {
+  border-color: var(--interface-ink);
+  box-shadow: 0 0 0 1px rgba(25, 25, 25, 0.22);
+}
+
+.interface textarea {
+  resize: vertical;
+}
+
+.interface button {
+  min-height: 2rem;
+}
+
+.interface .hint,
+.interface small {
+  color: var(--interface-muted);
+}
+
+.interface .interface-character {
+  gap: 0.6rem;
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.86), rgba(255, 255, 255, 0.86)),
+    repeating-linear-gradient(
+      0deg,
+      rgba(0, 0, 0, 0.025) 0,
+      rgba(0, 0, 0, 0.025) 1px,
+      transparent 1px,
+      transparent 4px
+    );
+}
+
+.interface .interface-character__identity,
+.interface .interface-equipment__header {
+  display: grid;
+  grid-template-columns: minmax(12rem, 2fr) minmax(6rem, 0.55fr) minmax(10rem, 1fr);
+  align-items: end;
+  gap: var(--interface-gap);
+  border-bottom: 2px solid var(--interface-black);
+  padding: 0 0 0.65rem;
+}
+
+.interface .interface-character__identity label,
+.interface .interface-equipment__header label,
+.interface .interface-field,
+.interface .interface-dev-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.interface .interface-character__identity span,
+.interface .interface-equipment__header span,
+.interface .interface-field > span,
+.interface .interface-dev-field > span {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.055em;
+  text-transform: uppercase;
+}
+
+.interface .interface-character__name input {
+  border-width: 0 0 1px;
+  border-radius: 0;
+  background: transparent;
+  font-size: 1.45rem;
+  font-weight: 800;
+}
+
+.interface .interface-skills h2 {
+  margin: 0 0 0.45rem;
+  font-size: 0.85rem;
+  letter-spacing: 0.1em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.interface .interface-skills__grid {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 0.45rem;
+}
+
+.interface .interface-skill {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  border-top: 5px solid var(--interface-neutral);
+  background: rgba(255, 255, 255, 0.72);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.16);
+}
+
+.interface .interface-skill input {
+  height: 2.5rem;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  font-size: 1.35rem;
+  font-weight: 800;
+  text-align: center;
+}
+
+.interface .interface-skill span {
+  min-height: 2rem;
+  padding: 0.35rem 0.2rem;
+  font-size: 0.78rem;
+  font-weight: 800;
+  line-height: 1.1;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.interface .interface-tone--corps {
+  --interface-tone: var(--interface-corps);
+}
+
+.interface .interface-tone--ame {
+  --interface-tone: var(--interface-ame);
+}
+
+.interface .interface-tone--esprit {
+  --interface-tone: var(--interface-esprit);
+}
+
+.interface .interface-tone--neutral {
+  --interface-tone: var(--interface-neutral);
+}
+
+.interface .interface-skill.interface-tone--corps,
+.interface .interface-skill.interface-tone--ame,
+.interface .interface-skill.interface-tone--esprit {
+  border-top-color: var(--interface-tone);
+}
+
+.interface .interface-skill.interface-tone--corps span,
+.interface .interface-skill.interface-tone--ame span,
+.interface .interface-skill.interface-tone--esprit span,
+.interface .interface-talent-group legend {
+  color: var(--interface-tone);
+}
+
+.interface .interface-state-band,
+.interface .interface-progression__band {
+  display: grid;
+  align-items: center;
+  gap: 0.65rem;
+  border-radius: 3px;
+  background: var(--interface-black);
+  color: var(--interface-white);
+  padding: 0.65rem 0.8rem;
+}
+
+.interface .interface-state-band {
+  grid-template-columns: minmax(0, 1fr) minmax(7rem, 0.72fr) minmax(0, 1fr);
+}
+
+.interface .interface-state-band__resource {
+  display: grid;
+  grid-template-columns: auto minmax(7rem, 1fr);
+  align-items: center;
+  gap: 0.35rem 0.55rem;
+}
+
+.interface .interface-state-band__label {
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.interface .interface-resource__controls {
+  display: grid;
+  grid-template-columns: 2rem minmax(0, 1fr) 2rem;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.interface .interface-resource__controls button {
+  width: auto;
+  min-width: 2rem;
+  padding-inline: 0.35rem;
+}
+
+.interface .interface-resource__controls--dark input,
+.interface .interface-resource__controls--dark button {
+  border-color: rgba(255, 255, 255, 0.28);
+  background: #282828;
+  color: var(--interface-white);
+  text-align: center;
+}
+
+.interface .interface-state-track {
+  display: grid;
+  grid-column: 1 / -1;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 0.22rem;
+}
+
+.interface .interface-state-track span {
+  display: grid;
+  min-height: 1.25rem;
+  place-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.38);
+  border-radius: 999px;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.68rem;
+}
+
+.interface .interface-state-track span.is-current {
+  border-color: var(--interface-white);
+  background: var(--interface-white);
+  color: var(--interface-black);
+  font-weight: 800;
+}
+
+.interface .interface-state-band__initiative {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-inline: 1px solid rgba(255, 255, 255, 0.22);
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.interface .interface-state-band__initiative > span {
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+}
+
+.interface .interface-state-band__initiative strong {
+  font-size: 1.65rem;
+}
+
+.interface .interface-state-band__initiative small {
+  color: rgba(255, 255, 255, 0.58);
+  font-size: 0.62rem;
+}
+
+.interface .interface-state-band__dev {
+  display: flex;
+  grid-column: 1 / -1;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.35rem 1rem;
+  border-top: 1px dashed rgba(255, 255, 255, 0.24);
+  padding-top: 0.42rem;
+  color: rgba(255, 255, 255, 0.68);
+  font-size: 0.7rem;
+}
+
+.interface .interface-state-band__dev span:first-child {
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  border-radius: 999px;
+  padding: 0 0.35rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.interface .interface-fold {
+  border: var(--interface-border);
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.55);
+}
+
+.interface .interface-fold > summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  cursor: pointer;
+  border-left: 5px solid var(--interface-black);
+  padding: 0.58rem 0.75rem;
+  list-style: none;
+  user-select: none;
+}
+
+.interface .interface-fold > summary::-webkit-details-marker {
+  display: none;
+}
+
+.interface .interface-fold > summary::after {
+  content: "＋";
+  flex: 0 0 auto;
+  font-weight: 800;
+}
+
+.interface .interface-fold[open] > summary::after {
+  content: "−";
+}
+
+.interface .interface-fold > summary > span {
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.interface .interface-fold > summary small {
+  margin-left: auto;
+  text-align: right;
+}
+
+.interface .interface-fold__content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--interface-gap);
+  border-top: var(--interface-border);
+  padding: var(--interface-gap);
+}
+
+.interface .interface-fold--development {
+  border-style: dashed;
+  background: rgba(80, 80, 80, 0.04);
+}
+
+.interface .interface-fold--development > summary {
+  border-left-color: var(--interface-neutral);
+}
+
+.interface .interface-dev-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--interface-gap);
+}
+
+.interface .interface-dev-grid p {
+  margin: 0.25rem 0 0;
+}
+
+.interface .interface-talent-groups {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--interface-gap);
+}
+
+.interface .interface-talent-group {
+  border: 1px solid var(--interface-tone);
+  border-top: 4px solid var(--interface-tone);
+  padding: 0.55rem;
+}
+
+.interface .interface-talent-group legend {
+  padding: 0 0.25rem;
+  font-weight: 800;
+}
+
+.interface .interface-talent {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 4.3rem;
+  align-items: center;
+  gap: 0.45rem;
+  margin-bottom: 0.35rem;
+}
+
+.interface .interface-talent:last-child {
+  margin-bottom: 0;
+}
+
+.interface .interface-talent span {
+  font-size: 0.78rem;
+  line-height: 1.15;
+}
+
+.interface .interface-talent input {
+  text-align: center;
+}
+
+.interface .interface-derived-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--interface-gap);
+}
+
+.interface .interface-derived-card {
+  display: flex;
+  min-height: 4.3rem;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--interface-tone);
+  border-top: 5px solid var(--interface-tone);
+  background: rgba(255, 255, 255, 0.72);
+  padding: 0.5rem;
+  text-align: center;
+}
+
+.interface .interface-derived-card span {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.interface .interface-derived-card strong {
+  color: var(--interface-tone);
+  font-size: 1.55rem;
+}
+
+.interface .interface-subsection-heading,
+.interface .interface-panel__heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--interface-gap);
+}
+
+.interface .interface-subsection-heading h3,
+.interface .interface-panel__heading h2 {
+  margin: 0;
+}
+
+.interface .interface-panel__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.35rem;
+  margin-bottom: 0.65rem;
+}
+
+.interface .interface-panel__actions button,
+.interface .interface-subsection-heading button,
+.interface .interface-notice button,
+.interface .interface-item-row button {
+  width: auto;
+}
+
+.interface .interface-item-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.interface .interface-item-row {
+  display: grid;
+  grid-template-columns: 2rem minmax(8rem, 1fr) auto auto minmax(4rem, auto);
+  align-items: center;
+  gap: 0.5rem;
+  border: var(--interface-border);
+  background: rgba(255, 255, 255, 0.64);
+  padding: 0.35rem;
+}
+
+.interface .interface-item-row img {
+  width: 2rem;
+  height: 2rem;
+  border: 0;
+  object-fit: cover;
+}
+
+.interface .interface-item-row__name {
+  justify-content: flex-start;
+  overflow: hidden;
+  border: 0;
+  background: transparent;
+  padding: 0;
+  text-align: left;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.interface .interface-item-row__formula {
+  font-family: monospace;
+  text-align: right;
+}
+
+.interface .interface-empty {
+  margin: 0;
+  font-style: italic;
+  color: var(--interface-muted);
+}
+
+.interface .interface-progression {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  margin-top: 0.35rem;
+}
+
+.interface .interface-progression__band {
+  grid-template-columns: auto auto minmax(0, 1fr);
+}
+
+.interface .interface-progression__band > strong {
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.interface .interface-progression__band > span {
+  color: rgba(255, 255, 255, 0.68);
+  font-size: 0.72rem;
+  text-align: right;
+}
+
+.interface .interface-progression__gauge {
+  display: flex;
+  gap: 0.3rem;
+}
+
+.interface .interface-progression__gauge label,
+.interface .interface-progression__choices label {
+  position: relative;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+}
+
+.interface .interface-progression__gauge input,
+.interface .interface-progression__choices input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.interface .interface-progression__gauge span,
+.interface .interface-progression__choices label span {
+  display: grid;
+  width: 1.65rem;
+  height: 1.65rem;
+  place-items: center;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 800;
+}
+
+.interface .interface-progression__gauge input:checked + span {
+  background: var(--interface-white);
+  color: var(--interface-black);
+}
+
+.interface .interface-progression__choices {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--interface-gap);
+}
+
+.interface .interface-progression__choices fieldset {
+  border: var(--interface-border);
+  background: rgba(255, 255, 255, 0.58);
+  padding: 0.6rem;
+}
+
+.interface .interface-progression__choices legend {
+  font-weight: 800;
+}
+
+.interface .interface-progression__choices fieldset > small {
+  display: block;
+  min-height: 2.3rem;
+}
+
+.interface .interface-progression__choices fieldset > div {
+  display: flex;
+  gap: 0.45rem;
+  margin-top: 0.5rem;
+}
+
+.interface .interface-progression__choices input:checked + span {
+  border-color: var(--interface-black);
+  background: var(--interface-black);
+  color: var(--interface-white);
+}
+
+.interface .interface-panel {
+  border: var(--interface-border);
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.58);
+  padding: var(--interface-gap);
+}
+
+.interface .interface-panel h2 {
+  margin: 0 0 var(--interface-gap);
+  font-size: 1rem;
+}
+
+.interface .interface-form-grid,
+.interface .interface-selection-grid {
+  display: grid;
+  gap: var(--interface-gap);
+}
+
+.interface .interface-form-grid--two,
+.interface .interface-selection-grid,
+.interface .interface-form-grid--equipment {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.interface .interface-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0.25rem 0;
+}
+
+.interface .interface-checkbox input {
+  width: auto;
+}
+
+.interface .interface-notice {
+  border: var(--interface-border);
+  margin: 0;
+  padding: 0.65rem;
+}
+
+.interface .interface-notice ul {
+  margin: 0.5rem 0;
+  padding-left: 1.25rem;
+}
+
+.interface .interface-notice p {
+  margin: 0.5rem 0;
+}
+
+.interface .interface-notice--warning {
+  border-left: 5px solid var(--interface-ame);
+}
+
+.interface .interface-notice--success,
+.interface .interface-notice--acknowledged {
+  border-left: 5px solid var(--interface-esprit);
+}
+
+.interface .interface-sheet__footer,
+.interface .interface-settings__footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--interface-gap);
+  border-top: var(--interface-border);
+  padding-top: var(--interface-gap);
+}
+
+.interface .interface-sheet__footer button,
+.interface .interface-settings__footer button {
+  width: auto;
+}
+
+.interface .interface-autosave {
+  margin-right: auto;
+  color: var(--interface-muted);
+  font-size: 0.75rem;
+}
+
+.interface .interface-equipment__header {
+  grid-template-columns: minmax(12rem, 1fr) auto;
+}
+
+.interface .interface-equipment__type {
+  align-self: center;
+  color: var(--interface-muted);
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.interface .interface-panel--equipment {
+  display: flex;
+  flex-direction: column;
+  gap: var(--interface-gap);
+}
+
+.interface .interface-field--damage input {
+  font-family: monospace;
+  font-size: 1.05rem;
+}
+
+.interface .notification.warning {
+  margin: var(--interface-gap) 0 0;
+}
+
+@media (max-width: 760px) {
+  .interface .interface-character__identity {
+    grid-template-columns: 1fr 6rem;
+  }
+
+  .interface .interface-character__identity label:last-child {
+    grid-column: 1 / -1;
+  }
+
+  .interface .interface-skills__grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .interface .interface-state-band {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .interface .interface-state-band__initiative {
+    grid-column: 1 / -1;
+    grid-row: 1;
+    border-inline: 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.22);
+    padding-bottom: 0.45rem;
+  }
+
+  .interface .interface-talent-groups,
+  .interface .interface-progression__choices {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .interface .interface-derived-grid,
+  .interface .interface-dev-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .interface .interface-item-row {
+    grid-template-columns: 2rem minmax(7rem, 1fr) auto;
+  }
+
+  .interface .interface-item-row__formula {
+    grid-column: 2 / -1;
+    text-align: left;
+  }
+}
+
+@media (max-width: 560px) {
+  .interface .interface-character__identity,
+  .interface .interface-equipment__header,
+  .interface .interface-form-grid--two,
+  .interface .interface-form-grid--equipment,
+  .interface .interface-selection-grid,
+  .interface .interface-state-band,
+  .interface .interface-talent-groups,
+  .interface .interface-progression__choices,
+  .interface .interface-derived-grid,
+  .interface .interface-dev-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .interface .interface-character__identity label:last-child,
+  .interface .interface-state-band__initiative {
+    grid-column: auto;
+  }
+
+  .interface .interface-skills__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .interface .interface-progression__band {
+    grid-template-columns: 1fr;
+  }
+
+  .interface .interface-progression__band > span {
+    text-align: left;
+  }
+
+  .interface .interface-fold > summary {
+    align-items: flex-start;
+  }
+
+  .interface .interface-fold > summary small {
+    display: none;
+  }
+}

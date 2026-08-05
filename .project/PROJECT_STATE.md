@@ -1,12 +1,12 @@
 # État du projet — Système D100 Interface
 
-**Dernière mise à jour :** 5 août 2026  
-**Statut global :** architecture Foundry validée, première tranche de développement prête à ouvrir  
-**Coordinateur :** GPT Pilote  
-**Spécialiste principal suivant :** GPT Foundry  
-**Dépôt :** `ctotone/DEV-interface`  
-**Branche :** `main`  
-**Base avant cette mise à jour :** `90858fdf37839150cca6e6364bedac3aa5e16512`  
+**Dernière mise à jour :** 5 août 2026
+**Statut global :** Tranche 1 en test utilisateur, correctif 1 en attente de retest
+**Coordinateur :** GPT Pilote
+**Spécialiste principal :** GPT Foundry
+**Dépôt :** `ctotone/DEV-interface`
+**Branche :** `main`
+**Base de référence de la candidate :** `ba2871fb2f5ec175b525535f0d31e8f3426a1b23`
 **Identifiant technique :** `interface`
 
 ## Finalité
@@ -22,7 +22,7 @@ Phase 00A — Résolution des jets : VALIDÉE
 Phase 00B — Cadrage produit et dépôt : VALIDÉE
 Phase 01 — Personnage, équipement et conflits : VALIDÉE
 Phase 02 — Architecture Foundry : VALIDÉE
-Phase 03 — Première tranche jouable : PROCHAINE
+Phase 03 — Première tranche jouable : EN COURS — T1 à T3 OK, T4 corrigé, tranche non validée
 Phases 04 à 08 : PLANIFIÉES
 ```
 
@@ -131,18 +131,19 @@ Item.type            : equipment
 .project/specification/PHASE_02_ARCHITECTURE_FOUNDRY_INTERFACE.md
 ```
 
-La phase 00A fait autorité pour l’algorithme des jets.  
-La phase 01 fait autorité pour le fonctionnel.  
+La phase 00A fait autorité pour l’algorithme des jets.
+La phase 01 fait autorité pour le fonctionnel.
 La phase 02 fait autorité pour la traduction technique Foundry et les clarifications validées pendant son arbitrage.
 
 ## État technique réel
 
 ```text
 Architecture : VALIDÉE
-Code système : NON COMMENCÉ
-system.json : NON CRÉÉ
-Tests unitaires : NON RÉALISÉS
-Tests Foundry : NON RÉALISÉS
+Code système : TRANCHE 1 PRODUITE
+system.json : CRÉÉ
+Contrôles statiques : 97 CONTRÔLES HORS FOUNDRY RÉUSSIS
+Tests réels Foundry : NON RÉALISÉS
+Validation utilisateur : EN ATTENTE
 Publication : NON
 ```
 
@@ -165,6 +166,7 @@ Les différences de hash dues au cycle d’échange, les suffixes automatiques d
 
 ```text
 Phase 03 — Première tranche jouable
-Première tranche technique — Squelette installable
+Tranche 1 — Candidate à installer et tester sous Foundry VTT 14.365
+Protocole — tests/protocols/TRANCHE_1_FOUNDRY_V14_365.md
 GPT principal — GPT Foundry
 ```

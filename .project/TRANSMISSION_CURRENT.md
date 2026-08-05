@@ -1,13 +1,13 @@
 # Transmission courante — Système D100 Interface
 
-**Dernière mise à jour :** 5 août 2026  
-**Coordinateur :** GPT Pilote  
-**Spécialiste principal suivant :** GPT Foundry  
-**Identifiant technique :** `interface`  
-**Dépôt :** `ctotone/DEV-interface`  
-**Branche :** `main`  
-**Base avant cette mise à jour :** `90858fdf37839150cca6e6364bedac3aa5e16512`  
-**Développement Foundry :** non commencé
+**Dernière mise à jour :** 5 août 2026
+**Coordinateur :** GPT Pilote
+**Spécialiste principal :** GPT Foundry
+**Identifiant technique :** `interface`
+**Dépôt :** `ctotone/DEV-interface`
+**Branche :** `main`
+**Base de référence de la candidate :** `ba2871fb2f5ec175b525535f0d31e8f3426a1b23`
+**Développement Foundry :** Tranche 1 produite, correctif 1 en attente de retest
 
 ## Finalité
 
@@ -17,25 +17,27 @@ Créer un système Foundry VTT générique, léger et orienté narration pour le
 
 ```text
 Phases 00A, 00B, 01 et 02 : VALIDÉES
-Phase suivante : 03 — Première tranche jouable
-Étape suivante : Tranche 1 — Squelette installable
+Phase 03 — Première tranche jouable : EN COURS
+Tranche 1 — Squelette installable : CANDIDATE
 Architecture Foundry : VALIDÉE
-Code Foundry : NON COMMENCÉ
-Tests Foundry : NON RÉALISÉS
+Code Foundry : PRODUIT POUR LA TRANCHE 1
+Contrôles statiques : RÉUSSIS — 100 contrôles
+Tests Foundry : PARTIELS — T1 à T3 OK, T4 corrigé et à rejouer
+Validation utilisateur : EN ATTENTE
 ```
 
 ## Base de reprise
 
-La base Git connue avant l’intégration de cette archive est :
+La candidate technique a été construite depuis :
 
 ```text
 Dépôt   : ctotone/DEV-interface
 Branche : main
-Commit  : 90858fdf37839150cca6e6364bedac3aa5e16512
-Message : Phase 1 terminée
+Commit  : ba2871fb2f5ec175b525535f0d31e8f3426a1b23
+Message : Phase 2 terminée
 ```
 
-Le prochain commit, créé par l’utilisateur après intégration, deviendra la nouvelle base matérielle. Un décalage temporaire entre ce hash et les documents du ZIP est normal.
+La candidate n’est pas commitée par GPT Foundry. Le prochain commit éventuel sera créé par l’utilisateur après ses tests et sa validation.
 
 ## Ordre de lecture
 
@@ -144,46 +146,41 @@ Une réserve n’est pas un blocage actuel. Elle devient un sujet d’architectu
 - les archives restituées excluent `.git/` et `.gitignore` ;
 - sauf indication explicite, l’utilisateur ne modifie pas l’archive restituée avant intégration.
 
-## Travail suivant
-
-### Objectif exact
-
-Produire la Tranche 1 — Squelette installable de la phase 03.
-
-### Inclus
-
-- `system.json` ;
-- `scripts/interface.mjs` ;
-- `lang/fr.json` ;
-- enregistrement des settings ;
-- TypeDataModels minimaux ;
-- Actor et Item minimaux ;
-- feuilles minimales ;
-- organisation technique réellement nécessaire ;
-- protocole de test d’installation V14.365.
-
-### Hors périmètre de cette première tranche
-
-- moteur D100 complet ;
-- Destin complet ;
-- cartes finales ;
-- dégâts complets ;
-- Dice So Nice ;
-- publication ;
-- design final.
-
-## État des preuves
+## Livrable technique courant
 
 ```text
-Architecture : VALIDÉE
-Code : NON PRODUIT
-Analyse statique : NON APPLICABLE
-Tests unitaires : NON RÉALISÉS
-Test Foundry : NON RÉALISÉ
-Test utilisateur : NON RÉALISÉ
-Publication : NON
+Version locale : 0.1.0
+Foundry cible : 14.365
+Rapport : .project/reports/PHASE_03_TRANCHE_1_CANDIDATE.md
+Protocole : tests/protocols/TRANCHE_1_FOUNDRY_V14_365.md
+Contrôle : node tests/static/check-project.mjs
 ```
+
+La Tranche 1 reste non validée tant que l’utilisateur n’a pas réalisé les tests réels et donné sa validation explicite.
+
+## Ordonnancement du design
+
+```text
+Tranche 1  : squelette neutre
+Tranche 2  : données affichées et valeurs dérivées nécessaires
+Tranche 2B : adaptation raisonnée du HTML/CSS Roll20
+Puis        : moteur D100 et cartes de chat
+```
+
+La référence Roll20 ne doit apporter aucune règle, donnée persistée ou logique non validée.
+
+## Résultat de test courant
+
+```text
+T1 : OK
+T2 : OK
+T3 : OK
+T4 : ÉCHEC sur la première candidate — templates Actor et Item à plusieurs racines
+Correctif 1 : produit, contrôlé hors Foundry, en attente de retest T4
+```
+
+Le menu de settings a été corrigé préventivement pour la même contrainte V14.
 
 ## Prochaine action exacte
 
-Ouvrir la phase 03 avec GPT Foundry à partir de cette archive et produire uniquement la Tranche 1 — Squelette installable, accompagnée d’un protocole de test sur Foundry VTT 14.365.
+Remplacer le dossier système par le correctif 1, effectuer `Shift+F5`, puis reprendre au test T4. Ne pas commencer la Tranche 2 avant validation explicite de la Tranche 1.

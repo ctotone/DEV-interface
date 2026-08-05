@@ -1,8 +1,8 @@
 # Roadmap — Système D100 Interface pour Foundry VTT
 
-**Dernière mise à jour :** 5 août 2026  
-**Statut :** validée par l’utilisateur  
-**Identifiant technique :** `interface`  
+**Dernière mise à jour :** 5 août 2026
+**Statut :** validée par l’utilisateur
+**Identifiant technique :** `interface`
 **Principe :** une phase planifiée ne prouve pas qu’elle est produite, testée ou validée.
 
 ## Phase 00A — Résolution des jets
@@ -61,7 +61,7 @@ Définir le périmètre de la première version jouable, l’organisation docume
 
 **Statut :** VALIDÉE
 
-**GPT principal métier :** GPT JdR  
+**GPT principal métier :** GPT JdR
 **Consolidation :** GPT Pilote
 
 ### Objectif
@@ -94,7 +94,7 @@ Consolider toutes les règles fonctionnelles nécessaires à la première versio
 
 **Statut :** VALIDÉE
 
-**GPT principal :** GPT Foundry  
+**GPT principal :** GPT Foundry
 **Coordination et consolidation :** GPT Pilote
 
 ### Objectif
@@ -136,7 +136,7 @@ Traduire les spécifications fonctionnelles validées en architecture technique 
 
 ## Phase 03 — Première tranche jouable
 
-**Statut :** PROCHAINE
+**Statut :** EN COURS — Tranche 1 candidate en attente de test
 
 **GPT principal :** GPT Foundry
 
@@ -158,6 +158,17 @@ Tranche 1 — Squelette installable
 - Actor et Item minimaux ;
 - feuilles minimales ;
 - test d’installation sur Foundry VTT 14.365.
+
+### Ordonnancement interne retenu
+
+```text
+Tranche 1  : squelette installable au design neutre
+Tranche 2  : données affichées et valeurs dérivées nécessaires
+Tranche 2B : adaptation raisonnée de la référence HTML/CSS Roll20
+Puis        : moteur D100 et cartes de chat
+```
+
+La Tranche 2 ne commence pas avant validation explicite de la Tranche 1.
 
 ### Résultat attendu de la phase
 
@@ -230,7 +241,7 @@ Permettre une scène de conflit simple sans créer de moteur tactique complet.
 
 **Statut :** PLANIFIÉE
 
-**GPT principal technique :** GPT Foundry  
+**GPT principal technique :** GPT Foundry
 **Contributeur visuel :** GPT Visuel
 
 ### Objectif
@@ -254,7 +265,7 @@ Améliorer la fluidité des feuilles et des cartes de chat sans alourdir l’usa
 
 **Statut :** PLANIFIÉE
 
-**GPT principal :** GPT Foundry  
+**GPT principal :** GPT Foundry
 **Tests réels :** utilisateur
 
 ### Objectif

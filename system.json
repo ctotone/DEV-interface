@@ -1,0 +1,43 @@
+{
+  "id": "interface",
+  "title": "D100 Interface",
+  "type": "system",
+  "version": "0.1.0",
+  "description": "Système D100 générique, léger et orienté narration.",
+  "compatibility": {
+    "minimum": "14",
+    "verified": "14",
+    "maximum": "14"
+  },
+  "esmodules": [
+    "scripts/interface.mjs"
+  ],
+  "styles": [
+    "styles/interface.css"
+  ],
+  "languages": [
+    {
+      "lang": "fr",
+      "name": "Français",
+      "path": "lang/fr.json"
+    }
+  ],
+  "documentTypes": {
+    "Actor": {
+      "character": {
+        "htmlFields": [
+          "identity.notes"
+        ]
+      }
+    },
+    "Item": {
+      "equipment": {
+        "htmlFields": [
+          "description"
+        ]
+      }
+    }
+  },
+  "initiative": "1d10 + @derived.initiativeBonus",
+  "media": []
+}

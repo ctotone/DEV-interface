@@ -1,0 +1,407 @@
+<div class="interface-sheet__content interface-character">
+  <header class="interface-character__identity">
+    <label class="interface-character__name">
+      <span>{{localize "INTERFACE.Common.Name"}}</span>
+      <input
+        id="{{rootId}}-name"
+        type="text"
+        name="name"
+        value="{{actor.name}}"
+        autocomplete="off"
+      >
+    </label>
+
+    <label>
+      <span>{{localize "INTERFACE.Identity.Age"}}</span>
+      <input type="text" name="system.identity.age" value="{{system.identity.age}}">
+    </label>
+
+    <label>
+      <span>{{localize "INTERFACE.Identity.Profession"}}</span>
+      <input type="text" name="system.identity.profession" value="{{system.identity.profession}}">
+    </label>
+  </header>
+
+  <div class="interface-sheet__body">
+    <section class="interface-skills" aria-labelledby="{{rootId}}-skills">
+      <h2 id="{{rootId}}-skills">{{localize "INTERFACE.Section.Skills"}}</h2>
+      <div class="interface-skills__grid">
+        {{#each skills}}
+          <label class="interface-skill interface-tone--{{tone}}">
+            <input
+              type="number"
+              name="system.skills.{{key}}"
+              value="{{value}}"
+              min="0"
+              max="100"
+              step="1"
+            >
+            <span>{{localize label}}</span>
+          </label>
+        {{/each}}
+      </div>
+    </section>
+
+    <section class="interface-state-band" aria-label="{{localize "INTERFACE.Section.Resources"}}">
+      <div class="interface-state-band__resource">
+        <span class="interface-state-band__label">{{localize "INTERFACE.Resource.Wounds"}}</span>
+        <div class="interface-resource__controls interface-resource__controls--dark">
+          {{#if editable}}
+            <button
+              type="button"
+              data-action="adjustResource"
+              data-resource="wounds"
+              data-delta="-1"
+              aria-label="{{localize "INTERFACE.Common.Decrease"}}"
+            >−</button>
+          {{/if}}
+          <input
+            type="number"
+            name="system.resources.wounds.value"
+            value="{{system.resources.wounds.value}}"
+            min="0"
+            max="15"
+            step="1"
+          >
+          {{#if editable}}
+            <button
+              type="button"
+              data-action="adjustResource"
+              data-resource="wounds"
+              data-delta="1"
+              aria-label="{{localize "INTERFACE.Common.Increase"}}"
+            >+</button>
+          {{/if}}
+        </div>
+        <div class="interface-state-track" aria-label="{{localize "INTERFACE.State.Level"}} {{derived.levels.wounds}}">
+          {{#each woundTrack}}
+            <span class="{{#if current}}is-current{{/if}}" title="{{value}}">{{value}}</span>
+          {{/each}}
+        </div>
+      </div>
+
+      <div class="interface-state-band__initiative">
+        <span>{{localize "INTERFACE.Derived.Initiative"}}</span>
+        <strong>+{{derived.initiativeBonus}}</strong>
+        <small>{{localize "INTERFACE.Derived.InitiativeBonus"}}</small>
+      </div>
+
+      <div class="interface-state-band__resource">
+        <span class="interface-state-band__label">{{localize "INTERFACE.Resource.Stress"}}</span>
+        <div class="interface-resource__controls interface-resource__controls--dark">
+          {{#if editable}}
+            <button
+              type="button"
+              data-action="adjustResource"
+              data-resource="stress"
+              data-delta="-1"
+              aria-label="{{localize "INTERFACE.Common.Decrease"}}"
+            >−</button>
+          {{/if}}
+          <input
+            type="number"
+            name="system.resources.stress.value"
+            value="{{system.resources.stress.value}}"
+            min="0"
+            max="15"
+            step="1"
+          >
+          {{#if editable}}
+            <button
+              type="button"
+              data-action="adjustResource"
+              data-resource="stress"
+              data-delta="1"
+              aria-label="{{localize "INTERFACE.Common.Increase"}}"
+            >+</button>
+          {{/if}}
+        </div>
+        <div class="interface-state-track" aria-label="{{localize "INTERFACE.State.Level"}} {{derived.levels.stress}}">
+          {{#each stressTrack}}
+            <span class="{{#if current}}is-current{{/if}}" title="{{value}}">{{value}}</span>
+          {{/each}}
+        </div>
+      </div>
+
+      <div class="interface-state-band__dev">
+        <span>{{localize "INTERFACE.Development.Temporary"}}</span>
+        <span>{{localize "INTERFACE.State.TotalPenalty"}} : −{{derived.statePenalty}}</span>
+        <span>{{localize "INTERFACE.Resource.Destiny"}} : {{system.resources.destiny.value}}</span>
+      </div>
+    </section>
+
+    <details class="interface-fold interface-fold--development" data-section="development" {{#if sections.development}}open{{/if}}>
+      <summary>
+        <span>{{localize "INTERFACE.Development.Title"}}</span>
+        <small>{{localize "INTERFACE.Development.TemporaryHint"}}</small>
+      </summary>
+      <div class="interface-fold__content">
+        <div class="interface-dev-grid">
+          <label class="interface-dev-field">
+            <span>{{localize "INTERFACE.Resource.Destiny"}}</span>
+            <input
+              type="number"
+              name="system.resources.destiny.value"
+              value="{{system.resources.destiny.value}}"
+              min="0"
+              step="1"
+            >
+          </label>
+          <div>
+            <strong>{{localize "INTERFACE.State.Detail"}}</strong>
+            <p>
+              ({{derived.levels.wounds}} + {{derived.levels.stress}})
+              × {{statePenaltyCoefficient}}
+              = {{derived.statePenalty}}
+            </p>
+          </div>
+          <div>
+            <strong>{{localize "INTERFACE.Creation.TalentTotal"}}</strong>
+            <p>{{creation.talentTotal}} / 100</p>
+          </div>
+        </div>
+
+        {{#if creation.showWarnings}}
+          <div class="interface-notice interface-notice--warning">
+            <strong>{{localize "INTERFACE.Creation.WarningTitle"}}</strong>
+            <ul>
+              {{#each creation.warnings}}
+                <li>{{message}}</li>
+              {{/each}}
+            </ul>
+            <p>{{localize "INTERFACE.Creation.NonBlocking"}}</p>
+            <button type="button" data-action="acknowledgeCreationWarnings">
+              <i class="fa-solid fa-check" aria-hidden="true"></i>
+              {{localize "INTERFACE.Creation.Acknowledge"}}
+            </button>
+          </div>
+        {{else}}
+          {{#if creation.acknowledged}}
+            <p class="interface-notice interface-notice--acknowledged">
+              {{localize "INTERFACE.Creation.Acknowledged"}}
+            </p>
+          {{else}}
+            <p class="interface-notice interface-notice--success">
+              {{localize "INTERFACE.Creation.RecommendedDistribution"}}
+            </p>
+          {{/if}}
+        {{/if}}
+      </div>
+    </details>
+
+    <details class="interface-fold" data-section="talents" {{#if sections.talents}}open{{/if}}>
+      <summary>
+        <span>{{localize "INTERFACE.Section.Talents"}}</span>
+        <small>{{creation.talentTotal}} / 100</small>
+      </summary>
+      <div class="interface-fold__content">
+        <div class="interface-talent-groups">
+          {{#each talentGroups}}
+            <fieldset class="interface-talent-group interface-tone--{{tone}}">
+              <legend>{{localize label}}</legend>
+              {{#each talents}}
+                <label class="interface-talent">
+                  <span>{{localize label}}</span>
+                  <input
+                    type="number"
+                    name="system.talents.{{key}}"
+                    value="{{value}}"
+                    min="0"
+                    max="30"
+                    step="1"
+                  >
+                </label>
+              {{/each}}
+            </fieldset>
+          {{/each}}
+        </div>
+      </div>
+    </details>
+
+    <details class="interface-fold" data-section="combat" {{#if sections.combat}}open{{/if}}>
+      <summary>
+        <span>{{localize "INTERFACE.Section.Combat"}}</span>
+        <small>{{localize "INTERFACE.Section.Derived"}} · {{localize "INTERFACE.Section.Weapons"}}</small>
+      </summary>
+      <div class="interface-fold__content">
+        <div class="interface-derived-grid">
+          {{#each derivedScores}}
+            <div class="interface-derived-card interface-tone--{{tone}}">
+              <span>{{localize label}}</span>
+              <strong>{{value}}</strong>
+            </div>
+          {{/each}}
+
+          {{#if customDerived.enabled}}
+            <div class="interface-derived-card interface-tone--neutral">
+              <span>{{customDerived.name}}</span>
+              {{#if customDerived.available}}
+                <strong>{{customDerived.value}}</strong>
+              {{else}}
+                <strong>—</strong>
+              {{/if}}
+            </div>
+          {{/if}}
+        </div>
+
+        <div class="interface-subsection-heading">
+          <h3>{{localize "INTERFACE.Section.Weapons"}}</h3>
+          {{#if editable}}
+            <button
+              type="button"
+              data-action="createEquipment"
+              data-category="{{categories.WEAPON}}"
+            >
+              <i class="fa-solid fa-plus" aria-hidden="true"></i>
+              {{localize "INTERFACE.Inventory.AddWeapon"}}
+            </button>
+          {{/if}}
+        </div>
+
+        {{#if hasWeapons}}
+          <ol class="interface-item-list interface-item-list--weapons">
+            {{#each weapons}}
+              <li class="interface-item-row" data-item-id="{{id}}">
+                <img src="{{img}}" alt="">
+                <button
+                  type="button"
+                  class="interface-item-row__name"
+                  data-action="editEmbeddedItem"
+                >{{name}}</button>
+                <span>×{{quantity}}</span>
+                <span class="interface-item-row__formula">{{damageFormula}}</span>
+              </li>
+            {{/each}}
+          </ol>
+        {{else}}
+          <p class="interface-empty">{{localize "INTERFACE.Inventory.NoWeapons"}}</p>
+        {{/if}}
+      </div>
+    </details>
+
+    <details class="interface-fold" data-section="specializations" {{#if sections.specializations}}open{{/if}}>
+      <summary>
+        <span>{{localize "INTERFACE.Section.Specializations"}}</span>
+        <small>{{localize "INTERFACE.Specializations.Hint"}}</small>
+      </summary>
+      <div class="interface-fold__content">
+        <textarea name="system.identity.specializations" rows="6">{{system.identity.specializations}}</textarea>
+      </div>
+    </details>
+
+    <details class="interface-fold" data-section="inventory" {{#if sections.inventory}}open{{/if}}>
+      <summary>
+        <span>{{localize "INTERFACE.Section.Inventory"}}</span>
+        <small>{{inventory.length}}</small>
+      </summary>
+      <div class="interface-fold__content">
+        {{#if editable}}
+          <div class="interface-panel__actions">
+            <button
+              type="button"
+              data-action="createEquipment"
+              data-category="{{categories.ORDINARY}}"
+            >
+              <i class="fa-solid fa-plus" aria-hidden="true"></i>
+              {{localize "INTERFACE.Inventory.AddOrdinary"}}
+            </button>
+            <button
+              type="button"
+              data-action="createEquipment"
+              data-category="{{categories.WEAPON}}"
+            >
+              <i class="fa-solid fa-plus" aria-hidden="true"></i>
+              {{localize "INTERFACE.Inventory.AddWeapon"}}
+            </button>
+          </div>
+        {{/if}}
+
+        {{#if hasInventory}}
+          <ol class="interface-item-list">
+            {{#each inventory}}
+              <li class="interface-item-row" data-item-id="{{id}}">
+                <img src="{{img}}" alt="">
+                <button
+                  type="button"
+                  class="interface-item-row__name"
+                  data-action="editEmbeddedItem"
+                >{{name}}</button>
+                <span>{{localize categoryLabel}}</span>
+                <span>×{{quantity}}</span>
+                {{#if isWeapon}}
+                  <span class="interface-item-row__formula">{{damageFormula}}</span>
+                {{/if}}
+              </li>
+            {{/each}}
+          </ol>
+        {{else}}
+          <p class="interface-empty">{{localize "INTERFACE.Inventory.Empty"}}</p>
+        {{/if}}
+        <p class="hint">{{localize "INTERFACE.Inventory.DropHint"}}</p>
+      </div>
+    </details>
+
+    <details class="interface-fold" data-section="notes" {{#if sections.notes}}open{{/if}}>
+      <summary>
+        <span>{{localize "INTERFACE.Section.Notes"}}</span>
+        <small>{{localize "INTERFACE.Notes.Hint"}}</small>
+      </summary>
+      <div class="interface-fold__content">
+        <textarea name="system.identity.notes" rows="10">{{system.identity.notes}}</textarea>
+      </div>
+    </details>
+
+    <section class="interface-progression" aria-labelledby="{{rootId}}-progression">
+      <div class="interface-progression__band">
+        <strong id="{{rootId}}-progression">{{localize "INTERFACE.Section.Progression"}}</strong>
+        <div class="interface-progression__gauge">
+          {{#each progressionGauge}}
+            <label title="{{value}}">
+              <input
+                type="radio"
+                name="system.progression.gauge"
+                value="{{value}}"
+                {{#if checked}}checked{{/if}}
+              >
+              <span>{{value}}</span>
+            </label>
+          {{/each}}
+        </div>
+        <span>{{localize "INTERFACE.Progression.GaugeHint"}}</span>
+      </div>
+
+      <div class="interface-progression__choices">
+        {{#each progressionGroups}}
+          <fieldset>
+            <legend>{{localize label}}</legend>
+            <small>{{localize detail}}</small>
+            <div>
+              {{#each gains}}
+                <label>
+                  <input
+                    type="checkbox"
+                    name="system.progression.{{../key}}.{{key}}"
+                    {{#if checked}}checked{{/if}}
+                  >
+                  <span>{{index}}</span>
+                </label>
+              {{/each}}
+            </div>
+          </fieldset>
+        {{/each}}
+      </div>
+      <p class="hint">{{localize "INTERFACE.Progression.ManualHint"}}</p>
+    </section>
+  </div>
+
+  <footer class="interface-sheet__footer">
+    <span class="interface-autosave">
+      <i class="fa-solid fa-arrows-rotate" aria-hidden="true"></i>
+      {{localize "INTERFACE.Common.AutoSaveActive"}}
+    </span>
+    <button type="submit">
+      <i class="fa-solid fa-floppy-disk" aria-hidden="true"></i>
+      {{localize "INTERFACE.Common.Save"}}
+    </button>
+  </footer>
+</div>

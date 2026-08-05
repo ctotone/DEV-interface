@@ -1,0 +1,200 @@
+{
+  "TYPES": {
+    "Actor": {
+      "character": "Personnage"
+    },
+    "Item": {
+      "equipment": "Équipement"
+    }
+  },
+  "INTERFACE": {
+    "Actor": {
+      "Character": "Personnage"
+    },
+    "Item": {
+      "Equipment": "Équipement"
+    },
+    "Sheet": {
+      "Character": "Fiche de personnage D100 Interface",
+      "Equipment": "Fiche d’équipement D100 Interface"
+    },
+    "Common": {
+      "Name": "Nom",
+      "Save": "Enregistrer",
+      "MinimalHtmlFieldHint": "Édition texte minimale ; l’éditeur riche et le design final seront adaptés dans une tranche ultérieure.",
+      "Decrease": "Diminuer",
+      "Increase": "Augmenter",
+      "AutoSaveActive": "Enregistrement automatique actif"
+    },
+    "Section": {
+      "Identity": "Identité",
+      "Skills": "Compétences",
+      "Talents": "Talents",
+      "Resources": "Ressources",
+      "Notes": "Notes",
+      "Equipment": "Équipement",
+      "Creation": "Création",
+      "Derived": "Valeurs dérivées",
+      "Inventory": "Inventaire",
+      "Weapons": "Armes",
+      "Combat": "Combat",
+      "Specializations": "Spécialisations",
+      "Progression": "Expérience",
+      "Development": "Développement"
+    },
+    "Identity": {
+      "Age": "Âge",
+      "Profession": "Profession",
+      "Specializations": "Spécialisations"
+    },
+    "Skill": {
+      "Carrure": "Carrure",
+      "Agilite": "Agilité",
+      "Perception": "Perception",
+      "Mental": "Mental",
+      "Intellect": "Intellect",
+      "Charisme": "Charisme"
+    },
+    "Talent": {
+      "Endurance": "Endurance",
+      "ForceBrute": "Force brute",
+      "Robustesse": "Robustesse",
+      "AgiliteCorporelle": "Agilité corporelle",
+      "Precision": "Précision",
+      "Reflexe": "Réflexe",
+      "AcuiteSensorielle": "Acuité sensorielle",
+      "SixiemeSens": "Sixième sens",
+      "Vigilance": "Vigilance",
+      "Decision": "Décision",
+      "Determination": "Détermination",
+      "EquilibreMental": "Équilibre mental",
+      "Creativite": "Créativité",
+      "Erudition": "Érudition",
+      "Logique": "Logique",
+      "Aura": "Aura",
+      "CommunicationExpressive": "Communication expressive",
+      "Persuasion": "Persuasion"
+    },
+    "Resource": {
+      "Wounds": "Blessures",
+      "Stress": "Stress",
+      "Destiny": "Destin",
+      "DestinyInactiveHint": "Le Destin est persisté, mais sa mécanique n’est pas encore active."
+    },
+    "Equipment": {
+      "Category": "Catégorie",
+      "CategoryOrdinary": "Objet ordinaire",
+      "CategoryWeapon": "Arme",
+      "Quantity": "Quantité",
+      "DamageFormula": "Formule de dégâts",
+      "Description": "Description",
+      "HiddenDamageHint": "La formule de dégâts existante est conservée lorsque l’objet redevient ordinaire ; elle est simplement masquée."
+    },
+    "Settings": {
+      "MenuName": "Configuration D100 Interface",
+      "MenuLabel": "Configurer D100 Interface",
+      "MenuHint": "Modifier les paramètres mondiaux validés du système.",
+      "MenuTitle": "Configuration D100 Interface",
+      "StateSection": "États",
+      "DestinySection": "Destin",
+      "CustomDerivedSection": "Valeur dérivée personnalisée",
+      "CustomDerivedEnabled": "Activer la valeur dérivée personnalisée",
+      "CustomDerivedName": "Nom",
+      "CustomDerivedSkills": "Compétences",
+      "CustomDerivedSkillsHint": "Sélectionner exactement deux Compétences lorsque l’option est activée.",
+      "CustomDerivedTalents": "Talents",
+      "CustomDerivedTalentsHint": "Sélectionner exactement six Talents lorsque l’option est activée.",
+      "CustomDerived": {
+        "Invalid": "La valeur dérivée personnalisée exige un nom, exactement deux Compétences et exactement six Talents."
+      },
+      "InvalidNumber": "Valeur invalide pour le paramètre « {setting} ».",
+      "Saved": "Paramètres D100 Interface enregistrés.",
+      "LoadDefaults": "Charger les valeurs recommandées",
+      "Save": "Enregistrer les paramètres",
+      "statePenaltyCoefficient": {
+        "Name": "Coefficient de malus d’état",
+        "Hint": "Valeur recommandée : 3. Minimum : 0."
+      },
+      "destinyGain": {
+        "Name": "Gain de Destin après échec final",
+        "Hint": "Valeur recommandée : 5. Minimum : 0."
+      },
+      "destinyCap": {
+        "Name": "Plafond de Destin",
+        "Hint": "Valeur recommandée : 30. Minimum : 0."
+      },
+      "destinyTriggerChance": {
+        "Name": "Probabilité de déclenchement du Destin",
+        "Hint": "Valeur recommandée : 80 %. De 0 à 100."
+      },
+      "destinyCriticalMinimum": {
+        "Name": "Réserve minimale pour amortir un échec critique",
+        "Hint": "Valeur recommandée : 15. Minimum : 0."
+      },
+      "customDerived": {
+        "Name": "Configuration de la valeur dérivée personnalisée",
+        "Hint": "Nom, deux Compétences et six Talents."
+      },
+      "schemaVersion": {
+        "Name": "Version interne du schéma",
+        "Hint": "Paramètre caché réservé aux migrations internes."
+      },
+      "DestinyInactiveWarning": "Ces paramètres sont persistés, mais le moteur de Destin n’est pas encore actif."
+    },
+    "Derived": {
+      "Melee": "Corps à corps",
+      "Distance": "Distance",
+      "Verbal": "Verbal",
+      "InitiativeBonus": "Bonus d’initiative",
+      "FormulasHidden": "Les formules exactes restent masquées ; seules les valeurs finales sont affichées.",
+      "Initiative": "Initiative"
+    },
+    "State": {
+      "Level": "Niveau",
+      "TotalPenalty": "Malus d’état",
+      "Detail": "Détail du malus"
+    },
+    "Creation": {
+      "TalentTotal": "Total des Talents",
+      "WarningTitle": "Répartition différente des recommandations",
+      "WarningSkills": "Compétences actuelles : {values}. Répartition recommandée : 20 / 30 / 30 / 40 / 40 / 50.",
+      "WarningTalentsUnder": "Total des Talents : {total}. Il reste {remaining} point(s) par rapport au total recommandé de 100.",
+      "WarningTalentsOver": "Total des Talents : {total}. Le total recommandé de 100 est dépassé de {excess} point(s).",
+      "NonBlocking": "Cet avertissement ne bloque ni l’enregistrement ni le jeu.",
+      "Acknowledge": "J’ai pris connaissance",
+      "Acknowledged": "Répartition différente acceptée pour cette ouverture de fiche.",
+      "RecommendedDistribution": "La répartition recommandée de création est respectée."
+    },
+    "Inventory": {
+      "AddOrdinary": "Ajouter un objet",
+      "AddWeapon": "Ajouter une arme",
+      "NewOrdinary": "Nouvel objet",
+      "NewWeapon": "Nouvelle arme",
+      "Empty": "Aucun équipement embarqué.",
+      "NoWeapons": "Aucune arme embarquée.",
+      "DropHint": "Tu peux aussi glisser un Item Équipement depuis la barre latérale vers cette fiche.",
+      "WeaponsDuplicatedHint": "Une arme reste visible dans l’Inventaire et apparaît également dans cette zone."
+    },
+    "Specializations": {
+      "Hint": "Une spécialisation par ligne"
+    },
+    "Notes": {
+      "Hint": "Notes libres du joueur"
+    },
+    "Development": {
+      "Title": "Informations de développement",
+      "Temporary": "Développement",
+      "TemporaryHint": "Données temporaires pour les tests ; elles seront retirées de la fiche finale."
+    },
+    "Progression": {
+      "GaugeHint": "Jauge manuelle de 0 à 3",
+      "SkillGain": "Amélioration de Compétence",
+      "SkillGainDetail": "+5 dans une Compétence choisie",
+      "TalentGain": "Amélioration de Talents",
+      "TalentGainDetail": "+15 points à répartir entre les Talents",
+      "SpecializationGain": "Nouvelle Spécialisation",
+      "SpecializationGainDetail": "Ajouter une Spécialisation décidée avec le MJ",
+      "ManualHint": "La jauge et les neuf cases sont déclaratives. Cette tranche n’applique encore aucun gain automatiquement."
+    }
+  }
+}

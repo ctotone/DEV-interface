@@ -1,0 +1,127 @@
+<div class="interface-settings__content">
+  <div class="interface-settings__body">
+    <section class="interface-panel">
+      <h2>{{localize "INTERFACE.Settings.StateSection"}}</h2>
+
+      <label class="interface-field">
+        <span>{{localize "INTERFACE.Settings.statePenaltyCoefficient.Name"}}</span>
+        <input
+          type="number"
+          name="statePenaltyCoefficient"
+          value="{{settings.statePenaltyCoefficient}}"
+          min="0"
+          step="1"
+        >
+        <small>{{localize "INTERFACE.Settings.statePenaltyCoefficient.Hint"}}</small>
+      </label>
+    </section>
+
+    <section class="interface-panel">
+      <h2>{{localize "INTERFACE.Settings.DestinySection"}}</h2>
+
+      <div class="interface-form-grid interface-form-grid--two">
+        <label class="interface-field">
+          <span>{{localize "INTERFACE.Settings.destinyGain.Name"}}</span>
+          <input type="number" name="destinyGain" value="{{settings.destinyGain}}" min="0" step="1">
+          <small>{{localize "INTERFACE.Settings.destinyGain.Hint"}}</small>
+        </label>
+
+        <label class="interface-field">
+          <span>{{localize "INTERFACE.Settings.destinyCap.Name"}}</span>
+          <input type="number" name="destinyCap" value="{{settings.destinyCap}}" min="0" step="1">
+          <small>{{localize "INTERFACE.Settings.destinyCap.Hint"}}</small>
+        </label>
+
+        <label class="interface-field">
+          <span>{{localize "INTERFACE.Settings.destinyTriggerChance.Name"}}</span>
+          <input
+            type="number"
+            name="destinyTriggerChance"
+            value="{{settings.destinyTriggerChance}}"
+            min="0"
+            max="100"
+            step="1"
+          >
+          <small>{{localize "INTERFACE.Settings.destinyTriggerChance.Hint"}}</small>
+        </label>
+
+        <label class="interface-field">
+          <span>{{localize "INTERFACE.Settings.destinyCriticalMinimum.Name"}}</span>
+          <input
+            type="number"
+            name="destinyCriticalMinimum"
+            value="{{settings.destinyCriticalMinimum}}"
+            min="0"
+            step="1"
+          >
+          <small>{{localize "INTERFACE.Settings.destinyCriticalMinimum.Hint"}}</small>
+        </label>
+      </div>
+
+      <p class="notification warning">{{localize "INTERFACE.Settings.DestinyInactiveWarning"}}</p>
+    </section>
+
+    <section class="interface-panel">
+      <h2>{{localize "INTERFACE.Settings.CustomDerivedSection"}}</h2>
+
+      <label class="interface-checkbox">
+        <input
+          type="checkbox"
+          name="customDerived.enabled"
+          {{#if customDerived.enabled}}checked{{/if}}
+        >
+        <span>{{localize "INTERFACE.Settings.CustomDerivedEnabled"}}</span>
+      </label>
+
+      <label class="interface-field">
+        <span>{{localize "INTERFACE.Settings.CustomDerivedName"}}</span>
+        <input type="text" name="customDerived.name" value="{{customDerived.name}}">
+      </label>
+
+      <div class="interface-selection-grid">
+        <fieldset>
+          <legend>{{localize "INTERFACE.Settings.CustomDerivedSkills"}}</legend>
+          <p class="hint">{{localize "INTERFACE.Settings.CustomDerivedSkillsHint"}}</p>
+          {{#each skills}}
+            <label class="interface-checkbox">
+              <input
+                type="checkbox"
+                name="customDerived.skills"
+                value="{{key}}"
+                {{#if checked}}checked{{/if}}
+              >
+              <span>{{localize label}}</span>
+            </label>
+          {{/each}}
+        </fieldset>
+
+        <fieldset>
+          <legend>{{localize "INTERFACE.Settings.CustomDerivedTalents"}}</legend>
+          <p class="hint">{{localize "INTERFACE.Settings.CustomDerivedTalentsHint"}}</p>
+          {{#each talents}}
+            <label class="interface-checkbox">
+              <input
+                type="checkbox"
+                name="customDerived.talents"
+                value="{{key}}"
+                {{#if checked}}checked{{/if}}
+              >
+              <span>{{localize label}}</span>
+            </label>
+          {{/each}}
+        </fieldset>
+      </div>
+    </section>
+  </div>
+
+  <footer class="interface-settings__footer">
+    <button type="button" data-action="loadDefaults">
+      <i class="fa-solid fa-rotate-left" aria-hidden="true"></i>
+      {{localize "INTERFACE.Settings.LoadDefaults"}}
+    </button>
+    <button type="submit">
+      <i class="fa-solid fa-floppy-disk" aria-hidden="true"></i>
+      {{localize "INTERFACE.Settings.Save"}}
+    </button>
+  </footer>
+</div>
