@@ -11,7 +11,7 @@
 - **Nom court du dépôt :** `DEV-interface`
 - **Branche :** `main`
 - **Base de départ :** `d4926487700295843281e1adffd077bf8d56113d`
-- **Commit de clôture documentaire :** à renseigner après intégration de l’archive actualisée
+- **Commit de clôture documentaire :** `90858fdf37839150cca6e6364bedac3aa5e16512`
 - **GPT principal métier :** GPT JdR
 - **Consolidation :** GPT Pilote
 

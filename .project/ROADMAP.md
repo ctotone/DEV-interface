@@ -92,57 +92,74 @@ Consolider toutes les règles fonctionnelles nécessaires à la première versio
 
 ## Phase 02 — Architecture Foundry
 
-**Statut :** PROCHAINE
+**Statut :** VALIDÉE
 
 **GPT principal :** GPT Foundry  
-**Coordination :** GPT Pilote
+**Coordination et consolidation :** GPT Pilote
 
 ### Objectif
 
 Traduire les spécifications fonctionnelles validées en architecture technique Foundry sans modifier les règles métier.
 
-### Périmètre
+### Résultat
 
-- version cible de Foundry et compatibilité ;
-- structure du système et manifeste ;
-- Actor et Item nécessaires ;
-- modèles de données ;
-- paramètres de monde ;
-- moteur de jets et contrat de résultat ;
-- cartes de chat ;
-- initiative ;
-- permissions propriétaire / MJ ;
-- stratégie de migration de données ;
-- organisation des fichiers techniques ;
-- stratégie de tests.
+- génération Foundry V14 retenue ;
+- build `14.365` retenue comme environnement initial de développement et de test ;
+- manifeste prévu avec `minimum 14 / verified 14 / maximum 14` ;
+- un Actor `character` et un Item `equipment` ;
+- TypeDataModels, settings et données dérivées définis ;
+- moteur D100 pur et orchestration Foundry séparés ;
+- contrat des cartes publiques et MJ défini ;
+- confidentialité du Destin définie ;
+- architecture des armes, dégâts, initiative et permissions définie ;
+- migrations internes et stratégie de tests définies ;
+- réserves de faisabilité isolées ;
+- aucun import Roll20 ;
+- aucune publication autorisée.
 
-### Réserves techniques à évaluer
+### Arbitrages consolidés
 
-- assistance aux gains d’expérience ;
-- interface de répartition des quinze points de talents ;
-- messages de chat liés aux armes et aux dégâts ;
-- conservation d’un ordre stable lors des égalités d’initiative ;
-- configuration mondiale de la valeur dérivée personnalisée ;
-- présentation compacte du détail Blessures / Stress ;
-- migration éventuelle depuis les anciennes données Roll20.
+- Compétences bornées de `0` à `100` ;
+- seuil D100 non clampé à `100` ;
+- intervention du Destin signalée par un halo discret ;
+- brut, correction et final accessibles au survol ;
+- test secret réservé au MJ.
 
-### Livrable attendu
+### Livrables
 
-Une spécification technique et une architecture validées, suffisamment précises pour commencer la première tranche jouable.
+```text
+.project/specification/PHASE_02_ARCHITECTURE_FOUNDRY_INTERFACE.md
+.project/decisions/PHASE_02_ARCHITECTURE_FOUNDRY.md
+```
 
 ---
 
 ## Phase 03 — Première tranche jouable
 
-**Statut :** PLANIFIÉE
+**Statut :** PROCHAINE
 
 **GPT principal :** GPT Foundry
 
 ### Objectif
 
-Créer un système minimal installable et une fiche personnage fonctionnelle.
+Créer la première base installable et testable du système, puis progresser vers une fiche personnage fonctionnelle.
 
-### Résultat attendu
+### Première étape
+
+```text
+Tranche 1 — Squelette installable
+```
+
+- manifeste `system.json` ;
+- point d’entrée ES module ;
+- langue française ;
+- settings ;
+- TypeDataModels minimaux ;
+- Actor et Item minimaux ;
+- feuilles minimales ;
+- test d’installation sur Foundry VTT 14.365.
+
+### Résultat attendu de la phase
 
 - système installable ;
 - création d’un Actor personnage ;

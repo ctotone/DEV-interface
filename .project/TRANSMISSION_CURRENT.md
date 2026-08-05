@@ -2,216 +2,188 @@
 
 **Dernière mise à jour :** 5 août 2026  
 **Coordinateur :** GPT Pilote  
-**Identifiant technique Foundry :** `interface`  
+**Spécialiste principal suivant :** GPT Foundry  
+**Identifiant technique :** `interface`  
 **Dépôt :** `ctotone/DEV-interface`  
-**Nom court du dépôt :** `DEV-interface`  
-**Branche active :** `main`  
-**Commit de référence avant cette mise à jour :** `d4926487700295843281e1adffd077bf8d56113d`  
-**Base matérielle de cette mise à jour :** archive complète `interface(3).zip` fournie par l’utilisateur  
+**Branche :** `main`  
+**Base avant cette mise à jour :** `90858fdf37839150cca6e6364bedac3aa5e16512`  
 **Développement Foundry :** non commencé
 
 ## Finalité
 
-Créer un système Foundry VTT pour le Système D100 Interface, un moteur D100 générique, léger et orienté narration.
+Créer un système Foundry VTT générique, léger et orienté narration pour le Système D100 Interface.
 
-## Statut général
+## Statut
 
 ```text
-Phase 00A — Résolution des jets : VALIDÉE
-Phase 00B — Cadrage produit et dépôt : VALIDÉE
-Phase 01 — Personnage, équipement et conflits : VALIDÉE
-Phase actuelle suivante : 02 — Architecture Foundry
-Architecture Foundry : NON COMMENCÉE
-Développement Foundry : NON COMMENCÉ
+Phases 00A, 00B, 01 et 02 : VALIDÉES
+Phase suivante : 03 — Première tranche jouable
+Étape suivante : Tranche 1 — Squelette installable
+Architecture Foundry : VALIDÉE
+Code Foundry : NON COMMENCÉ
+Tests Foundry : NON RÉALISÉS
 ```
 
-## Base de référence
+## Base de reprise
 
-### Base Git connue avant intégration de cette archive
+La base Git connue avant l’intégration de cette archive est :
 
 ```text
-Dépôt : DEV-interface
+Dépôt   : ctotone/DEV-interface
 Branche : main
-Commit : d4926487700295843281e1adffd077bf8d56113d
+Commit  : 90858fdf37839150cca6e6364bedac3aa5e16512
+Message : Phase 1 terminée
 ```
 
-Après intégration de cette archive, l’utilisateur communiquera le nouveau hash de commit. Ce hash deviendra la nouvelle base d’autorité Git.
+Le prochain commit, créé par l’utilisateur après intégration, deviendra la nouvelle base matérielle. Un décalage temporaire entre ce hash et les documents du ZIP est normal.
 
-### Sources fonctionnelles
+## Ordre de lecture
+
+1. présent fichier ;
+2. `.project/PROJECT_STATE.md` ;
+3. `.project/ROADMAP.md` ;
+4. `.project/decisions/PHASE_02_ARCHITECTURE_FOUNDRY.md` ;
+5. `.project/specification/PHASE_02_ARCHITECTURE_FOUNDRY_INTERFACE.md` ;
+6. spécifications 00A et 01 selon le sujet.
+
+## Autorités actives
 
 ```text
 .project/specification/PHASE_00A_TRANSMISSION_FOUNDRY_RESOLUTION_JETS_INTERFACE.md
 .project/specification/PHASE_01_SPECIFICATION_FONCTIONNELLE_PERSONNAGE_EQUIPEMENT_CONFLITS_INTERFACE.md
+.project/specification/PHASE_02_ARCHITECTURE_FOUNDRY_INTERFACE.md
 ```
 
-La phase 00A reste l’autorité détaillée pour le moteur de résolution.  
-La phase 01 complète cette base pour les autres données et comportements de la première version.
+- phase 00A : algorithme détaillé des jets, Destin et marges ;
+- phase 01 : personnage, états, valeurs dérivées, équipement, conflits et progression ;
+- phase 02 : architecture Foundry et clarifications techniques validées.
 
-### Sources historiques
+## Décisions impératives de phase 02
+
+### Compatibilité
 
 ```text
-.project/references/
+Foundry supporté : génération V14
+Build initiale   : 14.365
+Manifest         : minimum 14 / verified 14 / maximum 14
+V13 / V15        : non déclarées
 ```
 
-Les sources historiques ne doivent pas être utilisées pour restaurer silencieusement une ancienne règle.
+### Données
 
-## Éléments validés
+- Actor unique : `character` ;
+- Item unique : `equipment` ;
+- catégories : `ordinary | weapon` ;
+- Compétences : entiers de `0` à `100` ;
+- Talents : entiers de `0` à `30` ;
+- seuil D100 non clampé à `100` ;
+- données dérivées non persistées.
 
-- identifiant technique du système : `interface` ;
-- principes de légèreté et de soutien à la narration ;
-- arbre complet de résolution des jets ;
-- marges de réussite et d’échec distinctes, positives ou nulles ;
-- fiche et création de personnage ;
-- six compétences et dix-huit talents ;
-- valeurs dérivées et initiative ;
-- Blessures et Stress de `0 à 15` par paliers de trois ;
-- Destin et paramètres numériques MJ ;
-- équipements et armes ;
-- parcours des dégâts dans le chat ;
-- spécialisations ;
-- progression en neuf gains ;
-- première version jouable cadrée ;
-- conflit sans moteur tactique complet ;
-- roadmap des phases 00A à 08 ;
-- organisation documentaire légère autour de `.project/` ;
-- mode d’échange par archive ZIP complète.
+### Destin et chat
 
-## Décisions impératives
+- résultat définitif public ;
+- halo ou teinte discrète en cas d’intervention ;
+- survol du résultat donnant brut, correction du Destin et final ;
+- test secret et détails internes réservés au MJ ;
+- aucune donnée secrète dans un message public ;
+- flags des cartes sous `flags.interface.card`, schéma `1`.
 
-### Ne pas modifier sans confirmation
+### Architecture
 
-- les règles validées ;
-- l’identifiant technique `interface` ;
-- le périmètre de la première version jouable ;
-- l’absence de moteur de combat tactique complet ;
-- les plafonds et formules fonctionnelles validés ;
-- la séparation entre interprétation narrative et qualification mécanique.
+- TypeDataModels V14 ;
+- moteur D100 pur ;
+- services d’orchestration ;
+- settings mondiaux sous `interface` ;
+- Items embarqués ;
+- snapshot d’armes sur une réussite ;
+- dégâts jamais appliqués automatiquement ;
+- initiative native ;
+- Dice So Nice facultatif ;
+- migrations internes uniquement ;
+- aucun import Roll20 ;
+- aucun socket ou API publique stable en V1 sans besoin démontré.
 
-### Ne pas supposer
+## Ne pas modifier sans arbitrage
 
-- une conséquence narrative automatique ;
-- une application automatique des dégâts ;
-- une relation automatique entre spécialisation et avantage ;
-- une formule d’arme officielle non fournie ;
-- une règle de récupération absente des spécifications ;
-- un catalogue ou compendium d’armes définitif ;
-- une mécanique modulaire non demandée.
+- les règles validées des phases 00A et 01 ;
+- les bornes `0–100` des Compétences et `0–30` des Talents ;
+- l’identifiant `interface` ;
+- la génération V14 comme compatibilité déclarée ;
+- la confidentialité du test de Destin ;
+- l’absence d’automatisation tactique et narrative ;
+- l’absence d’import Roll20.
 
-### Ne pas ajouter prématurément
+## Réserves à tester
 
-- ciblage ;
-- armure ;
-- résistance ;
-- défense automatisée ;
-- portée tactique ;
-- structure technique Foundry avant validation de la phase 02 ;
-- dossiers techniques sans usage réel.
+- concurrence d’écritures du Destin ;
+- propriétaires multiples ;
+- égalités d’initiative ;
+- formules de dégâts avancées ;
+- réduction du plafond de Destin ;
+- migrations avec deux MJ ;
+- compatibilité des anciennes cartes ;
+- intégration Dice So Nice ;
+- coût de l’assistant de répartition des Talents.
 
-## Convention d’échange par archive ZIP
+Une réserve n’est pas un blocage actuel. Elle devient un sujet d’architecture seulement si un test réel démontre un problème.
 
-- l’archive contient le projet complet ;
-- `.git/` est toujours exclu ;
-- `.gitignore` est toujours exclu ;
-- le GPT retourne une archive complète mise à jour ;
-- l’utilisateur intègre, teste, commit et pousse ;
-- l’utilisateur communique ensuite le nouveau hash ;
-- sauf indication explicite, l’utilisateur ne modifie pas l’archive retournée avant son prochain renvoi.
+## Responsabilités
 
-## Répartition des responsabilités
-
-- **Utilisateur :** autorité finale, validation, tests réels, intégration Git, commits, push et publication.
+- **Utilisateur :** validation, tests réels, intégration Git, commits, push, version et publication.
 - **GPT Pilote :** coordination, consolidation, état, roadmap et transmissions.
-- **GPT JdR :** phase 01 produite.
-- **GPT Foundry :** principal de la phase 02 et des phases techniques.
-- **GPT Visuel :** contribution future à la phase 06.
+- **GPT Foundry :** architecture et développement Foundry.
+- **GPT JdR :** règles fonctionnelles déjà produites.
+- **GPT Visuel :** contribution future à l’ergonomie et à l’identité.
 
-## Dernières modifications produites dans cette archive
+## Conventions opérationnelles des archives
 
-### Fichiers modifiés
+- un écart de hash peut être normal dans le cycle ZIP → intégration → commit → push ;
+- `.git/` et `.gitignore` peuvent être présents dans une archive entrante et sont ignorés silencieusement ;
+- un suffixe automatique comme `interface(4).zip` n’est pas un numéro de version ;
+- seule une divergence réelle de contenu, de branche ou de projet doit être signalée ;
+- les archives restituées excluent `.git/` et `.gitignore` ;
+- sauf indication explicite, l’utilisateur ne modifie pas l’archive restituée avant intégration.
 
-- `README.md`
-- `.project/PROJECT_STATE.md`
-- `.project/ROADMAP.md`
-- `.project/TRANSMISSION_CURRENT.md`
-- `.project/decisions/PHASE_00B_CADRAGE_PRODUIT_ET_DEPOT.md`
-- `.project/specification/PHASE_01_SPECIFICATION_FONCTIONNELLE_PERSONNAGE_EQUIPEMENT_CONFLITS_INTERFACE.md`
-
-### Fichier ajouté
-
-- `.project/decisions/PHASE_01_PERSONNAGE_EQUIPEMENT_CONFLITS.md`
-
-### Fichiers conservés sans modification
-
-- `.project/specification/PHASE_00A_TRANSMISSION_FOUNDRY_RESOLUTION_JETS_INTERFACE.md`
-- les fichiers présents dans `.project/references/`
-
-### Fichiers exclus de l’archive livrée
-
-- `.git/`
-- `.gitignore`
-
-## Travail en cours
+## Travail suivant
 
 ### Objectif exact
 
-Préparer l’ouverture de la phase 02 consacrée à l’architecture Foundry.
+Produire la Tranche 1 — Squelette installable de la phase 03.
 
-### Déjà fait
+### Inclus
 
-- noyau de résolution validé ;
-- première version jouable cadrée ;
-- règles fonctionnelles de personnage, équipement et conflits validées ;
-- marges clarifiées ;
-- chronologie documentaire normalisée ;
-- phase 01 clôturée fonctionnellement.
+- `system.json` ;
+- `scripts/interface.mjs` ;
+- `lang/fr.json` ;
+- enregistrement des settings ;
+- TypeDataModels minimaux ;
+- Actor et Item minimaux ;
+- feuilles minimales ;
+- organisation technique réellement nécessaire ;
+- protocole de test d’installation V14.365.
 
-### Reste à faire avant le développement
+### Hors périmètre de cette première tranche
 
-- choisir la version cible de Foundry ;
-- définir Actor, Item et modèles de données ;
-- définir les settings de monde ;
-- définir le contrat du moteur de jets ;
-- définir les cartes de chat ;
-- définir les permissions ;
-- définir la stratégie de migration ;
-- préparer le plan de tests techniques.
+- moteur D100 complet ;
+- Destin complet ;
+- cartes finales ;
+- dégâts complets ;
+- Dice So Nice ;
+- publication ;
+- design final.
 
-## Problèmes connus et limites
+## État des preuves
 
-- la version cible de Foundry n’est pas encore choisie ;
-- aucune architecture technique n’est validée ;
-- aucun code Foundry n’existe ;
-- aucun test Foundry n’a été réalisé ;
-- les formules et catalogues d’armes restent différés ;
-- plusieurs aides d’interface sont des réserves techniques à évaluer, pas des obligations déjà implémentées.
-
-## Contrôles réalisés sur cette archive
-
-- exclusion de `.git/` ;
-- exclusion de `.gitignore` ;
-- conservation de la racine `interface/` ;
-- conservation des références historiques ;
-- conservation sans modification de la spécification 00A ;
-- correction de la section des marges dans la spécification 01 ;
-- remplacement du hash erroné de la spécification 01 ;
-- mise à jour des chemins normalisés ;
-- cohérence des statuts entre les fichiers de pilotage ;
-- validation de l’archive ZIP produite.
-
-Aucun test Foundry n’a été réalisé : le développement n’a pas commencé.
-
-## Livrables actifs
-
-- `README.md`
-- `.project/PROJECT_STATE.md`
-- `.project/ROADMAP.md`
-- `.project/TRANSMISSION_CURRENT.md`
-- `.project/decisions/PHASE_00B_CADRAGE_PRODUIT_ET_DEPOT.md`
-- `.project/decisions/PHASE_01_PERSONNAGE_EQUIPEMENT_CONFLITS.md`
-- `.project/specification/PHASE_00A_TRANSMISSION_FOUNDRY_RESOLUTION_JETS_INTERFACE.md`
-- `.project/specification/PHASE_01_SPECIFICATION_FONCTIONNELLE_PERSONNAGE_EQUIPEMENT_CONFLITS_INTERFACE.md`
-- `.project/references/`
+```text
+Architecture : VALIDÉE
+Code : NON PRODUIT
+Analyse statique : NON APPLICABLE
+Tests unitaires : NON RÉALISÉS
+Test Foundry : NON RÉALISÉ
+Test utilisateur : NON RÉALISÉ
+Publication : NON
+```
 
 ## Prochaine action exacte
 
-Ouvrir la phase 02 avec GPT Foundry à partir de cette transmission et des deux spécifications fonctionnelles, puis produire une proposition d’architecture avant tout développement.
+Ouvrir la phase 03 avec GPT Foundry à partir de cette archive et produire uniquement la Tranche 1 — Squelette installable, accompagnée d’un protocole de test sur Foundry VTT 14.365.

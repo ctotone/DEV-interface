@@ -1,165 +1,19 @@
 # État du projet — Système D100 Interface
 
 **Dernière mise à jour :** 5 août 2026  
-**Statut global :** conception fonctionnelle validée, phase d’architecture Foundry prête à ouvrir  
+**Statut global :** architecture Foundry validée, première tranche de développement prête à ouvrir  
 **Coordinateur :** GPT Pilote  
-**Spécialiste technique principal suivant :** GPT Foundry  
-**Nom court du dépôt :** `DEV-interface`  
-**Dépôt de développement :** `ctotone/DEV-interface`  
-**Branche de référence :** `main`  
-**Commit de référence avant cette mise à jour :** `d4926487700295843281e1adffd077bf8d56113d`  
-**Identifiant technique Foundry :** `interface`
+**Spécialiste principal suivant :** GPT Foundry  
+**Dépôt :** `ctotone/DEV-interface`  
+**Branche :** `main`  
+**Base avant cette mise à jour :** `90858fdf37839150cca6e6364bedac3aa5e16512`  
+**Identifiant technique :** `interface`
 
 ## Finalité
 
-Créer un système de jeu complet pour Foundry VTT à partir du Système D100 Interface, un moteur D100 générique, léger et orienté narration.
+Créer un système Foundry VTT générique, léger et orienté narration pour le Système D100 Interface.
 
-Le système doit soutenir la table sans imposer une interprétation automatique des réussites, échecs, critiques, marges ou conséquences narratives.
-
-## Première version jouable validée
-
-La première version utile doit permettre de :
-
-- créer un personnage ;
-- consulter et modifier ses données ;
-- effectuer tous les jets principaux ;
-- appliquer Blessures, Stress et Destin ;
-- gérer l’équipement essentiel ;
-- utiliser des armes comme Items ;
-- effectuer un jet d’initiative simple ;
-- jouer une scène de conflit avec les jets ordinaires du système.
-
-## Modèle de conflit validé
-
-Le système ne gère pas de combat tactique complet.
-
-```text
-Pas de cible à sélectionner
-Pas de résistance ou défense automatisée
-Pas d’armure calculée
-Pas de comparaison attaquant/défenseur
-Pas de gestion tactique automatisée de portée ou de position
-Pas d’application automatique des dégâts
-```
-
-La résolution repose sur :
-
-```text
-Jet d’initiative simple
-→ jet classique sur une valeur dérivée
-→ interprétation par la table
-→ choix éventuel d’une arme
-→ jet de dégâts dans le chat
-→ ajustement manuel des états concernés
-```
-
-## Noyau fonctionnel validé
-
-### Personnage
-
-- six compétences ;
-- dix-huit talents fixes ;
-- talents strictement plafonnés à `30` ;
-- création recommandée à `20 / 30 / 30 / 40 / 40 / 50` ;
-- cent points de talents recommandés ;
-- validations de création souples et confirmables.
-
-### Jets
-
-- tout jet standard associe une compétence et un talent ;
-- résultats automatiques, critiques et super-critiques définis ;
-- avantage et désavantage résolus par qualité mécanique ;
-- Destin individuel et paramètres MJ définis ;
-- marges de réussite et d’échec distinctes, toujours positives ou nulles.
-
-### Valeurs dérivées et initiative
-
-- Corps à corps ;
-- Distance ;
-- Verbal ;
-- une valeur dérivée personnalisée mondiale optionnelle ;
-- valeurs dérivées plafonnées à `99` ;
-- initiative : `1D10 + arrondi(Distance / 10)` ;
-- Blessures et Stress sans effet sur l’initiative.
-
-### Blessures et Stress
-
-- valeurs brutes de `0 à 15` ;
-- conversion en niveaux `0 à 5` par paliers de trois ;
-- coefficient commun configurable, valeur par défaut `3` ;
-- malus soustrait à tous les jets D100 ;
-- aucune conséquence narrative automatique au maximum.
-
-### Équipement, armes et dégâts
-
-- un type fonctionnel générique `Équipement` ;
-- catégories minimales : objet ordinaire et arme ;
-- arme avec nom, description et formule de dégâts facultative ;
-- sélection d’arme proposée dans le chat après une réussite de conflit ;
-- option de dégâts maximum sur réussite critique ou super critique ;
-- aucune application automatique à une cible.
-
-### Spécialisations et progression
-
-- spécialisations en texte libre ;
-- aucun avantage ou bonus automatique ;
-- parcours de progression limité à neuf gains :
-  - trois gains de Compétence à `+5` ;
-  - trois gains de Talents à `+15` points ;
-  - trois nouvelles Spécialisations ;
-- assistance d’application des gains à évaluer techniquement en phase 02.
-
-## Paramètres MJ
-
-Le projet ne prévoit pas un ensemble de règles modulaires activables.
-
-Le MJ doit pouvoir configurer les valeurs numériques explicitement prévues, notamment :
-
-- coefficient de Blessure et de Stress ;
-- gain de Destin après échec ;
-- plafond de Destin ;
-- probabilité de déclenchement ;
-- réserve minimale pour amortir un échec critique ;
-- activation et configuration de la valeur dérivée personnalisée.
-
-## Sources d’autorité fonctionnelles
-
-### Phase 00A — Noyau de résolution
-
-```text
-.project/specification/PHASE_00A_TRANSMISSION_FOUNDRY_RESOLUTION_JETS_INTERFACE.md
-```
-
-Autorité détaillée pour :
-
-- le calcul du seuil ;
-- la qualification des dés ;
-- les modes normal, avantage et désavantage ;
-- la sélection du résultat brut ;
-- le Destin ;
-- le résultat définitif ;
-- les marges ;
-- les cas de test fonctionnels.
-
-### Phase 01 — Personnage, équipement et conflits
-
-```text
-.project/specification/PHASE_01_SPECIFICATION_FONCTIONNELLE_PERSONNAGE_EQUIPEMENT_CONFLITS_INTERFACE.md
-```
-
-Autorité fonctionnelle pour :
-
-- la fiche et la création ;
-- les valeurs dérivées ;
-- l’initiative ;
-- Blessures et Stress ;
-- l’équipement et les armes ;
-- les dégâts ;
-- les spécialisations ;
-- l’expérience et la progression ;
-- les comportements essentiels du chat.
-
-En cas de différence non explicitement présentée comme une évolution validée, la spécification détaillée de phase 00A reste prioritaire pour le noyau de résolution.
+Le système qualifie les résultats mécaniques et facilite leur usage, sans imposer les conséquences narratives.
 
 ## État des phases
 
@@ -167,45 +21,150 @@ En cas de différence non explicitement présentée comme une évolution validé
 Phase 00A — Résolution des jets : VALIDÉE
 Phase 00B — Cadrage produit et dépôt : VALIDÉE
 Phase 01 — Personnage, équipement et conflits : VALIDÉE
-Phase 02 — Architecture Foundry : PROCHAINE
-Phases 03 à 08 : PLANIFIÉES
+Phase 02 — Architecture Foundry : VALIDÉE
+Phase 03 — Première tranche jouable : PROCHAINE
+Phases 04 à 08 : PLANIFIÉES
 ```
 
-La roadmap validée se trouve dans `.project/ROADMAP.md`.
+## Périmètre de la première version
 
-## État technique
+- fiche de personnage ;
+- six Compétences et dix-huit Talents ;
+- jets normaux, avantage et désavantage ;
+- Destin ;
+- Blessures et Stress ;
+- valeurs dérivées ;
+- initiative ;
+- progression en neuf gains ;
+- équipement et armes ;
+- cartes de chat et dégâts ;
+- settings mondiaux ;
+- permissions propriétaire et MJ ;
+- migrations internes de schéma.
+
+## Invariants fonctionnels principaux
+
+### Personnage
+
+- Compétences fixes, entières de `0` à `100` ;
+- Talents fixes, entiers de `0` à `30` ;
+- création recommandée : `20 / 30 / 30 / 40 / 40 / 50` et cent points de Talents ;
+- validations de création souples et confirmables ;
+- spécialisations en texte libre.
+
+### Résolution
 
 ```text
-Architecture Foundry : non définie
-Code du système : non commencé
-Manifeste system.json : non créé
-Version cible de Foundry : non décidée
-Version du système : non décidée
-Publication : hors périmètre actuel
+Seuil de base  = Compétence + Talent
+Seuil final    = Seuil de base − Malus d’état
 ```
 
-## Responsabilités actuelles
+- seuil non clampé à `100` ;
+- automatiques et critiques définis par la phase 00A ;
+- avantage et désavantage résolus par qualité mécanique ;
+- marges de réussite et d’échec distinctes, positives ou nulles ;
+- aucune conséquence narrative automatique.
 
-- **Utilisateur :** autorité finale, arbitrages, validation, tests réels, intégration Git et publication.
-- **GPT Pilote :** cadrage, coordination, consolidation et transmission.
-- **GPT JdR :** phase 01 produite et consolidée.
-- **GPT Foundry :** principal de la phase 02 et des phases techniques suivantes.
-- **GPT Visuel :** contribution future à l’ergonomie et à l’identité visuelle.
+### États et Destin
 
-## Convention de travail par archive ZIP
+- Blessures et Stress de `0` à `15` ;
+- niveaux `0` à `5` par paliers de trois ;
+- coefficient commun configurable, défaut `3` ;
+- Destin individuel, paramètres mondiaux validés ;
+- résultat final public ;
+- intervention du Destin signalée par un halo discret ;
+- brut, correction et final accessibles au survol ;
+- test secret et détails internes réservés au MJ.
 
-- l’archive échangée contient le projet complet ;
-- `.git/` et `.gitignore` sont toujours ignorés et exclus ;
-- le GPT retourne une archive complète mise à jour ;
-- l’utilisateur réalise les commits et communique le nouveau hash validé ;
-- sauf indication explicite contraire, l’utilisateur ne modifie pas le contenu de l’archive entre sa réception et son prochain renvoi ;
-- le dernier hash communiqué après intégration devient la nouvelle base d’autorité Git.
+### Conflits
 
-## Invariants actuels
+- Corps à corps, Distance et Verbal plafonnés à `99` ;
+- une valeur dérivée personnalisée mondiale optionnelle ;
+- initiative : `1d10 + round(Distance / 10)` ;
+- armes comme équipements de catégorie `weapon` ;
+- dégâts dans le chat ;
+- aucune cible ni application automatique.
 
-- `.project/` contient la mémoire interne du projet et ne doit pas faire partie d’une future archive de distribution.
-- Les fichiers de pilotage restent directement à la racine de `.project/`.
-- L’arborescence reste courte et n’anticipe pas des dossiers sans usage réel.
-- Les règles validées ne sont pas modifiées sans arbitrage explicite de l’utilisateur.
-- Les sources historiques ne restaurent jamais silencieusement une ancienne règle.
-- Le futur système Foundry conserve l’identifiant technique `interface`.
+## Architecture Foundry validée
+
+```text
+Génération supportée : V14
+Build initiale       : 14.365
+Compatibilité        : minimum 14 / verified 14 / maximum 14
+Package              : system
+Version initiale     : 0.1.0
+Version de schéma    : 1
+Actor.type           : character
+Item.type            : equipment
+```
+
+### Principes
+
+- `TypeDataModel` pour les sous-types Actor et Item ;
+- un seul point d’entrée ES module ;
+- moteur D100 pur, indépendant des Documents et du DOM ;
+- services pour les effets de bord ;
+- données dérivées non persistées ;
+- Items embarqués comme source de vérité de l’inventaire ;
+- cartes de chat natives avec `flags.interface.card` ;
+- projection publique sans données secrètes ;
+- Dice So Nice facultatif et isolé ;
+- migrations internes, sans import Roll20 ;
+- aucun socket ou API publique stable en V1 sans besoin démontré.
+
+## Hors périmètre actuel
+
+- publication et release ;
+- compatibilité V13 ou V15 ;
+- import Roll20 ;
+- moteur tactique ;
+- ciblage, défense, armure ou application automatique ;
+- compendiums finaux ;
+- design graphique définitif ;
+- localisation autre que la structure française initiale.
+
+## Sources d’autorité
+
+```text
+.project/specification/PHASE_00A_TRANSMISSION_FOUNDRY_RESOLUTION_JETS_INTERFACE.md
+.project/specification/PHASE_01_SPECIFICATION_FONCTIONNELLE_PERSONNAGE_EQUIPEMENT_CONFLITS_INTERFACE.md
+.project/specification/PHASE_02_ARCHITECTURE_FOUNDRY_INTERFACE.md
+```
+
+La phase 00A fait autorité pour l’algorithme des jets.  
+La phase 01 fait autorité pour le fonctionnel.  
+La phase 02 fait autorité pour la traduction technique Foundry et les clarifications validées pendant son arbitrage.
+
+## État technique réel
+
+```text
+Architecture : VALIDÉE
+Code système : NON COMMENCÉ
+system.json : NON CRÉÉ
+Tests unitaires : NON RÉALISÉS
+Tests Foundry : NON RÉALISÉS
+Publication : NON
+```
+
+## Risques à tester
+
+- concurrence des écritures de Destin ;
+- permissions et propriétaires multiples ;
+- égalités d’initiative ;
+- formules de dégâts avancées ;
+- réduction du plafond de Destin ;
+- anciennes cartes après changement de schéma ;
+- migrations avec deux MJ ;
+- intégration Dice So Nice.
+
+## Convention de travail
+
+Les différences de hash dues au cycle d’échange, les suffixes automatiques de ZIP et la présence de `.git/` ou `.gitignore` dans une archive entrante ne sont pas des anomalies. Ils sont ignorés sauf divergence réelle de contenu, de branche ou de projet.
+
+## Prochaine étape
+
+```text
+Phase 03 — Première tranche jouable
+Première tranche technique — Squelette installable
+GPT principal — GPT Foundry
+```

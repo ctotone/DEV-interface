@@ -2,10 +2,13 @@
 
 Dépôt de développement du **Système D100 Interface** pour Foundry VTT.
 
-- **Identifiant technique du système :** `interface`
-- **Dépôt de référence :** `ctotone/DEV-interface`
-- **Branche de référence :** `main`
-- **Commit de référence avant cette mise à jour :** `d4926487700295843281e1adffd077bf8d56113d`
+```text
+Identifiant technique : interface
+Dépôt                : ctotone/DEV-interface
+Branche              : main
+Base avant cette mise à jour :
+90858fdf37839150cca6e6364bedac3aa5e16512
+```
 
 ## Statut
 
@@ -13,23 +16,64 @@ Dépôt de développement du **Système D100 Interface** pour Foundry VTT.
 Phase 00A — Résolution des jets : VALIDÉE
 Phase 00B — Cadrage produit et dépôt : VALIDÉE
 Phase 01 — Personnage, équipement et conflits : VALIDÉE
-Phase suivante : 02 — Architecture Foundry
+Phase 02 — Architecture Foundry : VALIDÉE
+Phase suivante : 03 — Première tranche jouable
 Développement Foundry : NON COMMENCÉ
 ```
 
-## Finalité de la première version jouable
+## Première version jouable
 
 La première version doit permettre de :
 
-- créer un personnage et gérer ses données ;
-- effectuer les jets principaux ;
+- créer et gérer un personnage ;
+- effectuer les jets D100 principaux ;
 - appliquer Blessures, Stress et Destin ;
-- gérer l’équipement essentiel ;
-- utiliser des armes comme Items ;
-- lancer une initiative simple ;
-- jouer une scène de conflit résolue avec les jets ordinaires du système.
+- utiliser les valeurs dérivées et une initiative simple ;
+- gérer l’équipement et les armes ;
+- produire les cartes de résultat et les jets de dégâts ;
+- jouer une scène de conflit sans moteur tactique complet.
 
-Le projet ne prévoit pas de moteur de combat tactique complet : pas de ciblage, de résistance automatisée, d’armure calculée ni d’application automatique des dégâts.
+Le système n’automatise ni le ciblage, ni la défense, ni l’armure, ni l’application des dégâts, ni les conséquences narratives.
+
+## Architecture validée
+
+```text
+Foundry supporté     : génération V14
+Build initiale test  : 14.365
+Manifest             : minimum 14 / verified 14 / maximum 14
+Actor                : character
+Item                 : equipment
+Catégories Item      : ordinary | weapon
+Version package      : 0.1.0
+Version schéma       : 1
+```
+
+Principes :
+
+- TypeDataModels V14 ;
+- moteur D100 pur et testable ;
+- données persistées séparées des données dérivées ;
+- settings et flags sous le namespace `interface` ;
+- projections publique et MJ séparées ;
+- Dice So Nice facultatif ;
+- migrations internes uniquement ;
+- aucun socket, compendium ou framework ajouté sans besoin démontré.
+
+## Autorités documentaires
+
+```text
+.project/specification/
+├── PHASE_00A_TRANSMISSION_FOUNDRY_RESOLUTION_JETS_INTERFACE.md
+├── PHASE_01_SPECIFICATION_FONCTIONNELLE_PERSONNAGE_EQUIPEMENT_CONFLITS_INTERFACE.md
+└── PHASE_02_ARCHITECTURE_FOUNDRY_INTERFACE.md
+```
+
+```text
+.project/decisions/
+├── PHASE_00B_CADRAGE_PRODUIT_ET_DEPOT.md
+├── PHASE_01_PERSONNAGE_EQUIPEMENT_CONFLITS.md
+└── PHASE_02_ARCHITECTURE_FOUNDRY.md
+```
 
 ## Organisation
 
@@ -43,38 +87,22 @@ Le projet ne prévoit pas de moteur de combat tactique complet : pas de ciblage,
 └── references/
 ```
 
-- `.project/` contient la mémoire interne, les décisions, les transmissions, les spécifications et les sources historiques.
-- Les fichiers de pilotage restent directement à la racine de `.project/`.
-- Aucun sous-dossier supplémentaire n’est créé sans besoin réel.
-- `.project/` devra être exclu des futures archives de distribution du système.
+`.project/` contient la mémoire interne du projet et devra être exclu des futures archives de distribution.
 
-## Spécifications fonctionnelles actives
+## Conventions d’échange
 
-```text
-.project/specification/
-├── PHASE_00A_TRANSMISSION_FOUNDRY_RESOLUTION_JETS_INTERFACE.md
-└── PHASE_01_SPECIFICATION_FONCTIONNELLE_PERSONNAGE_EQUIPEMENT_CONFLITS_INTERFACE.md
-```
+- une différence de hash entre un document, une archive et le dépôt peut être normale dans le cycle ZIP → intégration → commit → push ;
+- un suffixe automatique comme `interface(3).zip` ne représente pas une version fonctionnelle ;
+- les archives entrantes peuvent contenir `.git/` et `.gitignore`, qui sont ignorés silencieusement ;
+- les archives de travail restituées excluent `.git/` et `.gitignore` ;
+- sauf indication explicite, l’utilisateur ne modifie pas le contenu d’une archive restituée avant son intégration.
 
-La phase 00A reste l’autorité détaillée pour l’algorithme des jets, le Destin et les marges.  
-La phase 01 complète cette base pour le personnage, les valeurs dérivées, l’initiative, les états, l’équipement, les armes, les dégâts et la progression.
+## Reprise
 
-## Convention d’échange par archive ZIP
-
-Les échanges de travail portent sur une archive complète du projet.
-
-- le dossier `.git/` est toujours ignoré et exclu ;
-- le fichier `.gitignore` est toujours ignoré et exclu ;
-- GPT Pilote ou le GPT spécialisé retourne une archive complète mise à jour ;
-- l’utilisateur réalise l’intégration Git, les commits et les pushes ;
-- sauf indication explicite de l’utilisateur, le contenu d’une archive retournée est considéré comme inchangé avant son prochain renvoi.
-
-## Reprise du projet
-
-Ordre de lecture recommandé :
+Ordre de lecture :
 
 1. `.project/TRANSMISSION_CURRENT.md`
 2. `.project/PROJECT_STATE.md`
 3. `.project/ROADMAP.md`
-4. les décisions utiles dans `.project/decisions/`
-5. les spécifications concernées dans `.project/specification/`
+4. la décision de la phase active ;
+5. les spécifications concernées.
