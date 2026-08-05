@@ -1,13 +1,13 @@
 # État du projet — Système D100 Interface
 
-**Dernière mise à jour :** 4 août 2026  
-**Statut global :** cadrage produit validé, consolidation fonctionnelle restante avant architecture Foundry  
+**Dernière mise à jour :** 5 août 2026  
+**Statut global :** conception fonctionnelle validée, phase d’architecture Foundry prête à ouvrir  
 **Coordinateur :** GPT Pilote  
-**Spécialiste technique principal prévu :** GPT Foundry  
+**Spécialiste technique principal suivant :** GPT Foundry  
 **Nom court du dépôt :** `DEV-interface`  
 **Dépôt de développement :** `ctotone/DEV-interface`  
 **Branche de référence :** `main`  
-**Commit de référence avant cette mise à jour :** `546be8b109f2355821a02e30090b6ca89e220fc9`  
+**Commit de référence avant cette mise à jour :** `d4926487700295843281e1adffd077bf8d56113d`  
 **Identifiant technique Foundry :** `interface`
 
 ## Finalité
@@ -38,85 +38,137 @@ Pas de cible à sélectionner
 Pas de résistance ou défense automatisée
 Pas d’armure calculée
 Pas de comparaison attaquant/défenseur
-Pas de gestion tactique de portée ou de position
+Pas de gestion tactique automatisée de portée ou de position
+Pas d’application automatique des dégâts
 ```
 
-La résolution prévue repose sur :
+La résolution repose sur :
 
 ```text
 Jet d’initiative simple
-→ jet classique sur une statistique dérivée de conflit
+→ jet classique sur une valeur dérivée
 → interprétation par la table
-→ dégâts définis par l’arme en cas d’attaque réussie
+→ choix éventuel d’une arme
+→ jet de dégâts dans le chat
+→ ajustement manuel des états concernés
 ```
 
-Trois statistiques dérivées des compétences et talents doivent encore être décrites pendant la phase 01.
+## Noyau fonctionnel validé
 
-Une interaction de type « jet de conflit réussi → bouton de dégâts de l’arme dans la carte de chat » est une piste ergonomique à étudier, pas encore une règle technique validée.
+### Personnage
+
+- six compétences ;
+- dix-huit talents fixes ;
+- talents strictement plafonnés à `30` ;
+- création recommandée à `20 / 30 / 30 / 40 / 40 / 50` ;
+- cent points de talents recommandés ;
+- validations de création souples et confirmables.
+
+### Jets
+
+- tout jet standard associe une compétence et un talent ;
+- résultats automatiques, critiques et super-critiques définis ;
+- avantage et désavantage résolus par qualité mécanique ;
+- Destin individuel et paramètres MJ définis ;
+- marges de réussite et d’échec distinctes, toujours positives ou nulles.
+
+### Valeurs dérivées et initiative
+
+- Corps à corps ;
+- Distance ;
+- Verbal ;
+- une valeur dérivée personnalisée mondiale optionnelle ;
+- valeurs dérivées plafonnées à `99` ;
+- initiative : `1D10 + arrondi(Distance / 10)` ;
+- Blessures et Stress sans effet sur l’initiative.
+
+### Blessures et Stress
+
+- valeurs brutes de `0 à 15` ;
+- conversion en niveaux `0 à 5` par paliers de trois ;
+- coefficient commun configurable, valeur par défaut `3` ;
+- malus soustrait à tous les jets D100 ;
+- aucune conséquence narrative automatique au maximum.
+
+### Équipement, armes et dégâts
+
+- un type fonctionnel générique `Équipement` ;
+- catégories minimales : objet ordinaire et arme ;
+- arme avec nom, description et formule de dégâts facultative ;
+- sélection d’arme proposée dans le chat après une réussite de conflit ;
+- option de dégâts maximum sur réussite critique ou super critique ;
+- aucune application automatique à une cible.
+
+### Spécialisations et progression
+
+- spécialisations en texte libre ;
+- aucun avantage ou bonus automatique ;
+- parcours de progression limité à neuf gains :
+  - trois gains de Compétence à `+5` ;
+  - trois gains de Talents à `+15` points ;
+  - trois nouvelles Spécialisations ;
+- assistance d’application des gains à évaluer techniquement en phase 02.
 
 ## Paramètres MJ
 
 Le projet ne prévoit pas un ensemble de règles modulaires activables.
 
-Le MJ doit seulement pouvoir configurer certaines valeurs numériques prévues par les règles, notamment :
+Le MJ doit pouvoir configurer les valeurs numériques explicitement prévues, notamment :
 
 - coefficient de Blessure et de Stress ;
 - gain de Destin après échec ;
 - plafond de Destin ;
 - probabilité de déclenchement ;
-- réserve minimale nécessaire pour amortir un échec critique ;
-- autres valeurs explicitement validées dans les futures spécifications.
+- réserve minimale pour amortir un échec critique ;
+- activation et configuration de la valeur dérivée personnalisée.
 
-Les valeurs par défaut du noyau de résolution sont fixées dans la spécification fonctionnelle correspondante.
+## Sources d’autorité fonctionnelles
 
-## Principes directeurs validés
-
-- privilégier la solution la plus légère lorsque plusieurs options sont suffisamment proches ;
-- conserver la complexité des calculs dans le moteur plutôt qu’à la charge des joueurs ;
-- distinguer les règles fonctionnelles de leur future implémentation Foundry ;
-- ne pas restaurer silencieusement une ancienne règle issue du PDF ou de la fiche Roll20 ;
-- ne pas commencer le développement sur un point de règle encore ouvert ;
-- garder une organisation documentaire proportionnée à un projet géré par une seule personne ;
-- ne pas transformer le système en moteur tactique ou narratif autoritaire.
-
-## Sources historiques
-
-Les sources historiques sont conservées dans `.project/references/` :
-
-- `Système de jeu Interface.pdf`
-- `interface.html`
-- `interface.css`
-- `translation.json`
-
-Elles décrivent des états antérieurs du système. Elles servent à comprendre son évolution, mais ne priment pas sur les décisions explicitement validées.
-
-## Base fonctionnelle validée
-
-Le noyau de résolution des jets est consolidé dans :
+### Phase 00A — Noyau de résolution
 
 ```text
-.project/specification/TRANSMISSION_FOUNDRY_ARBRE_RESOLUTION_JETS_INTERFACE.md
+.project/specification/PHASE_00A_TRANSMISSION_FOUNDRY_RESOLUTION_JETS_INTERFACE.md
 ```
 
-Cette spécification fixe notamment :
+Autorité détaillée pour :
 
 - le calcul du seuil ;
-- les zones automatiques ;
-- les critiques et super-critiques ;
+- la qualification des dés ;
 - les modes normal, avantage et désavantage ;
 - la sélection du résultat brut ;
 - le Destin ;
-- le calcul des marges ;
-- les paramètres MJ associés ;
-- les cas de test fonctionnels minimaux.
+- le résultat définitif ;
+- les marges ;
+- les cas de test fonctionnels.
+
+### Phase 01 — Personnage, équipement et conflits
+
+```text
+.project/specification/PHASE_01_SPECIFICATION_FONCTIONNELLE_PERSONNAGE_EQUIPEMENT_CONFLITS_INTERFACE.md
+```
+
+Autorité fonctionnelle pour :
+
+- la fiche et la création ;
+- les valeurs dérivées ;
+- l’initiative ;
+- Blessures et Stress ;
+- l’équipement et les armes ;
+- les dégâts ;
+- les spécialisations ;
+- l’expérience et la progression ;
+- les comportements essentiels du chat.
+
+En cas de différence non explicitement présentée comme une évolution validée, la spécification détaillée de phase 00A reste prioritaire pour le noyau de résolution.
 
 ## État des phases
 
 ```text
 Phase 00A — Résolution des jets : VALIDÉE
 Phase 00B — Cadrage produit et dépôt : VALIDÉE
-Phase 01 — Personnage, équipement et conflits : PROCHAINE
-Phases 02 à 08 : PLANIFIÉES
+Phase 01 — Personnage, équipement et conflits : VALIDÉE
+Phase 02 — Architecture Foundry : PROCHAINE
+Phases 03 à 08 : PLANIFIÉES
 ```
 
 La roadmap validée se trouve dans `.project/ROADMAP.md`.
@@ -136,10 +188,9 @@ Publication : hors périmètre actuel
 
 - **Utilisateur :** autorité finale, arbitrages, validation, tests réels, intégration Git et publication.
 - **GPT Pilote :** cadrage, coordination, consolidation et transmission.
-- **GPT JdR :** contribution principale attendue pour la consolidation des règles de la phase 01.
-- **GPT Foundry :** architecture et développement Foundry lors des phases techniques.
+- **GPT JdR :** phase 01 produite et consolidée.
+- **GPT Foundry :** principal de la phase 02 et des phases techniques suivantes.
 - **GPT Visuel :** contribution future à l’ergonomie et à l’identité visuelle.
-- **Autres GPT spécialisés :** contributions ponctuelles selon les besoins validés.
 
 ## Convention de travail par archive ZIP
 
@@ -154,7 +205,7 @@ Publication : hors périmètre actuel
 
 - `.project/` contient la mémoire interne du projet et ne doit pas faire partie d’une future archive de distribution.
 - Les fichiers de pilotage restent directement à la racine de `.project/`.
-- L’arborescence doit rester courte et ne pas anticiper des dossiers sans usage réel.
-- Les règles du noyau de résolution validées ne sont pas modifiées sans arbitrage explicite de l’utilisateur.
-- Les sources historiques ne doivent pas être utilisées pour restaurer silencieusement une ancienne règle.
+- L’arborescence reste courte et n’anticipe pas des dossiers sans usage réel.
+- Les règles validées ne sont pas modifiées sans arbitrage explicite de l’utilisateur.
+- Les sources historiques ne restaurent jamais silencieusement une ancienne règle.
 - Le futur système Foundry conserve l’identifiant technique `interface`.

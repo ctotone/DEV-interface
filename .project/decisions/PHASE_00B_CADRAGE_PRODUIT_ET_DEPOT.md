@@ -11,7 +11,7 @@
 - **Nom court du dépôt :** `DEV-interface`
 - **Branche :** `main`
 - **Base de départ :** `546be8b109f2355821a02e30090b6ca89e220fc9`
-- **Commit de clôture documentaire :** à renseigner après intégration de l’archive actualisée
+- **Commit de clôture documentaire :** `d4926487700295843281e1adffd077bf8d56113d`
 
 ## 1. Objectif de la phase
 
@@ -201,7 +201,7 @@ Les décisions de périmètre et la roadmap ont été validées explicitement pa
 Statut final : PHASE VALIDÉE
 Base de départ : commit 546be8b109f2355821a02e30090b6ca89e220fc9
 Livrable de clôture : archive complète actualisée
-Commit de clôture : à communiquer par l’utilisateur après intégration
+Commit de clôture : d4926487700295843281e1adffd077bf8d56113d
 ```
 
 ## 11. Conséquences pour la suite
