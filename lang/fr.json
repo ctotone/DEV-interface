@@ -79,7 +79,7 @@
       "Wounds": "Blessures",
       "Stress": "Stress",
       "Destiny": "Destin",
-      "DestinyInactiveHint": "Le Destin est persisté, mais sa mécanique n’est pas encore active."
+      "DestinyInactiveHint": "La réserve de Destin est individuelle et gérée automatiquement par les jets D100."
     },
     "Equipment": {
       "Category": "Catégorie",
@@ -139,7 +139,7 @@
         "Name": "Version interne du schéma",
         "Hint": "Paramètre caché réservé aux migrations internes."
       },
-      "DestinyInactiveWarning": "Ces paramètres sont persistés, mais le moteur de Destin n’est pas encore actif."
+      "DestinyInactiveWarning": "Le moteur de Destin est actif. Ses paramètres sont lus à chaque jet D100."
     },
     "Derived": {
       "Melee": "Corps à corps",
@@ -152,7 +152,23 @@
     "State": {
       "Level": "Niveau",
       "TotalPenalty": "Malus d’état",
-      "Detail": "Détail du malus"
+      "Detail": "Détail du malus",
+      "Wounds": {
+        "Indemne": "Indemne",
+        "Touche": "Touché",
+        "Meurtri": "Meurtri",
+        "Blesse": "Blessé",
+        "Brisse": "Brisé",
+        "Critique": "Critique"
+      },
+      "Stress": {
+        "Stable": "Stable",
+        "Tendu": "Tendu",
+        "Eprouve": "Éprouvé",
+        "Ebranle": "Ébranlé",
+        "Submerge": "Submergé",
+        "Rupture": "Rupture"
+      }
     },
     "Creation": {
       "TalentTotal": "Total des Talents",
@@ -195,6 +211,53 @@
       "SpecializationGain": "Nouvelle Spécialisation",
       "SpecializationGainDetail": "Ajouter une Spécialisation décidée avec le MJ",
       "ManualHint": "La jauge et les neuf cases sont déclaratives. Cette tranche n’applique encore aucun gain automatiquement."
+    },
+    "D100": {
+      "Mode": {
+        "Title": "Mode du jet",
+        "Normal": "Normal",
+        "Advantage": "Avantage",
+        "Disadvantage": "Désavantage",
+        "Hint": "Le mode est choisi manuellement pour la situation ; le moteur ne l’attribue pas."
+      },
+      "RollSkillTitle": "Choisir un Talent associé puis lancer le D100",
+      "RollTalentTitle": "Lancer ce jet de Compétence + Talent",
+      "RollDerivedTitle": "Lancer ce jet dérivé",
+      "ChooseTalentTitle": "Choisir un Talent pour {skill}",
+      "ChooseTalentHint": "Un jet standard utilise toujours une Compétence et l’un de ses trois Talents associés.",
+      "Threshold": "Seuil",
+      "FinalResult": "Résultat final",
+      "Margin": "Marge",
+      "DestinyIntervened": "Le Destin est intervenu",
+      "DestinyHover": "Brut : {raw} — Destin : {correction} — Final : {final}",
+      "NoPermission": "Tu dois être propriétaire du personnage ou MJ pour lancer ce jet.",
+      "InvalidMode": "Le mode de jet demandé est invalide.",
+      "RollError": "Le jet D100 n’a pas pu être finalisé : {message}",
+      "Quality": {
+        "Success": "Réussite",
+        "Failure": "Échec",
+        "AutomaticSuccess": "Réussite automatique",
+        "AutomaticFailure": "Échec automatique",
+        "CriticalSuccess": "Réussite critique",
+        "CriticalFailure": "Échec critique",
+        "SuperCriticalSuccess": "Super réussite critique",
+        "SuperCriticalFailure": "Super échec critique",
+        "AutomaticCriticalSuccess": "Réussite automatique critique",
+        "AutomaticCriticalFailure": "Échec automatique critique"
+      },
+      "NaturalValues": "Dés naturels",
+      "RawResult": "Résultat brut retenu",
+      "DevelopmentCardHint": "Carte technique provisoire de la Tranche 3 ; le rendu final viendra avec les cartes de chat.",
+      "RollAlreadyRunning": "Un jet est déjà en cours pour ce personnage.",
+      "PreRoll": {
+        "Title": "Préparer le jet — {source}",
+        "Mode": "Mode du jet",
+        "Modifier": "Bonus / Malus",
+        "ModifierHint": "Valeur positive : bonus au seuil. Valeur négative : malus au seuil.",
+        "Roll": "Lancer les dés",
+        "InvalidModifier": "Le bonus ou malus doit être un nombre entier.",
+        "ModeHint": "Gauche : désavantage · Centre : normal · Droite : avantage."
+      }
     }
   }
 }

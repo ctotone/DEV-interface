@@ -8,9 +8,14 @@ import {
   SYSTEM_ID,
   TALENT_GROUPS
 } from "../constants.mjs";
+import { D100_MODES } from "../rules/d100/constants.mjs";
+import { standardTalentsForSkill } from "../services/d100-roll-service.mjs";
 
 const { ActorSheetV2 } = foundry.applications.sheets;
-const { HandlebarsApplicationMixin } = foundry.applications.api;
+const {
+  DialogV2,
+  HandlebarsApplicationMixin
+} = foundry.applications.api;
 
 const RESOURCE_KEYS = new Set(["wounds", "stress"]);
 const DEFAULT_SECTION_STATE = Object.freeze({
@@ -21,6 +26,20 @@ const DEFAULT_SECTION_STATE = Object.freeze({
   inventory: true,
   notes: false
 });
+
+
+function escapeHtml(value) {
+  return String(value)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+}
+
+function canUpdateActor(sheet) {
+  return sheet.actor?.canUserModify?.(game.user, "update") ?? true;
+}
 
 function itemView(item) {
   const isWeapon = item.system.category === EQUIPMENT_CATEGORIES.WEAPON;
@@ -60,11 +79,50 @@ function creationWarningMessage(code, creation) {
   }
 }
 
-function buildStateTrack(level) {
-  return Array.from({ length: 6 }, (_, value) => ({
-    value,
-    current: value === level
-  }));
+const STATE_PRESENTATION = Object.freeze([
+  Object.freeze({
+    color: "#7A7F87",
+    wounds: "INTERFACE.State.Wounds.Indemne",
+    stress: "INTERFACE.State.Stress.Stable"
+  }),
+  Object.freeze({
+    color: "#718F78",
+    wounds: "INTERFACE.State.Wounds.Touche",
+    stress: "INTERFACE.State.Stress.Tendu"
+  }),
+  Object.freeze({
+    color: "#B39A45",
+    wounds: "INTERFACE.State.Wounds.Meurtri",
+    stress: "INTERFACE.State.Stress.Eprouve"
+  }),
+  Object.freeze({
+    color: "#C97932",
+    wounds: "INTERFACE.State.Wounds.Blesse",
+    stress: "INTERFACE.State.Stress.Ebranle"
+  }),
+  Object.freeze({
+    color: "#B84A3A",
+    wounds: "INTERFACE.State.Wounds.Brisse",
+    stress: "INTERFACE.State.Stress.Submerge"
+  }),
+  Object.freeze({
+    color: "#762F3A",
+    wounds: "INTERFACE.State.Wounds.Critique",
+    stress: "INTERFACE.State.Stress.Rupture"
+  })
+]);
+
+function buildStatePresentation(resource, level) {
+  const normalizedLevel = Number.isInteger(level)
+    ? Math.min(5, Math.max(0, level))
+    : 0;
+  const presentation = STATE_PRESENTATION[normalizedLevel];
+
+  return {
+    level: normalizedLevel,
+    label: presentation[resource],
+    color: presentation.color
+  };
 }
 
 function buildProgressionGroup(system, key, label, detail) {
@@ -81,6 +139,7 @@ function buildProgressionGroup(system, key, label, detail) {
 }
 
 async function adjustResourceAction(event, target) {
+  if (!canUpdateActor(this)) return;
   const resource = target.dataset.resource;
   const delta = Number.parseInt(target.dataset.delta ?? "0", 10);
   if (!RESOURCE_KEYS.has(resource) || !Number.isInteger(delta)) return;
@@ -120,6 +179,7 @@ async function createEquipmentAction(event, target) {
 }
 
 async function editEmbeddedItemAction(event, target) {
+  if (!canUpdateActor(this)) return;
   const row = target.closest("[data-item-id]");
   const item = this.actor.items.get(row?.dataset.itemId);
   await item?.sheet?.render({ force: true });
@@ -134,10 +194,289 @@ function creationSignature(creation) {
 }
 
 function acknowledgeCreationWarningsAction() {
+  if (!canUpdateActor(this)) return;
   this.acknowledgedCreationSignature = creationSignature(
     this.actor.system.derived.creation
   );
   return this.render();
+}
+
+
+function standardRollLabel(skillKey, talentKey) {
+  const skill = SKILLS.find(entry => entry.key === skillKey);
+  const talent = TALENT_GROUPS
+    .flatMap(group => group.talents)
+    .find(entry => entry.key === talentKey);
+  if (!skill || !talent) return "";
+
+  return `${game.i18n.localize(skill.label)} + ${game.i18n.localize(talent.label)}`;
+}
+
+function derivedRollLabel(key) {
+  if (key === "custom") {
+    return String(game.settings.get(
+      SYSTEM_ID,
+      SETTING_KEYS.CUSTOM_DERIVED
+    )?.name ?? "").trim();
+  }
+
+  const definition = DERIVED_SCORE_DEFINITIONS[key];
+  return definition ? game.i18n.localize(definition.label) : "";
+}
+
+const PRE_ROLL_MODE_ORDER = Object.freeze([
+  D100_MODES.DISADVANTAGE,
+  D100_MODES.NORMAL,
+  D100_MODES.ADVANTAGE
+]);
+
+function activatePreRollModeSlider(event, dialog) {
+  const slider = dialog.element.querySelector("[data-interface-mode-slider]");
+  if (!slider || slider.dataset.interfaceSliderReady === "true") return;
+
+  const group = slider.closest(".interface-preroll-mode");
+  if (!group) return;
+
+  const inputs = PRE_ROLL_MODE_ORDER.map(mode => (
+    group.querySelector(`input[name="mode"][value="${mode}"]`)
+  ));
+  if (inputs.some(input => !input)) return;
+
+  slider.dataset.interfaceSliderReady = "true";
+  let activePointerId = null;
+
+  const selectFromPointer = (clientX, { dragging = false } = {}) => {
+    const rect = slider.getBoundingClientRect();
+    if (!(rect.width > 0)) return;
+
+    const ratio = Math.min(1, Math.max(0, (clientX - rect.left) / rect.width));
+    if (dragging) {
+      slider.style.setProperty(
+        "--interface-slider-position",
+        `${ratio * 100}%`
+      );
+    }
+
+    const index = Math.round(ratio * (PRE_ROLL_MODE_ORDER.length - 1));
+    const input = inputs[index];
+    if (input.checked) return;
+
+    input.checked = true;
+    input.dispatchEvent(new Event("change", { bubbles: true }));
+  };
+
+  slider.addEventListener("pointerdown", pointerEvent => {
+    if (pointerEvent.button !== 0) return;
+
+    activePointerId = pointerEvent.pointerId;
+    slider.classList.add("is-dragging");
+    slider.setPointerCapture?.(activePointerId);
+    selectFromPointer(pointerEvent.clientX, { dragging: true });
+    pointerEvent.preventDefault();
+  });
+
+  slider.addEventListener("pointermove", pointerEvent => {
+    if (pointerEvent.pointerId !== activePointerId) return;
+
+    selectFromPointer(pointerEvent.clientX, { dragging: true });
+    pointerEvent.preventDefault();
+  });
+
+  const finishDrag = pointerEvent => {
+    if (pointerEvent.pointerId !== activePointerId) return;
+
+    selectFromPointer(pointerEvent.clientX, { dragging: true });
+    if (slider.hasPointerCapture?.(activePointerId)) {
+      slider.releasePointerCapture(activePointerId);
+    }
+    activePointerId = null;
+    slider.classList.remove("is-dragging");
+    slider.style.removeProperty("--interface-slider-position");
+    pointerEvent.preventDefault();
+  };
+
+  slider.addEventListener("pointerup", finishDrag);
+  slider.addEventListener("pointercancel", finishDrag);
+}
+
+async function requestRollOptions(sourceLabel) {
+  const result = await DialogV2.input({
+    classes: ["interface", "interface-preroll-dialog"],
+    window: {
+      title: game.i18n.format("INTERFACE.D100.PreRoll.Title", {
+        source: sourceLabel
+      })
+    },
+    position: {
+      width: 380
+    },
+    content: `
+      <div class="interface-preroll">
+        <div class="interface-preroll__source">${escapeHtml(sourceLabel)}</div>
+        <fieldset class="interface-preroll__mode">
+          <legend>${game.i18n.localize("INTERFACE.D100.PreRoll.Mode")}</legend>
+          <div class="interface-preroll-mode">
+            <label class="interface-preroll-mode__option interface-preroll-mode__option--disadvantage">
+              <input
+                type="radio"
+                name="mode"
+                value="${D100_MODES.DISADVANTAGE}"
+              >
+              <span>${game.i18n.localize("INTERFACE.D100.Mode.Disadvantage")}</span>
+            </label>
+            <label class="interface-preroll-mode__option interface-preroll-mode__option--normal">
+              <input
+                type="radio"
+                name="mode"
+                value="${D100_MODES.NORMAL}"
+                checked
+              >
+              <span>${game.i18n.localize("INTERFACE.D100.Mode.Normal")}</span>
+            </label>
+            <label class="interface-preroll-mode__option interface-preroll-mode__option--advantage">
+              <input
+                type="radio"
+                name="mode"
+                value="${D100_MODES.ADVANTAGE}"
+              >
+              <span>${game.i18n.localize("INTERFACE.D100.Mode.Advantage")}</span>
+            </label>
+            <div
+              class="interface-preroll-mode__rail"
+              data-interface-mode-slider
+              aria-hidden="true"
+            >
+              <span class="interface-preroll-mode__thumb"></span>
+            </div>
+          </div>
+          <small>${game.i18n.localize("INTERFACE.D100.PreRoll.ModeHint")}</small>
+        </fieldset>
+        <label class="interface-preroll__field">
+          <span>${game.i18n.localize("INTERFACE.D100.PreRoll.Modifier")}</span>
+          <input name="modifier" type="number" value="0" step="1">
+          <small>${game.i18n.localize("INTERFACE.D100.PreRoll.ModifierHint")}</small>
+        </label>
+      </div>
+    `,
+    ok: {
+      label: game.i18n.localize("INTERFACE.D100.PreRoll.Roll")
+    },
+    rejectClose: false,
+    modal: true,
+    render: activatePreRollModeSlider
+  });
+
+  if (!result) return null;
+
+  const mode = String(result.mode ?? "");
+  const modifier = Number.parseInt(String(result.modifier ?? "0"), 10);
+  if (!Object.values(D100_MODES).includes(mode)) {
+    ui.notifications.error(game.i18n.localize("INTERFACE.D100.InvalidMode"));
+    return null;
+  }
+  if (!Number.isInteger(modifier)) {
+    ui.notifications.error(
+      game.i18n.localize("INTERFACE.D100.PreRoll.InvalidModifier")
+    );
+    return null;
+  }
+
+  return Object.freeze({ mode, modifier });
+}
+
+async function executeRoll(sheet, target, callback) {
+  if (!canUpdateActor(sheet)) return null;
+  target.disabled = true;
+  try {
+    await sheet.submit();
+    return await callback();
+  } finally {
+    if (target.isConnected) target.disabled = false;
+  }
+}
+
+async function rollTalentAction(event, target) {
+  const skillKey = target.dataset.skillKey;
+  const talentKey = target.dataset.talentKey;
+
+  return executeRoll(this, target, async () => {
+    const options = await requestRollOptions(
+      standardRollLabel(skillKey, talentKey)
+    );
+    if (!options) return null;
+
+    return this.actor.rollStandardD100({
+      skillKey,
+      talentKey,
+      ...options
+    });
+  });
+}
+
+async function chooseTalentForSkill(sheet, skillKey) {
+  const talents = standardTalentsForSkill(skillKey);
+  const skill = SKILLS.find(entry => entry.key === skillKey);
+  if (!skill || talents.length === 0) return null;
+
+  return DialogV2.wait({
+    window: {
+      title: game.i18n.format("INTERFACE.D100.ChooseTalentTitle", {
+        skill: game.i18n.localize(skill.label)
+      })
+    },
+    content: `<p>${game.i18n.localize(
+      "INTERFACE.D100.ChooseTalentHint"
+    )}</p>`,
+    buttons: talents.map((talent, index) => ({
+      action: talent.key,
+      label: `${game.i18n.localize(talent.label)} (${
+        sheet.actor.system.talents[talent.key]
+      })`,
+      default: index === 0,
+      callback: () => talent.key
+    })),
+    rejectClose: false,
+    modal: true
+  });
+}
+
+async function rollSkillAction(event, target) {
+  if (!canUpdateActor(this)) return null;
+  const skillKey = target.dataset.skillKey;
+  target.disabled = true;
+
+  try {
+    await this.submit();
+    const talentKey = await chooseTalentForSkill(this, skillKey);
+    if (!talentKey) return null;
+
+    const options = await requestRollOptions(
+      standardRollLabel(skillKey, talentKey)
+    );
+    if (!options) return null;
+
+    return this.actor.rollStandardD100({
+      skillKey,
+      talentKey,
+      ...options
+    });
+  } finally {
+    if (target.isConnected) target.disabled = false;
+  }
+}
+
+async function rollDerivedAction(event, target) {
+  const key = target.dataset.derivedKey;
+
+  return executeRoll(this, target, async () => {
+    const options = await requestRollOptions(derivedRollLabel(key));
+    if (!options) return null;
+
+    return this.actor.rollDerivedD100({
+      key,
+      ...options
+    });
+  });
 }
 
 export class InterfaceCharacterSheet extends HandlebarsApplicationMixin(ActorSheetV2) {
@@ -151,11 +490,17 @@ export class InterfaceCharacterSheet extends HandlebarsApplicationMixin(ActorShe
       width: 860,
       height: 880
     },
+    window: {
+      resizable: true
+    },
     actions: {
       adjustResource: adjustResourceAction,
       createEquipment: createEquipmentAction,
       editEmbeddedItem: editEmbeddedItemAction,
-      acknowledgeCreationWarnings: acknowledgeCreationWarningsAction
+      acknowledgeCreationWarnings: acknowledgeCreationWarningsAction,
+      rollSkill: rollSkillAction,
+      rollTalent: rollTalentAction,
+      rollDerived: rollDerivedAction
     },
     form: {
       closeOnSubmit: false,
@@ -193,16 +538,18 @@ export class InterfaceCharacterSheet extends HandlebarsApplicationMixin(ActorShe
     const warningsAcknowledged = creationWarnings.length > 0
       && this.acknowledgedCreationSignature
         === creationSignature(derived.creation);
+    const readOnly = !canUpdateActor(this);
 
     return {
       ...context,
       actor: this.actor,
       system,
+      readOnly,
       derived,
       sections: this.sectionState,
       statePenaltyCoefficient,
-      woundTrack: buildStateTrack(derived.levels.wounds),
-      stressTrack: buildStateTrack(derived.levels.stress),
+      woundState: buildStatePresentation("wounds", derived.levels.wounds),
+      stressState: buildStatePresentation("stress", derived.levels.stress),
       derivedScores: Object.entries(DERIVED_SCORE_DEFINITIONS).map(
         ([key, definition]) => ({
           key,
@@ -274,6 +621,16 @@ export class InterfaceCharacterSheet extends HandlebarsApplicationMixin(ActorShe
       section.addEventListener("toggle", () => {
         this.sectionState[section.dataset.section] = section.open;
       });
+    }
+
+    if (!canUpdateActor(this)) {
+      const blockDocumentInteraction = event => {
+        event.preventDefault();
+        event.stopImmediatePropagation();
+      };
+      this.element.addEventListener("dragstart", blockDocumentInteraction, true);
+      this.element.addEventListener("dragover", blockDocumentInteraction, true);
+      this.element.addEventListener("drop", blockDocumentInteraction, true);
     }
   }
 }

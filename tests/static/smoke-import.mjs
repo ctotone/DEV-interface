@@ -24,6 +24,8 @@ class FakeTypeDataModel {
 
 class FakeApplicationV2 {
   async close() {}
+  async render() {}
+  async submit() {}
   async _postRender() {}
 }
 
@@ -34,15 +36,72 @@ function HandlebarsApplicationMixin(Base) {
   return class HandlebarsApplication extends Base {};
 }
 
+class FakeDialogV2 {
+  static async wait(config) {
+    return config.buttons?.[0]?.callback?.() ?? null;
+  }
+
+  static async input() {
+    return {
+      mode: "normal",
+      modifier: 0
+    };
+  }
+}
+
 const registeredSettings = [];
 const registeredMenus = [];
 const registeredSheets = [];
 const settingValues = new Map();
 const hooks = new Map();
+const fakeRollResults = [];
+const publishedRolls = [];
+
+globalThis.Roll = class FakeRoll {
+  constructor(formula) {
+    this.formula = formula;
+    this.dice = [];
+    this.total = null;
+  }
+
+  async evaluate() {
+    const values = fakeRollResults.shift();
+    if (!values) throw new Error(`Aucun résultat simulé pour ${this.formula}.`);
+    this.dice = [{
+      results: values.map(result => ({ result, active: true }))
+    }];
+    this.total = values.reduce((sum, value) => sum + value, 0);
+    return this;
+  }
+
+  async toMessage(data) {
+    publishedRolls.push({ roll: this, data });
+    return { id: `message-${publishedRolls.length}` };
+  }
+};
 
 globalThis.Actor = class Actor {
+  constructor() {
+    this.name = "Actor de test";
+    this.system = {};
+    this.updates = [];
+  }
+
   getRollData() {
     return { base: true };
+  }
+
+  canUserModify() {
+    return true;
+  }
+
+  async update(changes) {
+    this.updates.push(changes);
+    if ("system.resources.destiny.value" in changes) {
+      this.system.resources.destiny.value =
+        changes["system.resources.destiny.value"];
+    }
+    return this;
   }
 };
 globalThis.Item = class Item {};
@@ -54,6 +113,7 @@ globalThis.foundry = {
   applications: {
     api: {
       ApplicationV2: FakeApplicationV2,
+      DialogV2: FakeDialogV2,
       HandlebarsApplicationMixin
     },
     sheets: {
@@ -80,7 +140,12 @@ globalThis.foundry = {
   },
   documents: {
     Actor: globalThis.Actor,
-    Item: globalThis.Item
+    Item: globalThis.Item,
+    ChatMessage: {
+      getSpeaker({ actor }) {
+        return { actor: actor?.id ?? "actor-test" };
+      }
+    }
   }
 };
 
@@ -96,6 +161,22 @@ globalThis.CONFIG = {
 };
 
 globalThis.game = {
+  user: {
+    id: "user-test",
+    isGM: true
+  },
+  i18n: {
+    localize(key) {
+      return key;
+    },
+    format(key, data = {}) {
+      return Object.entries(data).reduce(
+        (value, [name, replacement]) =>
+          value.replaceAll(`{${name}}`, String(replacement)),
+        key
+      );
+    }
+  },
   settings: {
     register(system, key, config) {
       registeredSettings.push([system, key, config]);
@@ -106,7 +187,19 @@ globalThis.game = {
     },
     get(system, key) {
       return settingValues.get(`${system}.${key}`);
+    },
+    async set(system, key, value) {
+      settingValues.set(`${system}.${key}`, value);
+      return value;
     }
+  }
+};
+
+globalThis.ui = {
+  notifications: {
+    warn() {},
+    error() {},
+    info() {}
   }
 };
 
@@ -259,4 +352,100 @@ assert.deepEqual(actor.getRollData(), {
   }
 });
 
-console.log("OK — chargement isolé du point d’entrée et enregistrements simulés.");
+const rollingActor = new CONFIG.Actor.documentClass();
+rollingActor.id = "rolling-actor";
+rollingActor.name = "Camille";
+rollingActor.system = {
+  skills: {
+    carrure: 40,
+    agilite: 30,
+    perception: 50,
+    mental: 30,
+    intellect: 20,
+    charisme: 40
+  },
+  talents: {
+    endurance: 10,
+    forceBrute: 10,
+    robustesse: 10,
+    agiliteCorporelle: 10,
+    precision: 10,
+    reflexe: 10,
+    acuiteSensorielle: 5,
+    sixiemeSens: 5,
+    vigilance: 5,
+    decision: 5,
+    determination: 5,
+    equilibreMental: 5,
+    creativite: 0,
+    erudition: 0,
+    logique: 0,
+    aura: 0,
+    communicationExpressive: 0,
+    persuasion: 0
+  },
+  resources: {
+    wounds: { value: 0 },
+    stress: { value: 0 },
+    destiny: { value: 10 }
+  },
+  derived: {
+    levels: { wounds: 0, stress: 0 },
+    statePenalty: 0,
+    scores: {
+      melee: 45,
+      distance: 45,
+      verbal: 30,
+      custom: null
+    },
+    initiativeBonus: 5
+  }
+};
+
+fakeRollResults.push([42]);
+const standardResult = await rollingActor.rollStandardD100({
+  skillKey: "carrure",
+  talentKey: "endurance",
+  mode: "normal",
+  modifier: 10
+});
+assert.equal(standardResult.rawResult, 42);
+assert.equal(standardResult.threshold.modifier, 10);
+assert.equal(standardResult.threshold.final, 60);
+assert.equal(standardResult.finalQualification.success, true);
+assert.equal(rollingActor.system.resources.destiny.value, 0);
+assert.equal(publishedRolls.length, 1);
+assert.match(
+  publishedRolls[0].data.flavor,
+  /INTERFACE\.D100\.FinalResult/
+);
+
+fakeRollResults.push([43, 44]);
+const advantageResult = await rollingActor.rollDerivedD100({
+  key: "melee",
+  mode: "advantage"
+});
+assert.deepEqual(
+  advantageResult.naturalResults.map(result => result.value),
+  [43, 44]
+);
+assert.equal(advantageResult.rawResult, 44);
+assert.equal(advantageResult.finalQualification.critical, true);
+assert.equal(publishedRolls.length, 2);
+
+await game.settings.set("interface", "destinyTriggerChance", 100);
+rollingActor.system.resources.destiny.value = 10;
+fakeRollResults.push([57], [1]);
+const destinyResult = await rollingActor.rollStandardD100({
+  skillKey: "carrure",
+  talentKey: "endurance",
+  mode: "normal"
+});
+assert.equal(destinyResult.destiny.triggered, true);
+assert.equal(destinyResult.destiny.secretRoll, 1);
+assert.equal(destinyResult.finalResult, 50);
+assert.equal(rollingActor.system.resources.destiny.value, 0);
+assert.equal(publishedRolls.length, 3);
+assert.doesNotMatch(publishedRolls[2].data.flavor, /secret|chance|éligib/i);
+
+console.log("OK — chargement isolé, enregistrements et jets Foundry simulés.");

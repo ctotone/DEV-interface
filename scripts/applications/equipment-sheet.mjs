@@ -11,6 +11,9 @@ export class InterfaceEquipmentSheet extends HandlebarsApplicationMixin(ItemShee
       width: 560,
       height: 620
     },
+    window: {
+      resizable: true
+    },
     form: {
       closeOnSubmit: false,
       submitOnChange: true

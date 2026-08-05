@@ -8,7 +8,7 @@ import { registerInterfaceSettings } from "./settings/register-settings.mjs";
 import { ACTOR_TYPES, ITEM_TYPES, SYSTEM_ID } from "./constants.mjs";
 
 Hooks.once("init", () => {
-  console.info("D100 Interface | Initialisation de la Tranche 2");
+  console.info("D100 Interface | Initialisation de la Tranche 3");
 
   CONFIG.Actor.documentClass = InterfaceActor;
   CONFIG.Item.documentClass = InterfaceItem;

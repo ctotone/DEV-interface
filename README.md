@@ -19,30 +19,33 @@ Phase 01 — Personnage, équipement et conflits : VALIDÉE
 Phase 02 — Architecture Foundry : VALIDÉE
 Phase 03 — Première tranche jouable : EN COURS
 Tranche 1 — Squelette installable : VALIDÉE SOUS FOUNDRY 14.365
-Tranche 2 — Données et dérivés : CANDIDATE EN ATTENTE DE TEST
+Tranche 2 — Données et dérivés : VALIDÉE SOUS FOUNDRY 14.365
+Tranche 2B — Adaptation fonctionnelle de la fiche : VALIDÉE SOUS FOUNDRY 14.365
+Tranche 3 — Moteur D100 : CANDIDATE EN ATTENTE DE TEST
 Développement Foundry : EN COURS
 ```
 
-## Candidate actuelle — Tranche 2
+## Candidate actuelle — Tranche 3
 
-La version locale `0.1.0` ajoute au squelette validé :
+La version locale `0.1.0` ajoute :
 
-- états Blessures et Stress ;
-- malus d’état mondial ;
-- Corps à corps, Distance et Verbal ;
-- valeur dérivée personnalisée ;
-- bonus d’initiative préparé ;
-- diagnostics souples de création ;
-- Inventaire et Armes fondés sur les Items embarqués ;
-- création et ouverture d’équipements depuis la fiche Actor ;
-- tests unitaires des calculs purs.
+- moteur métier D100 pur ;
+- modes normal, avantage et désavantage ;
+- vingt scénarios fonctionnels T01 à T20 ;
+- adaptateur Foundry `Roll` ;
+- jets Compétence + Talent ;
+- jets des valeurs dérivées de combat ;
+- Destin opérationnel avec test secret lorsque l’intervention est possible ;
+- écriture contrôlée de la réserve de Destin sur l’Actor ;
+- message de chat technique provisoire ;
+- déclencheurs depuis les libellés de Compétences et Talents et les boutons de combat.
 
-Les données dérivées sont préparées en mémoire et ne modifient pas le schéma persisté validé.
+Le rendu final des cartes de chat, les dégâts et Dice So Nice restent hors de cette tranche.
 
 Installation et test :
 
 ```text
-tests/protocols/TRANCHE_2_FOUNDRY_V14_365.md
+tests/protocols/TRANCHE_3_FOUNDRY_V14_365.md
 ```
 
 Contrôle hors Foundry :
@@ -51,7 +54,7 @@ Contrôle hors Foundry :
 node tests/static/check-project.mjs
 ```
 
-La Tranche 2 n’est pas validée avant le test réel et la validation explicite de l’utilisateur.
+La Tranche 3 n’est pas validée avant le test réel et la validation explicite de l’utilisateur.
 
 ## Première version jouable
 
@@ -139,3 +142,8 @@ Ordre de lecture :
 3. `.project/ROADMAP.md`
 4. la décision de la phase active ;
 5. les spécifications concernées.
+
+
+## Tranche 3 — Pré-lancer
+
+Les jets D100 passent par une fenêtre pré-lancer compacte proposant le mode du jet et un Bonus / Malus temporaire. Aucun de ces choix n’est persisté sur l’Actor.

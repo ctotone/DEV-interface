@@ -288,3 +288,30 @@ T4 OK
 ...
 T12 OK
 ```
+
+
+## Correctif 1 — Complément de test
+
+### Action requise : **Shift+F5**
+
+Remplacer le dossier du système puis faire `Shift+F5` dans le monde ouvert.
+
+### T13 — Couleurs du bloc Combat et de l'Inventaire
+
+Ouvre la fiche du personnage puis le bloc **Combat** et le bloc **Inventaire**.
+
+**Résultat attendu :**
+
+- le titre **Armes** est lisible en couleur sombre ;
+- les noms des armes possédées sont lisibles en couleur sombre ;
+- les noms des objets de l'inventaire sont lisibles en couleur sombre.
+
+### T14 — Redimensionnement de la fiche
+
+Tente de redimensionner la fenêtre de la fiche personnage, puis la fiche d'un objet.
+
+**Résultat attendu :**
+
+- la fiche Actor est redimensionnable ;
+- la fiche Item est redimensionnable ;
+- le contenu reste utilisable après redimensionnement.

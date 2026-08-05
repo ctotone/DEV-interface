@@ -160,7 +160,7 @@
   text-align: center;
 }
 
-.interface .interface-skill span {
+.interface .interface-roll-link--skill {
   min-height: 2rem;
   padding: 0.35rem 0.2rem;
   font-size: 0.78rem;
@@ -192,9 +192,10 @@
   border-top-color: var(--interface-tone);
 }
 
-.interface .interface-skill.interface-tone--corps span,
-.interface .interface-skill.interface-tone--ame span,
-.interface .interface-skill.interface-tone--esprit span,
+.interface .interface-skill.interface-tone--corps .interface-roll-link,
+.interface .interface-skill.interface-tone--ame .interface-roll-link,
+.interface .interface-skill.interface-tone--esprit .interface-roll-link,
+.interface .interface-talent-group .interface-roll-link,
 .interface .interface-talent-group legend {
   color: var(--interface-tone);
 }
@@ -249,28 +250,21 @@
   text-align: center;
 }
 
-.interface .interface-state-track {
-  display: grid;
+.interface .interface-state-label {
   grid-column: 1 / -1;
-  grid-template-columns: repeat(6, 1fr);
-  gap: 0.22rem;
-}
-
-.interface .interface-state-track span {
-  display: grid;
-  min-height: 1.25rem;
-  place-items: center;
-  border: 1px solid rgba(255, 255, 255, 0.38);
-  border-radius: 999px;
-  color: rgba(255, 255, 255, 0.6);
-  font-size: 0.68rem;
-}
-
-.interface .interface-state-track span.is-current {
-  border-color: var(--interface-white);
-  background: var(--interface-white);
-  color: var(--interface-black);
+  justify-self: center;
+  min-width: 7rem;
+  border: 1px solid var(--interface-state-color);
+  border-radius: 0.45rem;
+  background: rgba(0, 0, 0, 0.18);
+  color: var(--interface-state-color);
+  padding: 0.18rem 0.65rem;
+  font-size: 0.7rem;
   font-weight: 800;
+  letter-spacing: 0.045em;
+  line-height: 1.2;
+  text-align: center;
+  text-transform: uppercase;
 }
 
 .interface .interface-state-band__initiative {
@@ -417,7 +411,7 @@
   margin-bottom: 0;
 }
 
-.interface .interface-talent span {
+.interface .interface-roll-link--talent {
   font-size: 0.78rem;
   line-height: 1.15;
 }
@@ -467,6 +461,7 @@
 .interface .interface-subsection-heading h3,
 .interface .interface-panel__heading h2 {
   margin: 0;
+  color: var(--interface-ink);
 }
 
 .interface .interface-panel__actions {
@@ -515,10 +510,17 @@
   overflow: hidden;
   border: 0;
   background: transparent;
+  color: var(--interface-ink);
   padding: 0;
   text-align: left;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.interface .interface-item-row__name:hover,
+.interface .interface-item-row__name:focus-visible {
+  color: var(--interface-ink);
+  text-decoration: underline;
 }
 
 .interface .interface-item-row__formula {
@@ -813,4 +815,448 @@
   .interface .interface-fold > summary small {
     display: none;
   }
+}
+
+
+.interface .interface-roll-mode {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 0.35rem 0.75rem;
+  border: var(--interface-border);
+  background: rgba(255, 255, 255, 0.64);
+  padding: 0.45rem 0.6rem;
+}
+
+.interface .interface-roll-mode > span {
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.interface .interface-roll-mode__buttons {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.3rem;
+}
+
+.interface .interface-roll-mode__buttons button {
+  min-height: 1.8rem;
+  border: 1px solid rgba(25, 25, 25, 0.28);
+  background: rgba(255, 255, 255, 0.72);
+  color: var(--interface-ink);
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
+.interface .interface-roll-mode__buttons button.is-active {
+  background: var(--interface-black);
+  color: var(--interface-white);
+}
+
+.interface .interface-roll-mode small {
+  grid-column: 1 / -1;
+}
+
+.interface .interface-roll-link {
+  width: 100%;
+  min-height: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.interface .interface-roll-link:hover,
+.interface .interface-roll-link:focus-visible {
+  background: rgba(0, 0, 0, 0.055);
+  color: var(--interface-tone, inherit);
+  text-decoration: underline;
+}
+
+.interface .interface-roll-link--talent {
+  justify-content: flex-start;
+  padding: 0.2rem 0.25rem;
+  text-align: left;
+}
+
+.interface button.interface-derived-card {
+  width: 100%;
+  color: var(--interface-ink);
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.interface button.interface-derived-card:hover,
+.interface button.interface-derived-card:focus-visible {
+  background: rgba(255, 255, 255, 0.96);
+  box-shadow: 0 0 0 1px var(--interface-tone);
+}
+
+.interface button.interface-derived-card:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+.interface-d100-summary {
+  display: grid;
+  gap: 0.2rem;
+}
+
+.interface-d100-summary__destiny {
+  font-weight: 700;
+}
+
+.interface-d100-summary small {
+  opacity: 0.72;
+}
+
+
+/* Vue observateur : lecture seule locale, à l’exception des sections repliables. */
+.interface .interface-character--read-only {
+  cursor: default;
+}
+
+.interface .interface-character--read-only details > summary {
+  cursor: pointer;
+}
+
+.interface .interface-readonly-field {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.interface .interface-readonly-field > span {
+  color: var(--interface-muted);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.055em;
+  text-transform: uppercase;
+}
+
+.interface .interface-character__name.interface-readonly-field > strong {
+  overflow: hidden;
+  border-bottom: 1px solid rgba(25, 25, 25, 0.35);
+  font-size: 1.45rem;
+  font-weight: 800;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.interface .interface-skill__value {
+  display: grid;
+  min-height: 2.5rem;
+  place-items: center;
+  font-size: 1.35rem;
+  font-weight: 800;
+}
+
+.interface .interface-skill__label {
+  display: grid;
+  min-height: 2rem;
+  place-items: center;
+  padding: 0.35rem 0.2rem;
+  color: var(--interface-tone);
+  font-size: 0.78rem;
+  font-weight: 800;
+  line-height: 1.1;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.interface .interface-resource__readonly {
+  display: grid;
+  min-height: 2rem;
+  place-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  border-radius: 3px;
+  background: #282828;
+  color: var(--interface-white);
+  font-size: 1rem;
+}
+
+.interface .interface-talent__label {
+  color: var(--interface-tone);
+  font-size: 0.78rem;
+  line-height: 1.15;
+}
+
+.interface .interface-talent__value {
+  display: grid;
+  min-height: 1.8rem;
+  place-items: center;
+  border: 1px solid rgba(25, 25, 25, 0.22);
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.56);
+}
+
+.interface .interface-item-row__name--readonly {
+  cursor: default;
+}
+
+.interface .interface-item-row__name--readonly:hover,
+.interface .interface-item-row__name--readonly:focus-visible {
+  color: var(--interface-ink);
+  text-decoration: none;
+}
+
+.interface .interface-readonly-text {
+  min-height: 5rem;
+  border: var(--interface-border);
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.46);
+  padding: 0.65rem;
+  color: var(--interface-ink);
+  line-height: 1.45;
+  white-space: pre-wrap;
+}
+
+.interface .interface-progression__readonly-dot {
+  display: grid;
+  width: 1.65rem;
+  height: 1.65rem;
+  place-items: center;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 800;
+}
+
+.interface .interface-progression__band .interface-progression__readonly-dot.is-current {
+  background: var(--interface-white);
+  color: var(--interface-black);
+}
+
+.interface .interface-progression__choices .interface-progression__readonly-dot.is-current {
+  background: var(--interface-black);
+  color: var(--interface-white);
+}
+
+
+/* Fenêtre compacte de préparation d’un jet D100. */
+.interface-preroll-dialog .window-content {
+  padding: 0.85rem;
+}
+
+.interface-preroll-dialog .interface-preroll {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  min-width: 0;
+}
+
+.interface-preroll-dialog .interface-preroll__source {
+  border-left: 4px solid var(--interface-neutral);
+  border-radius: 0.25rem;
+  background: rgba(25, 25, 25, 0.06);
+  color: var(--interface-ink);
+  padding: 0.55rem 0.7rem;
+  font-weight: 800;
+}
+
+
+.interface-preroll-dialog .interface-preroll__mode {
+  min-width: 0;
+  margin: 0;
+  border: 0;
+  padding: 0;
+}
+
+.interface-preroll-dialog .interface-preroll__mode legend {
+  margin-bottom: 0.45rem;
+  color: var(--interface-ink);
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.055em;
+  text-transform: uppercase;
+}
+
+.interface-preroll-dialog .interface-preroll__mode > small {
+  display: block;
+  margin-top: 0.45rem;
+  color: var(--interface-muted);
+  line-height: 1.3;
+}
+
+.interface-preroll-dialog .interface-preroll-mode {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.3rem;
+  min-height: 4.15rem;
+  padding-bottom: 1.25rem;
+}
+
+.interface-preroll-dialog .interface-preroll-mode__rail {
+  position: absolute;
+  right: 16.666%;
+  bottom: 0;
+  left: 16.666%;
+  --interface-slider-position: 50%;
+  z-index: 2;
+  height: 1.15rem;
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+}
+
+.interface-preroll-dialog .interface-preroll-mode__rail::before {
+  position: absolute;
+  top: calc(50% - 0.14rem);
+  right: 0;
+  left: 0;
+  height: 0.28rem;
+  border: 1px solid rgba(25, 25, 25, 0.24);
+  border-radius: 999px;
+  background: linear-gradient(
+    90deg,
+    rgba(184, 74, 58, 0.9) 0%,
+    rgba(122, 127, 135, 0.72) 50%,
+    rgba(113, 143, 120, 0.95) 100%
+  );
+  content: "";
+}
+
+.interface-preroll-dialog .interface-preroll-mode__thumb {
+  position: absolute;
+  top: 50%;
+  left: var(--interface-slider-position);
+  width: 0.9rem;
+  height: 0.9rem;
+  border: 2px solid var(--interface-paper);
+  border-radius: 50%;
+  background: var(--interface-neutral);
+  box-shadow: 0 0 0 1px rgba(25, 25, 25, 0.45), 0 2px 5px rgba(0, 0, 0, 0.25);
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  transition:
+    left 140ms ease,
+    background-color 140ms ease;
+}
+
+.interface-preroll-dialog .interface-preroll-mode:has(
+  .interface-preroll-mode__option--disadvantage input:checked
+) .interface-preroll-mode__rail {
+  --interface-slider-position: 0%;
+}
+
+.interface-preroll-dialog .interface-preroll-mode:has(
+  .interface-preroll-mode__option--disadvantage input:checked
+) .interface-preroll-mode__thumb {
+  background: #b84a3a;
+}
+
+.interface-preroll-dialog .interface-preroll-mode:has(
+  .interface-preroll-mode__option--advantage input:checked
+) .interface-preroll-mode__rail {
+  --interface-slider-position: 100%;
+}
+
+.interface-preroll-dialog .interface-preroll-mode:has(
+  .interface-preroll-mode__option--advantage input:checked
+) .interface-preroll-mode__thumb {
+  background: #718f78;
+}
+
+.interface-preroll-dialog .interface-preroll-mode__rail.is-dragging {
+  cursor: grabbing;
+}
+
+.interface-preroll-dialog
+  .interface-preroll-mode__rail.is-dragging
+  .interface-preroll-mode__thumb {
+  transition: none;
+}
+
+.interface-preroll-dialog .interface-preroll-mode__option {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  min-width: 0;
+  min-height: 2.4rem;
+  place-items: center;
+  border: 1px solid rgba(25, 25, 25, 0.22);
+  border-radius: 0.35rem;
+  background: rgba(255, 255, 255, 0.66);
+  color: var(--interface-ink);
+  cursor: pointer;
+  padding: 0.42rem 0.25rem;
+  text-align: center;
+  transition:
+    border-color 120ms ease,
+    background-color 120ms ease,
+    box-shadow 120ms ease;
+}
+
+.interface-preroll-dialog .interface-preroll-mode__option input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.interface-preroll-dialog .interface-preroll-mode__option span {
+  pointer-events: none;
+  font-size: 0.72rem;
+  font-weight: 800;
+  line-height: 1.1;
+}
+
+.interface-preroll-dialog .interface-preroll-mode__option:has(input:checked) {
+  border-color: var(--interface-neutral);
+  background: rgba(122, 127, 135, 0.16);
+  box-shadow: inset 0 -3px 0 var(--interface-neutral);
+}
+
+.interface-preroll-dialog
+  .interface-preroll-mode__option--disadvantage:has(input:checked) {
+  border-color: #b84a3a;
+  background: rgba(184, 74, 58, 0.14);
+  box-shadow: inset 0 -3px 0 #b84a3a;
+}
+
+.interface-preroll-dialog
+  .interface-preroll-mode__option--advantage:has(input:checked) {
+  border-color: #718f78;
+  background: rgba(113, 143, 120, 0.17);
+  box-shadow: inset 0 -3px 0 #718f78;
+}
+
+.interface-preroll-dialog .interface-preroll-mode__option:has(input:focus-visible) {
+  outline: 2px solid var(--interface-ink);
+  outline-offset: 2px;
+}
+
+.interface-preroll-dialog .interface-preroll__field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.interface-preroll-dialog .interface-preroll__field > span {
+  color: var(--interface-ink);
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.055em;
+  text-transform: uppercase;
+}
+
+.interface-preroll-dialog .interface-preroll__field input,
+.interface-preroll-dialog .interface-preroll__field select {
+  width: 100%;
+  border: 1px solid rgba(25, 25, 25, 0.35);
+  background: rgba(255, 255, 255, 0.9);
+  color: var(--interface-ink);
+}
+
+.interface-preroll-dialog .interface-preroll__field small {
+  color: var(--interface-muted);
+  line-height: 1.3;
 }

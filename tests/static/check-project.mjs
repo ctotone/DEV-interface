@@ -350,6 +350,55 @@ check(
   "Le bandeau noir doit regrouper les états et l’initiative."
 );
 check(
+  characterTemplate.includes("interface-state-label")
+    && characterTemplate.includes("woundState.label")
+    && characterTemplate.includes("stressState.label"),
+  "Les bulles de niveau doivent être remplacées par les libellés narratifs Blessures/Stress."
+);
+check(
+  !characterTemplate.includes("interface-state-track")
+    && !characterApplication.includes("buildStateTrack"),
+  "L’ancien affichage en six bulles de niveau doit être absent."
+);
+for (const color of [
+  "#7A7F87",
+  "#718F78",
+  "#B39A45",
+  "#C97932",
+  "#B84A3A",
+  "#762F3A"
+]) {
+  check(
+    characterApplication.includes(color),
+    `Couleur d’état absente du contexte de fiche : ${color}.`
+  );
+}
+for (const key of [
+  "INTERFACE.State.Wounds.Indemne",
+  "INTERFACE.State.Wounds.Touche",
+  "INTERFACE.State.Wounds.Meurtri",
+  "INTERFACE.State.Wounds.Blesse",
+  "INTERFACE.State.Wounds.Brisse",
+  "INTERFACE.State.Wounds.Critique",
+  "INTERFACE.State.Stress.Stable",
+  "INTERFACE.State.Stress.Tendu",
+  "INTERFACE.State.Stress.Eprouve",
+  "INTERFACE.State.Stress.Ebranle",
+  "INTERFACE.State.Stress.Submerge",
+  "INTERFACE.State.Stress.Rupture"
+]) {
+  check(
+    typeof resolveLocalization(french, key) === "string",
+    `Clé française d’état absente : ${key}.`
+  );
+}
+check(
+  read("styles/interface.css").includes(".interface .interface-state-label")
+    && read("styles/interface.css").includes("border-radius: 0.45rem")
+    && read("styles/interface.css").includes("var(--interface-state-color)"),
+  "Le libellé d’état doit être encadré, arrondi et coloré selon son palier."
+);
+check(
   characterTemplate.includes("interface-state-band__dev")
     && characterTemplate.includes("INTERFACE.Development.Temporary"),
   "Les informations temporaires de développement doivent être identifiées."
@@ -363,12 +412,239 @@ check(
   "La fiche Item doit indiquer que l’enregistrement automatique est actif."
 );
 
+const actorDocument = read("scripts/documents/interface-actor.mjs");
+const d100Service = read("scripts/services/d100-roll-service.mjs");
+const d100Engine = read("scripts/rules/d100/resolve-d100.mjs");
+const d100Destiny = read("scripts/rules/d100/resolve-destiny.mjs");
+const d100Selection = read("scripts/rules/d100/select-raw.mjs");
+const d100UnitTests = read("tests/unit/d100-engine.test.mjs");
+
+for (const requiredFile of [
+  "scripts/rules/d100/constants.mjs",
+  "scripts/rules/d100/qualify-natural.mjs",
+  "scripts/rules/d100/qualify-final.mjs",
+  "scripts/rules/d100/select-raw.mjs",
+  "scripts/rules/d100/resolve-destiny.mjs",
+  "scripts/rules/d100/compute-margin.mjs",
+  "scripts/rules/d100/resolve-d100.mjs",
+  "scripts/services/d100-roll-service.mjs",
+  "tests/unit/d100-engine.test.mjs"
+]) {
+  check(exists(requiredFile), `Composant D100 absent : ${requiredFile}`);
+}
+
+check(
+  /rollStandardD100/.test(actorDocument)
+    && /rollDerivedD100/.test(actorDocument),
+  "L’Actor doit exposer les deux adaptateurs de jet D100."
+);
+for (const action of ["rollSkill", "rollTalent", "rollDerived"]) {
+  check(
+    characterApplication.includes(`${action}:`),
+    `Action D100 absente de la fiche Actor : ${action}.`
+  );
+}
+check(
+  !characterApplication.includes("setRollMode:")
+    && !characterTemplate.includes("interface-roll-mode")
+    && !characterTemplate.includes('data-action="setRollMode"'),
+  "Le bandeau permanent de mode de jet doit être absent de la fiche Actor."
+);
+check(
+  characterTemplate.includes('data-action="rollSkill"')
+    && characterTemplate.includes('data-action="rollTalent"')
+    && characterTemplate.includes('data-action="rollDerived"'),
+  "Les déclencheurs de jet doivent être présents sur Compétences, Talents et dérivés."
+);
+check(
+  characterApplication.includes("DialogV2.input")
+    && characterApplication.includes("requestRollOptions")
+    && characterApplication.includes('name="mode"')
+    && characterApplication.includes('type="radio"')
+    && characterApplication.includes("interface-preroll-mode__option--disadvantage")
+    && characterApplication.includes("interface-preroll-mode__option--normal")
+    && characterApplication.includes("interface-preroll-mode__option--advantage")
+    && characterApplication.includes("checked")
+    && !characterApplication.includes('<select name="mode">')
+    && characterApplication.includes('name="modifier"')
+    && characterApplication.includes("INTERFACE.D100.PreRoll.Roll"),
+  "La fenêtre pré-lancer doit proposer une réglette trois positions, le bonus/malus et le lancement."
+);
+
+check(
+  characterApplication.includes("activatePreRollModeSlider")
+    && characterApplication.includes("data-interface-mode-slider")
+    && characterApplication.includes("render: activatePreRollModeSlider")
+    && characterApplication.includes('addEventListener("pointerdown"')
+    && characterApplication.includes('addEventListener("pointermove"')
+    && characterApplication.includes('addEventListener("pointerup"')
+    && characterApplication.includes("setPointerCapture")
+    && characterApplication.includes("releasePointerCapture")
+    && characterApplication.includes('style.setProperty(')
+    && characterApplication.includes('style.removeProperty("--interface-slider-position")')
+    && characterApplication.includes("Math.round(ratio * (PRE_ROLL_MODE_ORDER.length - 1))"),
+  "La réglette pré-lancer doit être réellement déplaçable à la souris entre les trois positions."
+);
+
+check(
+  characterApplication.includes("const readOnly = !canUpdateActor(this)")
+    && characterApplication.includes('addEventListener("drop", blockDocumentInteraction, true)'),
+  "La vue observateur doit être calculée localement et bloquer le glisser-déposer."
+);
+for (const readOnlyClass of [
+  "interface-character--read-only",
+  "interface-readonly-field",
+  "interface-skill__value",
+  "interface-talent__value",
+  "interface-resource__readonly",
+  "interface-readonly-text",
+  "interface-progression__readonly-dot",
+  "interface-item-row__name--readonly"
+]) {
+  check(
+    characterTemplate.includes(readOnlyClass),
+    `Élément de lecture seule absent de la fiche Actor : ${readOnlyClass}.`
+  );
+}
+check(
+  characterTemplate.includes("{{#if editable}}\n  <footer class=\"interface-sheet__footer\">"),
+  "Le pied de fiche interactif doit être absent pour un observateur."
+);
+check(
+  read("styles/interface.css").includes(
+    "Vue observateur : lecture seule locale"
+  )
+    && read("styles/interface.css").includes(
+      ".interface .interface-character--read-only details > summary"
+    ),
+  "La vue observateur doit rester plate sauf pour les sections repliables."
+);
+check(
+  /new Roll\(formula\)/.test(d100Service)
+    && /mode === D100_MODES\.NORMAL \? "1d100" : "2d100"/.test(d100Service),
+  "L’adaptateur Foundry doit utiliser 1d100 ou 2d100 selon le mode."
+);
+check(
+  /modifier = 0/.test(d100Service)
+    && /baseThreshold - statePenalty \+ situationalModifier/.test(d100Service)
+    && /threshold:\s*\{[\s\S]*modifier: situationalModifier/.test(d100Service),
+  "Le bonus/malus pré-lancer doit modifier temporairement le seuil sans clamp."
+);
+check(
+  /extractNaturalValues\(roll\)/.test(d100Service)
+    && /roll\.dice/.test(d100Service),
+  "Les résultats naturels doivent être extraits des termes du Roll Foundry."
+);
+check(
+  d100Service.indexOf("await actor.update") < d100Service.indexOf(
+    "await publishDevelopmentRoll"
+  ),
+  "L’écriture du Destin doit précéder la publication du message."
+);
+check(
+  /ACTIVE_ACTOR_ROLLS/.test(d100Service),
+  "Le service doit empêcher deux jets locaux simultanés sur le même Actor."
+);
+const publicSummarySource = d100Service.slice(
+  d100Service.indexOf("function publicSummaryHtml"),
+  d100Service.indexOf("async function publishDevelopmentRoll")
+);
+for (const secretName of ["secretRoll", "triggerChance", "criticalMinimum", "eligible"]) {
+  check(
+    !publicSummarySource.includes(secretName),
+    `La projection publique ne doit pas contenir le secret « ${secretName} ».`
+  );
+}
+check(
+  !/flags\s*:/.test(d100Service),
+  "La carte technique ne doit pas placer de diagnostic secret dans des flags publics."
+);
+check(
+  /structuredClone/.test(d100Engine)
+    && /deepFreeze/.test(d100Engine),
+  "Le moteur D100 doit protéger l’entrée et retourner un résultat immutable."
+);
+check(
+  /finalThreshold <= 5/.test(d100Destiny)
+    && /rawQualification\.automatic/.test(d100Destiny),
+  "Le Destin doit respecter le seuil <= 5 et les échecs automatiques."
+);
+check(
+  /candidate\.rank - current\.rank/.test(d100Selection)
+    && /candidate\.value < current\.value/.test(d100Selection)
+    && /candidate\.value > current\.value/.test(d100Selection),
+  "La sélection avantage/désavantage doit suivre la qualité puis le départage numérique."
+);
+for (let index = 1; index <= 20; index += 1) {
+  const scenario = `T${String(index).padStart(2, "0")}`;
+  check(
+    d100UnitTests.includes(scenario),
+    `Scénario fonctionnel absent des tests unitaires : ${scenario}.`
+  );
+}
+check(
+  read("templates/settings/interface-settings.hbs").includes(
+    "INTERFACE.Settings.DestinyInactiveWarning"
+  )
+    && resolveLocalization(
+      french,
+      "INTERFACE.Settings.DestinyInactiveWarning"
+    )?.includes("actif"),
+  "Le menu des settings doit indiquer que le moteur de Destin est actif."
+);
+
+for (const key of [
+  "INTERFACE.D100.Quality.Success",
+  "INTERFACE.D100.Quality.Failure",
+  "INTERFACE.D100.Quality.AutomaticSuccess",
+  "INTERFACE.D100.Quality.AutomaticFailure",
+  "INTERFACE.D100.Quality.AutomaticCriticalSuccess",
+  "INTERFACE.D100.Quality.AutomaticCriticalFailure",
+  "INTERFACE.D100.Quality.CriticalSuccess",
+  "INTERFACE.D100.Quality.CriticalFailure",
+  "INTERFACE.D100.Quality.SuperCriticalSuccess",
+  "INTERFACE.D100.Quality.SuperCriticalFailure"
+]) {
+  check(
+    resolveLocalization(french, key) !== undefined,
+    `Libellé français D100 absent : ${key}.`
+  );
+}
+
+
+for (const key of [
+  "INTERFACE.D100.PreRoll.Title",
+  "INTERFACE.D100.PreRoll.Mode",
+  "INTERFACE.D100.PreRoll.ModeHint",
+  "INTERFACE.D100.PreRoll.Modifier",
+  "INTERFACE.D100.PreRoll.ModifierHint",
+  "INTERFACE.D100.PreRoll.Roll",
+  "INTERFACE.D100.PreRoll.InvalidModifier"
+]) {
+  check(
+    resolveLocalization(french, key) !== undefined,
+    `Libellé français de pré-lancer absent : ${key}.`
+  );
+}
+check(
+  read("styles/interface.css").includes("interface-preroll-dialog")
+    && read("styles/interface.css").includes("interface-preroll__field")
+    && read("styles/interface.css").includes("interface-preroll-mode")
+    && read("styles/interface.css").includes("interface-preroll-mode__rail")
+    && read("styles/interface.css").includes("interface-preroll-mode__thumb")
+    && read("styles/interface.css").includes("--interface-slider-position")
+    && read("styles/interface.css").includes("cursor: grab")
+    && read("styles/interface.css").includes("touch-action: none")
+    && read("styles/interface.css").includes(":has("),
+  "La fenêtre pré-lancer doit disposer d’un style compact dédié et d’une réglette déplaçable."
+);
+
 const runtimeText = [
   ...moduleFiles.map(file => fs.readFileSync(file, "utf8")),
   read("system.json")
 ].join("\n");
 
-check(!/\bsocket\b/i.test(runtimeText), "Aucun socket ne doit être ajouté en Tranche 2.");
+check(!/\bsocket\b/i.test(runtimeText), "Aucun socket ne doit être ajouté en Tranche 3.");
 check(!/dice\s*so\s*nice|dice-so-nice/i.test(runtimeText), "Dice So Nice ne doit pas être requis.");
 check(!/roll20/i.test(runtimeText), "Aucun code ou import Roll20 ne doit être ajouté.");
 check(!/"relationships"\s*:/.test(runtimeText), "Aucune dépendance de package ne doit être déclarée.");

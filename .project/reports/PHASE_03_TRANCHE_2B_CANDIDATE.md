@@ -124,3 +124,10 @@ Les contrôles couvrent notamment :
 - le bouton manuel d’enregistrement est conservé ;
 - aucun design final des cartes de chat ou des jets n’est inclus ;
 - aucun test réel dans Foundry n’est revendiqué.
+
+
+## Correctif 1
+
+- activation du redimensionnement des fiches Actor et Item ;
+- correction de la couleur du titre **Armes** ;
+- correction de la couleur des noms des armes et objets dans les listes embarquées.
