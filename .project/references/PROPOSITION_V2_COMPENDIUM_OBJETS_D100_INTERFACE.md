@@ -1,6 +1,6 @@
 # PROPOSITION V2 — COMPENDIUM GÉNÉRIQUE DES OBJETS
 
-**Statut :** proposition enrichie - VALIDÉE 
+**Statut :** proposition enrichie  
 **Système :** D100 Interface  
 **Principe :** objets génériques, récurrents et immédiatement utiles en jeu  
 **Objectif :** couvrir les besoins fréquents sans transformer le compendium en catalogue encyclopédique
