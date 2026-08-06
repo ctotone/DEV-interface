@@ -1,0 +1,30 @@
+{
+  "_id": "HweVcXEjtEQEKt1h",
+  "name": "Craie ou marqueur",
+  "type": "equipment",
+  "img": "systems/interface/assets/compendiums/objects/exploration/1.craie marqueur.webp",
+  "system": {
+    "description": "Permet de laisser des signes, repères ou messages temporaires.",
+    "category": "ordinary",
+    "quantity": 1,
+    "damage": {
+      "formula": ""
+    }
+  },
+  "effects": [],
+  "folder": "J6vKQHVXbzY80S40",
+  "sort": 500000,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {},
+  "_stats": {
+    "coreVersion": "14.365",
+    "systemId": "interface",
+    "systemVersion": "0.1.0",
+    "createdTime": 1786046400000,
+    "modifiedTime": 1786046400000,
+    "lastModifiedBy": null
+  },
+  "_key": "!items!HweVcXEjtEQEKt1h"
+}

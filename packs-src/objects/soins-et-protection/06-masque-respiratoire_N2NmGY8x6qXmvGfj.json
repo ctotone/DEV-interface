@@ -1,0 +1,30 @@
+{
+  "_id": "N2NmGY8x6qXmvGfj",
+  "name": "Masque respiratoire",
+  "type": "equipment",
+  "img": "systems/interface/assets/compendiums/objects/care/4.masque_respiratoire.webp",
+  "system": {
+    "description": "Protection contre fumées, poussières ou atmosphères dangereuses.",
+    "category": "ordinary",
+    "quantity": 1,
+    "damage": {
+      "formula": ""
+    }
+  },
+  "effects": [],
+  "folder": "93DCVWIM2Gr4xWvs",
+  "sort": 600000,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {},
+  "_stats": {
+    "coreVersion": "14.365",
+    "systemId": "interface",
+    "systemVersion": "0.1.0",
+    "createdTime": 1786046400000,
+    "modifiedTime": 1786046400000,
+    "lastModifiedBy": null
+  },
+  "_key": "!items!N2NmGY8x6qXmvGfj"
+}

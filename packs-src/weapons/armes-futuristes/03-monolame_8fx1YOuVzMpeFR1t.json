@@ -1,0 +1,30 @@
+{
+  "_id": "8fx1YOuVzMpeFR1t",
+  "name": "Monolame",
+  "type": "equipment",
+  "img": "systems/interface/assets/compendiums/weapons/futuristic/3.Monolame.webp",
+  "system": {
+    "description": "Lame avancée dangereuse sans être automatiquement dévastatrice.",
+    "category": "weapon",
+    "quantity": 1,
+    "damage": {
+      "formula": "1D8+1"
+    }
+  },
+  "effects": [],
+  "folder": "N18qPTkR45ajfH5U",
+  "sort": 300000,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {},
+  "_stats": {
+    "coreVersion": "14.365",
+    "systemId": "interface",
+    "systemVersion": "0.1.0",
+    "createdTime": 1786046400000,
+    "modifiedTime": 1786046400000,
+    "lastModifiedBy": null
+  },
+  "_key": "!items!8fx1YOuVzMpeFR1t"
+}

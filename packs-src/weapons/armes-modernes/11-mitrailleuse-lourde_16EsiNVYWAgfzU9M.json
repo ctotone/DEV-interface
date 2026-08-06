@@ -1,0 +1,30 @@
+{
+  "_id": "16EsiNVYWAgfzU9M",
+  "name": "Mitrailleuse lourde",
+  "type": "equipment",
+  "img": "systems/interface/assets/compendiums/weapons/modern/3.Mitrailleuse lourde.webp",
+  "system": {
+    "description": "Arme automatique soutenue capable de saturer une zone.",
+    "category": "weapon",
+    "quantity": 1,
+    "damage": {
+      "formula": "3D6+1"
+    }
+  },
+  "effects": [],
+  "folder": "33oZscpYkG0OXeqJ",
+  "sort": 1100000,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {},
+  "_stats": {
+    "coreVersion": "14.365",
+    "systemId": "interface",
+    "systemVersion": "0.1.0",
+    "createdTime": 1786046400000,
+    "modifiedTime": 1786046400000,
+    "lastModifiedBy": null
+  },
+  "_key": "!items!16EsiNVYWAgfzU9M"
+}

@@ -1,0 +1,30 @@
+{
+  "_id": "xazPXFMwT1sJFKTS",
+  "name": "Canon léger",
+  "type": "equipment",
+  "img": "systems/interface/assets/compendiums/weapons/ancient/3.canon.webp",
+  "system": {
+    "description": "Pièce d’artillerie capable de ravager une cible ou une petite zone.",
+    "category": "weapon",
+    "quantity": 1,
+    "damage": {
+      "formula": "4D6+2"
+    }
+  },
+  "effects": [],
+  "folder": "IscazlkUm5jcuJvp",
+  "sort": 1400000,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {},
+  "_stats": {
+    "coreVersion": "14.365",
+    "systemId": "interface",
+    "systemVersion": "0.1.0",
+    "createdTime": 1786046400000,
+    "modifiedTime": 1786046400000,
+    "lastModifiedBy": null
+  },
+  "_key": "!items!xazPXFMwT1sJFKTS"
+}

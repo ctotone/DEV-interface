@@ -1,0 +1,30 @@
+{
+  "_id": "Z8MLLZ1s0ub60rOD",
+  "name": "Nécessaire pour le feu",
+  "type": "equipment",
+  "img": "systems/interface/assets/compendiums/objects/survival/2.necessaire feu.webp",
+  "system": {
+    "description": "Ensemble simple permettant d’allumer ou entretenir un feu.",
+    "category": "ordinary",
+    "quantity": 1,
+    "damage": {
+      "formula": ""
+    }
+  },
+  "effects": [],
+  "folder": "wr1ycSyLHxJSxQH5",
+  "sort": 700000,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {},
+  "_stats": {
+    "coreVersion": "14.365",
+    "systemId": "interface",
+    "systemVersion": "0.1.0",
+    "createdTime": 1786046400000,
+    "modifiedTime": 1786046400000,
+    "lastModifiedBy": null
+  },
+  "_key": "!items!Z8MLLZ1s0ub60rOD"
+}

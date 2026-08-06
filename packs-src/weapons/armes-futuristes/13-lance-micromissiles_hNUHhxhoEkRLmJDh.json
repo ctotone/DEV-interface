@@ -1,0 +1,30 @@
+{
+  "_id": "hNUHhxhoEkRLmJDh",
+  "name": "Lance-micromissiles",
+  "type": "equipment",
+  "img": "systems/interface/assets/compendiums/weapons/futuristic/3.Lance-micromissiles.webp",
+  "system": {
+    "description": "Système lourd projetant plusieurs charges guidées vers une cible.",
+    "category": "weapon",
+    "quantity": 1,
+    "damage": {
+      "formula": "4D8+4"
+    }
+  },
+  "effects": [],
+  "folder": "N18qPTkR45ajfH5U",
+  "sort": 1300000,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {},
+  "_stats": {
+    "coreVersion": "14.365",
+    "systemId": "interface",
+    "systemVersion": "0.1.0",
+    "createdTime": 1786046400000,
+    "modifiedTime": 1786046400000,
+    "lastModifiedBy": null
+  },
+  "_key": "!items!hNUHhxhoEkRLmJDh"
+}

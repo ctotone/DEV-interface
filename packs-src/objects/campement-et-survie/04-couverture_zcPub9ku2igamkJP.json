@@ -1,0 +1,30 @@
+{
+  "_id": "zcPub9ku2igamkJP",
+  "name": "Couverture",
+  "type": "equipment",
+  "img": "systems/interface/assets/compendiums/objects/survival/2.couverture.webp",
+  "system": {
+    "description": "Protection simple contre le froid et les intempéries.",
+    "category": "ordinary",
+    "quantity": 1,
+    "damage": {
+      "formula": ""
+    }
+  },
+  "effects": [],
+  "folder": "wr1ycSyLHxJSxQH5",
+  "sort": 400000,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {},
+  "_stats": {
+    "coreVersion": "14.365",
+    "systemId": "interface",
+    "systemVersion": "0.1.0",
+    "createdTime": 1786046400000,
+    "modifiedTime": 1786046400000,
+    "lastModifiedBy": null
+  },
+  "_key": "!items!zcPub9ku2igamkJP"
+}

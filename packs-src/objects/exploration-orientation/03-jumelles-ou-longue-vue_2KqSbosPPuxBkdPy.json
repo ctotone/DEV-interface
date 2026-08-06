@@ -1,0 +1,30 @@
+{
+  "_id": "2KqSbosPPuxBkdPy",
+  "name": "Jumelles ou longue-vue",
+  "type": "equipment",
+  "img": "systems/interface/assets/compendiums/objects/exploration/1.jumelle.webp",
+  "system": {
+    "description": "Instrument d’observation destiné à voir à grande distance.",
+    "category": "ordinary",
+    "quantity": 1,
+    "damage": {
+      "formula": ""
+    }
+  },
+  "effects": [],
+  "folder": "J6vKQHVXbzY80S40",
+  "sort": 300000,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {},
+  "_stats": {
+    "coreVersion": "14.365",
+    "systemId": "interface",
+    "systemVersion": "0.1.0",
+    "createdTime": 1786046400000,
+    "modifiedTime": 1786046400000,
+    "lastModifiedBy": null
+  },
+  "_key": "!items!2KqSbosPPuxBkdPy"
+}

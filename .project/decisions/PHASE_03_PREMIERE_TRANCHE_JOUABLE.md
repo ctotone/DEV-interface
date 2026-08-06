@@ -11,7 +11,7 @@
 - **Branche :** `main`
 - **Base de départ :** `ba2871fb2f5ec175b525535f0d31e8f3426a1b23`
 - **Dernier commit contenu dans l’archive de clôture :** `0852b3f62fafd2f0128a5ad8e3170eb791aebe39`
-- **Commit de clôture documentaire :** à renseigner après intégration et push par l’utilisateur
+- **Commit de clôture documentaire :** `72a2d32ff51661e548f3900792fca263e8b75b98`
 - **GPT principal :** GPT Foundry
 - **Coordination et consolidation :** GPT Pilote
 - **Tests réels :** utilisateur sous Foundry VTT `14.365`
@@ -217,7 +217,7 @@ Le livrable existe, les tranches annoncées ont été produites, les contrôles 
 Branche : main
 Commit présent dans l’archive : 0852b3f62fafd2f0128a5ad8e3170eb791aebe39
 Travaux de Tranche 3B : présents dans l’arbre de travail
-Commit de clôture : à communiquer après intégration et push
+Commit de clôture : 72a2d32ff51661e548f3900792fca263e8b75b98
 Version : 0.1.0
 ```
 
@@ -231,6 +231,126 @@ Avant d’ouvrir une nouvelle tranche de développement, la roadmap des phases 0
 - ce qui reste réellement à développer ;
 - ce qui relève de la finition, des tests ou du design.
 
-# 13. Prochaine action
+# 13. Prochaine action au moment de la clôture
 
-Après intégration et push de cette clôture, communiquer le nouveau hash à GPT Pilote afin d’établir la base d’autorité et de recalibrer la phase 04.
+L’intégration et le push de clôture ont été réalisés par l’utilisateur.
+
+```text
+Commit de clôture de la phase 03 :
+72a2d32ff51661e548f3900792fca263e8b75b98
+```
+
+La phase 04 n’a pas encore été ouverte.
+
+# 14. Addendum post-clôture — Compendiums d’armes et d’objets
+
+## 14.1 Qualification
+
+```text
+Nature : complément post-clôture de la phase 03
+Statut : VALIDÉ PAR L’UTILISATEUR
+Réouverture de la phase 03 : NON
+Ouverture de la phase 04 : NON
+Publication : NON ENGAGÉE
+```
+
+Ce complément enrichit la base jouable avant le recalibrage de la phase 04. Il ne modifie pas le statut historique de la phase 03 ni son commit de clôture.
+
+## 14.2 Base et validation
+
+```text
+Commit de clôture historique de la phase 03 :
+72a2d32ff51661e548f3900792fca263e8b75b98
+
+Dernier commit observé avant intégration du complément :
+7d7e7d7cb994951fa41cba9f6520a591900c7dfe
+
+Commit d’intégration du complément :
+à communiquer après intégration et push par l’utilisateur
+
+Foundry réellement testé :
+14.365
+
+Tests utilisateur compendiums :
+T1 à T11 — OK
+
+Contrôles hors Foundry :
+718 réussis
+```
+
+## 14.3 Résultat ajouté
+
+Deux compendiums système natifs ont été produits et validés :
+
+```text
+Objets
+Collection : interface.objects
+Contenu    : 60 Items equipment / category ordinary
+Dossiers   : 8
+
+Armes
+Collection : interface.weapons
+Contenu    : 42 Items equipment / category weapon
+Dossiers   : 3
+```
+
+Les identifiants `interface.objects` et `interface.weapons`, les IDs des 102 Items et les IDs des 11 dossiers sont désormais structurants.
+
+L’arbitrage utilisateur suivant est intégré :
+
+```text
+Nom final : Mitrailleuse lourde
+Formule   : 3D6+1
+```
+
+Les 102 descriptions sont enregistrées en texte brut, sans balises HTML visibles.
+
+## 14.4 Chaîne de production validée
+
+```text
+packs-src/
+→ sources JSON lisibles et modifiables
+
+tools/build-compendiums.mjs
+→ reconstruction contrôlée
+
+packs/
+→ bases installables Foundry
+```
+
+Une reconstruction doit partir de `packs-src/` puis être suivie des contrôles du projet. Les bases produites ne doivent pas devenir la seule source de vérité éditoriale.
+
+## 14.5 Invariants conservés
+
+Ce complément n’ajoute aucun nouveau :
+
+- DataModel ;
+- type d’Actor ou d’Item ;
+- setting ;
+- flag ;
+- socket ;
+- schéma ;
+- mécanisme de migration ;
+- dépendance ;
+- contrat d’API publique.
+
+La version package reste `0.1.0` et la version de schéma reste `1`.
+
+## 14.6 Observation méthodologique
+
+**[CANDIDATE D’ÉVOLUTION — outillage transversal Foundry]**
+
+Les outils de validation, de chargement isolé, de tests unitaires, de construction de compendiums et de contrôle d’archive montrent un potentiel de réutilisation.
+
+Ils ne sont pas transformés à ce stade en framework permanent. Leur valeur générique devra être évaluée en fin de projet à partir :
+
+- de leur usage réel sur l’ensemble du projet Interface ;
+- du temps et des erreurs économisés ;
+- des adaptations propres à Interface ;
+- d’un éventuel second projet de comparaison ;
+- du REX préparé par GPT Foundry à destination de GPT Architecte.
+
+## 14.7 Conséquence pour la suite
+
+La phase 04 devra partir de la base incluant ce complément. Elle ne devra pas recréer les compendiums, leurs identifiants, leur contenu ni leur chaîne de reconstruction.
+

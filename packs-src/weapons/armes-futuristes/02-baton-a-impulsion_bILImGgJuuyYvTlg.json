@@ -1,0 +1,30 @@
+{
+  "_id": "bILImGgJuuyYvTlg",
+  "name": "Bâton à impulsion",
+  "type": "equipment",
+  "img": "systems/interface/assets/compendiums/weapons/futuristic/3.Bâton à impulsion.webp",
+  "system": {
+    "description": "Arme de contact destinée à neutraliser sans produire de Blessures.",
+    "category": "weapon",
+    "quantity": 1,
+    "damage": {
+      "formula": "0"
+    }
+  },
+  "effects": [],
+  "folder": "N18qPTkR45ajfH5U",
+  "sort": 200000,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {},
+  "_stats": {
+    "coreVersion": "14.365",
+    "systemId": "interface",
+    "systemVersion": "0.1.0",
+    "createdTime": 1786046400000,
+    "modifiedTime": 1786046400000,
+    "lastModifiedBy": null
+  },
+  "_key": "!items!bILImGgJuuyYvTlg"
+}

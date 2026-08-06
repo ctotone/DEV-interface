@@ -175,6 +175,44 @@ Tranche 3B — Assistant de création et ergonomie complémentaire : VALIDÉE
 
 ---
 
+
+## Complément post-clôture de la phase 03 — Compendiums d’armes et d’objets
+
+**Statut :** VALIDÉ
+
+**GPT principal :** GPT Foundry  
+**Tests réels :** utilisateur  
+**Commit de clôture historique de la phase 03 :** `72a2d32ff51661e548f3900792fca263e8b75b98`
+
+### Qualification
+
+Ce travail est un complément intercalaire validé. Il ne rouvre pas la phase 03 et n’ouvre pas la phase 04.
+
+### Résultat
+
+- compendium `interface.objects` : 60 objets, 8 dossiers ;
+- compendium `interface.weapons` : 42 armes, 3 dossiers ;
+- 102 images dédiées et deux bannières ;
+- sources lisibles sous `packs-src/` ;
+- reconstruction contrôlée avec `tools/build-compendiums.mjs` ;
+- descriptions en texte brut ;
+- tests Foundry T1 à T11 validés ;
+- 718 contrôles hors Foundry réussis.
+
+### Conséquence
+
+La phase 04 partira de la base intégrant ce complément. Les compendiums, leurs identifiants et leur chaîne de production ne doivent pas être recréés.
+
+### Livrables
+
+```text
+.project/decisions/COMPENDIUMS_SYSTEME_OBJETS_ARMES.md
+.project/reports/COMPENDIUMS_SYSTEME_CANDIDATE.md
+tests/protocols/COMPENDIUMS_SYSTEME_FOUNDRY_V14_365.md
+```
+
+---
+
 ## Phase 04 — États, Destin et réglages MJ
 
 **Statut :** PROCHAINE — PÉRIMÈTRE À RECALIBRER
@@ -211,7 +249,9 @@ La phase 04 ne doit pas réimplémenter les éléments validés en phase 03.
 - bonus d’initiative dérivé ;
 - Items `ordinary | weapon` ;
 - sections Inventaire et Armes ;
-- formules de dégâts persistées sur les armes.
+- formules de dégâts persistées sur les armes ;
+- compendium `interface.weapons` validé avec 42 armes ;
+- compendium `interface.objects` validé avec 60 objets.
 
 ### Reste principalement à traiter
 
@@ -315,6 +355,7 @@ Préparer une première version publiable seulement lorsque le système est stab
 + 01 Personnage, équipement et conflits
 → 02 Architecture Foundry
 → 03 Première tranche jouable
+→ complément post-clôture : compendiums d’armes et d’objets
 → recalibrage 04–06 selon la base réelle
 → 04 États, Destin et réglages MJ
 → 05 Conflits, initiative et armes

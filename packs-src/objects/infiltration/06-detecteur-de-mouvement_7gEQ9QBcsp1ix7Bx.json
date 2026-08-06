@@ -1,0 +1,30 @@
+{
+  "_id": "7gEQ9QBcsp1ix7Bx",
+  "name": "Détecteur de mouvement",
+  "type": "equipment",
+  "img": "systems/interface/assets/compendiums/objects/security/7.Détecteur de mouvement.webp",
+  "system": {
+    "description": "Appareil signalant une présence ou un déplacement dans une zone.",
+    "category": "ordinary",
+    "quantity": 1,
+    "damage": {
+      "formula": ""
+    }
+  },
+  "effects": [],
+  "folder": "QbHsXNfS6xY25vkh",
+  "sort": 600000,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {},
+  "_stats": {
+    "coreVersion": "14.365",
+    "systemId": "interface",
+    "systemVersion": "0.1.0",
+    "createdTime": 1786046400000,
+    "modifiedTime": 1786046400000,
+    "lastModifiedBy": null
+  },
+  "_key": "!items!7gEQ9QBcsp1ix7Bx"
+}

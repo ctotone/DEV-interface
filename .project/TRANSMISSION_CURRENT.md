@@ -2,12 +2,13 @@
 
 **Dernière mise à jour :** 6 août 2026  
 **Coordinateur :** GPT Pilote  
-**Spécialiste principal de la phase clôturée :** GPT Foundry  
+**Spécialiste principal du dernier complément :** GPT Foundry  
 **Identifiant technique :** `interface`  
 **Dépôt :** `ctotone/DEV-interface`  
 **Branche :** `main`  
-**Dernier commit contenu dans l’archive :** `0852b3f62fafd2f0128a5ad8e3170eb791aebe39`  
-**Commit de clôture de phase 03 :** à communiquer après intégration et push
+**Commit de clôture de la phase 03 :** `72a2d32ff51661e548f3900792fca263e8b75b98`  
+**Dernier commit observé avant intégration des compendiums :** `7d7e7d7cb994951fa41cba9f6520a591900c7dfe`  
+**Commit d’intégration du complément :** à communiquer après intégration et push
 
 ## Finalité
 
@@ -17,27 +18,25 @@ Créer un système Foundry VTT générique, léger et orienté narration pour le
 
 ```text
 Phases 00A, 00B, 01, 02 et 03 : VALIDÉES
-Tranches 1, 2, 2B, 3 et 3B : VALIDÉES
+Phase 03 : CLÔTURÉE
+Complément post-clôture — Compendiums d’armes et d’objets : VALIDÉ
 Version package : 0.1.0
 Version schéma : 1
-Tests Foundry utilisateur T1 à T35 : OK
-Contrôles hors Foundry : 390 OK
 Publication : NON ENGAGÉE
 ```
 
 ## Base de reprise
 
-Utiliser l’archive complète issue de la clôture de phase 03.
+Utiliser la présente archive complète.
 
-```text
-Dépôt : ctotone/DEV-interface
-Branche : main
-Commit présent dans l’archive : 0852b3f62fafd2f0128a5ad8e3170eb791aebe39
-Travaux de Tranche 3B : présents et validés dans l’arbre de travail
-Commit de clôture : à renseigner après le push utilisateur
-```
+Elle contient :
 
-Un décalage temporaire entre le hash documentaire, le ZIP et le dernier push est normal dans le cycle d’échange du projet.
+- la base technique issue du commit `7d7e7d7cb994951fa41cba9f6520a591900c7dfe` ;
+- les compendiums validés et leurs sources ;
+- les corrections de descriptions en texte brut ;
+- la consolidation documentaire du complément.
+
+Le futur commit d’intégration remplacera cette archive comme base distante de reprise, sans remplacer le commit historique de clôture de la phase 03.
 
 ## Ordre de lecture
 
@@ -45,105 +44,104 @@ Un décalage temporaire entre le hash documentaire, le ZIP et le dernier push es
 2. `.project/PROJECT_STATE.md` ;
 3. `.project/ROADMAP.md` ;
 4. `.project/decisions/PHASE_03_PREMIERE_TRANCHE_JOUABLE.md` ;
-5. `.project/specification/PHASE_02_ARCHITECTURE_FOUNDRY_INTERFACE.md` ;
-6. spécifications 00A et 01 selon le sujet.
+5. `.project/decisions/COMPENDIUMS_SYSTEME_OBJETS_ARMES.md` ;
+6. `.project/reports/COMPENDIUMS_SYSTEME_CANDIDATE.md` ;
+7. `tests/protocols/COMPENDIUMS_SYSTEME_FOUNDRY_V14_365.md` ;
+8. spécifications 00A, 01 et 02 selon le sujet.
 
 ## État stable obtenu
 
 - système installable sous Foundry V14 ;
 - Actor `character` et Item `equipment` ;
-- feuilles Actor et Item ;
-- six Compétences, dix-huit Talents et ressources ;
-- données dérivées et settings mondiaux ;
-- moteur D100 complet pour normal, avantage et désavantage ;
-- Destin et marges ;
-- assistant de création avec `flags.interface.creation.pending` ;
-- Items embarqués, Inventaire et Armes ;
-- assets WebP par défaut ;
-- première ergonomie fonctionnelle de la fiche ;
-- permissions validées pour les usages testés.
+- moteur D100, Destin et marges ;
+- assistant de création ;
+- fiche Actor et fiche Item ;
+- Inventaire et Armes ;
+- deux compendiums natifs :
+  - `interface.objects` ;
+  - `interface.weapons` ;
+- 60 objets et 42 armes ;
+- 11 dossiers ;
+- 102 descriptions en texte brut ;
+- sources lisibles sous `packs-src/` ;
+- reconstruction par `tools/build-compendiums.mjs`.
 
-## Décisions impératives de phase 03
+## Décisions impératives du complément
 
-### Création
+### Identifiants
 
 ```text
-Créer un personnage
-→ créer immédiatement un Actor character
-→ poser flags.interface.creation.pending = true
-→ sauvegarder progressivement sur cet Actor
-→ retirer le flag à la validation finale
-→ ouvrir la fiche classique du même Actor
+Objets : interface.objects
+Armes  : interface.weapons
 ```
 
-### Jets
+Ne pas les renommer sans migration et analyse d’impact.
 
-- les Compétences ne sont pas cliquables dans l’interface actuelle ;
-- les Talents lancent le jet standard associé ;
-- les valeurs de Combat lancent les jets dérivés ;
-- le seuil n’est pas plafonné à `100`.
+### Source de vérité
 
-### Inventaire
+```text
+packs-src/
+→ modification et revue humaines
 
-- les objets ordinaires sont affichés dans Inventaire ;
-- les armes sont affichées dans Armes ;
-- aucune duplication visuelle ;
-- suppression après confirmation explicite.
+tools/build-compendiums.mjs
+→ reconstruction contrôlée
 
-### Données et architecture
+packs/
+→ bases Foundry installables
+```
 
-- Compétences : `0 à 100` ;
-- Talents : `0 à 30` ;
-- Actor unique : `character` ;
-- Item unique : `equipment` ;
-- catégories : `ordinary | weapon` ;
-- version de schéma : `1` ;
-- aucun socket, import Roll20 ou dépendance externe.
+Ne pas modifier uniquement les bases compilées en oubliant les sources.
+
+### Contenu
+
+- `Mitrailleuse lourde` conserve la formule `3D6+1` ;
+- les descriptions restent en texte brut tant que la fiche Item utilise une zone de texte simple ;
+- les prompts de génération d’images ne sont pas intégrés aux descriptions visibles.
+
+## Validations
+
+```text
+Tests Foundry T1 à T11 : OK
+Contrôles hors Foundry : 718 OK
+Modules JavaScript vérifiés : 22
+Tests unitaires : 3
+Chargement isolé et enregistrements init simulés : OK
+```
+
+Les outils automatiques ne remplacent pas les futurs tests joueur, multijoueur ou de publication.
 
 ## Éléments non finalisés
 
-- cartes de chat définitives ;
+- cartes de chat finales ;
 - dégâts depuis le chat ;
 - initiative complète ;
 - progression assistée ;
 - Dice So Nice ;
 - migrations ;
-- verrouillage des écritures concurrentes ;
+- concurrence d’écriture ;
 - identité visuelle finale ;
-- stabilisation et publication.
+- stabilisation ;
+- audit des droits et de la publication.
 
-## Anticipations à prendre en compte
+## Observation méthodologique
 
-La phase 03 a anticipé :
+**[CANDIDATE D’ÉVOLUTION — outillage transversal Foundry]**
 
-- une grande partie de la phase 04 ;
-- une partie du socle de la phase 05 ;
-- une partie importante de l’ergonomie prévue en phase 06.
-
-Ne pas recommencer ces éléments. Recalibrer le reste des phases 04 à 06 à partir de la base réelle.
+Les outils créés pour Interface pourront être évalués en fin de projet selon leur apport réel. Aucune transformation en framework permanent n’est décidée. Un REX séparé de GPT Foundry vers GPT Architecte est annoncé et devra être relié à cette observation lorsqu’il sera disponible.
 
 ## Responsabilités
 
 - **Utilisateur :** tests réels, validation, intégration Git, commits, push, version et publication.
-- **GPT Pilote :** coordination, consolidation, roadmap et transmissions.
-- **GPT Foundry :** développement et tests techniques Foundry.
-- **GPT Visuel :** contribution future à l’identité visuelle lorsque la phase correspondante sera ouverte.
+- **GPT Pilote :** consolidation, recalibrage de roadmap et transmissions.
+- **GPT Foundry :** développement Foundry et REX technique.
+- **GPT Architecte :** évaluation ultérieure de l’intérêt transversal de l’outillage.
 
 ## Conventions opérationnelles des archives
 
-- les archives entrantes peuvent contenir `.git/` et `.gitignore` ;
-- un suffixe automatique dans le nom du ZIP n’indique pas une version fonctionnelle ;
-- un écart de hash n’est signalé que s’il révèle une divergence réelle de contenu ou de branche ;
-- les archives livrées par les GPT sont complètes et n’annoncent jamais un commit ou un push non réalisé.
-
-## Référence historique
-
-La version PDF historique a été remplacée par :
-
-```text
-.project/references/systeme de jeu Interface.md
-```
+- `.git/` et `.gitignore` peuvent être présents dans les archives entrantes et sont ignorés silencieusement ;
+- un suffixe automatique du ZIP n’indique pas une version ;
+- les écarts de hash ne sont signalés qu’en cas de divergence réelle de contenu, de branche ou de base.
 
 ## Prochaine action exacte
 
-Après intégration et push, communiquer le nouveau hash de clôture à GPT Pilote, puis recalibrer la phase 04 avant toute nouvelle tranche de développement.
+Intégrer cette archive, effectuer le commit et le push du complément post-clôture, puis communiquer le nouveau hash à GPT Pilote.

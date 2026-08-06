@@ -1,0 +1,30 @@
+{
+  "_id": "Gvl7fkLMXqZS5RTI",
+  "name": "Matériel d’écriture",
+  "type": "equipment",
+  "img": "systems/interface/assets/compendiums/objects/communication/5.Matériel d’écriture.webp",
+  "system": {
+    "description": "Carnet, papier et instruments permettant de prendre des notes.",
+    "category": "ordinary",
+    "quantity": 1,
+    "damage": {
+      "formula": ""
+    }
+  },
+  "effects": [],
+  "folder": "UzR3uoKqVp96ylRh",
+  "sort": 500000,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {},
+  "_stats": {
+    "coreVersion": "14.365",
+    "systemId": "interface",
+    "systemVersion": "0.1.0",
+    "createdTime": 1786046400000,
+    "modifiedTime": 1786046400000,
+    "lastModifiedBy": null
+  },
+  "_key": "!items!Gvl7fkLMXqZS5RTI"
+}

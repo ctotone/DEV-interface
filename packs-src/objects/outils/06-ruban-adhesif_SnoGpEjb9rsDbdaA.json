@@ -1,0 +1,30 @@
+{
+  "_id": "SnoGpEjb9rsDbdaA",
+  "name": "Ruban adhésif",
+  "type": "equipment",
+  "img": "systems/interface/assets/compendiums/objects/tools/3.Ruban adhésif.webp",
+  "system": {
+    "description": "Matériau de fixation rapide permettant de renforcer ou réparer provisoirement.",
+    "category": "ordinary",
+    "quantity": 1,
+    "damage": {
+      "formula": ""
+    }
+  },
+  "effects": [],
+  "folder": "5YTqIeRZk87lEzBm",
+  "sort": 600000,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {},
+  "_stats": {
+    "coreVersion": "14.365",
+    "systemId": "interface",
+    "systemVersion": "0.1.0",
+    "createdTime": 1786046400000,
+    "modifiedTime": 1786046400000,
+    "lastModifiedBy": null
+  },
+  "_key": "!items!SnoGpEjb9rsDbdaA"
+}

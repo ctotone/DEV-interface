@@ -1,0 +1,30 @@
+{
+  "_id": "yVq6FSpnC5pz8Iaa",
+  "name": "Générateur portable",
+  "type": "equipment",
+  "img": "systems/interface/assets/compendiums/objects/technical/8.generateur.webp",
+  "system": {
+    "description": "Source autonome d’énergie destinée à alimenter temporairement du matériel.",
+    "category": "ordinary",
+    "quantity": 1,
+    "damage": {
+      "formula": ""
+    }
+  },
+  "effects": [],
+  "folder": "uIyDpqEels56bxtK",
+  "sort": 400000,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {},
+  "_stats": {
+    "coreVersion": "14.365",
+    "systemId": "interface",
+    "systemVersion": "0.1.0",
+    "createdTime": 1786046400000,
+    "modifiedTime": 1786046400000,
+    "lastModifiedBy": null
+  },
+  "_key": "!items!yVq6FSpnC5pz8Iaa"
+}

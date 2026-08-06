@@ -1,0 +1,30 @@
+{
+  "_id": "VQvXug1mK0KxK6pP",
+  "name": "Sifflet",
+  "type": "equipment",
+  "img": "systems/interface/assets/compendiums/objects/exploration/1.sifflet.webp",
+  "system": {
+    "description": "Petit instrument destiné à attirer l’attention à distance.",
+    "category": "ordinary",
+    "quantity": 1,
+    "damage": {
+      "formula": ""
+    }
+  },
+  "effects": [],
+  "folder": "J6vKQHVXbzY80S40",
+  "sort": 700000,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {},
+  "_stats": {
+    "coreVersion": "14.365",
+    "systemId": "interface",
+    "systemVersion": "0.1.0",
+    "createdTime": 1786046400000,
+    "modifiedTime": 1786046400000,
+    "lastModifiedBy": null
+  },
+  "_key": "!items!VQvXug1mK0KxK6pP"
+}

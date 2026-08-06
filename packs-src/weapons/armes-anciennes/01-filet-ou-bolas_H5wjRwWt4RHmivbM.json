@@ -1,0 +1,30 @@
+{
+  "_id": "H5wjRwWt4RHmivbM",
+  "name": "Filet ou bolas",
+  "type": "equipment",
+  "img": "systems/interface/assets/compendiums/weapons/ancient/2.Filet ou bolas.webp",
+  "system": {
+    "description": "Arme d’entrave destinée à immobiliser plutôt qu’à blesser.",
+    "category": "weapon",
+    "quantity": 1,
+    "damage": {
+      "formula": "0"
+    }
+  },
+  "effects": [],
+  "folder": "IscazlkUm5jcuJvp",
+  "sort": 100000,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {},
+  "_stats": {
+    "coreVersion": "14.365",
+    "systemId": "interface",
+    "systemVersion": "0.1.0",
+    "createdTime": 1786046400000,
+    "modifiedTime": 1786046400000,
+    "lastModifiedBy": null
+  },
+  "_key": "!items!H5wjRwWt4RHmivbM"
+}

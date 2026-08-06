@@ -1,0 +1,30 @@
+{
+  "_id": "Z3coBiYhOcrjkweb",
+  "name": "Lampe portable",
+  "type": "equipment",
+  "img": "systems/interface/assets/compendiums/objects/exploration/1.lampe.webp",
+  "system": {
+    "description": "Source de lumière transportable, adaptée à l’époque de jeu.",
+    "category": "ordinary",
+    "quantity": 1,
+    "damage": {
+      "formula": ""
+    }
+  },
+  "effects": [],
+  "folder": "J6vKQHVXbzY80S40",
+  "sort": 400000,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {},
+  "_stats": {
+    "coreVersion": "14.365",
+    "systemId": "interface",
+    "systemVersion": "0.1.0",
+    "createdTime": 1786046400000,
+    "modifiedTime": 1786046400000,
+    "lastModifiedBy": null
+  },
+  "_key": "!items!Z3coBiYhOcrjkweb"
+}

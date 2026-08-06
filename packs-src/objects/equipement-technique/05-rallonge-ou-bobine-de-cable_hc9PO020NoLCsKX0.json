@@ -1,0 +1,30 @@
+{
+  "_id": "hc9PO020NoLCsKX0",
+  "name": "Rallonge ou bobine de câble",
+  "type": "equipment",
+  "img": "systems/interface/assets/compendiums/objects/technical/8.rallonge.webp",
+  "system": {
+    "description": "Câble permettant de déporter une alimentation ou une connexion.",
+    "category": "ordinary",
+    "quantity": 1,
+    "damage": {
+      "formula": ""
+    }
+  },
+  "effects": [],
+  "folder": "uIyDpqEels56bxtK",
+  "sort": 500000,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {},
+  "_stats": {
+    "coreVersion": "14.365",
+    "systemId": "interface",
+    "systemVersion": "0.1.0",
+    "createdTime": 1786046400000,
+    "modifiedTime": 1786046400000,
+    "lastModifiedBy": null
+  },
+  "_key": "!items!hc9PO020NoLCsKX0"
+}

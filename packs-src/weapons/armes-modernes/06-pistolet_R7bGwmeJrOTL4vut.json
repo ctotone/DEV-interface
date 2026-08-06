@@ -1,0 +1,30 @@
+{
+  "_id": "R7bGwmeJrOTL4vut",
+  "name": "Pistolet",
+  "type": "equipment",
+  "img": "systems/interface/assets/compendiums/weapons/modern/3.pistolet.webp",
+  "system": {
+    "description": "Arme de poing semi-automatique polyvalente.",
+    "category": "weapon",
+    "quantity": 1,
+    "damage": {
+      "formula": "1D8+1"
+    }
+  },
+  "effects": [],
+  "folder": "33oZscpYkG0OXeqJ",
+  "sort": 600000,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {},
+  "_stats": {
+    "coreVersion": "14.365",
+    "systemId": "interface",
+    "systemVersion": "0.1.0",
+    "createdTime": 1786046400000,
+    "modifiedTime": 1786046400000,
+    "lastModifiedBy": null
+  },
+  "_key": "!items!R7bGwmeJrOTL4vut"
+}

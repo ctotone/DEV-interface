@@ -1,0 +1,30 @@
+{
+  "_id": "j3M6uksLfv3bivNn",
+  "name": "Fusil de précision",
+  "type": "equipment",
+  "img": "systems/interface/assets/compendiums/weapons/modern/3.fusil de précision.webp",
+  "system": {
+    "description": "Arme longue conçue pour délivrer un tir précis et très puissant.",
+    "category": "weapon",
+    "quantity": 1,
+    "damage": {
+      "formula": "2D10+2"
+    }
+  },
+  "effects": [],
+  "folder": "33oZscpYkG0OXeqJ",
+  "sort": 1200000,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {},
+  "_stats": {
+    "coreVersion": "14.365",
+    "systemId": "interface",
+    "systemVersion": "0.1.0",
+    "createdTime": 1786046400000,
+    "modifiedTime": 1786046400000,
+    "lastModifiedBy": null
+  },
+  "_key": "!items!j3M6uksLfv3bivNn"
+}

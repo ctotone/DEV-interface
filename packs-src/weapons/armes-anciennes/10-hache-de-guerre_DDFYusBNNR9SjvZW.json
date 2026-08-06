@@ -1,0 +1,30 @@
+{
+  "_id": "DDFYusBNNR9SjvZW",
+  "name": "Hache de guerre",
+  "type": "equipment",
+  "img": "systems/interface/assets/compendiums/weapons/ancient/3.hache de guerre.webp",
+  "system": {
+    "description": "Arme lourde concentrant sa puissance sur un tranchant court.",
+    "category": "weapon",
+    "quantity": 1,
+    "damage": {
+      "formula": "1D10+1"
+    }
+  },
+  "effects": [],
+  "folder": "IscazlkUm5jcuJvp",
+  "sort": 1000000,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {},
+  "_stats": {
+    "coreVersion": "14.365",
+    "systemId": "interface",
+    "systemVersion": "0.1.0",
+    "createdTime": 1786046400000,
+    "modifiedTime": 1786046400000,
+    "lastModifiedBy": null
+  },
+  "_key": "!items!DDFYusBNNR9SjvZW"
+}

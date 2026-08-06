@@ -1,0 +1,30 @@
+{
+  "_id": "LXOC0gClAZqIAjiB",
+  "name": "Batterie ou accumulateur",
+  "type": "equipment",
+  "img": "systems/interface/assets/compendiums/objects/technical/8.batterie.webp",
+  "system": {
+    "description": "Réserve portable d’énergie adaptée à différents équipements.",
+    "category": "ordinary",
+    "quantity": 1,
+    "damage": {
+      "formula": ""
+    }
+  },
+  "effects": [],
+  "folder": "uIyDpqEels56bxtK",
+  "sort": 100000,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {},
+  "_stats": {
+    "coreVersion": "14.365",
+    "systemId": "interface",
+    "systemVersion": "0.1.0",
+    "createdTime": 1786046400000,
+    "modifiedTime": 1786046400000,
+    "lastModifiedBy": null
+  },
+  "_key": "!items!LXOC0gClAZqIAjiB"
+}

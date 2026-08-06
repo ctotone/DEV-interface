@@ -1,0 +1,30 @@
+{
+  "_id": "PohXUT5J7euSoO5c",
+  "name": "Menottes ou liens de contention",
+  "type": "equipment",
+  "img": "systems/interface/assets/compendiums/objects/security/7.menottes.webp",
+  "system": {
+    "description": "Dispositif servant à retenir ou entraver une personne.",
+    "category": "ordinary",
+    "quantity": 1,
+    "damage": {
+      "formula": ""
+    }
+  },
+  "effects": [],
+  "folder": "QbHsXNfS6xY25vkh",
+  "sort": 200000,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {},
+  "_stats": {
+    "coreVersion": "14.365",
+    "systemId": "interface",
+    "systemVersion": "0.1.0",
+    "createdTime": 1786046400000,
+    "modifiedTime": 1786046400000,
+    "lastModifiedBy": null
+  },
+  "_key": "!items!PohXUT5J7euSoO5c"
+}

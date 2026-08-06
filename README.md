@@ -3,16 +3,17 @@
 Dépôt de développement du **Système D100 Interface** pour Foundry VTT.
 
 ```text
-Identifiant technique : interface
-Dépôt                : ctotone/DEV-interface
-Branche              : main
-Version package      : 0.1.0
-Version schéma       : 1
-Dernier commit inclus:
-0852b3f62fafd2f0128a5ad8e3170eb791aebe39
+Identifiant technique              : interface
+Dépôt                              : ctotone/DEV-interface
+Branche                            : main
+Version package                    : 0.1.0
+Version schéma                     : 1
+Commit de clôture de la phase 03   : 72a2d32ff51661e548f3900792fca263e8b75b98
+Dernier commit observé dans la base: 7d7e7d7cb994951fa41cba9f6520a591900c7dfe
+Commit d’intégration compendiums   : à communiquer après push
 ```
 
-Le commit de clôture de la phase 03 sera renseigné après intégration et push par l’utilisateur.
+Le commit de clôture historique de la phase 03 est fixé. Le complément compendiums attend son propre commit d’intégration.
 
 ## Statut
 
@@ -21,7 +22,8 @@ Phase 00A — Résolution des jets : VALIDÉE
 Phase 00B — Cadrage produit et dépôt : VALIDÉE
 Phase 01 — Personnage, équipement et conflits : VALIDÉE
 Phase 02 — Architecture Foundry : VALIDÉE
-Phase 03 — Première tranche jouable : VALIDÉE
+Phase 03 — Première tranche jouable : VALIDÉE ET CLÔTURÉE
+Complément post-clôture — Compendiums d’armes et d’objets : VALIDÉ
 Phase 04 — États, Destin et réglages MJ : PROCHAINE, À RECALIBRER
 Publication : NON ENGAGÉE
 ```
@@ -43,16 +45,47 @@ La version `0.1.0` comprend :
 - un assistant de création de personnage ;
 - une fiche Actor et une fiche Item utilisables ;
 - des assets WebP par défaut ;
+- deux compendiums système natifs : **Objets** et **Armes** ;
+- 60 objets ordinaires et 42 armes illustrés ;
 - un premier rendu technique des jets dans le chat.
 
-## Validation de phase 03
+
+## Compendiums système
 
 ```text
-Tranches 1, 2, 2B, 3 et 3B : VALIDÉES
-Tests Foundry utilisateur T1 à T35 : OK
-Contrôles hors Foundry : 390 OK
-Modules JavaScript vérifiés : 22
-Tests unitaires : 3
+Objets
+ID technique : objects
+Collection   : interface.objects
+Contenu      : 60 Items equipment / category ordinary
+Dossiers     : 8
+
+Armes
+ID technique : weapons
+Collection   : interface.weapons
+Contenu      : 42 Items equipment / category weapon
+Dossiers     : 3
+```
+
+Les entrées utilisent les icônes présentes sous `assets/compendiums/`.
+Les sources JSON sont conservées sous `packs-src/` et les bases LevelDB
+installables sous `packs/`.
+
+La décision utilisateur **Mitrailleuse lourde** remplace le nom
+**Mitrailleuse légère** de la proposition d’armes, sans modifier sa formule
+`3D6+1`.
+
+## Validations
+
+```text
+Phase 03
+- Tranches 1, 2, 2B, 3 et 3B : VALIDÉES
+- Tests Foundry utilisateur T1 à T35 : OK
+
+Complément compendiums
+- Tests Foundry utilisateur T1 à T11 : OK
+- Contrôles hors Foundry : 718 OK
+- Modules JavaScript vérifiés : 22
+- Tests unitaires : 3
 ```
 
 Les protocoles et rapports techniques sont conservés dans :
@@ -117,7 +150,8 @@ Document d’autorité :
 ├── PHASE_00B_CADRAGE_PRODUIT_ET_DEPOT.md
 ├── PHASE_01_PERSONNAGE_EQUIPEMENT_CONFLITS.md
 ├── PHASE_02_ARCHITECTURE_FOUNDRY.md
-└── PHASE_03_PREMIERE_TRANCHE_JOUABLE.md
+├── PHASE_03_PREMIERE_TRANCHE_JOUABLE.md
+└── COMPENDIUMS_SYSTEME_OBJETS_ARMES.md
 ```
 
 La référence historique des règles est désormais disponible en Markdown :
@@ -131,6 +165,8 @@ La référence historique des règles est désormais disponible en Markdown :
 ```text
 .project/       mémoire, décisions, spécifications et rapports
 assets/         images du système
+packs/          compendiums LevelDB installables
+packs-src/      sources JSON humaines des compendiums
 lang/           localisation française
 scripts/        données, Documents, règles, services et applications
 styles/         styles du système
@@ -163,4 +199,4 @@ Lire dans cet ordre :
 .project/decisions/PHASE_03_PREMIERE_TRANCHE_JOUABLE.md
 ```
 
-Avant tout nouveau développement, recalibrer les phases 04 à 06 afin de ne pas reproduire les éléments déjà validés en phase 03.
+Après le commit d’intégration des compendiums, recalibrer les phases 04 à 06 afin de ne pas reproduire les éléments déjà validés en phase 03 ni le complément post-clôture.

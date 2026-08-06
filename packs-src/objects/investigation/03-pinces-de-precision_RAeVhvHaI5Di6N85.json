@@ -1,0 +1,30 @@
+{
+  "_id": "RAeVhvHaI5Di6N85",
+  "name": "Pinces de précision",
+  "type": "equipment",
+  "img": "systems/interface/assets/compendiums/objects/investigation/6.Pinces de précision.webp",
+  "system": {
+    "description": "Petits outils permettant de saisir et manipuler des éléments fragiles.",
+    "category": "ordinary",
+    "quantity": 1,
+    "damage": {
+      "formula": ""
+    }
+  },
+  "effects": [],
+  "folder": "k59Iur2XRdwLx62h",
+  "sort": 300000,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {},
+  "_stats": {
+    "coreVersion": "14.365",
+    "systemId": "interface",
+    "systemVersion": "0.1.0",
+    "createdTime": 1786046400000,
+    "modifiedTime": 1786046400000,
+    "lastModifiedBy": null
+  },
+  "_key": "!items!RAeVhvHaI5Di6N85"
+}

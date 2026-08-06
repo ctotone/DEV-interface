@@ -1,0 +1,30 @@
+{
+  "_id": "qX1InC6IDAslmkwI",
+  "name": "Grappin",
+  "type": "equipment",
+  "img": "systems/interface/assets/compendiums/objects/tools/3.grappin.webp",
+  "system": {
+    "description": "Crochet muni d’une corde permettant de s’accrocher ou franchir un obstacle.",
+    "category": "ordinary",
+    "quantity": 1,
+    "damage": {
+      "formula": ""
+    }
+  },
+  "effects": [],
+  "folder": "5YTqIeRZk87lEzBm",
+  "sort": 800000,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {},
+  "_stats": {
+    "coreVersion": "14.365",
+    "systemId": "interface",
+    "systemVersion": "0.1.0",
+    "createdTime": 1786046400000,
+    "modifiedTime": 1786046400000,
+    "lastModifiedBy": null
+  },
+  "_key": "!items!qX1InC6IDAslmkwI"
+}

@@ -1,0 +1,30 @@
+{
+  "_id": "iSi6nfwDLF7LS45Z",
+  "name": "Canon électromagnétique lourd",
+  "type": "equipment",
+  "img": "systems/interface/assets/compendiums/weapons/futuristic/3.Canon électromagnétique lourd.webp",
+  "system": {
+    "description": "Arme antimatériel dévastatrice propulsant un projectile à vitesse extrême.",
+    "category": "weapon",
+    "quantity": 1,
+    "damage": {
+      "formula": "5D10+5"
+    }
+  },
+  "effects": [],
+  "folder": "N18qPTkR45ajfH5U",
+  "sort": 1400000,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {},
+  "_stats": {
+    "coreVersion": "14.365",
+    "systemId": "interface",
+    "systemVersion": "0.1.0",
+    "createdTime": 1786046400000,
+    "modifiedTime": 1786046400000,
+    "lastModifiedBy": null
+  },
+  "_key": "!items!iSi6nfwDLF7LS45Z"
+}

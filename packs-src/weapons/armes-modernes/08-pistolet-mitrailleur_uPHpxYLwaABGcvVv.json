@@ -1,0 +1,30 @@
+{
+  "_id": "uPHpxYLwaABGcvVv",
+  "name": "Pistolet-mitrailleur",
+  "type": "equipment",
+  "img": "systems/interface/assets/compendiums/weapons/modern/3.pistolet-mitrailleur.webp",
+  "system": {
+    "description": "Arme automatique compacte destinée aux courtes distances.",
+    "category": "weapon",
+    "quantity": 1,
+    "damage": {
+      "formula": "2D6"
+    }
+  },
+  "effects": [],
+  "folder": "33oZscpYkG0OXeqJ",
+  "sort": 800000,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {},
+  "_stats": {
+    "coreVersion": "14.365",
+    "systemId": "interface",
+    "systemVersion": "0.1.0",
+    "createdTime": 1786046400000,
+    "modifiedTime": 1786046400000,
+    "lastModifiedBy": null
+  },
+  "_key": "!items!uPHpxYLwaABGcvVv"
+}

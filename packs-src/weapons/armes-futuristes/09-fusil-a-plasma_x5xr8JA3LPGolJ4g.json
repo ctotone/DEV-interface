@@ -1,0 +1,30 @@
+{
+  "_id": "x5xr8JA3LPGolJ4g",
+  "name": "Fusil à plasma",
+  "type": "equipment",
+  "img": "systems/interface/assets/compendiums/weapons/futuristic/3.Fusil à plasma.webp",
+  "system": {
+    "description": "Arme lourde projetant une masse d’énergie thermique destructrice.",
+    "category": "weapon",
+    "quantity": 1,
+    "damage": {
+      "formula": "3D6+1"
+    }
+  },
+  "effects": [],
+  "folder": "N18qPTkR45ajfH5U",
+  "sort": 900000,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {},
+  "_stats": {
+    "coreVersion": "14.365",
+    "systemId": "interface",
+    "systemVersion": "0.1.0",
+    "createdTime": 1786046400000,
+    "modifiedTime": 1786046400000,
+    "lastModifiedBy": null
+  },
+  "_key": "!items!x5xr8JA3LPGolJ4g"
+}

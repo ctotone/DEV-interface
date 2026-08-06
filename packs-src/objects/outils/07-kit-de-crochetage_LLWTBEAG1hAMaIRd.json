@@ -1,0 +1,30 @@
+{
+  "_id": "LLWTBEAG1hAMaIRd",
+  "name": "Kit de crochetage",
+  "type": "equipment",
+  "img": "systems/interface/assets/compendiums/objects/tools/3.crochetage.webp",
+  "system": {
+    "description": "Ensemble d’outils fins permettant de manipuler certaines serrures.",
+    "category": "ordinary",
+    "quantity": 1,
+    "damage": {
+      "formula": ""
+    }
+  },
+  "effects": [],
+  "folder": "5YTqIeRZk87lEzBm",
+  "sort": 700000,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {},
+  "_stats": {
+    "coreVersion": "14.365",
+    "systemId": "interface",
+    "systemVersion": "0.1.0",
+    "createdTime": 1786046400000,
+    "modifiedTime": 1786046400000,
+    "lastModifiedBy": null
+  },
+  "_key": "!items!LLWTBEAG1hAMaIRd"
+}

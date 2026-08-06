@@ -1,0 +1,30 @@
+{
+  "_id": "GAD7XGOqbtgF9xqi",
+  "name": "Fusil électromagnétique",
+  "type": "equipment",
+  "img": "systems/interface/assets/compendiums/weapons/futuristic/3.Fusil électromagnétique.webp",
+  "system": {
+    "description": "Arme de précision propulsant un projectile à très haute vitesse.",
+    "category": "weapon",
+    "quantity": 1,
+    "damage": {
+      "formula": "2D10+2"
+    }
+  },
+  "effects": [],
+  "folder": "N18qPTkR45ajfH5U",
+  "sort": 1000000,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {},
+  "_stats": {
+    "coreVersion": "14.365",
+    "systemId": "interface",
+    "systemVersion": "0.1.0",
+    "createdTime": 1786046400000,
+    "modifiedTime": 1786046400000,
+    "lastModifiedBy": null
+  },
+  "_key": "!items!GAD7XGOqbtgF9xqi"
+}

@@ -1,13 +1,14 @@
 # État du projet — Système D100 Interface
 
 **Dernière mise à jour :** 6 août 2026  
-**Statut global :** Phase 03 validée — clôture documentaire préparée  
+**Statut global :** Phase 03 clôturée — complément post-clôture des compendiums validé  
 **Coordinateur :** GPT Pilote  
-**Spécialiste principal de la phase clôturée :** GPT Foundry  
+**Spécialiste principal du complément :** GPT Foundry  
 **Dépôt :** `ctotone/DEV-interface`  
 **Branche :** `main`  
-**Dernier commit contenu dans l’archive :** `0852b3f62fafd2f0128a5ad8e3170eb791aebe39`  
-**Commit de clôture de phase 03 :** à communiquer après intégration et push  
+**Commit de clôture de la phase 03 :** `72a2d32ff51661e548f3900792fca263e8b75b98`  
+**Dernier commit observé avant intégration du complément :** `7d7e7d7cb994951fa41cba9f6520a591900c7dfe`  
+**Commit d’intégration du complément :** à communiquer après intégration et push  
 **Identifiant technique :** `interface`  
 **Version package :** `0.1.0`  
 **Version de schéma :** `1`
@@ -25,7 +26,8 @@ Phase 00A — Résolution des jets : VALIDÉE
 Phase 00B — Cadrage produit et dépôt : VALIDÉE
 Phase 01 — Personnage, équipement et conflits : VALIDÉE
 Phase 02 — Architecture Foundry : VALIDÉE
-Phase 03 — Première tranche jouable : VALIDÉE
+Phase 03 — Première tranche jouable : VALIDÉE ET CLÔTURÉE
+Complément post-clôture — Compendiums d’armes et d’objets : VALIDÉ
 Phase 04 — États, Destin et réglages MJ : PROCHAINE, PÉRIMÈTRE À RECALIBRER
 Phase 05 — Conflits, initiative et armes : PLANIFIÉE, SOCLE PARTIELLEMENT ANTICIPÉ
 Phase 06 — Ergonomie et identité visuelle : PLANIFIÉE, SOCLE PARTIELLEMENT ANTICIPÉ
@@ -52,16 +54,28 @@ Il comprend actuellement :
 - un assistant de création avec état d’attente persistant ;
 - une fiche Actor et une fiche Item utilisables ;
 - des assets par défaut en WebP ;
-- une première adaptation ergonomique substantielle.
+- deux compendiums système natifs ;
+- 60 objets ordinaires répartis dans 8 dossiers ;
+- 42 armes réparties dans 3 dossiers ;
+- une chaîne reconstructible `packs-src/ → build-compendiums → packs/`.
 
-## Validation de phase 03
+## Validations
+
+### Phase 03
 
 ```text
 Tranches 1, 2, 2B, 3 et 3B : VALIDÉES
 Tests Foundry utilisateur T1 à T35 : OK
-Contrôles hors Foundry : 390 OK
+```
+
+### Complément compendiums
+
+```text
+Tests Foundry utilisateur T1 à T11 : OK
+Contrôles hors Foundry : 718 OK
 Modules JavaScript vérifiés : 22
 Tests unitaires : 3
+Chargement isolé et initialisation simulée : OK
 ```
 
 ## Invariants fonctionnels
@@ -88,22 +102,21 @@ Seuil final   = Seuil de base − Malus d’état
 - marges de réussite et d’échec distinctes ;
 - aucune conséquence narrative automatique.
 
-### États et Destin
+### Compendiums
 
-- Blessures et Stress de `0` à `15` ;
-- niveaux `0` à `5` par paliers de trois ;
-- coefficient commun configurable, défaut `3` ;
-- Destin individuel et paramètres mondiaux ;
-- résultat final public ;
-- test secret et détails internes réservés au MJ.
+```text
+interface.objects
+→ 60 Items equipment / ordinary
 
-### Conflits
+interface.weapons
+→ 42 Items equipment / weapon
+```
 
-- Corps à corps, Distance et Verbal plafonnés à `99` ;
-- valeur dérivée personnalisée mondiale optionnelle ;
-- initiative prévue : `1d10 + round(Distance / 10)` ;
-- armes comme équipements `weapon` ;
-- aucune cible ni application automatique des dégâts.
+- les identifiants des packs ne doivent pas être renommés silencieusement ;
+- les sources éditables résident dans `packs-src/` ;
+- les packs installables sont reconstruits avec `tools/build-compendiums.mjs` ;
+- les 102 descriptions sont en texte brut ;
+- aucune publication n’est engagée.
 
 ## Architecture Foundry
 
@@ -119,16 +132,14 @@ Item.type            : equipment
 Principes :
 
 - TypeDataModels V14 ;
-- un seul point d’entrée ES module ;
 - moteur D100 pur ;
-- services pour les effets de bord ;
 - données dérivées non persistées ;
-- Items embarqués comme source de vérité ;
+- Items embarqués comme source de vérité des inventaires ;
 - settings et flags sous `interface` ;
 - Dice So Nice facultatif ;
 - migrations internes seulement ;
 - aucun import Roll20 ;
-- aucun socket ou API publique stable sans besoin démontré.
+- aucun socket ou contrat d’API publique sans besoin démontré.
 
 ## Éléments ouverts
 
@@ -141,11 +152,14 @@ Principes :
 - concurrence d’écriture ;
 - identité visuelle finale ;
 - stabilisation globale ;
+- droits et audit de publication des assets ;
 - publication.
 
-## Anticipations de roadmap
+## Observation méthodologique
 
-La phase 03 a déjà produit une partie des phases 04 à 06. Ces phases restent ouvertes tant que leur périmètre restant n’a pas été recalibré et validé.
+**[CANDIDATE D’ÉVOLUTION — outillage transversal Foundry]**
+
+L’outillage construit pendant le projet pourra être évalué en fin de projet. Aucune extraction permanente ni généralisation n’est validée à ce stade. Un REX de GPT Foundry à destination de GPT Architecte est annoncé.
 
 ## Sources d’autorité
 
@@ -154,14 +168,9 @@ La phase 03 a déjà produit une partie des phases 04 à 06. Ces phases restent 
 .project/specification/PHASE_01_SPECIFICATION_FONCTIONNELLE_PERSONNAGE_EQUIPEMENT_CONFLITS_INTERFACE.md
 .project/specification/PHASE_02_ARCHITECTURE_FOUNDRY_INTERFACE.md
 .project/decisions/PHASE_03_PREMIERE_TRANCHE_JOUABLE.md
-```
-
-La référence historique des règles est désormais :
-
-```text
-.project/references/systeme de jeu Interface.md
+.project/decisions/COMPENDIUMS_SYSTEME_OBJETS_ARMES.md
 ```
 
 ## Prochaine étape
 
-Après le commit de clôture de phase 03, recalibrer la phase 04 à partir de l’état réel avant tout nouveau développement.
+Intégrer et pousser le complément validé, communiquer son hash à GPT Pilote, puis recalibrer la phase 04 à partir de cette nouvelle base réelle.

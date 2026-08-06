@@ -1,0 +1,19 @@
+{
+  "_id": "93DCVWIM2Gr4xWvs",
+  "name": "SOINS ET PROTECTION",
+  "type": "Item",
+  "folder": null,
+  "sorting": "a",
+  "sort": 0,
+  "color": null,
+  "flags": {},
+  "_stats": {
+    "coreVersion": "14.365",
+    "systemId": "interface",
+    "systemVersion": "0.1.0",
+    "createdTime": 1786046400000,
+    "modifiedTime": 1786046400000,
+    "lastModifiedBy": null
+  },
+  "_key": "!folders!93DCVWIM2Gr4xWvs"
+}

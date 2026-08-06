@@ -1,0 +1,30 @@
+{
+  "_id": "vhVT2eBIAJlsa562",
+  "name": "Corde",
+  "type": "equipment",
+  "img": "systems/interface/assets/compendiums/objects/survival/2.corde.webp",
+  "system": {
+    "description": "Corde solide utilisée pour attacher, escalader, tirer ou sécuriser.",
+    "category": "ordinary",
+    "quantity": 1,
+    "damage": {
+      "formula": ""
+    }
+  },
+  "effects": [],
+  "folder": "wr1ycSyLHxJSxQH5",
+  "sort": 100000,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {},
+  "_stats": {
+    "coreVersion": "14.365",
+    "systemId": "interface",
+    "systemVersion": "0.1.0",
+    "createdTime": 1786046400000,
+    "modifiedTime": 1786046400000,
+    "lastModifiedBy": null
+  },
+  "_key": "!items!vhVT2eBIAJlsa562"
+}

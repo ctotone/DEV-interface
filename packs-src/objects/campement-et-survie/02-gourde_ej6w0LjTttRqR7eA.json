@@ -1,0 +1,30 @@
+{
+  "_id": "ej6w0LjTttRqR7eA",
+  "name": "Gourde",
+  "type": "equipment",
+  "img": "systems/interface/assets/compendiums/objects/survival/2.gourde.webp",
+  "system": {
+    "description": "Récipient portable destiné au transport de liquide.",
+    "category": "ordinary",
+    "quantity": 1,
+    "damage": {
+      "formula": ""
+    }
+  },
+  "effects": [],
+  "folder": "wr1ycSyLHxJSxQH5",
+  "sort": 200000,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {},
+  "_stats": {
+    "coreVersion": "14.365",
+    "systemId": "interface",
+    "systemVersion": "0.1.0",
+    "createdTime": 1786046400000,
+    "modifiedTime": 1786046400000,
+    "lastModifiedBy": null
+  },
+  "_key": "!items!ej6w0LjTttRqR7eA"
+}

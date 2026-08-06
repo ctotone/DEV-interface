@@ -1,0 +1,30 @@
+{
+  "_id": "K6Qi8ALCoye7SiiO",
+  "name": "Grenade explosive",
+  "type": "equipment",
+  "img": "systems/interface/assets/compendiums/weapons/modern/3.grenade.webp",
+  "system": {
+    "description": "Charge portative provoquant une explosion dans une zone limitée.",
+    "category": "weapon",
+    "quantity": 1,
+    "damage": {
+      "formula": "3D8+2"
+    }
+  },
+  "effects": [],
+  "folder": "33oZscpYkG0OXeqJ",
+  "sort": 1300000,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {},
+  "_stats": {
+    "coreVersion": "14.365",
+    "systemId": "interface",
+    "systemVersion": "0.1.0",
+    "createdTime": 1786046400000,
+    "modifiedTime": 1786046400000,
+    "lastModifiedBy": null
+  },
+  "_key": "!items!K6Qi8ALCoye7SiiO"
+}

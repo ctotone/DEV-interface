@@ -1,0 +1,30 @@
+{
+  "_id": "VsaXxJxhpCrYJzL9",
+  "name": "Kit de réparation",
+  "type": "equipment",
+  "img": "systems/interface/assets/compendiums/objects/tools/3.Kit de réparation.webp",
+  "system": {
+    "description": "Petit nécessaire pour réparer vêtements, équipements ou objets simples.",
+    "category": "ordinary",
+    "quantity": 1,
+    "damage": {
+      "formula": ""
+    }
+  },
+  "effects": [],
+  "folder": "5YTqIeRZk87lEzBm",
+  "sort": 500000,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {},
+  "_stats": {
+    "coreVersion": "14.365",
+    "systemId": "interface",
+    "systemVersion": "0.1.0",
+    "createdTime": 1786046400000,
+    "modifiedTime": 1786046400000,
+    "lastModifiedBy": null
+  },
+  "_key": "!items!VsaXxJxhpCrYJzL9"
+}

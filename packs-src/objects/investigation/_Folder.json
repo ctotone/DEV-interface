@@ -1,0 +1,19 @@
+{
+  "_id": "k59Iur2XRdwLx62h",
+  "name": "INVESTIGATION",
+  "type": "Item",
+  "folder": null,
+  "sorting": "a",
+  "sort": 0,
+  "color": null,
+  "flags": {},
+  "_stats": {
+    "coreVersion": "14.365",
+    "systemId": "interface",
+    "systemVersion": "0.1.0",
+    "createdTime": 1786046400000,
+    "modifiedTime": 1786046400000,
+    "lastModifiedBy": null
+  },
+  "_key": "!folders!k59Iur2XRdwLx62h"
+}

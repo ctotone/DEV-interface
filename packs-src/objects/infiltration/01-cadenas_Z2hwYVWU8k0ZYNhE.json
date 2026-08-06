@@ -1,0 +1,30 @@
+{
+  "_id": "Z2hwYVWU8k0ZYNhE",
+  "name": "Cadenas",
+  "type": "equipment",
+  "img": "systems/interface/assets/compendiums/objects/security/7.Cadenas.webp",
+  "system": {
+    "description": "Verrou portable destiné à sécuriser une porte, une chaîne ou un contenant.",
+    "category": "ordinary",
+    "quantity": 1,
+    "damage": {
+      "formula": ""
+    }
+  },
+  "effects": [],
+  "folder": "QbHsXNfS6xY25vkh",
+  "sort": 100000,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {},
+  "_stats": {
+    "coreVersion": "14.365",
+    "systemId": "interface",
+    "systemVersion": "0.1.0",
+    "createdTime": 1786046400000,
+    "modifiedTime": 1786046400000,
+    "lastModifiedBy": null
+  },
+  "_key": "!items!Z2hwYVWU8k0ZYNhE"
+}

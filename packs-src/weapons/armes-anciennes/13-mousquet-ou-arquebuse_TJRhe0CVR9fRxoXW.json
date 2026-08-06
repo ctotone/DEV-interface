@@ -1,0 +1,30 @@
+{
+  "_id": "TJRhe0CVR9fRxoXW",
+  "name": "Mousquet ou arquebuse",
+  "type": "equipment",
+  "img": "systems/interface/assets/compendiums/weapons/ancient/3.Mousquet.webp",
+  "system": {
+    "description": "Arme longue à poudre noire, puissante mais lente à recharger.",
+    "category": "weapon",
+    "quantity": 1,
+    "damage": {
+      "formula": "2D6+2"
+    }
+  },
+  "effects": [],
+  "folder": "IscazlkUm5jcuJvp",
+  "sort": 1300000,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {},
+  "_stats": {
+    "coreVersion": "14.365",
+    "systemId": "interface",
+    "systemVersion": "0.1.0",
+    "createdTime": 1786046400000,
+    "modifiedTime": 1786046400000,
+    "lastModifiedBy": null
+  },
+  "_key": "!items!TJRhe0CVR9fRxoXW"
+}

@@ -1,0 +1,30 @@
+{
+  "_id": "UCan4C4VOziXKSNu",
+  "name": "Fusil d’assaut",
+  "type": "equipment",
+  "img": "systems/interface/assets/compendiums/weapons/modern/3.fusil d'assaut.webp",
+  "system": {
+    "description": "Arme longue automatique polyvalente destinée au combat général.",
+    "category": "weapon",
+    "quantity": 1,
+    "damage": {
+      "formula": "2D8+1"
+    }
+  },
+  "effects": [],
+  "folder": "33oZscpYkG0OXeqJ",
+  "sort": 1000000,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {},
+  "_stats": {
+    "coreVersion": "14.365",
+    "systemId": "interface",
+    "systemVersion": "0.1.0",
+    "createdTime": 1786046400000,
+    "modifiedTime": 1786046400000,
+    "lastModifiedBy": null
+  },
+  "_key": "!items!UCan4C4VOziXKSNu"
+}

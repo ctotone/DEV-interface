@@ -1,0 +1,30 @@
+{
+  "_id": "B7xf1bC1VqGk0Nus",
+  "name": "Pistolet-mitrailleur à impulsion",
+  "type": "equipment",
+  "img": "systems/interface/assets/compendiums/weapons/futuristic/3.Pistolet-mitrailleur à impulsion.webp",
+  "system": {
+    "description": "Arme compacte délivrant une succession rapide d’impulsions énergétiques.",
+    "category": "weapon",
+    "quantity": 1,
+    "damage": {
+      "formula": "2D6"
+    }
+  },
+  "effects": [],
+  "folder": "N18qPTkR45ajfH5U",
+  "sort": 700000,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {},
+  "_stats": {
+    "coreVersion": "14.365",
+    "systemId": "interface",
+    "systemVersion": "0.1.0",
+    "createdTime": 1786046400000,
+    "modifiedTime": 1786046400000,
+    "lastModifiedBy": null
+  },
+  "_key": "!items!B7xf1bC1VqGk0Nus"
+}

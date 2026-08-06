@@ -1,0 +1,30 @@
+{
+  "_id": "KRC4ZTFRBl4FZAsF",
+  "name": "Désinfectant",
+  "type": "equipment",
+  "img": "systems/interface/assets/compendiums/objects/care/4.desinfectant.webp",
+  "system": {
+    "description": "Produit destiné au nettoyage d’une plaie ou d’un matériel.",
+    "category": "ordinary",
+    "quantity": 1,
+    "damage": {
+      "formula": ""
+    }
+  },
+  "effects": [],
+  "folder": "93DCVWIM2Gr4xWvs",
+  "sort": 300000,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {},
+  "_stats": {
+    "coreVersion": "14.365",
+    "systemId": "interface",
+    "systemVersion": "0.1.0",
+    "createdTime": 1786046400000,
+    "modifiedTime": 1786046400000,
+    "lastModifiedBy": null
+  },
+  "_key": "!items!KRC4ZTFRBl4FZAsF"
+}

@@ -1,0 +1,30 @@
+{
+  "_id": "sTpWqS8y1Lpc5ZeS",
+  "name": "Sacoche",
+  "type": "equipment",
+  "img": "systems/interface/assets/compendiums/objects/communication/5.Sacoche.webp",
+  "system": {
+    "description": "Petit contenant facilement accessible destiné au transport d’équipement.",
+    "category": "ordinary",
+    "quantity": 1,
+    "damage": {
+      "formula": ""
+    }
+  },
+  "effects": [],
+  "folder": "UzR3uoKqVp96ylRh",
+  "sort": 700000,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {},
+  "_stats": {
+    "coreVersion": "14.365",
+    "systemId": "interface",
+    "systemVersion": "0.1.0",
+    "createdTime": 1786046400000,
+    "modifiedTime": 1786046400000,
+    "lastModifiedBy": null
+  },
+  "_key": "!items!sTpWqS8y1Lpc5ZeS"
+}

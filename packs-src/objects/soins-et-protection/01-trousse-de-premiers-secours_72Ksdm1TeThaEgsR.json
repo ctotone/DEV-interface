@@ -1,0 +1,30 @@
+{
+  "_id": "72Ksdm1TeThaEgsR",
+  "name": "Trousse de premiers secours",
+  "type": "equipment",
+  "img": "systems/interface/assets/compendiums/objects/care/4.trousse_de_premiers_secours.webp",
+  "system": {
+    "description": "Ensemble de base destiné aux soins d’urgence.",
+    "category": "ordinary",
+    "quantity": 1,
+    "damage": {
+      "formula": ""
+    }
+  },
+  "effects": [],
+  "folder": "93DCVWIM2Gr4xWvs",
+  "sort": 100000,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {},
+  "_stats": {
+    "coreVersion": "14.365",
+    "systemId": "interface",
+    "systemVersion": "0.1.0",
+    "createdTime": 1786046400000,
+    "modifiedTime": 1786046400000,
+    "lastModifiedBy": null
+  },
+  "_key": "!items!72Ksdm1TeThaEgsR"
+}

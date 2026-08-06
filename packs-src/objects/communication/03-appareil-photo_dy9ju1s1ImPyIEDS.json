@@ -1,0 +1,30 @@
+{
+  "_id": "dy9ju1s1ImPyIEDS",
+  "name": "Appareil photo",
+  "type": "equipment",
+  "img": "systems/interface/assets/compendiums/objects/communication/5.Appareil photo.webp",
+  "system": {
+    "description": "Dispositif permettant de conserver une image d’un lieu, objet ou événement.",
+    "category": "ordinary",
+    "quantity": 1,
+    "damage": {
+      "formula": ""
+    }
+  },
+  "effects": [],
+  "folder": "UzR3uoKqVp96ylRh",
+  "sort": 300000,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {},
+  "_stats": {
+    "coreVersion": "14.365",
+    "systemId": "interface",
+    "systemVersion": "0.1.0",
+    "createdTime": 1786046400000,
+    "modifiedTime": 1786046400000,
+    "lastModifiedBy": null
+  },
+  "_key": "!items!dy9ju1s1ImPyIEDS"
+}

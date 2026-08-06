@@ -115,6 +115,149 @@ for (const declaredPath of [
   check(exists(declaredPath), `Chemin déclaré absent : ${declaredPath}`);
 }
 
+const expectedPacks = [
+  {
+    name: "objects",
+    label: "Objets",
+    path: "packs/objects",
+    type: "Item",
+    system: "interface",
+    banner: "systems/interface/assets/banners/banniere_item.webp"
+  },
+  {
+    name: "weapons",
+    label: "Armes",
+    path: "packs/weapons",
+    type: "Item",
+    system: "interface",
+    banner: "systems/interface/assets/banners/banniere_armes.webp"
+  }
+];
+
+check(
+  JSON.stringify(manifest.packs) === JSON.stringify(expectedPacks),
+  "system.json: les packs Objets et Armes doivent conserver leurs identifiants, titres, chemins et bannières validés."
+);
+
+for (const pack of expectedPacks) {
+  check(exists(pack.path), `Pack compilé absent : ${pack.path}`);
+  check(
+    exists(pack.banner.replace("systems/interface/", "")),
+    `Bannière de compendium absente : ${pack.banner}`
+  );
+}
+
+check(
+  read(".gitattributes").includes("packs/** binary"),
+  ".gitattributes doit protéger les fichiers LevelDB contre les conversions de fin de ligne."
+);
+
+execFileSync(
+  process.execPath,
+  [path.join(root, "tools/build-compendiums.mjs")],
+  { stdio: "pipe" }
+);
+check(true, "Reconstruction et vérification des packs LevelDB.");
+
+function readPackSources(packName) {
+  return collectFiles(path.join("packs-src", packName), ".json")
+    .map(file => JSON.parse(fs.readFileSync(file, "utf8")));
+}
+
+const weaponSources = readPackSources("weapons");
+const objectSources = readPackSources("objects");
+const weaponFolders = weaponSources.filter(document => document._key?.startsWith("!folders!"));
+const objectFolders = objectSources.filter(document => document._key?.startsWith("!folders!"));
+const weaponItems = weaponSources.filter(document => document._key?.startsWith("!items!"));
+const objectItems = objectSources.filter(document => document._key?.startsWith("!items!"));
+
+check(
+  weaponItems.length === 42 && weaponFolders.length === 3,
+  "Le pack Armes doit contenir 42 Items et 3 dossiers."
+);
+check(
+  objectItems.length === 60 && objectFolders.length === 8,
+  "Le pack Objets doit contenir 60 Items et 8 dossiers."
+);
+
+check(
+  JSON.stringify(weaponFolders.map(folder => folder.name).sort()) === JSON.stringify([
+    "ARMES ANCIENNES",
+    "ARMES FUTURISTES",
+    "ARMES MODERNES"
+  ].sort()),
+  "Les dossiers du pack Armes sont incohérents."
+);
+check(
+  JSON.stringify(objectFolders.map(folder => folder.name).sort()) === JSON.stringify([
+    "EXPLORATION, ORIENTATION",
+    "CAMPEMENT ET SURVIE",
+    "OUTILS",
+    "SOINS ET PROTECTION",
+    "COMMUNICATION",
+    "INVESTIGATION",
+    "INFILTRATION",
+    "ÉQUIPEMENT TECHNIQUE"
+  ].sort()),
+  "Les dossiers du pack Objets sont incohérents."
+);
+
+const allCompendiumItems = [...weaponItems, ...objectItems];
+check(
+  new Set(allCompendiumItems.map(item => item._id)).size === 102,
+  "Les 102 Items de compendium doivent posséder des identifiants uniques."
+);
+check(
+  new Set(allCompendiumItems.map(item => item.img)).size === 102,
+  "Chaque entrée de compendium doit utiliser une icône dédiée."
+);
+
+for (const item of weaponItems) {
+  check(
+    item.type === "equipment"
+      && item.system?.category === "weapon"
+      && item.system?.quantity === 1
+      && typeof item.system?.damage?.formula === "string"
+      && item.system.damage.formula.length > 0,
+    `Arme invalide dans le pack : ${item.name}.`
+  );
+}
+for (const item of objectItems) {
+  check(
+    item.type === "equipment"
+      && item.system?.category === "ordinary"
+      && item.system?.quantity === 1
+      && item.system?.damage?.formula === "",
+    `Objet invalide dans le pack : ${item.name}.`
+  );
+}
+for (const item of allCompendiumItems) {
+  const imagePath = item.img?.replace("systems/interface/", "");
+  check(
+    imagePath && exists(imagePath),
+    `Image de compendium absente pour ${item.name} : ${item.img}.`
+  );
+  check(
+    typeof item.system?.description === "string"
+      && item.system.description.trim().length > 0
+      && !/[<>]/.test(item.system.description),
+    `La description doit être un texte brut non vide pour ${item.name}.`
+  );
+}
+
+const heavyMachineGun = weaponItems.find(item => item.name === "Mitrailleuse lourde");
+check(
+  heavyMachineGun?.system?.damage?.formula === "3D6+1"
+    && !weaponItems.some(item => item.name === "Mitrailleuse légère"),
+  "La décision utilisateur « Mitrailleuse lourde » avec la formule 3D6+1 doit être conservée."
+);
+
+for (const packName of ["objects", "weapons"]) {
+  for (const file of ["CURRENT", "LOCK", "MANIFEST-000001", "000002.log"]) {
+    check(exists(path.join("packs", packName, file)), `Fichier LevelDB absent : packs/${packName}/${file}`);
+  }
+}
+
 const moduleFiles = collectFiles("scripts", ".mjs");
 for (const testFile of collectFiles("tests/static", ".mjs")) {
   execFileSync(process.execPath, ["--check", testFile], { stdio: "pipe" });

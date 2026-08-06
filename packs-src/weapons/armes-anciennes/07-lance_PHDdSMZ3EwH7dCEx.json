@@ -1,0 +1,30 @@
+{
+  "_id": "PHDdSMZ3EwH7dCEx",
+  "name": "Lance",
+  "type": "equipment",
+  "img": "systems/interface/assets/compendiums/weapons/ancient/3.lance.webp",
+  "system": {
+    "description": "Arme d’allonge polyvalente utilisée pour frapper ou projeter.",
+    "category": "weapon",
+    "quantity": 1,
+    "damage": {
+      "formula": "1D6+2"
+    }
+  },
+  "effects": [],
+  "folder": "IscazlkUm5jcuJvp",
+  "sort": 700000,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {},
+  "_stats": {
+    "coreVersion": "14.365",
+    "systemId": "interface",
+    "systemVersion": "0.1.0",
+    "createdTime": 1786046400000,
+    "modifiedTime": 1786046400000,
+    "lastModifiedBy": null
+  },
+  "_key": "!items!PHDdSMZ3EwH7dCEx"
+}

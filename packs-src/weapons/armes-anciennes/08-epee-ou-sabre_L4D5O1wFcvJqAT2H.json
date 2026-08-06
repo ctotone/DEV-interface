@@ -1,0 +1,30 @@
+{
+  "_id": "L4D5O1wFcvJqAT2H",
+  "name": "Épée ou sabre",
+  "type": "equipment",
+  "img": "systems/interface/assets/compendiums/weapons/ancient/3.epee ou sabre.webp",
+  "system": {
+    "description": "Lame de combat polyvalente destinée à la taille et à l’estoc.",
+    "category": "weapon",
+    "quantity": 1,
+    "damage": {
+      "formula": "1D8+1"
+    }
+  },
+  "effects": [],
+  "folder": "IscazlkUm5jcuJvp",
+  "sort": 800000,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {},
+  "_stats": {
+    "coreVersion": "14.365",
+    "systemId": "interface",
+    "systemVersion": "0.1.0",
+    "createdTime": 1786046400000,
+    "modifiedTime": 1786046400000,
+    "lastModifiedBy": null
+  },
+  "_key": "!items!L4D5O1wFcvJqAT2H"
+}

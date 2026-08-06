@@ -1,0 +1,30 @@
+{
+  "_id": "RUfXTfoJIZGb7a5s",
+  "name": "Pied-de-biche",
+  "type": "equipment",
+  "img": "systems/interface/assets/compendiums/objects/tools/3.Pied de biche.webp",
+  "system": {
+    "description": "Barre solide utilisée pour forcer, soulever ou dégager.",
+    "category": "ordinary",
+    "quantity": 1,
+    "damage": {
+      "formula": ""
+    }
+  },
+  "effects": [],
+  "folder": "5YTqIeRZk87lEzBm",
+  "sort": 300000,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {},
+  "_stats": {
+    "coreVersion": "14.365",
+    "systemId": "interface",
+    "systemVersion": "0.1.0",
+    "createdTime": 1786046400000,
+    "modifiedTime": 1786046400000,
+    "lastModifiedBy": null
+  },
+  "_key": "!items!RUfXTfoJIZGb7a5s"
+}

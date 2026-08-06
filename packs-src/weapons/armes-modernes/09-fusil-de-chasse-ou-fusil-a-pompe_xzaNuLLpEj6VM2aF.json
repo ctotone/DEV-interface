@@ -1,0 +1,30 @@
+{
+  "_id": "xzaNuLLpEj6VM2aF",
+  "name": "Fusil de chasse ou fusil à pompe",
+  "type": "equipment",
+  "img": "systems/interface/assets/compendiums/weapons/modern/3.fusil à pompe.webp",
+  "system": {
+    "description": "Arme à forte dispersion particulièrement dangereuse à courte portée.",
+    "category": "weapon",
+    "quantity": 1,
+    "damage": {
+      "formula": "2D6+2"
+    }
+  },
+  "effects": [],
+  "folder": "33oZscpYkG0OXeqJ",
+  "sort": 900000,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {},
+  "_stats": {
+    "coreVersion": "14.365",
+    "systemId": "interface",
+    "systemVersion": "0.1.0",
+    "createdTime": 1786046400000,
+    "modifiedTime": 1786046400000,
+    "lastModifiedBy": null
+  },
+  "_key": "!items!xzaNuLLpEj6VM2aF"
+}
