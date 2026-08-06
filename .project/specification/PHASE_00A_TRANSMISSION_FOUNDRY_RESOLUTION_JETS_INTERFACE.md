@@ -52,7 +52,7 @@ La consolidation s’appuie sur trois états successifs du système :
 
 Fichiers historiques fournis :
 
-- `Système de jeu Interface.pdf`
+- `systeme de jeu Interface.md`
 - `interface.html`
 - `interface.css`
 - `translation.json`

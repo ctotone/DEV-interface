@@ -1,7 +1,29 @@
-import { EQUIPMENT_CATEGORIES } from "../constants.mjs";
+import {
+  DEFAULT_IMAGES,
+  EQUIPMENT_CATEGORIES
+} from "../constants.mjs";
 
 const { ItemSheetV2 } = foundry.applications.sheets;
 const { HandlebarsApplicationMixin } = foundry.applications.api;
+const { FilePicker } = foundry.applications.apps;
+
+function canUpdateItem(sheet) {
+  return sheet.item?.canUserModify?.(game.user, "update") ?? true;
+}
+
+async function chooseImageAction() {
+  if (!canUpdateItem(this)) return null;
+
+  await this.submit();
+  const current = String(this.item.img ?? "").trim()
+    || DEFAULT_IMAGES.EQUIPMENT[this.item.system.category];
+  const picker = new FilePicker({
+    type: "image",
+    current,
+    callback: path => this.item.update({ img: path })
+  });
+  return picker.render({ force: true });
+}
 
 export class InterfaceEquipmentSheet extends HandlebarsApplicationMixin(ItemSheetV2) {
   static DEFAULT_OPTIONS = {
@@ -13,6 +35,9 @@ export class InterfaceEquipmentSheet extends HandlebarsApplicationMixin(ItemShee
     },
     window: {
       resizable: true
+    },
+    actions: {
+      chooseImage: chooseImageAction
     },
     form: {
       closeOnSubmit: false,
@@ -35,6 +60,8 @@ export class InterfaceEquipmentSheet extends HandlebarsApplicationMixin(ItemShee
       ...context,
       item: this.item,
       system,
+      image: String(this.item.img ?? "").trim()
+        || DEFAULT_IMAGES.EQUIPMENT[system.category],
       categories: [
         {
           value: EQUIPMENT_CATEGORIES.ORDINARY,

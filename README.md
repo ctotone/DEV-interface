@@ -6,9 +6,13 @@ Dépôt de développement du **Système D100 Interface** pour Foundry VTT.
 Identifiant technique : interface
 Dépôt                : ctotone/DEV-interface
 Branche              : main
-Base de référence    :
-ba2871fb2f5ec175b525535f0d31e8f3426a1b23
+Version package      : 0.1.0
+Version schéma       : 1
+Dernier commit inclus:
+0852b3f62fafd2f0128a5ad8e3170eb791aebe39
 ```
+
+Le commit de clôture de la phase 03 sera renseigné après intégration et push par l’utilisateur.
 
 ## Statut
 
@@ -17,70 +21,56 @@ Phase 00A — Résolution des jets : VALIDÉE
 Phase 00B — Cadrage produit et dépôt : VALIDÉE
 Phase 01 — Personnage, équipement et conflits : VALIDÉE
 Phase 02 — Architecture Foundry : VALIDÉE
-Phase 03 — Première tranche jouable : EN COURS
-Tranche 1 — Squelette installable : VALIDÉE SOUS FOUNDRY 14.365
-Tranche 2 — Données et dérivés : VALIDÉE SOUS FOUNDRY 14.365
-Tranche 2B — Adaptation fonctionnelle de la fiche : VALIDÉE SOUS FOUNDRY 14.365
-Tranche 3 — Moteur D100 : CANDIDATE EN ATTENTE DE TEST
-Développement Foundry : EN COURS
+Phase 03 — Première tranche jouable : VALIDÉE
+Phase 04 — États, Destin et réglages MJ : PROCHAINE, À RECALIBRER
+Publication : NON ENGAGÉE
 ```
 
-## Candidate actuelle — Tranche 3
+## Base jouable actuelle
 
-La version locale `0.1.0` ajoute :
+La version `0.1.0` comprend :
 
-- moteur métier D100 pur ;
-- modes normal, avantage et désavantage ;
-- vingt scénarios fonctionnels T01 à T20 ;
-- adaptateur Foundry `Roll` ;
-- jets Compétence + Talent ;
-- jets des valeurs dérivées de combat ;
-- Destin opérationnel avec test secret lorsque l’intervention est possible ;
-- écriture contrôlée de la réserve de Destin sur l’Actor ;
-- message de chat technique provisoire ;
-- déclencheurs depuis les libellés de Compétences et Talents et les boutons de combat.
+- un système installable sous Foundry VTT V14 ;
+- un Actor `character` et un Item `equipment` ;
+- les six Compétences et dix-huit Talents ;
+- Blessures, Stress, Destin et progression ;
+- les valeurs dérivées ;
+- les settings mondiaux ;
+- les équipements ordinaires et les armes ;
+- le moteur D100 normal, avantage et désavantage ;
+- les résultats automatiques, critiques et super-critiques ;
+- le Destin et les marges ;
+- un assistant de création de personnage ;
+- une fiche Actor et une fiche Item utilisables ;
+- des assets WebP par défaut ;
+- un premier rendu technique des jets dans le chat.
 
-Le rendu final des cartes de chat, les dégâts et Dice So Nice restent hors de cette tranche.
-
-Installation et test :
+## Validation de phase 03
 
 ```text
-tests/protocols/TRANCHE_3_FOUNDRY_V14_365.md
+Tranches 1, 2, 2B, 3 et 3B : VALIDÉES
+Tests Foundry utilisateur T1 à T35 : OK
+Contrôles hors Foundry : 390 OK
+Modules JavaScript vérifiés : 22
+Tests unitaires : 3
 ```
 
-Contrôle hors Foundry :
+Les protocoles et rapports techniques sont conservés dans :
 
 ```text
-node tests/static/check-project.mjs
+.project/reports/
+tests/protocols/
 ```
 
-La Tranche 3 n’est pas validée avant le test réel et la validation explicite de l’utilisateur.
-
-## Première version jouable
-
-La première version doit permettre de :
-
-- créer et gérer un personnage ;
-- effectuer les jets D100 principaux ;
-- appliquer Blessures, Stress et Destin ;
-- utiliser les valeurs dérivées et une initiative simple ;
-- gérer l’équipement et les armes ;
-- produire les cartes de résultat et les jets de dégâts ;
-- jouer une scène de conflit sans moteur tactique complet.
-
-Le système n’automatise ni le ciblage, ni la défense, ni l’armure, ni l’application des dégâts, ni les conséquences narratives.
-
-## Architecture validée
+## Architecture
 
 ```text
-Foundry supporté     : génération V14
-Build initiale test  : 14.365
-Manifest             : minimum 14 / verified 14 / maximum 14
-Actor                : character
-Item                 : equipment
-Catégories Item      : ordinary | weapon
-Version package      : 0.1.0
-Version schéma       : 1
+Foundry supporté : génération V14
+Build testée      : 14.365
+Manifest          : minimum 14 / verified 14 / maximum 14
+Actor             : character
+Item              : equipment
+Catégories Item   : ordinary | weapon
 ```
 
 Principes :
@@ -88,11 +78,30 @@ Principes :
 - TypeDataModels V14 ;
 - moteur D100 pur et testable ;
 - données persistées séparées des données dérivées ;
-- settings et flags sous le namespace `interface` ;
-- projections publique et MJ séparées ;
+- settings et flags sous `interface` ;
 - Dice So Nice facultatif ;
 - migrations internes uniquement ;
-- aucun socket, compendium ou framework ajouté sans besoin démontré.
+- aucun import Roll20 ;
+- aucune automatisation tactique ou narrative.
+
+## Décisions de phase 03
+
+La phase a notamment validé :
+
+- `flags.interface.creation.pending` pour les créations non finalisées ;
+- la sauvegarde progressive sur l’Actor réel ;
+- les Compétences non cliquables dans l’interface ;
+- les jets depuis les Talents et valeurs dérivées ;
+- la séparation visuelle entre Armes et Inventaire ;
+- la suppression confirmée des équipements ;
+- les images WebP par défaut ;
+- une première adaptation ergonomique de la fiche.
+
+Document d’autorité :
+
+```text
+.project/decisions/PHASE_03_PREMIERE_TRANCHE_JOUABLE.md
+```
 
 ## Autorités documentaires
 
@@ -107,43 +116,51 @@ Principes :
 .project/decisions/
 ├── PHASE_00B_CADRAGE_PRODUIT_ET_DEPOT.md
 ├── PHASE_01_PERSONNAGE_EQUIPEMENT_CONFLITS.md
-└── PHASE_02_ARCHITECTURE_FOUNDRY.md
+├── PHASE_02_ARCHITECTURE_FOUNDRY.md
+└── PHASE_03_PREMIERE_TRANCHE_JOUABLE.md
+```
+
+La référence historique des règles est désormais disponible en Markdown :
+
+```text
+.project/references/systeme de jeu Interface.md
 ```
 
 ## Organisation
 
 ```text
-.project/
-├── PROJECT_STATE.md
-├── ROADMAP.md
-├── TRANSMISSION_CURRENT.md
-├── decisions/
-├── reports/
-├── specification/
-└── references/
+.project/       mémoire, décisions, spécifications et rapports
+assets/         images du système
+lang/           localisation française
+scripts/        données, Documents, règles, services et applications
+styles/         styles du système
+templates/      feuilles et settings
+tests/          contrôles, tests unitaires et protocoles Foundry
 ```
 
-`.project/` contient la mémoire interne du projet et devra être exclu des futures archives de distribution.
+## Travail restant
 
-## Conventions d’échange
+Les phases suivantes doivent encore traiter ou finaliser :
 
-- une différence de hash entre un document, une archive et le dépôt peut être normale dans le cycle ZIP → intégration → commit → push ;
-- un suffixe automatique comme `interface(3).zip` ne représente pas une version fonctionnelle ;
-- les archives entrantes peuvent contenir `.git/` et `.gitignore`, qui sont ignorés silencieusement ;
-- les archives de travail restituées excluent `.git/` et `.gitignore` ;
-- sauf indication explicite, l’utilisateur ne modifie pas le contenu d’une archive restituée avant son intégration.
+- le périmètre résiduel des états, du Destin et des settings ;
+- les cartes de chat finales ;
+- l’initiative ;
+- les dégâts ;
+- la progression assistée ;
+- Dice So Nice ;
+- la stabilisation multijoueur ;
+- l’identité visuelle finale ;
+- la préparation de diffusion.
 
 ## Reprise
 
-Ordre de lecture :
+Lire dans cet ordre :
 
-1. `.project/TRANSMISSION_CURRENT.md`
-2. `.project/PROJECT_STATE.md`
-3. `.project/ROADMAP.md`
-4. la décision de la phase active ;
-5. les spécifications concernées.
+```text
+.project/TRANSMISSION_CURRENT.md
+.project/PROJECT_STATE.md
+.project/ROADMAP.md
+.project/decisions/PHASE_03_PREMIERE_TRANCHE_JOUABLE.md
+```
 
-
-## Tranche 3 — Pré-lancer
-
-Les jets D100 passent par une fenêtre pré-lancer compacte proposant le mode du jet et un Bonus / Malus temporaire. Aucun de ces choix n’est persisté sur l’Actor.
+Avant tout nouveau développement, recalibrer les phases 04 à 06 afin de ne pas reproduire les éléments déjà validés en phase 03.

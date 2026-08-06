@@ -88,7 +88,8 @@
       "Quantity": "Quantité",
       "DamageFormula": "Formule de dégâts",
       "Description": "Description",
-      "HiddenDamageHint": "La formule de dégâts existante est conservée lorsque l’objet redevient ordinaire ; elle est simplement masquée."
+      "HiddenDamageHint": "La formule de dégâts existante est conservée lorsque l’objet redevient ordinaire ; elle est simplement masquée.",
+      "ChooseImage": "Choisir l’image"
     },
     "Settings": {
       "MenuName": "Configuration D100 Interface",
@@ -168,7 +169,8 @@
         "Ebranle": "Ébranlé",
         "Submerge": "Submergé",
         "Rupture": "Rupture"
-      }
+      },
+      "Label": "État"
     },
     "Creation": {
       "TalentTotal": "Total des Talents",
@@ -186,10 +188,20 @@
       "AddWeapon": "Ajouter une arme",
       "NewOrdinary": "Nouvel objet",
       "NewWeapon": "Nouvelle arme",
-      "Empty": "Aucun équipement embarqué.",
+      "Empty": "Aucun objet embarqué.",
       "NoWeapons": "Aucune arme embarquée.",
       "DropHint": "Tu peux aussi glisser un Item Équipement depuis la barre latérale vers cette fiche.",
-      "WeaponsDuplicatedHint": "Une arme reste visible dans l’Inventaire et apparaît également dans cette zone."
+      "WeaponsDuplicatedHint": "Une arme reste visible dans l’Inventaire et apparaît également dans cette zone.",
+      "Add": "Ajouter un objet ou une arme",
+      "AddTitle": "Ajouter à l’inventaire",
+      "AddPrompt": "Que veux-tu ajouter ?",
+      "DeleteOrdinary": "Supprimer cet objet",
+      "DeleteWeapon": "Supprimer cette arme",
+      "DeleteTitle": "Supprimer l’équipement",
+      "DeletePrompt": "Supprimer définitivement « {name} » de cette fiche ?",
+      "DeleteWarning": "Cette suppression est irréversible.",
+      "DeleteConfirm": "Supprimer",
+      "DeleteCancel": "Annuler"
     },
     "Specializations": {
       "Hint": "Une spécialisation par ligne"
@@ -258,6 +270,38 @@
         "InvalidModifier": "Le bonus ou malus doit être un nombre entier.",
         "ModeHint": "Gauche : désavantage · Centre : normal · Droite : avantage."
       }
+    },
+    "CreationAssistant": {
+      "Title": "Création du personnage",
+      "Portrait": "Portrait",
+      "ChoosePortrait": "Choisir le portrait",
+      "SkillTokens": "Jetons de Compétences",
+      "SkillTokensHint": "Glisser un jeton sur une Compétence, ou saisir directement sa valeur.",
+      "TokenAvailable": "Jeton disponible",
+      "TokenAssigned": "Jeton attribué à {skill}. Il peut être déplacé vers une autre Compétence ou remis dans la réserve.",
+      "TalentHint": "De 0 à 30 points par Talent.",
+      "DerivedTitle": "Attributs dérivés",
+      "DerivedHint": "Valeurs informatives mises à jour en direct.",
+      "RecapTitle": "Récapitulatif de création",
+      "RecommendedSkills": "Répartition recommandée",
+      "CurrentSkills": "Répartition actuelle",
+      "TokensAssigned": "Jetons attribués",
+      "TalentsAssigned": "Points de Talents attribués",
+      "TalentsRemaining": "Points de Talents disponibles",
+      "Create": "Créer le personnage",
+      "CreateHint": "Le personnage n’est ajouté au monde qu’après cette validation.",
+      "NameRequired": "Le nom du personnage est obligatoire.",
+      "InvalidSkill": "La valeur de la Compétence « {skill} » doit être un entier compris entre 0 et 100.",
+      "InvalidTalent": "La valeur du Talent « {talent} » doit être un entier compris entre 0 et 30.",
+      "WarningTitle": "Répartition hors recommandations",
+      "WarningIntro": "La création peut continuer, mais les points suivants diffèrent des recommandations du système :",
+      "WarningSkills": "Compétences actuelles : {values}. Répartition recommandée : 20 / 30 / 30 / 40 / 40 / 50.",
+      "WarningTalentsUnder": "Total des Talents : {total}. Il reste {remaining} point(s) par rapport au total recommandé de 100.",
+      "WarningTalentsOver": "Total des Talents : {total}. Le total recommandé de 100 est dépassé de {excess} point(s).",
+      "Back": "Revenir en arrière",
+      "Confirm": "Valider quand même",
+      "CreateError": "Le personnage n’a pas pu être créé : {message}",
+      "OpenSheetError": "Le personnage a été créé, mais sa fiche n’a pas pu s’ouvrir automatiquement : {message}"
     }
   }
 }

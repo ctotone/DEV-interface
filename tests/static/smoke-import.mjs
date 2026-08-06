@@ -23,8 +23,26 @@ class FakeTypeDataModel {
 }
 
 class FakeApplicationV2 {
-  async close() {}
-  async render() {}
+  constructor() {
+    this.renderCalls = 0;
+    this.closeCalls = 0;
+  }
+
+  async close() {
+    this.closeCalls += 1;
+    return this;
+  }
+
+  async render() {
+    this.renderCalls += 1;
+    return this;
+  }
+
+  bringToFront() {
+    this.broughtToFront = true;
+    return this;
+  }
+
   async submit() {}
   async _postRender() {}
 }
@@ -49,6 +67,13 @@ class FakeDialogV2 {
   }
 }
 
+class FakeFilePicker extends FakeApplicationV2 {
+  constructor(options = {}) {
+    super();
+    this.options = options;
+  }
+}
+
 const registeredSettings = [];
 const registeredMenus = [];
 const registeredSheets = [];
@@ -56,6 +81,34 @@ const settingValues = new Map();
 const hooks = new Map();
 const fakeRollResults = [];
 const publishedRolls = [];
+
+function getByPath(target, path) {
+  return String(path).split(".").reduce(
+    (value, key) => value?.[key],
+    target
+  );
+}
+
+function setByPath(target, path, value) {
+  const parts = String(path).split(".");
+  let current = target;
+  for (const key of parts.slice(0, -1)) {
+    current[key] ??= {};
+    current = current[key];
+  }
+  current[parts.at(-1)] = value;
+}
+
+function deleteByPath(target, path) {
+  const parts = String(path).split(".");
+  let current = target;
+  for (const key of parts.slice(0, -1)) {
+    current = current?.[key];
+    if (!current) return;
+  }
+  delete current[parts.at(-1)];
+}
+
 
 globalThis.Roll = class FakeRoll {
   constructor(formula) {
@@ -81,9 +134,41 @@ globalThis.Roll = class FakeRoll {
 };
 
 globalThis.Actor = class Actor {
-  constructor() {
-    this.name = "Actor de test";
-    this.system = {};
+  static created = [];
+
+  static canUserCreate() {
+    return true;
+  }
+
+  static defaultName() {
+    return "Nouveau personnage";
+  }
+
+  static getDefaultArtwork() {
+    return {
+      img: "icons/svg/mystery-man.svg",
+      texture: { src: "icons/svg/mystery-man.svg" }
+    };
+  }
+
+  static async create(data) {
+    const actor = new this(data);
+    this.created.push(actor);
+    return actor;
+  }
+
+  static async createDialog() {
+    return null;
+  }
+
+  constructor(data = {}) {
+    this.id = data._id ?? `actor-${globalThis.Actor.created.length + 1}`;
+    this.uuid = `Actor.${this.id}`;
+    this.name = data.name ?? "Actor de test";
+    this.type = data.type ?? "character";
+    this.img = data.img ?? "icons/svg/mystery-man.svg";
+    this.system = structuredClone(data.system ?? {});
+    this.flags = structuredClone(data.flags ?? {});
     this.updates = [];
   }
 
@@ -95,11 +180,25 @@ globalThis.Actor = class Actor {
     return true;
   }
 
+  getFlag(scope, key) {
+    return getByPath(this.flags?.[scope], key);
+  }
+
+  async setFlag(scope, key, value) {
+    this.flags[scope] ??= {};
+    setByPath(this.flags[scope], key, value);
+    return this;
+  }
+
+  async unsetFlag(scope, key) {
+    deleteByPath(this.flags?.[scope], key);
+    return this;
+  }
+
   async update(changes) {
     this.updates.push(changes);
-    if ("system.resources.destiny.value" in changes) {
-      this.system.resources.destiny.value =
-        changes["system.resources.destiny.value"];
+    for (const [path, value] of Object.entries(changes)) {
+      setByPath(this, path, value);
     }
     return this;
   }
@@ -125,7 +224,8 @@ globalThis.foundry = {
         registerSheet(...args) {
           registeredSheets.push(args);
         }
-      }
+      },
+      FilePicker: FakeFilePicker
     }
   },
   data: {
@@ -229,6 +329,9 @@ const characterSheetModule = await import(
 const equipmentSheetModule = await import(
   `${pathToFileURL(path.join(root, "scripts/applications/equipment-sheet.mjs")).href}?smoke=${Date.now()}`
 );
+const characterCreationModule = await import(
+  `${pathToFileURL(path.join(root, "scripts/applications/character-creation-application.mjs")).href}?smoke=${Date.now()}`
+);
 
 assert.equal(
   characterSheetModule.InterfaceCharacterSheet.DEFAULT_OPTIONS.form.submitOnChange,
@@ -237,6 +340,238 @@ assert.equal(
 assert.equal(
   equipmentSheetModule.InterfaceEquipmentSheet.DEFAULT_OPTIONS.form.submitOnChange,
   true
+);
+assert.equal(
+  characterCreationModule.InterfaceCharacterCreationApplication.DEFAULT_OPTIONS
+    .form.closeOnSubmit,
+  false
+);
+
+const createdEquipmentData = [];
+const equipmentTestSheet = new characterSheetModule.InterfaceCharacterSheet();
+equipmentTestSheet.actor = {
+  canUserModify() {
+    return true;
+  },
+  async createEmbeddedDocuments(type, documents) {
+    assert.equal(type, "Item");
+    createdEquipmentData.push(...documents);
+    return documents.map((document, index) => ({
+      ...document,
+      id: `equipment-${index + 1}`,
+      sheet: {
+        async render() {}
+      }
+    }));
+  }
+};
+const fakeEquipmentEvent = {
+  preventDefault() {},
+  stopPropagation() {}
+};
+await characterSheetModule.InterfaceCharacterSheet.DEFAULT_OPTIONS.actions
+  .createEquipment.call(
+    equipmentTestSheet,
+    fakeEquipmentEvent,
+    { dataset: { category: "ordinary" } }
+  );
+await characterSheetModule.InterfaceCharacterSheet.DEFAULT_OPTIONS.actions
+  .createEquipment.call(
+    equipmentTestSheet,
+    fakeEquipmentEvent,
+    { dataset: { category: "weapon" } }
+  );
+assert.equal(
+  createdEquipmentData[0].img,
+  "systems/interface/assets/items/item_default.webp"
+);
+assert.equal(
+  createdEquipmentData[1].img,
+  "systems/interface/assets/items/weapon_default.webp"
+);
+assert.equal(
+  CONFIG.Actor.documentClass.createDialog
+    !== globalThis.Actor.createDialog,
+  true
+);
+
+const pendingActor = await CONFIG.Actor.documentClass.createDialog({
+  name: "Personnage en attente",
+  type: "character"
+});
+assert.ok(pendingActor);
+assert.equal(
+  pendingActor.getFlag("interface", "creation.pending"),
+  true
+);
+assert.equal(
+  pendingActor.img,
+  "systems/interface/assets/actor/avatar-default.webp",
+  "Un nouvel Actor doit recevoir le portrait par défaut du système."
+);
+
+const pendingCreationApplication =
+  await characterCreationModule.InterfaceCharacterCreationApplication
+    .openForActor({ actor: pendingActor });
+assert.ok(pendingCreationApplication);
+const samePendingCreationApplication =
+  await characterCreationModule.InterfaceCharacterCreationApplication
+    .openForActor({ actor: pendingActor });
+assert.equal(samePendingCreationApplication, pendingCreationApplication);
+assert.equal(pendingCreationApplication.broughtToFront, true);
+
+const draftValues = {
+  name: "Ariane",
+  age: "31",
+  profession: "Archiviste",
+  specializations: "Occultisme"
+};
+for (const skill of [
+  "carrure",
+  "agilite",
+  "perception",
+  "mental",
+  "intellect",
+  "charisme"
+]) {
+  draftValues[`skills.${skill}`] = "30";
+}
+for (const talent of [
+  "endurance",
+  "forceBrute",
+  "robustesse",
+  "agiliteCorporelle",
+  "precision",
+  "reflexe",
+  "acuiteSensorielle",
+  "sixiemeSens",
+  "vigilance",
+  "decision",
+  "determination",
+  "equilibreMental",
+  "creativite",
+  "erudition",
+  "logique",
+  "aura",
+  "communicationExpressive",
+  "persuasion"
+]) {
+  draftValues[`talents.${talent}`] = "5";
+}
+pendingCreationApplication.form = {
+  elements: {
+    namedItem(name) {
+      return { value: draftValues[name] ?? "" };
+    }
+  }
+};
+assert.equal(await pendingCreationApplication.saveDraft(), true);
+assert.equal(pendingActor.name, "Ariane");
+assert.equal(pendingActor.system.identity.age, "31");
+assert.equal(pendingActor.system.skills.carrure, 30);
+assert.equal(pendingActor.system.talents.endurance, 5);
+assert.equal(
+  pendingActor.getFlag("interface", "creation.pending"),
+  true
+);
+assert.equal(
+  pendingActor.img,
+  "systems/interface/assets/actor/avatar-default.webp",
+  "Un nouvel Actor doit recevoir le portrait par défaut du système."
+);
+
+await pendingCreationApplication.close();
+assert.equal(
+  pendingActor.getFlag("interface", "creation.pending"),
+  true,
+  "Fermer l’assistant doit conserver l’état de création en attente."
+);
+const reopenedPendingCreationApplication =
+  await characterCreationModule.InterfaceCharacterCreationApplication
+    .openForActor({ actor: pendingActor });
+assert.notEqual(
+  reopenedPendingCreationApplication,
+  pendingCreationApplication,
+  "Une nouvelle instance doit pouvoir rouvrir la création en attente."
+);
+
+const pendingSheet = new characterSheetModule.InterfaceCharacterSheet();
+pendingSheet.actor = pendingActor;
+await pendingSheet.render({ force: true });
+assert.equal(
+  pendingSheet.renderCalls,
+  0,
+  "La fiche classique ne doit pas être rendue tant que la création est en attente."
+);
+
+const finalValues = {
+  ...draftValues,
+  name: "Ariane finalisée",
+  "skills.carrure": "20",
+  "skills.agilite": "30",
+  "skills.perception": "30",
+  "skills.mental": "40",
+  "skills.intellect": "40",
+  "skills.charisme": "50"
+};
+const talentNames = [
+  "endurance",
+  "forceBrute",
+  "robustesse",
+  "agiliteCorporelle",
+  "precision",
+  "reflexe",
+  "acuiteSensorielle",
+  "sixiemeSens",
+  "vigilance",
+  "decision",
+  "determination",
+  "equilibreMental",
+  "creativite",
+  "erudition",
+  "logique",
+  "aura",
+  "communicationExpressive",
+  "persuasion"
+];
+for (const [index, talent] of talentNames.entries()) {
+  finalValues[`talents.${talent}`] = index < 10 ? "10" : "0";
+}
+const finalButton = { disabled: false, isConnected: true };
+const finalForm = {
+  elements: {
+    namedItem(name) {
+      return {
+        value: finalValues[name] ?? "",
+        focus() {}
+      };
+    }
+  },
+  querySelector(selector) {
+    assert.equal(selector, 'button[type="submit"]');
+    return finalButton;
+  }
+};
+reopenedPendingCreationApplication.form = finalForm;
+await characterCreationModule.InterfaceCharacterCreationApplication
+  .DEFAULT_OPTIONS.form.handler.call(
+    reopenedPendingCreationApplication,
+    new Event("submit"),
+    finalForm
+  );
+assert.equal(
+  pendingActor.getFlag("interface", "creation.pending"),
+  undefined,
+  "La validation finale doit retirer le flag de création."
+);
+assert.equal(pendingActor.name, "Ariane finalisée");
+assert.equal(globalThis.Actor.created.length, 1);
+
+await pendingSheet.render({ force: true });
+assert.equal(
+  pendingSheet.renderCalls,
+  1,
+  "La fiche classique doit être rendue après retrait du flag de création."
 );
 
 const details = new EventTarget();

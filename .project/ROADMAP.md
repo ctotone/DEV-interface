@@ -1,6 +1,6 @@
 # Roadmap — Système D100 Interface pour Foundry VTT
 
-**Dernière mise à jour :** 5 août 2026
+**Dernière mise à jour :** 6 août 2026
 **Statut :** validée par l’utilisateur
 **Identifiant technique :** `interface`
 **Principe :** une phase planifiée ne prouve pas qu’elle est produite, testée ou validée.
@@ -136,95 +136,91 @@ Traduire les spécifications fonctionnelles validées en architecture technique 
 
 ## Phase 03 — Première tranche jouable
 
-**Statut :** EN COURS — Tranche 1 candidate en attente de test
+**Statut :** VALIDÉE
 
-**GPT principal :** GPT Foundry
+**GPT principal :** GPT Foundry  
+**Tests réels :** utilisateur
 
 ### Objectif
 
-Créer la première base installable et testable du système, puis progresser vers une fiche personnage fonctionnelle.
+Créer une première base installable, persistante et jouable du système.
 
-### Première étape
-
-```text
-Tranche 1 — Squelette installable
-```
-
-- manifeste `system.json` ;
-- point d’entrée ES module ;
-- langue française ;
-- settings ;
-- TypeDataModels minimaux ;
-- Actor et Item minimaux ;
-- feuilles minimales ;
-- test d’installation sur Foundry VTT 14.365.
-
-### Ordonnancement interne retenu
+### Tranches réalisées
 
 ```text
-Tranche 1  : squelette installable au design neutre
-Tranche 2  : données affichées et valeurs dérivées nécessaires
-Tranche 2B : adaptation raisonnée de la référence HTML/CSS Roll20
-Puis        : moteur D100 et cartes de chat
+Tranche 1  — Squelette installable : VALIDÉE
+Tranche 2  — Données et dérivés : VALIDÉE
+Tranche 2B — Adaptation fonctionnelle de la fiche : VALIDÉE
+Tranche 3  — Moteur D100 : VALIDÉE
+Tranche 3B — Assistant de création et ergonomie complémentaire : VALIDÉE
 ```
 
-La Tranche 2 ne commence pas avant validation explicite de la Tranche 1.
+### Résultat
 
-### Résultat attendu de la phase
+- système installable sous Foundry VTT `14.365` ;
+- Actor et Item fonctionnels ;
+- données persistées et dérivées ;
+- settings mondiaux ;
+- moteur D100, Destin et marges ;
+- assistant de création ;
+- équipement embarqué ;
+- première fiche jouable ;
+- tests utilisateur T1 à T35 validés.
 
-- système installable ;
-- création d’un Actor personnage ;
-- données essentielles éditables ;
-- compétences et talents utilisables ;
-- valeurs dérivées calculées ;
-- jets principaux fonctionnels ;
-- première carte de chat ;
-- sauvegarde et rechargement vérifiés.
+### Livrable de décision
+
+```text
+.project/decisions/PHASE_03_PREMIERE_TRANCHE_JOUABLE.md
+```
 
 ---
 
 ## Phase 04 — États, Destin et réglages MJ
 
-**Statut :** PLANIFIÉE
+**Statut :** PROCHAINE — PÉRIMÈTRE À RECALIBRER
 
-**GPT principal :** GPT Foundry
+**GPT principal pressenti :** GPT Foundry
 
-### Objectif
-
-Implémenter les états et paramètres numériques du noyau.
-
-### Résultat attendu
+### Éléments déjà produits en phase 03
 
 - Blessures et Stress de `0 à 15` ;
 - conversion en niveaux ;
-- coefficient configurable ;
-- Destin complet ;
-- paramètres MJ et restauration des valeurs par défaut ;
-- détails de calcul consultables ;
-- tests fonctionnels du noyau.
+- coefficient mondial ;
+- settings du Destin ;
+- moteur complet du Destin ;
+- tests unitaires du noyau ;
+- interface de settings et chargement des valeurs par défaut.
+
+### Travail préalable obligatoire
+
+Comparer le périmètre initial à la base réelle et déterminer uniquement ce qui reste à produire, tester ou finaliser.
+
+La phase 04 ne doit pas réimplémenter les éléments validés en phase 03.
 
 ---
 
 ## Phase 05 — Conflits, initiative et armes
 
-**Statut :** PLANIFIÉE
+**Statut :** PLANIFIÉE — SOCLE PARTIELLEMENT ANTICIPÉ
 
 **GPT principal :** GPT Foundry
 
-### Objectif
+### Déjà produit
 
-Permettre une scène de conflit simple sans créer de moteur tactique complet.
+- Corps à corps, Distance et Verbal ;
+- bonus d’initiative dérivé ;
+- Items `ordinary | weapon` ;
+- sections Inventaire et Armes ;
+- formules de dégâts persistées sur les armes.
 
-### Périmètre
+### Reste principalement à traiter
 
-- valeurs dérivées de conflit ;
-- initiative simple ;
-- Items d’équipement et d’arme ;
-- formules de dégâts ;
-- choix d’arme depuis le chat ;
+- initiative complète dans Foundry ;
+- cartes de chat fonctionnelles ;
+- sélection des armes depuis le chat ;
 - dégâts normaux et maximum ;
-- absence de ciblage et d’application automatique ;
-- réutilisation des actions autorisées.
+- permissions et réutilisation des actions ;
+- tests de conflit sans automatisation tactique.
 
 ### Hors périmètre
 
@@ -233,31 +229,35 @@ Permettre une scène de conflit simple sans créer de moteur tactique complet.
 - résistance ;
 - armure calculée ;
 - portée tactique ;
-- positionnement automatisé.
+- application automatique des dégâts.
 
 ---
 
 ## Phase 06 — Ergonomie et identité visuelle
 
-**Statut :** PLANIFIÉE
+**Statut :** PLANIFIÉE — SOCLE PARTIELLEMENT ANTICIPÉ
 
-**GPT principal technique :** GPT Foundry
+**GPT principal technique :** GPT Foundry  
 **Contributeur visuel :** GPT Visuel
 
-### Objectif
+### Déjà produit
 
-Améliorer la fluidité des feuilles et des cartes de chat sans alourdir l’usage.
+- adaptation fonctionnelle de la fiche ;
+- assistant de création ;
+- organisation de l’identité ;
+- sections repliables ;
+- séparation Armes / Inventaire ;
+- premiers assets par défaut ;
+- premières règles de lisibilité et d’espacement.
 
-### Périmètre pressenti
+### Reste principalement à traiter
 
-- hiérarchie des informations ;
-- navigation de la fiche ;
-- interactions de jet ;
+- identité visuelle finale ;
 - cartes de chat ;
-- paramètres MJ ;
-- identité graphique ;
-- accessibilité et lisibilité ;
-- adaptation raisonnée des références Roll20.
+- cohérence graphique complète ;
+- accessibilité ;
+- responsive et finitions ;
+- arbitrages avec GPT Visuel.
 
 ---
 
@@ -265,7 +265,7 @@ Améliorer la fluidité des feuilles et des cartes de chat sans alourdir l’usa
 
 **Statut :** PLANIFIÉE
 
-**GPT principal :** GPT Foundry
+**GPT principal :** GPT Foundry  
 **Tests réels :** utilisateur
 
 ### Objectif
@@ -274,12 +274,11 @@ Obtenir une candidate stable et jouable.
 
 ### Périmètre
 
-- tests fonctionnels ;
-- tests Foundry ;
+- tests fonctionnels globaux ;
 - permissions ;
 - sauvegarde et rechargement ;
 - non-régression ;
-- tests utilisateur en partie ;
+- multijoueur et concurrence ;
 - correction des blocages ;
 - documentation des limites connues.
 
@@ -297,7 +296,7 @@ Préparer une première version publiable seulement lorsque le système est stab
 
 ### Périmètre futur
 
-- nettoyage de l’archive ;
+- nettoyage de l’archive de distribution ;
 - exclusion de `.project/` ;
 - versionnement ;
 - manifeste de distribution ;
@@ -316,6 +315,7 @@ Préparer une première version publiable seulement lorsque le système est stab
 + 01 Personnage, équipement et conflits
 → 02 Architecture Foundry
 → 03 Première tranche jouable
+→ recalibrage 04–06 selon la base réelle
 → 04 États, Destin et réglages MJ
 → 05 Conflits, initiative et armes
 → 06 Ergonomie et identité visuelle
@@ -323,4 +323,4 @@ Préparer une première version publiable seulement lorsque le système est stab
 → 08 Préparation de diffusion
 ```
 
-Certaines tâches des phases 03 à 06 pourront être réordonnées si GPT Foundry identifie une dépendance technique concrète. Toute modification importante de la roadmap reste soumise à validation utilisateur.
+Les anticipations validées de phase 03 font partie de la base réelle. Elles ne doivent pas être refaites ni considérées comme de simples intentions.

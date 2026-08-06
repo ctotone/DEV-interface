@@ -1,7 +1,9 @@
+import { InterfaceCharacterCreationApplication } from "./character-creation-application.mjs";
 import {
-  CREATION_RECOMMENDATIONS,
+  DEFAULT_IMAGES,
   DERIVED_SCORE_DEFINITIONS,
   EQUIPMENT_CATEGORIES,
+  FLAG_KEYS,
   ITEM_TYPES,
   SETTING_KEYS,
   SKILLS,
@@ -16,12 +18,13 @@ const {
   DialogV2,
   HandlebarsApplicationMixin
 } = foundry.applications.api;
+const { FilePicker } = foundry.applications.apps;
 
 const RESOURCE_KEYS = new Set(["wounds", "stress"]);
 const DEFAULT_SECTION_STATE = Object.freeze({
-  development: false,
   talents: true,
   combat: true,
+  weapons: true,
   specializations: false,
   inventory: true,
   notes: false
@@ -41,42 +44,37 @@ function canUpdateActor(sheet) {
   return sheet.actor?.canUserModify?.(game.user, "update") ?? true;
 }
 
+async function choosePortraitAction() {
+  if (!canUpdateActor(this)) return null;
+
+  await this.submit();
+  const picker = new FilePicker({
+    type: "image",
+    current: this.actor.img,
+    callback: path => this.actor.update({ img: path })
+  });
+  return picker.render({ force: true });
+}
+
 function itemView(item) {
   const isWeapon = item.system.category === EQUIPMENT_CATEGORIES.WEAPON;
 
   return {
     id: item.id,
     name: item.name,
-    img: item.img,
+    img: String(item.img ?? "").trim()
+      || DEFAULT_IMAGES.EQUIPMENT[item.system.category],
     quantity: item.system.quantity,
     category: item.system.category,
     categoryLabel: isWeapon
       ? "INTERFACE.Equipment.CategoryWeapon"
       : "INTERFACE.Equipment.CategoryOrdinary",
+    deleteLabel: isWeapon
+      ? "INTERFACE.Inventory.DeleteWeapon"
+      : "INTERFACE.Inventory.DeleteOrdinary",
     isWeapon,
     damageFormula: item.system.damage.formula
   };
-}
-
-function creationWarningMessage(code, creation) {
-  switch (code) {
-    case "skills":
-      return game.i18n.format("INTERFACE.Creation.WarningSkills", {
-        values: creation.skillValues.join(" / ")
-      });
-    case "talents-under":
-      return game.i18n.format("INTERFACE.Creation.WarningTalentsUnder", {
-        total: creation.talentTotal,
-        remaining: CREATION_RECOMMENDATIONS.talentTotal - creation.talentTotal
-      });
-    case "talents-over":
-      return game.i18n.format("INTERFACE.Creation.WarningTalentsOver", {
-        total: creation.talentTotal,
-        excess: creation.talentTotal - CREATION_RECOMMENDATIONS.talentTotal
-      });
-    default:
-      return code;
-  }
 }
 
 const STATE_PRESENTATION = Object.freeze([
@@ -156,26 +154,64 @@ async function adjustResourceAction(event, target) {
   await this.submit();
 }
 
-async function createEquipmentAction(event, target) {
-  const category = target.dataset.category;
-  if (!Object.values(EQUIPMENT_CATEGORIES).includes(category)) return;
-  if (!this.actor.canUserModify(game.user, "update")) return;
+async function createEquipment(sheet, category) {
+  if (!Object.values(EQUIPMENT_CATEGORIES).includes(category)) return null;
+  if (!sheet.actor.canUserModify(game.user, "update")) return null;
 
-  await this.submit();
+  await sheet.submit();
 
   const nameKey = category === EQUIPMENT_CATEGORIES.WEAPON
     ? "INTERFACE.Inventory.NewWeapon"
     : "INTERFACE.Inventory.NewOrdinary";
 
-  const [item] = await this.actor.createEmbeddedDocuments("Item", [{
+  const [item] = await sheet.actor.createEmbeddedDocuments("Item", [{
     name: game.i18n.localize(nameKey),
     type: ITEM_TYPES.EQUIPMENT,
+    img: DEFAULT_IMAGES.EQUIPMENT[category],
     system: {
       category
     }
   }]);
 
   await item?.sheet?.render({ force: true });
+  return item ?? null;
+}
+
+async function createEquipmentAction(event, target) {
+  event.preventDefault();
+  event.stopPropagation();
+  return createEquipment(this, target.dataset.category);
+}
+
+async function chooseEquipmentCategoryAction(event) {
+  event.preventDefault();
+  event.stopPropagation();
+  if (!canUpdateActor(this)) return null;
+
+  const category = await DialogV2.wait({
+    window: {
+      title: game.i18n.localize("INTERFACE.Inventory.AddTitle")
+    },
+    content: `<p>${game.i18n.localize("INTERFACE.Inventory.AddPrompt")}</p>`,
+    buttons: [
+      {
+        action: EQUIPMENT_CATEGORIES.ORDINARY,
+        label: game.i18n.localize("INTERFACE.Inventory.AddOrdinary"),
+        default: true,
+        callback: () => EQUIPMENT_CATEGORIES.ORDINARY
+      },
+      {
+        action: EQUIPMENT_CATEGORIES.WEAPON,
+        label: game.i18n.localize("INTERFACE.Inventory.AddWeapon"),
+        callback: () => EQUIPMENT_CATEGORIES.WEAPON
+      }
+    ],
+    rejectClose: false,
+    modal: true
+  });
+
+  if (!category) return null;
+  return createEquipment(this, category);
 }
 
 async function editEmbeddedItemAction(event, target) {
@@ -185,22 +221,40 @@ async function editEmbeddedItemAction(event, target) {
   await item?.sheet?.render({ force: true });
 }
 
-function creationSignature(creation) {
-  return JSON.stringify({
-    skillValues: creation.skillValues,
-    talentTotal: creation.talentTotal,
-    warnings: creation.warnings
+async function deleteEmbeddedItemAction(event, target) {
+  event.preventDefault();
+  event.stopPropagation();
+  if (!canUpdateActor(this)) return null;
+
+  const row = target.closest("[data-item-id]");
+  const item = this.actor.items.get(row?.dataset.itemId);
+  if (!item) return null;
+
+  const confirmed = await DialogV2.confirm({
+    window: {
+      title: game.i18n.localize("INTERFACE.Inventory.DeleteTitle")
+    },
+    content: `
+      <p>${game.i18n.format("INTERFACE.Inventory.DeletePrompt", {
+        name: escapeHtml(item.name)
+      })}</p>
+      <p class="hint">${game.i18n.localize("INTERFACE.Inventory.DeleteWarning")}</p>
+    `,
+    yes: {
+      label: game.i18n.localize("INTERFACE.Inventory.DeleteConfirm"),
+      icon: "fa-solid fa-trash"
+    },
+    no: {
+      label: game.i18n.localize("INTERFACE.Inventory.DeleteCancel")
+    },
+    rejectClose: false,
+    modal: true
   });
-}
 
-function acknowledgeCreationWarningsAction() {
-  if (!canUpdateActor(this)) return;
-  this.acknowledgedCreationSignature = creationSignature(
-    this.actor.system.derived.creation
-  );
-  return this.render();
+  if (!confirmed) return null;
+  await item.delete();
+  return item;
 }
-
 
 function standardRollLabel(skillKey, talentKey) {
   const skill = SKILLS.find(entry => entry.key === skillKey);
@@ -440,6 +494,8 @@ async function chooseTalentForSkill(sheet, skillKey) {
   });
 }
 
+// Conservé volontairement pour une éventuelle réactivation future.
+// Aucun élément du template ne référence actuellement cette action.
 async function rollSkillAction(event, target) {
   if (!canUpdateActor(this)) return null;
   const skillKey = target.dataset.skillKey;
@@ -480,8 +536,28 @@ async function rollDerivedAction(event, target) {
 }
 
 export class InterfaceCharacterSheet extends HandlebarsApplicationMixin(ActorSheetV2) {
-  acknowledgedCreationSignature = null;
   sectionState = { ...DEFAULT_SECTION_STATE };
+
+  async render(options = {}, legacyOptions = {}) {
+    const creationPending = this.actor.getFlag(
+      SYSTEM_ID,
+      FLAG_KEYS.CREATION_PENDING
+    ) === true;
+
+    if (creationPending && canUpdateActor(this)) {
+      const renderOptions = typeof options === "boolean"
+        ? { ...legacyOptions, force: options }
+        : { ...legacyOptions, ...options };
+
+      await InterfaceCharacterCreationApplication.openForActor({
+        actor: this.actor,
+        renderOptions
+      });
+      return this;
+    }
+
+    return super.render(options, legacyOptions);
+  }
 
   static DEFAULT_OPTIONS = {
     classes: ["interface", "interface-sheet", "interface-character-sheet"],
@@ -496,8 +572,10 @@ export class InterfaceCharacterSheet extends HandlebarsApplicationMixin(ActorShe
     actions: {
       adjustResource: adjustResourceAction,
       createEquipment: createEquipmentAction,
+      chooseEquipmentCategory: chooseEquipmentCategoryAction,
       editEmbeddedItem: editEmbeddedItemAction,
-      acknowledgeCreationWarnings: acknowledgeCreationWarningsAction,
+      deleteEmbeddedItem: deleteEmbeddedItemAction,
+      choosePortrait: choosePortraitAction,
       rollSkill: rollSkillAction,
       rollTalent: rollTalentAction,
       rollDerived: rollDerivedAction
@@ -523,21 +601,11 @@ export class InterfaceCharacterSheet extends HandlebarsApplicationMixin(ActorShe
       .filter(item => item.type === ITEM_TYPES.EQUIPMENT)
       .map(itemView);
     const weapons = embeddedEquipment.filter(item => item.isWeapon);
+    const inventory = embeddedEquipment.filter(item => !item.isWeapon);
     const customDerived = game.settings.get(
       SYSTEM_ID,
       SETTING_KEYS.CUSTOM_DERIVED
     );
-    const statePenaltyCoefficient = game.settings.get(
-      SYSTEM_ID,
-      SETTING_KEYS.STATE_PENALTY_COEFFICIENT
-    );
-    const creationWarnings = derived.creation.warnings.map(code => ({
-      code,
-      message: creationWarningMessage(code, derived.creation)
-    }));
-    const warningsAcknowledged = creationWarnings.length > 0
-      && this.acknowledgedCreationSignature
-        === creationSignature(derived.creation);
     const readOnly = !canUpdateActor(this);
 
     return {
@@ -547,7 +615,6 @@ export class InterfaceCharacterSheet extends HandlebarsApplicationMixin(ActorShe
       readOnly,
       derived,
       sections: this.sectionState,
-      statePenaltyCoefficient,
       woundState: buildStatePresentation("wounds", derived.levels.wounds),
       stressState: buildStatePresentation("stress", derived.levels.stress),
       derivedScores: Object.entries(DERIVED_SCORE_DEFINITIONS).map(
@@ -570,18 +637,12 @@ export class InterfaceCharacterSheet extends HandlebarsApplicationMixin(ActorShe
       })),
       talentGroups: TALENT_GROUPS.map(group => ({
         ...group,
+        skillValue: system.skills[group.skill],
         talents: group.talents.map(talent => ({
           ...talent,
           value: system.talents[talent.key]
         }))
       })),
-      creation: {
-        ...derived.creation,
-        warnings: creationWarnings,
-        acknowledged: warningsAcknowledged,
-        showWarnings: creationWarnings.length > 0
-          && !warningsAcknowledged
-      },
       progressionGauge: [0, 1, 2, 3].map(value => ({
         value,
         checked: system.progression.gauge === value
@@ -606,9 +667,9 @@ export class InterfaceCharacterSheet extends HandlebarsApplicationMixin(ActorShe
           "INTERFACE.Progression.SpecializationGainDetail"
         )
       ],
-      inventory: embeddedEquipment,
+      inventory,
       weapons,
-      hasInventory: embeddedEquipment.length > 0,
+      hasInventory: inventory.length > 0,
       hasWeapons: weapons.length > 0,
       categories: EQUIPMENT_CATEGORIES
     };

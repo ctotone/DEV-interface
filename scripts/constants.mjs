@@ -2,6 +2,10 @@ export const SYSTEM_ID = "interface";
 export const PACKAGE_VERSION = "0.1.0";
 export const SCHEMA_VERSION = 1;
 
+export const FLAG_KEYS = Object.freeze({
+  CREATION_PENDING: "creation.pending"
+});
+
 export const ACTOR_TYPES = Object.freeze({
   CHARACTER: "character"
 });
@@ -13,6 +17,16 @@ export const ITEM_TYPES = Object.freeze({
 export const EQUIPMENT_CATEGORIES = Object.freeze({
   ORDINARY: "ordinary",
   WEAPON: "weapon"
+});
+
+export const DEFAULT_IMAGES = Object.freeze({
+  ACTOR: "systems/interface/assets/actor/avatar-default.webp",
+  EQUIPMENT: Object.freeze({
+    [EQUIPMENT_CATEGORIES.ORDINARY]:
+      "systems/interface/assets/items/item_default.webp",
+    [EQUIPMENT_CATEGORIES.WEAPON]:
+      "systems/interface/assets/items/weapon_default.webp"
+  })
 });
 
 export const SKILLS = Object.freeze([

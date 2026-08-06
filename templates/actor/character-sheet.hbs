@@ -1,38 +1,79 @@
 <div class="interface-sheet__content interface-character {{#if readOnly}}interface-character--read-only{{/if}}">
-  <header class="interface-character__identity">
+  <header class="interface-identity-grid interface-character__identity">
+    <div class="interface-identity__portrait">
+      {{#if editable}}
+        <button
+          type="button"
+          class="interface-portrait-button"
+          data-action="choosePortrait"
+          title="{{localize "INTERFACE.CreationAssistant.ChoosePortrait"}}"
+        >
+          <img
+            src="{{actor.img}}"
+            alt="{{localize "INTERFACE.CreationAssistant.Portrait"}} — {{actor.name}}"
+          >
+          <span>
+            <i class="fa-solid fa-image" aria-hidden="true"></i>
+            {{localize "INTERFACE.CreationAssistant.ChoosePortrait"}}
+          </span>
+        </button>
+      {{else}}
+        <div class="interface-portrait-static">
+          <img
+            src="{{actor.img}}"
+            alt="{{localize "INTERFACE.CreationAssistant.Portrait"}} — {{actor.name}}"
+          >
+        </div>
+      {{/if}}
+    </div>
+
+    <div class="interface-identity__main">
+      {{#if editable}}
+        <label class="interface-identity-field interface-character__name">
+          <span>{{localize "INTERFACE.Common.Name"}}</span>
+          <input
+            id="{{rootId}}-name"
+            type="text"
+            name="name"
+            value="{{actor.name}}"
+            autocomplete="off"
+          >
+        </label>
+
+        <label class="interface-identity-field">
+          <span>{{localize "INTERFACE.Identity.Profession"}}</span>
+          <input
+            type="text"
+            name="system.identity.profession"
+            value="{{system.identity.profession}}"
+          >
+        </label>
+      {{else}}
+        <div class="interface-identity-field interface-readonly-field interface-character__name">
+          <span>{{localize "INTERFACE.Common.Name"}}</span>
+          <strong>{{actor.name}}</strong>
+        </div>
+
+        <div class="interface-identity-field interface-readonly-field">
+          <span>{{localize "INTERFACE.Identity.Profession"}}</span>
+          <strong>{{#if system.identity.profession}}{{system.identity.profession}}{{else}}—{{/if}}</strong>
+        </div>
+      {{/if}}
+    </div>
+
     {{#if editable}}
-      <label class="interface-character__name">
-        <span>{{localize "INTERFACE.Common.Name"}}</span>
+      <label class="interface-identity__age interface-identity-field interface-identity-field--age">
+        <span>{{localize "INTERFACE.Identity.Age"}}</span>
         <input
-          id="{{rootId}}-name"
           type="text"
-          name="name"
-          value="{{actor.name}}"
-          autocomplete="off"
+          name="system.identity.age"
+          value="{{system.identity.age}}"
         >
       </label>
-
-      <label>
-        <span>{{localize "INTERFACE.Identity.Age"}}</span>
-        <input type="text" name="system.identity.age" value="{{system.identity.age}}">
-      </label>
-
-      <label>
-        <span>{{localize "INTERFACE.Identity.Profession"}}</span>
-        <input type="text" name="system.identity.profession" value="{{system.identity.profession}}">
-      </label>
     {{else}}
-      <div class="interface-readonly-field interface-character__name">
-        <span>{{localize "INTERFACE.Common.Name"}}</span>
-        <strong>{{actor.name}}</strong>
-      </div>
-      <div class="interface-readonly-field">
+      <div class="interface-identity__age interface-identity-field interface-identity-field--age interface-readonly-field">
         <span>{{localize "INTERFACE.Identity.Age"}}</span>
         <strong>{{#if system.identity.age}}{{system.identity.age}}{{else}}—{{/if}}</strong>
-      </div>
-      <div class="interface-readonly-field">
-        <span>{{localize "INTERFACE.Identity.Profession"}}</span>
-        <strong>{{#if system.identity.profession}}{{system.identity.profession}}{{else}}—{{/if}}</strong>
       </div>
     {{/if}}
   </header>
@@ -53,13 +94,7 @@
                 max="100"
                 step="1"
               >
-              <button
-                type="button"
-                class="interface-roll-link interface-roll-link--skill"
-                data-action="rollSkill"
-                data-skill-key="{{key}}"
-                title="{{localize "INTERFACE.D100.RollSkillTitle"}}"
-              >{{localize label}}</button>
+              <span class="interface-skill__label">{{localize label}}</span>
             {{else}}
               <strong class="interface-skill__value">{{value}}</strong>
               <span class="interface-skill__label">{{localize label}}</span>
@@ -70,8 +105,20 @@
     </section>
 
     <section class="interface-state-band" aria-label="{{localize "INTERFACE.Section.Resources"}}">
-      <div class="interface-state-band__resource">
-        <span class="interface-state-band__label">{{localize "INTERFACE.Resource.Wounds"}}</span>
+      <div class="interface-state-band__resource interface-state-band__resource--wounds">
+        <div class="interface-state-band__meta">
+          <span class="interface-state-band__label">{{localize "INTERFACE.Resource.Wounds"}}</span>
+          <div
+            class="interface-state-label"
+            data-state-level="{{woundState.level}}"
+            style="--interface-state-color: {{woundState.color}};"
+            aria-label="{{localize "INTERFACE.State.Level"}} {{woundState.level}} : {{localize woundState.label}}"
+          >
+            <span>{{localize "INTERFACE.State.Label"}} :</span>
+            <strong>{{localize woundState.label}}</strong>
+          </div>
+        </div>
+
         {{#if editable}}
           <div class="interface-resource__controls interface-resource__controls--dark">
             <button
@@ -100,24 +147,14 @@
         {{else}}
           <strong class="interface-resource__readonly">{{system.resources.wounds.value}}</strong>
         {{/if}}
-        <div
-          class="interface-state-label"
-          data-state-level="{{woundState.level}}"
-          style="--interface-state-color: {{woundState.color}};"
-          aria-label="{{localize "INTERFACE.State.Level"}} {{woundState.level}} : {{localize woundState.label}}"
-        >
-          {{localize woundState.label}}
-        </div>
       </div>
 
       <div class="interface-state-band__initiative">
         <span>{{localize "INTERFACE.Derived.Initiative"}}</span>
         <strong>+{{derived.initiativeBonus}}</strong>
-        <small>{{localize "INTERFACE.Derived.InitiativeBonus"}}</small>
       </div>
 
-      <div class="interface-state-band__resource">
-        <span class="interface-state-band__label">{{localize "INTERFACE.Resource.Stress"}}</span>
+      <div class="interface-state-band__resource interface-state-band__resource--stress">
         {{#if editable}}
           <div class="interface-resource__controls interface-resource__controls--dark">
             <button
@@ -146,101 +183,31 @@
         {{else}}
           <strong class="interface-resource__readonly">{{system.resources.stress.value}}</strong>
         {{/if}}
-        <div
-          class="interface-state-label"
-          data-state-level="{{stressState.level}}"
-          style="--interface-state-color: {{stressState.color}};"
-          aria-label="{{localize "INTERFACE.State.Level"}} {{stressState.level}} : {{localize stressState.label}}"
-        >
-          {{localize stressState.label}}
-        </div>
-      </div>
 
-      <div class="interface-state-band__dev">
-        <span>{{localize "INTERFACE.Development.Temporary"}}</span>
-        <span>{{localize "INTERFACE.State.TotalPenalty"}} : −{{derived.statePenalty}}</span>
-        <span>{{localize "INTERFACE.Resource.Destiny"}} : {{system.resources.destiny.value}}</span>
+        <div class="interface-state-band__meta">
+          <span class="interface-state-band__label">{{localize "INTERFACE.Resource.Stress"}}</span>
+          <div
+            class="interface-state-label"
+            data-state-level="{{stressState.level}}"
+            style="--interface-state-color: {{stressState.color}};"
+            aria-label="{{localize "INTERFACE.State.Level"}} {{stressState.level}} : {{localize stressState.label}}"
+          >
+            <span>{{localize "INTERFACE.State.Label"}} :</span>
+            <strong>{{localize stressState.label}}</strong>
+          </div>
+        </div>
       </div>
     </section>
-
-    <details class="interface-fold interface-fold--development" data-section="development" {{#if sections.development}}open{{/if}}>
-      <summary>
-        <span>{{localize "INTERFACE.Development.Title"}}</span>
-        <small>{{localize "INTERFACE.Development.TemporaryHint"}}</small>
-      </summary>
-      <div class="interface-fold__content">
-        <div class="interface-dev-grid">
-          {{#if editable}}
-            <label class="interface-dev-field">
-              <span>{{localize "INTERFACE.Resource.Destiny"}}</span>
-              <input
-                type="number"
-                name="system.resources.destiny.value"
-                value="{{system.resources.destiny.value}}"
-                min="0"
-                step="1"
-              >
-            </label>
-          {{else}}
-            <div class="interface-dev-field interface-readonly-field">
-              <span>{{localize "INTERFACE.Resource.Destiny"}}</span>
-              <strong>{{system.resources.destiny.value}}</strong>
-            </div>
-          {{/if}}
-          <div>
-            <strong>{{localize "INTERFACE.State.Detail"}}</strong>
-            <p>
-              ({{derived.levels.wounds}} + {{derived.levels.stress}})
-              × {{statePenaltyCoefficient}}
-              = {{derived.statePenalty}}
-            </p>
-          </div>
-          <div>
-            <strong>{{localize "INTERFACE.Creation.TalentTotal"}}</strong>
-            <p>{{creation.talentTotal}} / 100</p>
-          </div>
-        </div>
-
-        {{#if creation.showWarnings}}
-          <div class="interface-notice interface-notice--warning">
-            <strong>{{localize "INTERFACE.Creation.WarningTitle"}}</strong>
-            <ul>
-              {{#each creation.warnings}}
-                <li>{{message}}</li>
-              {{/each}}
-            </ul>
-            <p>{{localize "INTERFACE.Creation.NonBlocking"}}</p>
-            {{#if editable}}
-              <button type="button" data-action="acknowledgeCreationWarnings">
-                <i class="fa-solid fa-check" aria-hidden="true"></i>
-                {{localize "INTERFACE.Creation.Acknowledge"}}
-              </button>
-            {{/if}}
-          </div>
-        {{else}}
-          {{#if creation.acknowledged}}
-            <p class="interface-notice interface-notice--acknowledged">
-              {{localize "INTERFACE.Creation.Acknowledged"}}
-            </p>
-          {{else}}
-            <p class="interface-notice interface-notice--success">
-              {{localize "INTERFACE.Creation.RecommendedDistribution"}}
-            </p>
-          {{/if}}
-        {{/if}}
-      </div>
-    </details>
 
     <details class="interface-fold" data-section="talents" {{#if sections.talents}}open{{/if}}>
       <summary>
         <span>{{localize "INTERFACE.Section.Talents"}}</span>
-        <small>{{creation.talentTotal}} / 100</small>
       </summary>
       <div class="interface-fold__content">
         <div class="interface-talent-groups">
           {{#each talentGroups}}
             <fieldset class="interface-talent-group interface-tone--{{tone}}">
-              <legend>{{localize label}}</legend>
+              <legend>{{localize label}} <span aria-hidden="true">—</span> {{skillValue}}</legend>
               {{#each talents}}
                 <div class="interface-talent">
                   {{#if ../../editable}}
@@ -248,6 +215,7 @@
                       type="button"
                       class="interface-roll-link interface-roll-link--talent"
                       data-action="rollTalent"
+                      tabindex="-1"
                       data-skill-key="{{../skill}}"
                       data-talent-key="{{key}}"
                       title="{{localize "INTERFACE.D100.RollTalentTitle"}}"
@@ -275,7 +243,6 @@
     <details class="interface-fold" data-section="combat" {{#if sections.combat}}open{{/if}}>
       <summary>
         <span>{{localize "INTERFACE.Section.Combat"}}</span>
-        <small>{{localize "INTERFACE.Section.Derived"}} · {{localize "INTERFACE.Section.Weapons"}}</small>
       </summary>
       <div class="interface-fold__content">
         <div class="interface-derived-grid">
@@ -329,25 +296,33 @@
           {{/if}}
         </div>
 
-        <div class="interface-subsection-heading">
-          <h3>{{localize "INTERFACE.Section.Weapons"}}</h3>
+      </div>
+    </details>
+
+    <details class="interface-fold" data-section="weapons" {{#if sections.weapons}}open{{/if}}>
+      <summary>
+        <span class="interface-fold__title-row">
+          <span>{{localize "INTERFACE.Section.Weapons"}}</span>
           {{#if editable}}
             <button
               type="button"
+              class="interface-fold__add"
               data-action="createEquipment"
               data-category="{{categories.WEAPON}}"
+              title="{{localize "INTERFACE.Inventory.AddWeapon"}}"
+              aria-label="{{localize "INTERFACE.Inventory.AddWeapon"}}"
             >
               <i class="fa-solid fa-plus" aria-hidden="true"></i>
-              {{localize "INTERFACE.Inventory.AddWeapon"}}
             </button>
           {{/if}}
-        </div>
-
+        </span>
+      </summary>
+      <div class="interface-fold__content">
         {{#if hasWeapons}}
           <ol class="interface-item-list interface-item-list--weapons">
             {{#each weapons}}
               <li class="interface-item-row" data-item-id="{{id}}">
-                <img src="{{img}}" alt="">
+                <img src="{{img}}" alt="{{name}}">
                 {{#if ../editable}}
                   <button
                     type="button"
@@ -359,6 +334,17 @@
                 {{/if}}
                 <span>×{{quantity}}</span>
                 <span class="interface-item-row__formula">{{damageFormula}}</span>
+                {{#if ../editable}}
+                  <button
+                    type="button"
+                    class="interface-item-row__delete"
+                    data-action="deleteEmbeddedItem"
+                    title="{{localize deleteLabel}}"
+                    aria-label="{{localize deleteLabel}}"
+                  >
+                    <i class="fa-solid fa-trash" aria-hidden="true"></i>
+                  </button>
+                {{/if}}
               </li>
             {{/each}}
           </ol>
@@ -371,7 +357,6 @@
     <details class="interface-fold" data-section="specializations" {{#if sections.specializations}}open{{/if}}>
       <summary>
         <span>{{localize "INTERFACE.Section.Specializations"}}</span>
-        <small>{{localize "INTERFACE.Specializations.Hint"}}</small>
       </summary>
       <div class="interface-fold__content">
         {{#if editable}}
@@ -384,36 +369,28 @@
 
     <details class="interface-fold" data-section="inventory" {{#if sections.inventory}}open{{/if}}>
       <summary>
-        <span>{{localize "INTERFACE.Section.Inventory"}}</span>
-        <small>{{inventory.length}}</small>
+        <span class="interface-fold__title-row">
+          <span>{{localize "INTERFACE.Section.Inventory"}}</span>
+          {{#if editable}}
+            <button
+              type="button"
+              class="interface-fold__add"
+              data-action="chooseEquipmentCategory"
+              title="{{localize "INTERFACE.Inventory.Add"}}"
+              aria-label="{{localize "INTERFACE.Inventory.Add"}}"
+            >
+              <i class="fa-solid fa-plus" aria-hidden="true"></i>
+            </button>
+          {{/if}}
+        </span>
       </summary>
       <div class="interface-fold__content">
-        {{#if editable}}
-          <div class="interface-panel__actions">
-            <button
-              type="button"
-              data-action="createEquipment"
-              data-category="{{categories.ORDINARY}}"
-            >
-              <i class="fa-solid fa-plus" aria-hidden="true"></i>
-              {{localize "INTERFACE.Inventory.AddOrdinary"}}
-            </button>
-            <button
-              type="button"
-              data-action="createEquipment"
-              data-category="{{categories.WEAPON}}"
-            >
-              <i class="fa-solid fa-plus" aria-hidden="true"></i>
-              {{localize "INTERFACE.Inventory.AddWeapon"}}
-            </button>
-          </div>
-        {{/if}}
 
         {{#if hasInventory}}
-          <ol class="interface-item-list">
+          <ol class="interface-item-list interface-item-list--inventory">
             {{#each inventory}}
               <li class="interface-item-row" data-item-id="{{id}}">
-                <img src="{{img}}" alt="">
+                <img src="{{img}}" alt="{{name}}">
                 {{#if ../editable}}
                   <button
                     type="button"
@@ -423,10 +400,17 @@
                 {{else}}
                   <span class="interface-item-row__name interface-item-row__name--readonly">{{name}}</span>
                 {{/if}}
-                <span>{{localize categoryLabel}}</span>
                 <span>×{{quantity}}</span>
-                {{#if isWeapon}}
-                  <span class="interface-item-row__formula">{{damageFormula}}</span>
+                {{#if ../editable}}
+                  <button
+                    type="button"
+                    class="interface-item-row__delete"
+                    data-action="deleteEmbeddedItem"
+                    title="{{localize deleteLabel}}"
+                    aria-label="{{localize deleteLabel}}"
+                  >
+                    <i class="fa-solid fa-trash" aria-hidden="true"></i>
+                  </button>
                 {{/if}}
               </li>
             {{/each}}
@@ -434,16 +418,12 @@
         {{else}}
           <p class="interface-empty">{{localize "INTERFACE.Inventory.Empty"}}</p>
         {{/if}}
-        {{#if editable}}
-          <p class="hint">{{localize "INTERFACE.Inventory.DropHint"}}</p>
-        {{/if}}
       </div>
     </details>
 
     <details class="interface-fold" data-section="notes" {{#if sections.notes}}open{{/if}}>
       <summary>
         <span>{{localize "INTERFACE.Section.Notes"}}</span>
-        <small>{{localize "INTERFACE.Notes.Hint"}}</small>
       </summary>
       <div class="interface-fold__content">
         {{#if editable}}

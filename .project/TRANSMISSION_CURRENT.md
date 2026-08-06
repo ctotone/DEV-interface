@@ -1,13 +1,13 @@
 # Transmission courante — Système D100 Interface
 
-**Dernière mise à jour :** 5 août 2026
-**Coordinateur :** GPT Pilote
-**Spécialiste principal :** GPT Foundry
-**Identifiant technique :** `interface`
-**Dépôt :** `ctotone/DEV-interface`
-**Branche :** `main`
-**Base de référence de la candidate :** `ba2871fb2f5ec175b525535f0d31e8f3426a1b23`
-**Développement Foundry :** Tranche 1 produite, correctif 1 en attente de retest
+**Dernière mise à jour :** 6 août 2026  
+**Coordinateur :** GPT Pilote  
+**Spécialiste principal de la phase clôturée :** GPT Foundry  
+**Identifiant technique :** `interface`  
+**Dépôt :** `ctotone/DEV-interface`  
+**Branche :** `main`  
+**Dernier commit contenu dans l’archive :** `0852b3f62fafd2f0128a5ad8e3170eb791aebe39`  
+**Commit de clôture de phase 03 :** à communiquer après intégration et push
 
 ## Finalité
 
@@ -16,171 +16,134 @@ Créer un système Foundry VTT générique, léger et orienté narration pour le
 ## Statut
 
 ```text
-Phases 00A, 00B, 01 et 02 : VALIDÉES
-Phase 03 — Première tranche jouable : EN COURS
-Tranche 1 — Squelette installable : CANDIDATE
-Architecture Foundry : VALIDÉE
-Code Foundry : PRODUIT POUR LA TRANCHE 1
-Contrôles statiques : RÉUSSIS — 100 contrôles
-Tests Foundry : PARTIELS — T1 à T3 OK, T4 corrigé et à rejouer
-Validation utilisateur : EN ATTENTE
+Phases 00A, 00B, 01, 02 et 03 : VALIDÉES
+Tranches 1, 2, 2B, 3 et 3B : VALIDÉES
+Version package : 0.1.0
+Version schéma : 1
+Tests Foundry utilisateur T1 à T35 : OK
+Contrôles hors Foundry : 390 OK
+Publication : NON ENGAGÉE
 ```
 
 ## Base de reprise
 
-La candidate technique a été construite depuis :
+Utiliser l’archive complète issue de la clôture de phase 03.
 
 ```text
-Dépôt   : ctotone/DEV-interface
+Dépôt : ctotone/DEV-interface
 Branche : main
-Commit  : ba2871fb2f5ec175b525535f0d31e8f3426a1b23
-Message : Phase 2 terminée
+Commit présent dans l’archive : 0852b3f62fafd2f0128a5ad8e3170eb791aebe39
+Travaux de Tranche 3B : présents et validés dans l’arbre de travail
+Commit de clôture : à renseigner après le push utilisateur
 ```
 
-La candidate n’est pas commitée par GPT Foundry. Le prochain commit éventuel sera créé par l’utilisateur après ses tests et sa validation.
+Un décalage temporaire entre le hash documentaire, le ZIP et le dernier push est normal dans le cycle d’échange du projet.
 
 ## Ordre de lecture
 
 1. présent fichier ;
 2. `.project/PROJECT_STATE.md` ;
 3. `.project/ROADMAP.md` ;
-4. `.project/decisions/PHASE_02_ARCHITECTURE_FOUNDRY.md` ;
+4. `.project/decisions/PHASE_03_PREMIERE_TRANCHE_JOUABLE.md` ;
 5. `.project/specification/PHASE_02_ARCHITECTURE_FOUNDRY_INTERFACE.md` ;
 6. spécifications 00A et 01 selon le sujet.
 
-## Autorités actives
+## État stable obtenu
+
+- système installable sous Foundry V14 ;
+- Actor `character` et Item `equipment` ;
+- feuilles Actor et Item ;
+- six Compétences, dix-huit Talents et ressources ;
+- données dérivées et settings mondiaux ;
+- moteur D100 complet pour normal, avantage et désavantage ;
+- Destin et marges ;
+- assistant de création avec `flags.interface.creation.pending` ;
+- Items embarqués, Inventaire et Armes ;
+- assets WebP par défaut ;
+- première ergonomie fonctionnelle de la fiche ;
+- permissions validées pour les usages testés.
+
+## Décisions impératives de phase 03
+
+### Création
 
 ```text
-.project/specification/PHASE_00A_TRANSMISSION_FOUNDRY_RESOLUTION_JETS_INTERFACE.md
-.project/specification/PHASE_01_SPECIFICATION_FONCTIONNELLE_PERSONNAGE_EQUIPEMENT_CONFLITS_INTERFACE.md
-.project/specification/PHASE_02_ARCHITECTURE_FOUNDRY_INTERFACE.md
+Créer un personnage
+→ créer immédiatement un Actor character
+→ poser flags.interface.creation.pending = true
+→ sauvegarder progressivement sur cet Actor
+→ retirer le flag à la validation finale
+→ ouvrir la fiche classique du même Actor
 ```
 
-- phase 00A : algorithme détaillé des jets, Destin et marges ;
-- phase 01 : personnage, états, valeurs dérivées, équipement, conflits et progression ;
-- phase 02 : architecture Foundry et clarifications techniques validées.
+### Jets
 
-## Décisions impératives de phase 02
+- les Compétences ne sont pas cliquables dans l’interface actuelle ;
+- les Talents lancent le jet standard associé ;
+- les valeurs de Combat lancent les jets dérivés ;
+- le seuil n’est pas plafonné à `100`.
 
-### Compatibilité
+### Inventaire
 
-```text
-Foundry supporté : génération V14
-Build initiale   : 14.365
-Manifest         : minimum 14 / verified 14 / maximum 14
-V13 / V15        : non déclarées
-```
+- les objets ordinaires sont affichés dans Inventaire ;
+- les armes sont affichées dans Armes ;
+- aucune duplication visuelle ;
+- suppression après confirmation explicite.
 
-### Données
+### Données et architecture
 
+- Compétences : `0 à 100` ;
+- Talents : `0 à 30` ;
 - Actor unique : `character` ;
 - Item unique : `equipment` ;
 - catégories : `ordinary | weapon` ;
-- Compétences : entiers de `0` à `100` ;
-- Talents : entiers de `0` à `30` ;
-- seuil D100 non clampé à `100` ;
-- données dérivées non persistées.
+- version de schéma : `1` ;
+- aucun socket, import Roll20 ou dépendance externe.
 
-### Destin et chat
+## Éléments non finalisés
 
-- résultat définitif public ;
-- halo ou teinte discrète en cas d’intervention ;
-- survol du résultat donnant brut, correction du Destin et final ;
-- test secret et détails internes réservés au MJ ;
-- aucune donnée secrète dans un message public ;
-- flags des cartes sous `flags.interface.card`, schéma `1`.
+- cartes de chat définitives ;
+- dégâts depuis le chat ;
+- initiative complète ;
+- progression assistée ;
+- Dice So Nice ;
+- migrations ;
+- verrouillage des écritures concurrentes ;
+- identité visuelle finale ;
+- stabilisation et publication.
 
-### Architecture
+## Anticipations à prendre en compte
 
-- TypeDataModels V14 ;
-- moteur D100 pur ;
-- services d’orchestration ;
-- settings mondiaux sous `interface` ;
-- Items embarqués ;
-- snapshot d’armes sur une réussite ;
-- dégâts jamais appliqués automatiquement ;
-- initiative native ;
-- Dice So Nice facultatif ;
-- migrations internes uniquement ;
-- aucun import Roll20 ;
-- aucun socket ou API publique stable en V1 sans besoin démontré.
+La phase 03 a anticipé :
 
-## Ne pas modifier sans arbitrage
+- une grande partie de la phase 04 ;
+- une partie du socle de la phase 05 ;
+- une partie importante de l’ergonomie prévue en phase 06.
 
-- les règles validées des phases 00A et 01 ;
-- les bornes `0–100` des Compétences et `0–30` des Talents ;
-- l’identifiant `interface` ;
-- la génération V14 comme compatibilité déclarée ;
-- la confidentialité du test de Destin ;
-- l’absence d’automatisation tactique et narrative ;
-- l’absence d’import Roll20.
-
-## Réserves à tester
-
-- concurrence d’écritures du Destin ;
-- propriétaires multiples ;
-- égalités d’initiative ;
-- formules de dégâts avancées ;
-- réduction du plafond de Destin ;
-- migrations avec deux MJ ;
-- compatibilité des anciennes cartes ;
-- intégration Dice So Nice ;
-- coût de l’assistant de répartition des Talents.
-
-Une réserve n’est pas un blocage actuel. Elle devient un sujet d’architecture seulement si un test réel démontre un problème.
+Ne pas recommencer ces éléments. Recalibrer le reste des phases 04 à 06 à partir de la base réelle.
 
 ## Responsabilités
 
-- **Utilisateur :** validation, tests réels, intégration Git, commits, push, version et publication.
-- **GPT Pilote :** coordination, consolidation, état, roadmap et transmissions.
-- **GPT Foundry :** architecture et développement Foundry.
-- **GPT JdR :** règles fonctionnelles déjà produites.
-- **GPT Visuel :** contribution future à l’ergonomie et à l’identité.
+- **Utilisateur :** tests réels, validation, intégration Git, commits, push, version et publication.
+- **GPT Pilote :** coordination, consolidation, roadmap et transmissions.
+- **GPT Foundry :** développement et tests techniques Foundry.
+- **GPT Visuel :** contribution future à l’identité visuelle lorsque la phase correspondante sera ouverte.
 
 ## Conventions opérationnelles des archives
 
-- un écart de hash peut être normal dans le cycle ZIP → intégration → commit → push ;
-- `.git/` et `.gitignore` peuvent être présents dans une archive entrante et sont ignorés silencieusement ;
-- un suffixe automatique comme `interface(4).zip` n’est pas un numéro de version ;
-- seule une divergence réelle de contenu, de branche ou de projet doit être signalée ;
-- les archives restituées excluent `.git/` et `.gitignore` ;
-- sauf indication explicite, l’utilisateur ne modifie pas l’archive restituée avant intégration.
+- les archives entrantes peuvent contenir `.git/` et `.gitignore` ;
+- un suffixe automatique dans le nom du ZIP n’indique pas une version fonctionnelle ;
+- un écart de hash n’est signalé que s’il révèle une divergence réelle de contenu ou de branche ;
+- les archives livrées par les GPT sont complètes et n’annoncent jamais un commit ou un push non réalisé.
 
-## Livrable technique courant
+## Référence historique
 
-```text
-Version locale : 0.1.0
-Foundry cible : 14.365
-Rapport : .project/reports/PHASE_03_TRANCHE_1_CANDIDATE.md
-Protocole : tests/protocols/TRANCHE_1_FOUNDRY_V14_365.md
-Contrôle : node tests/static/check-project.mjs
-```
-
-La Tranche 1 reste non validée tant que l’utilisateur n’a pas réalisé les tests réels et donné sa validation explicite.
-
-## Ordonnancement du design
+La version PDF historique a été remplacée par :
 
 ```text
-Tranche 1  : squelette neutre
-Tranche 2  : données affichées et valeurs dérivées nécessaires
-Tranche 2B : adaptation raisonnée du HTML/CSS Roll20
-Puis        : moteur D100 et cartes de chat
+.project/references/systeme de jeu Interface.md
 ```
-
-La référence Roll20 ne doit apporter aucune règle, donnée persistée ou logique non validée.
-
-## Résultat de test courant
-
-```text
-T1 : OK
-T2 : OK
-T3 : OK
-T4 : ÉCHEC sur la première candidate — templates Actor et Item à plusieurs racines
-Correctif 1 : produit, contrôlé hors Foundry, en attente de retest T4
-```
-
-Le menu de settings a été corrigé préventivement pour la même contrainte V14.
 
 ## Prochaine action exacte
 
-Remplacer le dossier système par le correctif 1, effectuer `Shift+F5`, puis reprendre au test T4. Ne pas commencer la Tranche 2 avant validation explicite de la Tranche 1.
+Après intégration et push, communiquer le nouveau hash de clôture à GPT Pilote, puis recalibrer la phase 04 avant toute nouvelle tranche de développement.

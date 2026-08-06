@@ -167,6 +167,28 @@ check(
   "Catégories d’équipement attendues : ordinary et weapon."
 );
 check(
+  constantsModule.DEFAULT_IMAGES?.ACTOR
+    === "systems/interface/assets/actor/avatar-default.webp",
+  "Le portrait Actor par défaut doit pointer vers l’asset WebP fourni."
+);
+check(
+  constantsModule.DEFAULT_IMAGES?.EQUIPMENT?.ordinary
+    === "systems/interface/assets/items/item_default.webp"
+    && constantsModule.DEFAULT_IMAGES?.EQUIPMENT?.weapon
+      === "systems/interface/assets/items/weapon_default.webp",
+  "Les images d’équipement par défaut doivent distinguer objet et arme."
+);
+for (const assetPath of [
+  constantsModule.DEFAULT_IMAGES.ACTOR,
+  ...Object.values(constantsModule.DEFAULT_IMAGES.EQUIPMENT)
+]) {
+  check(
+    assetPath.startsWith("systems/interface/")
+      && exists(assetPath.replace("systems/interface/", "")),
+    `Asset par défaut absent du package : ${assetPath}`
+  );
+}
+check(
   Object.keys(constantsModule.DERIVED_SCORE_DEFINITIONS).join(",")
     === "melee,distance,verbal",
   "Trois valeurs dérivées fixes sont attendues."
@@ -276,6 +298,11 @@ const scrollableParts = [
     application: "scripts/applications/interface-settings-application.mjs",
     template: "templates/settings/interface-settings.hbs",
     selector: ".interface-settings__body"
+  },
+  {
+    application: "scripts/applications/character-creation-application.mjs",
+    template: "templates/actor/character-creation.hbs",
+    selector: ".interface-character-creation__body"
   }
 ];
 
@@ -297,8 +324,15 @@ for (const { application, template, selector } of scrollableParts) {
 
 
 const characterApplication = read("scripts/applications/character-sheet.mjs");
+const characterCreationApplication = read(
+  "scripts/applications/character-creation-application.mjs"
+);
 const equipmentApplication = read("scripts/applications/equipment-sheet.mjs");
+const equipmentTemplate = read("templates/item/equipment-sheet.hbs");
 const characterTemplate = read("templates/actor/character-sheet.hbs");
+const characterCreationTemplate = read(
+  "templates/actor/character-creation.hbs"
+);
 
 check(
   /submitOnChange:\s*true/.test(characterApplication),
@@ -316,9 +350,9 @@ check(
 );
 
 for (const section of [
-  "development",
   "talents",
   "combat",
+  "weapons",
   "specializations",
   "inventory",
   "notes"
@@ -394,14 +428,15 @@ for (const key of [
 }
 check(
   read("styles/interface.css").includes(".interface .interface-state-label")
-    && read("styles/interface.css").includes("border-radius: 0.45rem")
+    && read("styles/interface.css").includes(".interface .interface-state-label strong")
     && read("styles/interface.css").includes("var(--interface-state-color)"),
-  "Le libellé d’état doit être encadré, arrondi et coloré selon son palier."
+  "Le libellé d’état doit rester lisible et coloré selon son palier."
 );
 check(
-  characterTemplate.includes("interface-state-band__dev")
-    && characterTemplate.includes("INTERFACE.Development.Temporary"),
-  "Les informations temporaires de développement doivent être identifiées."
+  !characterTemplate.includes("interface-state-band__dev")
+    && !characterTemplate.includes('data-section="development"')
+    && !characterTemplate.includes("INTERFACE.Development.Temporary"),
+  "Les informations temporaires de développement doivent être retirées de la fiche."
 );
 check(
   characterTemplate.includes("interface-autosave"),
@@ -410,6 +445,148 @@ check(
 check(
   read("templates/item/equipment-sheet.hbs").includes("interface-autosave"),
   "La fiche Item doit indiquer que l’enregistrement automatique est actif."
+);
+
+
+check(
+  characterTemplate.includes("interface-identity-grid")
+    && characterTemplate.includes("interface-identity__portrait")
+    && characterTemplate.includes('data-action="choosePortrait"')
+    && characterTemplate.indexOf("interface-identity__portrait")
+      < characterTemplate.indexOf("interface-identity__main")
+    && characterTemplate.indexOf("interface-identity__main")
+      < characterTemplate.indexOf("interface-identity__age"),
+  "La fiche Actor doit reprendre l’identité Portrait / Nom-Profession / Âge."
+);
+check(
+  characterApplication.includes("new FilePicker")
+    && characterApplication.includes('current: this.actor.img')
+    && characterApplication.includes('this.actor.update({ img: path })'),
+  "Le portrait de la fiche Actor doit être modifiable via le FilePicker."
+);
+check(
+  read("scripts/documents/interface-actor.mjs").includes("DEFAULT_IMAGES.ACTOR")
+    && read("scripts/documents/interface-actor.mjs").includes(
+      'img: String(data.img ?? "").trim() || DEFAULT_IMAGES.ACTOR'
+    ),
+  "Un nouvel Actor character doit recevoir le portrait WebP par défaut."
+);
+check(
+  characterApplication.includes("DEFAULT_IMAGES.EQUIPMENT[category]")
+    && characterApplication.includes("img: DEFAULT_IMAGES.EQUIPMENT[category]"),
+  "Un nouvel objet ou une nouvelle arme doit recevoir son image WebP par défaut."
+);
+check(
+  equipmentApplication.includes("chooseImageAction")
+    && equipmentApplication.includes("new FilePicker")
+    && equipmentApplication.includes("this.item.update({ img: path })")
+    && equipmentTemplate.includes('data-action="chooseImage"')
+    && equipmentTemplate.includes('src="{{image}}"'),
+  "La fiche Item doit afficher et permettre de modifier l’image de l’équipement."
+);
+check(
+  (characterTemplate.match(/<img src="{{img}}" alt="{{name}}">/g) ?? []).length === 2,
+  "Les sections Armes et Inventaire doivent afficher la vignette de chaque Item."
+);
+check(
+  !characterApplication.includes("acknowledgeCreationWarnings")
+    && !characterTemplate.includes("acknowledgeCreationWarnings")
+    && !characterTemplate.includes("creation.showWarnings"),
+  "Les avertissements de création doivent être retirés de la fiche courante."
+);
+
+for (const requiredFile of [
+  "scripts/applications/character-creation-application.mjs",
+  "scripts/rules/character-creation.mjs",
+  "templates/actor/character-creation.hbs",
+  "tests/unit/character-creation.test.mjs"
+]) {
+  check(exists(requiredFile), `Composant de création absent : ${requiredFile}`);
+}
+check(
+  /static async createDialog\(/.test(read("scripts/documents/interface-actor.mjs"))
+    && /this\.create\(actorData/.test(
+      read("scripts/documents/interface-actor.mjs")
+    )
+    && /FLAG_KEYS\.CREATION_PENDING/.test(
+      read("scripts/documents/interface-actor.mjs")
+    )
+    && /InterfaceCharacterCreationApplication\.openForActor/.test(
+      read("scripts/documents/interface-actor.mjs")
+    ),
+  "La création d’un Actor character doit créer immédiatement un Actor en attente et ouvrir l’assistant."
+);
+check(
+  characterApplication.includes("FLAG_KEYS.CREATION_PENDING")
+    && characterApplication.includes(
+      "InterfaceCharacterCreationApplication.openForActor"
+    )
+    && characterCreationApplication.includes("actor.unsetFlag")
+    && characterCreationApplication.includes("saveDraft"),
+  "Un Actor en attente doit rouvrir l’assistant, sauvegarder son brouillon et retirer le flag à la validation."
+);
+check(
+  characterCreationApplication.includes("calculateFixedDerivedScores")
+    && characterCreationApplication.includes("calculateCreationDiagnostics")
+    && characterCreationApplication.includes("refreshLiveValues"),
+  "L’assistant doit recalculer en direct les dérivés et les pools."
+);
+check(
+  characterCreationApplication.includes("new FilePicker")
+    && characterCreationApplication.includes("this.portrait")
+    && characterCreationApplication.includes("img: this.portrait")
+    && characterCreationApplication.includes("queueActorUpdate"),
+  "Le portrait doit être appliqué immédiatement à l’Actor en attente."
+);
+check(
+  characterCreationApplication.includes('addEventListener("dragstart"')
+    && characterCreationApplication.includes('addEventListener("dragover"')
+    && characterCreationApplication.includes('addEventListener("drop"')
+    && characterCreationApplication.includes("assignSkillToken")
+    && characterCreationApplication.includes("releaseSkillToken"),
+  "Les jetons de Compétences doivent être glissables, réattribuables et libérables."
+);
+check(
+  characterCreationTemplate.includes("interface-creation-columns")
+    && characterCreationTemplate.includes("repeat(6")
+      === false
+    && characterCreationTemplate.includes('name="skills.{{skill}}"')
+    && characterCreationTemplate.includes('name="talents.{{key}}"'),
+  "Le template doit aligner les six Compétences et leurs trois Talents."
+);
+check(
+  characterCreationTemplate.indexOf("interface-creation-derived")
+    < characterCreationTemplate.indexOf("interface-creation-specializations")
+    && characterCreationTemplate.indexOf("interface-creation-specializations")
+      < characterCreationTemplate.indexOf("interface-creation-final"),
+  "Le bloc Spécialisations doit se trouver entre les dérivés et la zone finale."
+);
+check(
+  characterCreationTemplate.includes("data-recap-token-count")
+    && characterCreationTemplate.includes("data-recap-talent-total")
+    && characterCreationTemplate.includes("data-recap-talent-remaining")
+    && characterCreationTemplate.includes("data-talent-block-total")
+    && characterCreationApplication.includes("data-talent-block-total")
+    && characterCreationTemplate.includes('type="submit"'),
+  "Le total de Talents, le récapitulatif et le bouton de création doivent être présents."
+);
+check(
+  characterCreationApplication.includes("DialogV2.wait")
+    && characterCreationApplication.includes(
+      "INTERFACE.CreationAssistant.Confirm"
+    )
+    && characterCreationApplication.includes(
+      "INTERFACE.CreationAssistant.Back"
+    ),
+  "Les écarts de création doivent proposer Revenir en arrière ou Valider quand même."
+);
+check(
+  read("styles/interface.css").includes(
+    "grid-template-columns: repeat(3, 10rem)"
+  )
+    && read("styles/interface.css").includes("justify-content: center")
+    && read("styles/interface.css").includes("width: 10rem"),
+  "Les trois cartes dérivées doivent avoir la même dimension et être centrées."
 );
 
 const actorDocument = read("scripts/documents/interface-actor.mjs");
@@ -441,7 +618,7 @@ check(
 for (const action of ["rollSkill", "rollTalent", "rollDerived"]) {
   check(
     characterApplication.includes(`${action}:`),
-    `Action D100 absente de la fiche Actor : ${action}.`
+    `Action D100 interne absente de la fiche Actor : ${action}.`
   );
 }
 check(
@@ -451,11 +628,112 @@ check(
   "Le bandeau permanent de mode de jet doit être absent de la fiche Actor."
 );
 check(
-  characterTemplate.includes('data-action="rollSkill"')
+  !characterTemplate.includes('data-action="rollSkill"')
     && characterTemplate.includes('data-action="rollTalent"')
-    && characterTemplate.includes('data-action="rollDerived"'),
-  "Les déclencheurs de jet doivent être présents sur Compétences, Talents et dérivés."
+    && characterTemplate.includes('data-action="rollDerived"')
+    && characterTemplate.includes("interface-skill__label"),
+  "Les Compétences doivent être statiques tandis que Talents et dérivés restent déclencheurs de jets."
 );
+check(
+  /data-action="rollTalent"[\s\S]*?tabindex="-1"/.test(characterTemplate),
+  "Les boutons de jet de Talent doivent être retirés de la tabulation pour enchaîner directement les champs numériques."
+);
+check(
+  read("styles/interface.css").includes(".interface .interface-derived-grid {")
+    && read("styles/interface.css").includes("display: flex")
+    && read("styles/interface.css").includes("flex-wrap: wrap")
+    && read("styles/interface.css").includes("justify-content: center")
+    && read("styles/interface.css").includes("flex: 0 0 10rem")
+    && read("styles/interface.css").includes("width: 10rem")
+    && read("styles/interface.css").includes("min-height: 4.8rem"),
+  "Les cartes de Combat de la fiche Actor doivent être homogènes, centrées et non étirées."
+);
+
+check(
+  !/<summary>[\s\S]*?INTERFACE\.Section\.Talents[\s\S]*?creation\.talentTotal[\s\S]*?<\/summary>/.test(
+    characterTemplate
+  )
+    && read("styles/interface.css").includes("margin-bottom: 0.12rem")
+    && read("styles/interface.css").includes("min-height: 1.7rem"),
+  "Le titre Talents ne doit plus afficher le contrôle 100/100 et les groupes doivent rester compacts."
+);
+check(
+  characterTemplate.includes('data-section="weapons"')
+    && characterTemplate.includes('data-action="createEquipment"')
+    && characterTemplate.includes('title="{{localize "INTERFACE.Inventory.AddWeapon"}}"')
+    && characterTemplate.indexOf('data-section="weapons"')
+      > characterTemplate.indexOf('data-section="combat"'),
+  "Les Armes doivent disposer d’une section autonome repliable avec un petit bouton d’ajout."
+);
+check(
+  characterTemplate.includes('data-action="chooseEquipmentCategory"')
+    && characterApplication.includes("chooseEquipmentCategoryAction")
+    && characterApplication.includes("INTERFACE.Inventory.AddPrompt")
+    && characterApplication.includes("EQUIPMENT_CATEGORIES.ORDINARY")
+    && characterApplication.includes("EQUIPMENT_CATEGORIES.WEAPON"),
+  "Le bouton compact de l’Inventaire doit proposer le choix entre objet ordinaire et arme."
+);
+check(
+  characterApplication.includes(
+    "const inventory = embeddedEquipment.filter(item => !item.isWeapon)"
+  )
+    && characterApplication.includes("hasInventory: inventory.length > 0")
+    && !characterTemplate.includes("{{inventory.length}}"),
+  "L’Inventaire doit afficher uniquement les objets ordinaires, sans compteur dans son titre."
+);
+check(
+  !characterTemplate.includes("INTERFACE.Specializations.Hint")
+    && !characterTemplate.includes("INTERFACE.Notes.Hint"),
+  "Les textes d’aide des sections Spécialisations et Notes doivent être absents de la fiche."
+);
+check(
+  read("styles/interface.css").includes("calc(1rem + 10px)")
+    && read("styles/interface.css").includes(".interface .interface-fold__add"),
+  "La fiche Actor doit conserver une marge intérieure globale renforcée et des boutons d’ajout compacts."
+);
+check(
+  characterApplication.includes("skillValue: system.skills[group.skill]")
+    && characterTemplate.includes("{{skillValue}}"),
+  "Chaque groupe de Talents doit rappeler la valeur de sa Compétence."
+);
+check(
+  !characterTemplate.includes('<small>{{localize "INTERFACE.Section.Derived"}}</small>'),
+  "Le sous-titre « Valeurs dérivées » doit être absent du bloc Combat."
+);
+check(
+  characterApplication.includes("deleteEmbeddedItemAction")
+    && characterApplication.includes("DialogV2.confirm")
+    && characterApplication.includes("await item.delete()")
+    && characterTemplate.includes('data-action="deleteEmbeddedItem"')
+    && characterTemplate.includes("interface-item-row__delete"),
+  "Les armes et objets doivent pouvoir être supprimés après confirmation."
+);
+check(
+  !characterTemplate.includes("INTERFACE.Inventory.DropHint"),
+  "Le texte d’aide au glisser-déposer doit être absent de l’Inventaire."
+);
+check(
+  characterTemplate.includes("interface-identity-field--age")
+    && read("styles/interface.css").includes(
+      "grid-template-columns: 10rem minmax(0, 1fr) 10rem"
+    ),
+  "Le bloc Identité doit suivre la disposition Portrait / Nom-Profession / Âge."
+);
+check(
+  characterTemplate.includes("interface-state-band__resource--wounds")
+    && characterTemplate.includes("interface-state-band__resource--stress")
+    && characterTemplate.includes("INTERFACE.State.Label")
+    && read("styles/interface.css").includes("border-inline: 2px solid"),
+  "Le bandeau Blessures / Initiative / Stress doit suivre la disposition validée."
+);
+check(
+  !fs.existsSync(path.join(root, "assets/items/item_default.png"))
+    && !fs.existsSync(path.join(root, "assets/items/weapon_default.png"))
+    && fs.existsSync(path.join(root, "assets/items/item_default.webp"))
+    && fs.existsSync(path.join(root, "assets/items/weapon_default.webp")),
+  "Les assets d’équipement doivent conserver uniquement les WebP."
+);
+
 check(
   characterApplication.includes("DialogV2.input")
     && characterApplication.includes("requestRollOptions")

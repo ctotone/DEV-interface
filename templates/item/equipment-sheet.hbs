@@ -1,5 +1,26 @@
 <div class="interface-sheet__content interface-equipment">
   <header class="interface-equipment__header">
+    <div class="interface-equipment__image">
+      {{#if editable}}
+        <button
+          type="button"
+          class="interface-portrait-button"
+          data-action="chooseImage"
+          title="{{localize "INTERFACE.Equipment.ChooseImage"}}"
+        >
+          <img src="{{image}}" alt="{{item.name}}">
+          <span>
+            <i class="fa-solid fa-image" aria-hidden="true"></i>
+            {{localize "INTERFACE.Equipment.ChooseImage"}}
+          </span>
+        </button>
+      {{else}}
+        <div class="interface-portrait-static">
+          <img src="{{image}}" alt="{{item.name}}">
+        </div>
+      {{/if}}
+    </div>
+
     <label class="interface-character__name">
       <span>{{localize "INTERFACE.Common.Name"}}</span>
       <input

@@ -1,0 +1,206 @@
+<div class="interface-character-creation__content">
+  <div class="interface-character-creation__body">
+    <header class="interface-identity-grid interface-creation-identity">
+      <div class="interface-identity__portrait">
+        <input type="hidden" name="img" value="{{identity.portrait}}">
+        <button
+          type="button"
+          class="interface-portrait-button"
+          data-action="choosePortrait"
+          title="{{localize "INTERFACE.CreationAssistant.ChoosePortrait"}}"
+        >
+          <img
+            src="{{identity.portrait}}"
+            alt="{{localize "INTERFACE.CreationAssistant.Portrait"}}"
+          >
+          <span>
+            <i class="fa-solid fa-image" aria-hidden="true"></i>
+            {{localize "INTERFACE.CreationAssistant.ChoosePortrait"}}
+          </span>
+        </button>
+      </div>
+
+      <div class="interface-identity__main">
+        <label class="interface-character__name">
+          <span>{{localize "INTERFACE.Common.Name"}}</span>
+          <input
+            type="text"
+            name="name"
+            value="{{identity.name}}"
+            autocomplete="off"
+            required
+          >
+        </label>
+
+        <label>
+          <span>{{localize "INTERFACE.Identity.Profession"}}</span>
+          <input
+            type="text"
+            name="profession"
+            value="{{identity.profession}}"
+            autocomplete="off"
+          >
+        </label>
+      </div>
+
+      <label class="interface-identity__age">
+        <span>{{localize "INTERFACE.Identity.Age"}}</span>
+        <input
+          type="text"
+          name="age"
+          value="{{identity.age}}"
+          autocomplete="off"
+        >
+      </label>
+    </header>
+
+    <section class="interface-creation-block interface-creation-skills">
+      <div class="interface-creation-block__heading">
+        <h2>{{localize "INTERFACE.Section.Skills"}}</h2>
+        <small>{{localize "INTERFACE.CreationAssistant.SkillTokensHint"}}</small>
+      </div>
+
+      <div
+        class="interface-skill-token-bank"
+        data-token-bank
+        aria-label="{{localize "INTERFACE.CreationAssistant.SkillTokens"}}"
+      >
+        <strong>{{localize "INTERFACE.CreationAssistant.SkillTokens"}}</strong>
+        <div class="interface-skill-token-bank__tokens">
+          {{#each tokens}}
+            <button
+              type="button"
+              class="interface-skill-token"
+              draggable="true"
+              data-skill-token-id="{{id}}"
+              aria-pressed="false"
+            >{{value}}</button>
+          {{/each}}
+        </div>
+      </div>
+
+      <div class="interface-creation-columns interface-creation-skill-columns">
+        {{#each groups}}
+          <label
+            class="interface-creation-skill interface-tone--{{tone}}"
+            data-skill-drop="{{skill}}"
+          >
+            <span>{{localize label}}</span>
+            <div class="interface-creation-skill__value">
+              <input
+                type="number"
+                name="skills.{{skill}}"
+                value="{{skillValue}}"
+                min="0"
+                max="100"
+                step="1"
+              >
+              <strong
+                class="interface-creation-skill__token is-empty"
+                data-assigned-token-for="{{skill}}"
+                aria-hidden="true"
+              ></strong>
+            </div>
+          </label>
+        {{/each}}
+      </div>
+    </section>
+
+    <section class="interface-creation-block interface-creation-talents">
+      <div class="interface-creation-block__heading">
+        <h2>{{localize "INTERFACE.Section.Talents"}}</h2>
+        <small>{{localize "INTERFACE.CreationAssistant.TalentHint"}}</small>
+        <strong class="interface-creation-talents__total">
+          {{localize "INTERFACE.CreationAssistant.TalentsAssigned"}}
+          <span data-talent-block-total>0 / {{talentRecommendation}}</span>
+        </strong>
+      </div>
+
+      <div class="interface-creation-columns interface-creation-talent-columns">
+        {{#each groups}}
+          <fieldset class="interface-creation-talent-group interface-tone--{{tone}}">
+            <legend>{{localize label}}</legend>
+            {{#each talents}}
+              <label>
+                <span>{{localize label}}</span>
+                <input
+                  type="number"
+                  name="talents.{{key}}"
+                  value="{{value}}"
+                  min="0"
+                  max="30"
+                  step="1"
+                >
+              </label>
+            {{/each}}
+          </fieldset>
+        {{/each}}
+      </div>
+    </section>
+
+    <section class="interface-creation-block interface-creation-derived">
+      <div class="interface-creation-block__heading">
+        <h2>{{localize "INTERFACE.CreationAssistant.DerivedTitle"}}</h2>
+        <small>{{localize "INTERFACE.CreationAssistant.DerivedHint"}}</small>
+      </div>
+
+      <div class="interface-creation-derived__cards">
+        {{#each derivedScores}}
+          <article class="interface-derived-card interface-tone--{{tone}}">
+            <span>{{localize label}}</span>
+            <strong data-derived-value="{{key}}">{{value}}</strong>
+          </article>
+        {{/each}}
+      </div>
+    </section>
+
+    <section class="interface-creation-block interface-creation-specializations">
+      <div class="interface-creation-block__heading">
+        <h2>{{localize "INTERFACE.Section.Specializations"}}</h2>
+        <small>{{localize "INTERFACE.Specializations.Hint"}}</small>
+      </div>
+      <textarea
+        name="specializations"
+        rows="4"
+        placeholder="{{localize "INTERFACE.Specializations.Hint"}}"
+      >{{identity.specializations}}</textarea>
+    </section>
+
+    <div class="interface-creation-final">
+      <section class="interface-creation-recap">
+        <h2>{{localize "INTERFACE.CreationAssistant.RecapTitle"}}</h2>
+
+        <dl>
+          <div>
+            <dt>{{localize "INTERFACE.CreationAssistant.RecommendedSkills"}}</dt>
+            <dd>{{recommendedSkills}}</dd>
+          </div>
+          <div>
+            <dt>{{localize "INTERFACE.CreationAssistant.CurrentSkills"}}</dt>
+            <dd data-recap-skill-values>0 / 0 / 0 / 0 / 0 / 0</dd>
+          </div>
+          <div>
+            <dt>{{localize "INTERFACE.CreationAssistant.TokensAssigned"}}</dt>
+            <dd data-recap-token-count>0 / 6</dd>
+          </div>
+          <div>
+            <dt>{{localize "INTERFACE.CreationAssistant.TalentsAssigned"}}</dt>
+            <dd data-recap-talent-total>0 / {{talentRecommendation}}</dd>
+          </div>
+          <div>
+            <dt>{{localize "INTERFACE.CreationAssistant.TalentsRemaining"}}</dt>
+            <dd data-recap-talent-remaining>{{talentRecommendation}}</dd>
+          </div>
+        </dl>
+      </section>
+
+      <section class="interface-creation-submit">
+        <button type="submit">
+          <i class="fa-solid fa-user-plus" aria-hidden="true"></i>
+          <span>{{localize "INTERFACE.CreationAssistant.Create"}}</span>
+        </button>
+        <small>{{localize "INTERFACE.CreationAssistant.CreateHint"}}</small>
+      </section>
+    </div>
+  </div>
+</div>
