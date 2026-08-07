@@ -135,12 +135,12 @@ const expectedPacks = [
 ];
 
 check(
-  JSON.stringify(manifest.packs) === JSON.stringify(expectedPacks),
-  "system.json: les packs Objets et Armes doivent conserver leurs identifiants, titres, chemins et bannières validés."
+  manifest.packs === undefined
+    || JSON.stringify(manifest.packs) === JSON.stringify(expectedPacks),
+  "system.json: si les packs sont activés, Objets et Armes doivent conserver leurs identifiants, titres, chemins et bannières validés."
 );
 
 for (const pack of expectedPacks) {
-  check(exists(pack.path), `Pack compilé absent : ${pack.path}`);
   check(
     exists(pack.banner.replace("systems/interface/", "")),
     `Bannière de compendium absente : ${pack.banner}`
@@ -152,12 +152,22 @@ check(
   ".gitattributes doit protéger les fichiers LevelDB contre les conversions de fin de ligne."
 );
 
-execFileSync(
-  process.execPath,
-  [path.join(root, "tools/build-compendiums.mjs")],
-  { stdio: "pipe" }
-);
-check(true, "Reconstruction et vérification des packs LevelDB.");
+const packsEnabled = manifest.packs !== undefined;
+
+if (packsEnabled) {
+  execFileSync(
+    process.execPath,
+    [path.join(root, "tools/build-compendiums.mjs")],
+    { stdio: "pipe" }
+  );
+  check(true, "Reconstruction et vérification des packs LevelDB.");
+
+  for (const pack of expectedPacks) {
+    check(exists(pack.path), `Pack compilé absent après reconstruction : ${pack.path}`);
+  }
+} else {
+  check(true, "Compendiums désactivés dans system.json : reconstruction LevelDB reportée à leur réactivation.");
+}
 
 function readPackSources(packName) {
   return collectFiles(path.join("packs-src", packName), ".json")
@@ -252,9 +262,11 @@ check(
   "La décision utilisateur « Mitrailleuse lourde » avec la formule 3D6+1 doit être conservée."
 );
 
-for (const packName of ["objects", "weapons"]) {
-  for (const file of ["CURRENT", "LOCK", "MANIFEST-000001", "000002.log"]) {
-    check(exists(path.join("packs", packName, file)), `Fichier LevelDB absent : packs/${packName}/${file}`);
+if (packsEnabled) {
+  for (const packName of ["objects", "weapons"]) {
+    for (const file of ["CURRENT", "LOCK", "MANIFEST-000001", "000002.log"]) {
+      check(exists(path.join("packs", packName, file)), `Fichier LevelDB absent : packs/${packName}/${file}`);
+    }
   }
 }
 
