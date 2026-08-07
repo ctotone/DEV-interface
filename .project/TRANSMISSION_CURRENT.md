@@ -1,147 +1,121 @@
 # Transmission courante — Système D100 Interface
 
-**Dernière mise à jour :** 6 août 2026  
+**Dernière mise à jour :** 7 août 2026  
 **Coordinateur :** GPT Pilote  
-**Spécialiste principal du dernier complément :** GPT Foundry  
+**Spécialiste principal de la prochaine phase :** GPT Foundry  
 **Identifiant technique :** `interface`  
 **Dépôt :** `ctotone/DEV-interface`  
 **Branche :** `main`  
-**Commit de clôture de la phase 03 :** `72a2d32ff51661e548f3900792fca263e8b75b98`  
-**Dernier commit observé avant intégration des compendiums :** `7d7e7d7cb994951fa41cba9f6520a591900c7dfe`  
-**Commit d’intégration du complément :** à communiquer après intégration et push
-
-## Finalité
-
-Créer un système Foundry VTT générique, léger et orienté narration pour le Système D100 Interface.
+**Version package :** `0.1.0`  
+**Version schéma :** `1`
 
 ## Statut
 
 ```text
-Phases 00A, 00B, 01, 02 et 03 : VALIDÉES
-Phase 03 : CLÔTURÉE
-Complément post-clôture — Compendiums d’armes et d’objets : VALIDÉ
-Version package : 0.1.0
-Version schéma : 1
+Phases 00A à 04 : VALIDÉES
+Complément compendiums : VALIDÉ
+Phase 05 : PROCHAINE — À RECALIBRER
 Publication : NON ENGAGÉE
 ```
 
 ## Base de reprise
 
-Utiliser la présente archive complète.
+```text
+Base de départ Phase 04 :
+386c71c5e73f9d9833905430c6d341344cfaf717
 
-Elle contient :
+Commit technique observé après mise en place du protocole compendiums :
+eb6dc6196a71e3413f851d876a1b617dba3938af
 
-- la base technique issue du commit `7d7e7d7cb994951fa41cba9f6520a591900c7dfe` ;
-- les compendiums validés et leurs sources ;
-- les corrections de descriptions en texte brut ;
-- la consolidation documentaire du complément.
+Commit de clôture documentaire Phase 04 :
+à communiquer après intégration et push utilisateur
+```
 
-Le futur commit d’intégration remplacera cette archive comme base distante de reprise, sans remplacer le commit historique de clôture de la phase 03.
+Après le prochain push, le nouveau hash remplacera l’archive comme base distante de reprise.
 
 ## Ordre de lecture
 
 1. présent fichier ;
 2. `.project/PROJECT_STATE.md` ;
 3. `.project/ROADMAP.md` ;
-4. `.project/decisions/PHASE_03_PREMIERE_TRANCHE_JOUABLE.md` ;
-5. `.project/decisions/COMPENDIUMS_SYSTEME_OBJETS_ARMES.md` ;
-6. `.project/reports/COMPENDIUMS_SYSTEME_CANDIDATE.md` ;
-7. `tests/protocols/COMPENDIUMS_SYSTEME_FOUNDRY_V14_365.md` ;
-8. spécifications 00A, 01 et 02 selon le sujet.
+4. `.project/decisions/PHASE_04_ETATS_DESTIN_REGLAGES_MJ.md` ;
+5. `.project/decisions/GESTION_COMPENDIUMS_MODE_DEVELOPPEMENT.md` ;
+6. spécifications 00A, 01 et 02 selon le sujet.
 
-## État stable obtenu
+## État stable
 
-- système installable sous Foundry V14 ;
-- Actor `character` et Item `equipment` ;
-- moteur D100, Destin et marges ;
-- assistant de création ;
-- fiche Actor et fiche Item ;
-- Inventaire et Armes ;
-- deux compendiums natifs :
-  - `interface.objects` ;
-  - `interface.weapons` ;
-- 60 objets et 42 armes ;
-- 11 dossiers ;
-- 102 descriptions en texte brut ;
-- sources lisibles sous `packs-src/` ;
-- reconstruction par `tools/build-compendiums.mjs`.
+- États Blessures / Stress conformes ;
+- malus d’état conforme ;
+- settings monde conformes ;
+- Destin conforme ;
+- persistance et permissions du domaine conformes ;
+- confidentialité actuelle du Destin acceptée ;
+- comportement de baisse du plafond Destin accepté ;
+- aucune lacune Phase 04 restante.
 
-## Décisions impératives du complément
-
-### Identifiants
+## Compendiums pendant le développement
 
 ```text
-Objets : interface.objects
-Armes  : interface.weapons
-```
+packs non déclarés dans system.json
+→ compendiums inactifs
 
-Ne pas les renommer sans migration et analyse d’impact.
-
-### Source de vérité
-
-```text
 packs-src/
-→ modification et revue humaines
-
-tools/build-compendiums.mjs
-→ reconstruction contrôlée
+→ source d’autorité
 
 packs/
-→ bases Foundry installables
+→ conservé dans l’état validé
 ```
 
-Ne pas modifier uniquement les bases compilées en oubliant les sources.
+Ne pas recréer ni réactiver les compendiums pendant le développement sauf besoin explicite de modification ou de test.
 
-### Contenu
+### Avant candidate / release 1.0.0
 
-- `Mitrailleuse lourde` conserve la formule `3D6+1` ;
-- les descriptions restent en texte brut tant que la fiche Item utilise une zone de texte simple ;
-- les prompts de génération d’images ne sont pas intégrés aux descriptions visibles.
+Obligatoire :
 
-## Validations
+1. rétablir les deux déclarations dans `system.json` ;
+2. conserver `interface.objects` et `interface.weapons` ;
+3. reconstruire via `tools/build-compendiums.mjs` ;
+4. exécuter `tests/static/check-project.mjs` ;
+5. tester les compendiums sous Foundry ;
+6. seulement ensuite préparer la candidate / release.
 
-```text
-Tests Foundry T1 à T11 : OK
-Contrôles hors Foundry : 718 OK
-Modules JavaScript vérifiés : 22
-Tests unitaires : 3
-Chargement isolé et enregistrements init simulés : OK
-```
+## Conventions opérationnelles DEV-interface
 
-Les outils automatiques ne remplacent pas les futurs tests joueur, multijoueur ou de publication.
+- écart de hash ZIP / commit : normal sauf divergence réelle ;
+- suffixe automatique de ZIP : sans signification fonctionnelle ;
+- `.git/` et `.gitignore` : ignorés silencieusement dans les archives entrantes ;
+- `TODO_evilbram.md` : personnel, non autoritatif, non modifié, non inclus dans les ZIP livrés ;
+- utilisateur : tests réels, commits, push, releases et publication.
 
-## Éléments non finalisés
+## Phase 05 — périmètre à recalibrer
 
-- cartes de chat finales ;
-- dégâts depuis le chat ;
-- initiative complète ;
-- progression assistée ;
-- Dice So Nice ;
-- migrations ;
-- concurrence d’écriture ;
-- identité visuelle finale ;
-- stabilisation ;
-- audit des droits et de la publication.
+Déjà produit :
 
-## Observation méthodologique
+- Corps à corps, Distance et Verbal ;
+- bonus d’initiative dérivé ;
+- Items `ordinary | weapon` ;
+- sections Inventaire et Armes ;
+- formules de dégâts persistées ;
+- compendiums d’objets et d’armes validés, actuellement désactivés.
 
-**[CANDIDATE D’ÉVOLUTION — outillage transversal Foundry]**
+Reste principalement à examiner :
 
-Les outils créés pour Interface pourront être évalués en fin de projet selon leur apport réel. Aucune transformation en framework permanent n’est décidée. Un REX séparé de GPT Foundry vers GPT Architecte est annoncé et devra être relié à cette observation lorsqu’il sera disponible.
+- initiative complète dans Foundry ;
+- cartes de chat fonctionnelles ;
+- sélection d’armes depuis le chat ;
+- dégâts normaux et maximum ;
+- permissions et réutilisation des actions ;
+- tests de conflit sans automatisation tactique.
 
-## Responsabilités
+Hors périmètre tactique :
 
-- **Utilisateur :** tests réels, validation, intégration Git, commits, push, version et publication.
-- **GPT Pilote :** consolidation, recalibrage de roadmap et transmissions.
-- **GPT Foundry :** développement Foundry et REX technique.
-- **GPT Architecte :** évaluation ultérieure de l’intérêt transversal de l’outillage.
-
-## Conventions opérationnelles des archives
-
-- `.git/` et `.gitignore` peuvent être présents dans les archives entrantes et sont ignorés silencieusement ;
-- un suffixe automatique du ZIP n’indique pas une version ;
-- les écarts de hash ne sont signalés qu’en cas de divergence réelle de contenu, de branche ou de base.
+- ciblage ;
+- défense automatisée ;
+- résistance ;
+- armure calculée ;
+- portée tactique ;
+- application automatique des dégâts.
 
 ## Prochaine action exacte
 
-Intégrer cette archive, effectuer le commit et le push du complément post-clôture, puis communiquer le nouveau hash à GPT Pilote.
+Après communication du commit de clôture Phase 04, ouvrir la Phase 05 par un audit de complétude et un recalibrage du périmètre réel avant toute modification.

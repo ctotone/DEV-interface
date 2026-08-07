@@ -1,6 +1,6 @@
 # Roadmap — Système D100 Interface pour Foundry VTT
 
-**Dernière mise à jour :** 6 août 2026
+**Dernière mise à jour :** 7 août 2026
 **Statut :** validée par l’utilisateur
 **Identifiant technique :** `interface`
 **Principe :** une phase planifiée ne prouve pas qu’elle est produite, testée ou validée.
@@ -215,31 +215,43 @@ tests/protocols/COMPENDIUMS_SYSTEME_FOUNDRY_V14_365.md
 
 ## Phase 04 — États, Destin et réglages MJ
 
-**Statut :** PROCHAINE — PÉRIMÈTRE À RECALIBRER
+**Statut :** VALIDÉE
 
-**GPT principal pressenti :** GPT Foundry
+**GPT principal :** GPT Foundry  
+**Tests réels :** utilisateur
 
-### Éléments déjà produits en phase 03
+### Résultat
 
-- Blessures et Stress de `0 à 15` ;
-- conversion en niveaux ;
-- coefficient mondial ;
-- settings du Destin ;
-- moteur complet du Destin ;
-- tests unitaires du noyau ;
-- interface de settings et chargement des valeurs par défaut.
+- audit de complétude terminé ;
+- aucune lacune fonctionnelle identifiée ;
+- aucun patch fonctionnel requis ;
+- États, malus, settings et Destin confirmés conformes ;
+- confidentialité actuelle du D100 secret Destin acceptée ;
+- comportement après baisse du plafond Destin accepté ;
+- 708 contrôles hors Foundry réussis ;
+- tests Foundry antérieurs pertinents conservés comme preuve.
 
-### Travail préalable obligatoire
+### Décision de clôture
 
-Comparer le périmètre initial à la base réelle et déterminer uniquement ce qui reste à produire, tester ou finaliser.
+```text
+.project/decisions/PHASE_04_ETATS_DESTIN_REGLAGES_MJ.md
+```
 
-La phase 04 ne doit pas réimplémenter les éléments validés en phase 03.
+### Décision opérationnelle connexe
+
+Les compendiums sont désactivés dans `system.json` pendant le développement afin d’éviter le bruit Git LevelDB.
+
+```text
+.project/decisions/GESTION_COMPENDIUMS_MODE_DEVELOPPEMENT.md
+```
+
+Ils devront être réactivés, reconstruits, contrôlés et testés avant la candidate / release `1.0.0`.
 
 ---
 
 ## Phase 05 — Conflits, initiative et armes
 
-**Statut :** PLANIFIÉE — SOCLE PARTIELLEMENT ANTICIPÉ
+**Statut :** PROCHAINE — PÉRIMÈTRE À RECALIBRER
 
 **GPT principal :** GPT Foundry
 
@@ -252,6 +264,21 @@ La phase 04 ne doit pas réimplémenter les éléments validés en phase 03.
 - formules de dégâts persistées sur les armes ;
 - compendium `interface.weapons` validé avec 42 armes ;
 - compendium `interface.objects` validé avec 60 objets.
+
+Les compendiums restent désactivés pendant le développement et ne doivent pas être réactivés pour cette phase sans besoin explicite.
+
+### Travail préalable obligatoire
+
+Comparer le périmètre prévu à la base réelle avant toute modification.
+
+Classer chaque exigence comme :
+
+```text
+DÉJÀ PRODUIT ET TESTÉ
+PRODUIT MAIS À RETESTER
+MANQUANT
+REPORTÉ
+```
 
 ### Reste principalement à traiter
 
@@ -346,6 +373,14 @@ Préparer une première version publiable seulement lorsque le système est stab
 - dépôt, branche ou release de diffusion selon décision utilisateur.
 
 ---
+
+### Obligation avant candidate / release 1.0.0
+
+- réactiver `interface.objects` et `interface.weapons` dans `system.json` ;
+- reconstruire les packs depuis `packs-src/` ;
+- exécuter les contrôles ;
+- tester les compendiums sous Foundry ;
+- vérifier objets, armes, dossiers, images et descriptions avant publication.
 
 ## Dépendances principales
 

@@ -9,8 +9,10 @@ Branche                            : main
 Version package                    : 0.1.0
 Version schéma                     : 1
 Commit de clôture de la phase 03   : 72a2d32ff51661e548f3900792fca263e8b75b98
-Dernier commit observé dans la base: 7d7e7d7cb994951fa41cba9f6520a591900c7dfe
-Commit d’intégration compendiums   : à communiquer après push
+Commit d’intégration compendiums   : cf83489710fce2e186b0f78bbc25bcdbaf791dec
+Base de départ de la phase 04      : 386c71c5e73f9d9833905430c6d341344cfaf717
+Commit technique Phase 04 observé  : eb6dc6196a71e3413f851d876a1b617dba3938af
+Commit de clôture Phase 04         : à communiquer après push
 ```
 
 Le commit de clôture historique de la phase 03 est fixé. Le complément compendiums attend son propre commit d’intégration.
@@ -23,8 +25,9 @@ Phase 00B — Cadrage produit et dépôt : VALIDÉE
 Phase 01 — Personnage, équipement et conflits : VALIDÉE
 Phase 02 — Architecture Foundry : VALIDÉE
 Phase 03 — Première tranche jouable : VALIDÉE ET CLÔTURÉE
-Complément post-clôture — Compendiums d’armes et d’objets : VALIDÉ
-Phase 04 — États, Destin et réglages MJ : PROCHAINE, À RECALIBRER
+Complément post-clôture — Compendiums : VALIDÉ
+Phase 04 — États, Destin et réglages MJ : VALIDÉE
+Phase 05 — Conflits, initiative et armes : PROCHAINE, À RECALIBRER
 Publication : NON ENGAGÉE
 ```
 
@@ -52,27 +55,25 @@ La version `0.1.0` comprend :
 
 ## Compendiums système
 
-```text
-Objets
-ID technique : objects
-Collection   : interface.objects
-Contenu      : 60 Items equipment / category ordinary
-Dossiers     : 8
+Les deux compendiums restent fonctionnellement validés mais sont **désactivés pendant le développement** afin d’éviter les réécritures LevelDB parasites dans Git.
 
-Armes
-ID technique : weapons
-Collection   : interface.weapons
-Contenu      : 42 Items equipment / category weapon
-Dossiers     : 3
+```text
+Objets  : interface.objects
+Armes   : interface.weapons
+
+Source d’autorité : packs-src/
+Builder           : tools/build-compendiums.mjs
+Artefacts          : packs/
+Manifeste dev      : aucune propriété packs
 ```
 
-Les entrées utilisent les icônes présentes sous `assets/compendiums/`.
-Les sources JSON sont conservées sous `packs-src/` et les bases LevelDB
-installables sous `packs/`.
+Avant candidate / release `1.0.0`, ils devront obligatoirement être réactivés, reconstruits, contrôlés et testés sous Foundry.
 
-La décision utilisateur **Mitrailleuse lourde** remplace le nom
-**Mitrailleuse légère** de la proposition d’armes, sans modifier sa formule
-`3D6+1`.
+Décision d’autorité :
+
+```text
+.project/decisions/GESTION_COMPENDIUMS_MODE_DEVELOPPEMENT.md
+```
 
 ## Validations
 
@@ -93,6 +94,16 @@ Les protocoles et rapports techniques sont conservés dans :
 ```text
 .project/reports/
 tests/protocols/
+```
+
+
+### Phase 04
+
+```text
+Audit de complétude : TERMINÉ
+Lacunes fonctionnelles : AUCUNE
+Patch fonctionnel : AUCUN
+Contrôles hors Foundry : 708 OK
 ```
 
 ## Architecture
@@ -176,17 +187,23 @@ tests/          contrôles, tests unitaires et protocoles Foundry
 
 ## Travail restant
 
-Les phases suivantes doivent encore traiter ou finaliser :
+### Phase 05 — prochaine
 
-- le périmètre résiduel des états, du Destin et des settings ;
-- les cartes de chat finales ;
-- l’initiative ;
-- les dégâts ;
-- la progression assistée ;
-- Dice So Nice ;
-- la stabilisation multijoueur ;
-- l’identité visuelle finale ;
-- la préparation de diffusion.
+- recalibrer le périmètre réel ;
+- initiative complète ;
+- cartes de chat fonctionnelles ;
+- sélection d’armes depuis le chat ;
+- dégâts normaux et maximum ;
+- permissions et réutilisation des actions ;
+- tests de conflit sans automatisation tactique.
+
+### Avant release 1.0.0
+
+- réactiver les deux compendiums ;
+- reconstruire les packs ;
+- exécuter les contrôles ;
+- tester sous Foundry ;
+- préparer seulement ensuite la candidate / release.
 
 ## Reprise
 

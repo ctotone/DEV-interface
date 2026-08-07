@@ -266,7 +266,7 @@ Dernier commit observé avant intégration du complément :
 7d7e7d7cb994951fa41cba9f6520a591900c7dfe
 
 Commit d’intégration du complément :
-à communiquer après intégration et push par l’utilisateur
+cf83489710fce2e186b0f78bbc25bcdbaf791dec
 
 Foundry réellement testé :
 14.365
