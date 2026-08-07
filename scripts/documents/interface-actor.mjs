@@ -7,6 +7,8 @@ import {
 } from "../constants.mjs";
 import { rollD100ForActor } from "../services/d100-roll-service.mjs";
 
+const CONFLICT_DERIVED_KEYS = new Set(["melee", "distance", "verbal"]);
+
 function withPendingCreationFlag(data) {
   const flags = structuredClone(data.flags ?? {});
   flags[SYSTEM_ID] ??= {};
@@ -125,7 +127,7 @@ export class InterfaceActor extends Actor {
       mode,
       modifier,
       context: {
-        kind: "combat"
+        kind: CONFLICT_DERIVED_KEYS.has(key) ? "combat" : "general"
       }
     });
   }

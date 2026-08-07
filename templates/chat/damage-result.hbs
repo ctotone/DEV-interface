@@ -1,0 +1,19 @@
+<article
+  class="interface-chat-card interface-chat-card--damage-result"
+  data-interface-card
+  data-interface-theme="{{theme}}"
+>
+  <header class="interface-chat-card__header">
+    <img class="interface-chat-card__portrait" src="{{actorImg}}" alt="{{actorName}}">
+    <div class="interface-chat-card__identity">
+      <strong class="interface-chat-card__actor{{#if compactActorName}} interface-chat-card__actor--compact{{/if}}">
+        {{actorName}}
+      </strong>
+      <div class="interface-chat-card__jet">{{title}}</div>
+    </div>
+  </header>
+  <div class="interface-chat-card__damage-output" data-state="result">
+    {{resultLabel}}
+  </div>
+  <div class="interface-chat-card__damage-detail">{{weaponName}} — {{modeLabel}}</div>
+</article>

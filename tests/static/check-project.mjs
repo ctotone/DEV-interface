@@ -746,6 +746,9 @@ check(
 
 const actorDocument = read("scripts/documents/interface-actor.mjs");
 const d100Service = read("scripts/services/d100-roll-service.mjs");
+const chatMessageService = read("scripts/chat/chat-message-service.mjs");
+const chatCardData = read("scripts/chat/chat-card-data.mjs");
+const chatCardController = read("scripts/chat/chat-card-controller.mjs");
 const d100Engine = read("scripts/rules/d100/resolve-d100.mjs");
 const d100Destiny = read("scripts/rules/d100/resolve-destiny.mjs");
 const d100Selection = read("scripts/rules/d100/select-raw.mjs");
@@ -970,27 +973,59 @@ check(
 );
 check(
   d100Service.indexOf("await actor.update") < d100Service.indexOf(
-    "await publishDevelopmentRoll"
+    "await publishD100Resolution"
   ),
-  "L’écriture du Destin doit précéder la publication du message."
+  "L’écriture du Destin doit précéder la publication des cartes de chat."
 );
 check(
   /ACTIVE_ACTOR_ROLLS/.test(d100Service),
   "Le service doit empêcher deux jets locaux simultanés sur le même Actor."
 );
-const publicSummarySource = d100Service.slice(
-  d100Service.indexOf("function publicSummaryHtml"),
-  d100Service.indexOf("async function publishDevelopmentRoll")
-);
-for (const secretName of ["secretRoll", "triggerChance", "criticalMinimum", "eligible"]) {
-  check(
-    !publicSummarySource.includes(secretName),
-    `La projection publique ne doit pas contenir le secret « ${secretName} ».`
-  );
-}
 check(
-  !/flags\s*:/.test(d100Service),
-  "La carte technique ne doit pas placer de diagnostic secret dans des flags publics."
+  /CHAT_CARD_SCHEMA = 1/.test(chatCardData)
+    && /D100_RESULT: "d100-result"/.test(chatCardData)
+    && /WEAPON_SELECTOR: "weapon-selector"/.test(chatCardData)
+    && /DAMAGE_RESULT: "damage-result"/.test(chatCardData),
+  "Les cartes Phase 05 doivent conserver flags.interface.card schema 1 et les types validés."
+);
+check(
+  /buildD100PublicData/.test(chatCardData)
+    && !chatCardData.slice(
+      chatCardData.indexOf("export function buildD100PublicData"),
+      chatCardData.indexOf("export function buildD100GmData")
+    ).includes("secretRoll"),
+  "La projection D100 publique ne doit pas persister le jet secret du Destin."
+);
+check(
+  /Hooks\.on\("renderChatMessageHTML"/.test(chatCardController)
+    && /canUserModify/.test(chatCardController),
+  "Les actions de cartes doivent être branchées sur renderChatMessageHTML et revérifier les permissions."
+);
+check(
+  /whisper/.test(chatMessageService)
+    && /D100_GM_DETAIL/.test(chatMessageService),
+  "Le diagnostic secret du Destin doit être séparé dans une carte MJ chuchotée."
+);
+check(
+  [
+    "--interface-result-critical-failure: #ff0000",
+    "--interface-result-failure: #ff006f",
+    "--interface-result-super-critical-failure: #dc00c9",
+    "--interface-result-success: #009700",
+    "--interface-result-critical-success: #0082ff",
+    "--interface-result-super-critical-success: #fffe00"
+  ].every(token => read("styles/interface.css").includes(token)),
+  "Les six couleurs fonctionnelles validées des cartes D100 doivent rester exactes."
+);
+check(
+  characterTemplate.includes('data-interface-theme="{{theme}}"')
+    && read("scripts/services/theme-service.mjs").includes(
+      'DEFAULT_INTERFACE_THEME = "default"'
+    )
+    && read("styles/interface.css").includes(
+      '.interface-chat-card[data-interface-theme="default"]'
+    ),
+  "Le point d’extension de thème doit rester commun à la fiche et aux cartes sans persistance."
 );
 check(
   /structuredClone/.test(d100Engine)

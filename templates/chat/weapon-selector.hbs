@@ -1,0 +1,47 @@
+<article
+  class="interface-chat-card interface-chat-card--damage"
+  data-interface-card
+  data-interface-theme="{{theme}}"
+>
+  <header class="interface-chat-card__header">
+    <img class="interface-chat-card__portrait" src="{{actorImg}}" alt="{{actorName}}">
+    <div class="interface-chat-card__identity">
+      <strong class="interface-chat-card__actor{{#if compactActorName}} interface-chat-card__actor--compact{{/if}}">
+        {{actorName}}
+      </strong>
+      <div class="interface-chat-card__jet">{{title}}</div>
+    </div>
+  </header>
+
+  {{#if hasWeapons}}
+    <div class="interface-chat-card__weapons">
+      {{#each weapons}}
+        <button
+          type="button"
+          class="interface-chat-card__weapon-button{{#unless valid}} interface-chat-card__weapon-button--invalid{{/unless}}"
+          data-interface-action="roll-damage"
+          data-weapon-index="{{index}}"
+          data-interface-weapon-valid="{{valid}}"
+          {{#unless valid}}disabled{{/unless}}
+          title="{{buttonTitle}}"
+        >
+          <img class="interface-chat-card__weapon-img" src="{{img}}" alt="">
+          <span class="interface-chat-card__weapon-name">{{name}}</span>
+          {{#unless valid}}
+            <small class="interface-chat-card__weapon-warning">{{../undefinedDamageLabel}}</small>
+          {{/unless}}
+        </button>
+      {{/each}}
+    </div>
+  {{else}}
+    <p class="interface-chat-card__notice">{{noWeaponsLabel}}</p>
+  {{/if}}
+
+  <div
+    class="interface-chat-card__damage-output"
+    data-interface-damage-output
+    data-state="waiting"
+  >
+    {{waitingLabel}}
+  </div>
+</article>

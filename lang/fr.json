@@ -302,6 +302,56 @@
       "Confirm": "Valider quand même",
       "CreateError": "Le personnage n’a pas pu être créé : {message}",
       "OpenSheetError": "Le personnage a été créé, mais sa fiche n’a pas pu s’ouvrir automatiquement : {message}"
+    },
+    "Chat": {
+      "D100": {
+        "SuccessMargin": "Marge de réussite : {value}",
+        "FailureMargin": "Marge d'échec : {value}",
+        "NaturalRollsTooltip": "Jets : {values}",
+        "DestinyTooltip": "Jet initial : {raw} | Destin : {correction} | Résultat final : {final}"
+      },
+      "Penalty": {
+        "Label": "Malus ({value})",
+        "Wounds": "Blessure : {value}",
+        "Stress": "Stress : {value}",
+        "Roll": "Malus de jet : {value}"
+      },
+      "Damage": {
+        "Allow": "Permettre les dégâts",
+        "Title": "Jet de dégâts",
+        "NoWeapons": "Aucune arme disponible.",
+        "Undefined": "Dégâts non définis",
+        "Waiting": "En attente du jet",
+        "Result": "{value} dégâts",
+        "Normal": "Dégâts normaux",
+        "Maximum": "Dégâts maximum",
+        "ChooseModeTitle": "Choisir les dégâts",
+        "ChooseModeHint": "Ce résultat critique autorise des dégâts normaux ou maximum.",
+        "ActionAlreadyRunning": "Cette action est déjà en cours.",
+        "InvalidSnapshot": "Les données de cette arme ne sont plus exploitables.",
+        "InvalidFormula": "La formule de dégâts de cette arme est invalide.",
+        "RollError": "Le jet de dégâts n'a pas pu être finalisé : {message}",
+        "SelectorError": "La carte de dégâts n'a pas pu être créée : {message}"
+      },
+      "GM": {
+        "Title": "Détail MJ — Destin",
+        "Raw": "Résultat initial : {value}",
+        "SecretRoll": "Jet secret du Destin : {value}",
+        "TriggerChance": "Chance d'intervention : {value}",
+        "Correction": "Correction : {value}",
+        "Reserve": "Réserve : {before} → {after}",
+        "Reason": "Diagnostic : {value}"
+      },
+      "Card": {
+        "Unsupported": "Cette carte de chat n'est plus compatible avec cette version du système.",
+        "ActorMissing": "Le personnage lié à cette carte n'est plus disponible.",
+        "GMOnly": "Cette action est réservée au MJ.",
+        "InvalidAction": "Cette action n'est pas autorisée pour cette carte.",
+        "NoPermission": "Tu n'as plus la permission d'utiliser cette action pour ce personnage."
+      }
+    },
+    "Initiative": {
+      "Tie": "Égalité d'initiative à {value} : {names}. Le MJ peut départager avec les outils natifs du Combat."
     }
   }
 }

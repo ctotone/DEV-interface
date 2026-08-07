@@ -14,6 +14,7 @@ import {
   prepareD100Resolution,
   resolveD100
 } from "../rules/d100/resolve-d100.mjs";
+import { publishD100Resolution } from "../chat/chat-message-service.mjs";
 
 const SKILL_BY_KEY = new Map(SKILLS.map(skill => [skill.key, skill]));
 const TALENT_BY_KEY = new Map(TALENTS.map(talent => [talent.key, talent]));
@@ -26,49 +27,6 @@ const ACTIVE_ACTOR_ROLLS = new WeakSet();
 
 function localize(key) {
   return game.i18n.localize(key);
-}
-
-function escapeHtml(value) {
-  return String(value)
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;")
-    .replaceAll("'", "&#039;");
-}
-
-function qualificationKey(qualification) {
-  if (qualification.superCritical) {
-    return qualification.success
-      ? "INTERFACE.D100.Quality.SuperCriticalSuccess"
-      : "INTERFACE.D100.Quality.SuperCriticalFailure";
-  }
-  if (qualification.automatic && qualification.critical) {
-    return qualification.success
-      ? "INTERFACE.D100.Quality.AutomaticCriticalSuccess"
-      : "INTERFACE.D100.Quality.AutomaticCriticalFailure";
-  }
-  if (qualification.critical) {
-    return qualification.success
-      ? "INTERFACE.D100.Quality.CriticalSuccess"
-      : "INTERFACE.D100.Quality.CriticalFailure";
-  }
-  if (qualification.automatic) {
-    return qualification.success
-      ? "INTERFACE.D100.Quality.AutomaticSuccess"
-      : "INTERFACE.D100.Quality.AutomaticFailure";
-  }
-  return qualification.success
-    ? "INTERFACE.D100.Quality.Success"
-    : "INTERFACE.D100.Quality.Failure";
-}
-
-function modeLabel(mode) {
-  return localize({
-    [D100_MODES.NORMAL]: "INTERFACE.D100.Mode.Normal",
-    [D100_MODES.ADVANTAGE]: "INTERFACE.D100.Mode.Advantage",
-    [D100_MODES.DISADVANTAGE]: "INTERFACE.D100.Mode.Disadvantage"
-  }[mode]);
 }
 
 function sourceContext(actor, source) {
@@ -86,6 +44,7 @@ function sourceContext(actor, source) {
       kind: "standard",
       key: `${skill.key}:${talent.key}`,
       label: `${localize(skill.label)} + ${localize(talent.label)}`,
+      displayLabel: localize(talent.label),
       baseValue: skillValue + talentValue,
       skillKey: skill.key,
       talentKey: talent.key,
@@ -118,6 +77,7 @@ function sourceContext(actor, source) {
       kind: "derived",
       key: source.key,
       label,
+      displayLabel: label,
       baseValue: value
     };
   }
@@ -190,64 +150,6 @@ async function createSecretRoll() {
   return roll.total;
 }
 
-function publicSummaryHtml(actor, result) {
-  const destinyText = result.destiny.triggered
-    ? `<span class="interface-d100-summary__destiny">${escapeHtml(
-      localize("INTERFACE.D100.DestinyIntervened")
-    )}</span>`
-    : "";
-  const correction = result.destiny.triggered
-    ? `<span title="${escapeHtml(
-      game.i18n.format("INTERFACE.D100.DestinyHover", {
-        raw: result.rawResult,
-        correction: result.destiny.correction,
-        final: result.finalResult
-      })
-    )}">${result.finalResult}</span>`
-    : String(result.finalResult);
-  const naturalValues = result.naturalResults
-    .map(entry => entry.value)
-    .join(" / ");
-
-  return `
-    <div class="interface-d100-summary">
-      <strong>${escapeHtml(actor.name)} — ${escapeHtml(result.source.label)}</strong>
-      <span>${escapeHtml(modeLabel(result.mode))}</span>
-      <span>${escapeHtml(localize("INTERFACE.D100.NaturalValues"))} : ${
-        escapeHtml(naturalValues)
-      }</span>
-      <span>${escapeHtml(localize("INTERFACE.D100.RawResult"))} : ${
-        result.rawResult
-      }</span>
-      <span>${escapeHtml(localize("INTERFACE.D100.Threshold"))} : ${
-        result.threshold.final
-      }</span>
-      <span>${escapeHtml(localize("INTERFACE.D100.PreRoll.Modifier"))} : ${
-        result.threshold.modifier >= 0 ? "+" : ""
-      }${result.threshold.modifier}</span>
-      <span>${escapeHtml(localize("INTERFACE.D100.FinalResult"))} : ${
-        correction
-      }</span>
-      <span>${escapeHtml(localize(
-        qualificationKey(result.finalQualification)
-      ))}</span>
-      <span>${escapeHtml(localize("INTERFACE.D100.Margin"))} : ${
-        result.margin.value
-      }</span>
-      ${destinyText}
-      <small>${escapeHtml(localize("INTERFACE.D100.DevelopmentCardHint"))}</small>
-    </div>
-  `;
-}
-
-async function publishDevelopmentRoll(actor, roll, result) {
-  const ChatMessageClass = foundry.documents.ChatMessage;
-  await roll.toMessage({
-    speaker: ChatMessageClass.getSpeaker({ actor }),
-    flavor: publicSummaryHtml(actor, result)
-  });
-}
-
 export async function rollD100ForActor({
   actor,
   source,
@@ -296,7 +198,11 @@ export async function rollD100ForActor({
       });
     }
 
-    await publishDevelopmentRoll(actor, roll, result);
+    await publishD100Resolution({
+      actor,
+      result,
+      destinyConfig: input.destiny
+    });
 
     const publicLog = {
       actor: actor.name,

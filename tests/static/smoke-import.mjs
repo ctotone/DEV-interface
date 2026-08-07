@@ -56,7 +56,8 @@ function HandlebarsApplicationMixin(Base) {
 
 class FakeDialogV2 {
   static async wait(config) {
-    return config.buttons?.[0]?.callback?.() ?? null;
+    const button = config.buttons?.[0];
+    return button?.callback ? button.callback() : button?.action ?? null;
   }
 
   static async input() {
@@ -81,6 +82,7 @@ const settingValues = new Map();
 const hooks = new Map();
 const fakeRollResults = [];
 const publishedRolls = [];
+const publishedMessages = [];
 
 function getByPath(target, path) {
   return String(path).split(".").reduce(
@@ -111,6 +113,10 @@ function deleteByPath(target, path) {
 
 
 globalThis.Roll = class FakeRoll {
+  static validate(formula) {
+    return typeof formula === "string" && formula.trim().length > 0;
+  }
+
   constructor(formula) {
     this.formula = formula;
     this.dice = [];
@@ -169,6 +175,7 @@ globalThis.Actor = class Actor {
     this.img = data.img ?? "icons/svg/mystery-man.svg";
     this.system = structuredClone(data.system ?? {});
     this.flags = structuredClone(data.flags ?? {});
+    this.items = Array.from(data.items ?? []);
     this.updates = [];
   }
 
@@ -205,11 +212,45 @@ globalThis.Actor = class Actor {
 };
 globalThis.Item = class Item {};
 
+class FakeChatMessage {
+  static getSpeaker({ actor }) {
+    return { actor: actor?.id ?? "actor-test" };
+  }
+
+  static async create(data) {
+    const message = new FakeChatMessage(data);
+    publishedMessages.push(message);
+    game.messages.contents.push(message);
+    return message;
+  }
+
+  constructor(data = {}) {
+    this.id = `message-${publishedMessages.length + 1}`;
+    this.timestamp = Date.now() + publishedMessages.length;
+    this.user = data.user;
+    this.speaker = data.speaker;
+    this.content = data.content ?? "";
+    this.flags = structuredClone(data.flags ?? {});
+    this.whisper = Array.from(data.whisper ?? []);
+  }
+
+  getFlag(scope, key) {
+    return getByPath(this.flags?.[scope], key);
+  }
+}
+
 globalThis.foundry = {
   abstract: {
     TypeDataModel: FakeTypeDataModel
   },
   applications: {
+    handlebars: {
+      async renderTemplate(path, data = {}) {
+        return `<article data-interface-card data-template="${path}">${
+          data.actorName ?? ""
+        }</article>`;
+      }
+    },
     api: {
       ApplicationV2: FakeApplicationV2,
       DialogV2: FakeDialogV2,
@@ -241,10 +282,11 @@ globalThis.foundry = {
   documents: {
     Actor: globalThis.Actor,
     Item: globalThis.Item,
-    ChatMessage: {
-      getSpeaker({ actor }) {
-        return { actor: actor?.id ?? "actor-test" };
-      }
+    ChatMessage: FakeChatMessage
+  },
+  utils: {
+    fromUuidSync() {
+      return null;
     }
   }
 };
@@ -264,6 +306,18 @@ globalThis.game = {
   user: {
     id: "user-test",
     isGM: true
+  },
+  users: [
+    { id: "user-test", isGM: true }
+  ],
+  messages: {
+    contents: [],
+    get(id) {
+      return this.contents.find(message => message.id === id);
+    },
+    [Symbol.iterator]() {
+      return this.contents[Symbol.iterator]();
+    }
   },
   i18n: {
     localize(key) {
@@ -305,6 +359,9 @@ globalThis.ui = {
 
 globalThis.Hooks = {
   once(name, callback) {
+    hooks.set(name, callback);
+  },
+  on(name, callback) {
     hooks.set(name, callback);
   }
 };
@@ -749,10 +806,22 @@ assert.equal(standardResult.threshold.modifier, 10);
 assert.equal(standardResult.threshold.final, 60);
 assert.equal(standardResult.finalQualification.success, true);
 assert.equal(rollingActor.system.resources.destiny.value, 0);
-assert.equal(publishedRolls.length, 1);
-assert.match(
-  publishedRolls[0].data.flavor,
-  /INTERFACE\.D100\.FinalResult/
+assert.equal(publishedMessages.length, 1);
+assert.equal(
+  publishedMessages[0].getFlag("interface", "card").type,
+  "d100-result"
+);
+assert.equal(
+  publishedMessages[0].getFlag("interface", "card").schema,
+  1
+);
+assert.equal(
+  publishedMessages[0].getFlag("interface", "card").publicData.source.name,
+  "INTERFACE.Talent.Endurance"
+);
+assert.equal(
+  publishedMessages[0].getFlag("interface", "card").publicData.threshold,
+  60
 );
 
 fakeRollResults.push([43, 44]);
@@ -766,7 +835,11 @@ assert.deepEqual(
 );
 assert.equal(advantageResult.rawResult, 44);
 assert.equal(advantageResult.finalQualification.critical, true);
-assert.equal(publishedRolls.length, 2);
+assert.equal(publishedMessages.length, 3);
+assert.equal(
+  publishedMessages[2].getFlag("interface", "card").type,
+  "weapon-selector"
+);
 
 await game.settings.set("interface", "destinyTriggerChance", 100);
 rollingActor.system.resources.destiny.value = 10;
@@ -780,7 +853,16 @@ assert.equal(destinyResult.destiny.triggered, true);
 assert.equal(destinyResult.destiny.secretRoll, 1);
 assert.equal(destinyResult.finalResult, 50);
 assert.equal(rollingActor.system.resources.destiny.value, 0);
-assert.equal(publishedRolls.length, 3);
-assert.doesNotMatch(publishedRolls[2].data.flavor, /secret|chance|éligib/i);
+assert.equal(publishedMessages.length, 5);
+const publicDestinyCard = publishedMessages[3].getFlag("interface", "card");
+const gmDestinyCard = publishedMessages[4].getFlag("interface", "card");
+assert.equal(publicDestinyCard.type, "d100-result");
+assert.equal(gmDestinyCard.type, "d100-gm-detail");
+assert.doesNotMatch(
+  JSON.stringify(publicDestinyCard.publicData),
+  /secretRoll|triggerChance|eligible|criticalMinimum/
+);
+assert.equal(gmDestinyCard.gmData.destiny.secretRoll, 1);
+assert.deepEqual(publishedMessages[4].whisper, ["user-test"]);
 
 console.log("OK — chargement isolé, enregistrements et jets Foundry simulés.");

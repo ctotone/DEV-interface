@@ -6,9 +6,11 @@ import { InterfaceCharacterSheet } from "./applications/character-sheet.mjs";
 import { InterfaceEquipmentSheet } from "./applications/equipment-sheet.mjs";
 import { registerInterfaceSettings } from "./settings/register-settings.mjs";
 import { ACTOR_TYPES, ITEM_TYPES, SYSTEM_ID } from "./constants.mjs";
+import { registerChatCardHooks } from "./chat/chat-card-controller.mjs";
+import { registerInitiativeHooks } from "./services/initiative-service.mjs";
 
 Hooks.once("init", () => {
-  console.info("D100 Interface | Initialisation de la Tranche 3B");
+  console.info("D100 Interface | Initialisation du système");
 
   CONFIG.Actor.documentClass = InterfaceActor;
   CONFIG.Item.documentClass = InterfaceItem;
@@ -17,6 +19,8 @@ Hooks.once("init", () => {
   CONFIG.Item.dataModels[ITEM_TYPES.EQUIPMENT] = EquipmentData;
 
   registerInterfaceSettings();
+  registerChatCardHooks();
+  registerInitiativeHooks();
 
   const { DocumentSheetConfig } = foundry.applications.apps;
 

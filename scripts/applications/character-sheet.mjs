@@ -12,6 +12,7 @@ import {
 } from "../constants.mjs";
 import { D100_MODES } from "../rules/d100/constants.mjs";
 import { standardTalentsForSkill } from "../services/d100-roll-service.mjs";
+import { resolveActorTheme } from "../services/theme-service.mjs";
 
 const { ActorSheetV2 } = foundry.applications.sheets;
 const {
@@ -612,6 +613,7 @@ export class InterfaceCharacterSheet extends HandlebarsApplicationMixin(ActorShe
       ...context,
       actor: this.actor,
       system,
+      theme: resolveActorTheme(this.actor),
       readOnly,
       derived,
       sections: this.sectionState,

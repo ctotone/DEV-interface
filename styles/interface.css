@@ -2011,3 +2011,277 @@
     grid-column: auto;
   }
 }
+
+
+/* Phase 05 — cartes de chat.
+ * Les variables de thème restent attachées à data-interface-theme afin de
+ * permettre de futures skins communes aux fiches et aux cartes sans dupliquer
+ * la logique des jets.
+ */
+.interface-chat-card[data-interface-theme="default"] {
+  --interface-card-paper: #f4f1e9;
+  --interface-card-paper-strong: #e7e1d5;
+  --interface-card-ink: #242424;
+  --interface-card-muted: #6a675f;
+  --interface-card-border: rgba(25, 25, 25, 0.34);
+  --interface-card-action: #d8d8d8;
+  --interface-card-action-hover: #eeeeee;
+  --interface-result-failure: #ff006f;
+  --interface-result-critical-failure: #ff0000;
+  --interface-result-super-critical-failure: #dc00c9;
+  --interface-result-success: #009700;
+  --interface-result-critical-success: #0082ff;
+  --interface-result-super-critical-success: #fffe00;
+  --interface-destiny-halo: rgba(0, 130, 255, 0.42);
+}
+
+.interface-chat-card {
+  box-sizing: border-box;
+  width: 100%;
+  margin: 0;
+  padding: 0.7rem;
+  border: 1px solid var(--interface-card-border);
+  border-radius: 0.45rem;
+  background: var(--interface-card-paper);
+  color: var(--interface-card-ink);
+  overflow: visible;
+}
+
+.interface-chat-card--destiny {
+  box-shadow:
+    0 0 0.2rem var(--interface-destiny-halo),
+    0 0 0.75rem var(--interface-destiny-halo);
+}
+
+.interface-chat-card__header {
+  display: grid;
+  grid-template-columns: 3.35rem minmax(0, 1fr);
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.interface-chat-card__portrait {
+  display: block;
+  width: 3.35rem;
+  height: 3.35rem;
+  border: 1px solid var(--interface-card-border);
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.interface-chat-card__identity {
+  min-width: 0;
+  text-align: center;
+}
+
+.interface-chat-card__actor,
+.interface-chat-card__jet {
+  display: block;
+  overflow-wrap: anywhere;
+  line-height: 1.1;
+}
+
+.interface-chat-card__actor {
+  font-size: 1.15rem;
+}
+
+.interface-chat-card__actor--compact {
+  font-size: 1rem;
+}
+
+.interface-chat-card__jet {
+  margin-top: 0.18rem;
+  font-size: 0.98rem;
+  font-weight: 650;
+}
+
+.interface-chat-card__jet--compact {
+  font-size: 0.88rem;
+}
+
+.interface-chat-card__penalty {
+  width: fit-content;
+  max-width: 100%;
+  margin: 0.18rem auto 0;
+  font-size: 0.78rem;
+  color: var(--interface-card-muted);
+  cursor: help;
+}
+
+.interface-chat-card__roll {
+  margin-top: 0.62rem;
+  text-align: center;
+  font-size: 3.2rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.interface-chat-card__roll[title] {
+  cursor: help;
+}
+
+.interface-chat-card__quality,
+.interface-chat-card__margin {
+  margin-top: 0.3rem;
+  text-align: center;
+  font-weight: 750;
+}
+
+.interface-chat-card__margin {
+  margin-top: 0.12rem;
+  font-size: 0.92rem;
+}
+
+.interface-result--failure .interface-chat-card__roll,
+.interface-result--failure .interface-chat-card__quality,
+.interface-result--failure .interface-chat-card__margin {
+  color: var(--interface-result-failure);
+}
+
+.interface-result--critical-failure .interface-chat-card__roll,
+.interface-result--critical-failure .interface-chat-card__quality,
+.interface-result--critical-failure .interface-chat-card__margin {
+  color: var(--interface-result-critical-failure);
+}
+
+.interface-result--super-critical-failure .interface-chat-card__roll,
+.interface-result--super-critical-failure .interface-chat-card__quality,
+.interface-result--super-critical-failure .interface-chat-card__margin {
+  color: var(--interface-result-super-critical-failure);
+}
+
+.interface-result--success .interface-chat-card__roll,
+.interface-result--success .interface-chat-card__quality,
+.interface-result--success .interface-chat-card__margin {
+  color: var(--interface-result-success);
+}
+
+.interface-result--critical-success .interface-chat-card__roll,
+.interface-result--critical-success .interface-chat-card__quality,
+.interface-result--critical-success .interface-chat-card__margin {
+  color: var(--interface-result-critical-success);
+}
+
+.interface-result--super-critical-success .interface-chat-card__roll,
+.interface-result--super-critical-success .interface-chat-card__quality,
+.interface-result--super-critical-success .interface-chat-card__margin {
+  color: var(--interface-result-super-critical-success);
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.42);
+}
+
+.interface-chat-card__action {
+  display: block;
+  width: auto;
+  min-width: 9rem;
+  min-height: 1.9rem;
+  margin: 0.55rem auto 0;
+  padding: 0.3rem 0.65rem;
+  border: 1px solid var(--interface-card-border);
+  border-radius: 0.35rem;
+  background: var(--interface-card-action);
+  color: var(--interface-card-ink);
+  font-weight: 650;
+}
+
+.interface-chat-card__action:hover {
+  background: var(--interface-card-action-hover);
+}
+
+.interface-chat-card__weapons {
+  display: grid;
+  gap: 0.35rem;
+  margin-top: 0.65rem;
+}
+
+.interface-chat-card__weapon-button {
+  display: grid;
+  grid-template-columns: 2.1rem minmax(0, 1fr);
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  min-height: 2.45rem;
+  padding: 0.22rem 0.45rem;
+  border: 1px solid var(--interface-card-border);
+  border-radius: 0.35rem;
+  background: var(--interface-card-paper-strong);
+  color: var(--interface-card-ink);
+  text-align: left;
+}
+
+.interface-chat-card__weapon-button:not(:disabled):hover {
+  background: var(--interface-card-action-hover);
+}
+
+.interface-chat-card__weapon-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.68;
+}
+
+.interface-chat-card__weapon-img {
+  grid-row: 1 / span 2;
+  display: block;
+  width: 2.1rem;
+  height: 2.1rem;
+  border-radius: 0.22rem;
+  object-fit: cover;
+}
+
+.interface-chat-card__weapon-name {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  font-weight: 650;
+}
+
+.interface-chat-card__weapon-warning {
+  color: var(--interface-card-muted);
+  font-size: 0.72rem;
+}
+
+.interface-chat-card__notice {
+  margin: 0.65rem 0 0;
+  padding: 0.45rem;
+  border: 1px dashed var(--interface-card-border);
+  border-radius: 0.3rem;
+  text-align: center;
+  color: var(--interface-card-muted);
+}
+
+.interface-chat-card__damage-output {
+  margin-top: 0.65rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid var(--interface-card-border);
+  text-align: center;
+  font-size: 1.1rem;
+  font-weight: 750;
+}
+
+.interface-chat-card__damage-output[data-state="waiting"] {
+  color: var(--interface-card-muted);
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.interface-chat-card__damage-detail {
+  margin-top: 0.15rem;
+  text-align: center;
+  color: var(--interface-card-muted);
+  font-size: 0.78rem;
+}
+
+.interface-chat-card__gm-grid {
+  display: grid;
+  gap: 0.2rem;
+  margin-top: 0.6rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid var(--interface-card-border);
+  font-size: 0.82rem;
+}
+
+.interface-chat-card--degraded {
+  color: var(--interface-card-muted);
+}
+
+.interface-damage-choice-dialog p {
+  margin: 0;
+}

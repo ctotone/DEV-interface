@@ -1,0 +1,46 @@
+<article
+  class="interface-chat-card interface-chat-card--d100 {{resultClass}}{{#if destinyIntervened}} interface-chat-card--destiny{{/if}}"
+  data-interface-card
+  data-interface-theme="{{theme}}"
+>
+  <header class="interface-chat-card__header">
+    <img class="interface-chat-card__portrait" src="{{actorImg}}" alt="{{actorName}}">
+    <div class="interface-chat-card__identity">
+      <strong class="interface-chat-card__actor{{#if compactActorName}} interface-chat-card__actor--compact{{/if}}">
+        {{actorName}}
+      </strong>
+      <div class="interface-chat-card__jet{{#if compactJetName}} interface-chat-card__jet--compact{{/if}}">
+        {{jetName}} ({{score}})
+      </div>
+      {{#if hasPenalty}}
+        <div class="interface-chat-card__penalty" title="{{penaltyTooltip}}">
+          {{localize "INTERFACE.Chat.Penalty.Label" value=penaltyTotal}}
+        </div>
+      {{/if}}
+    </div>
+  </header>
+
+  <div
+    class="interface-chat-card__roll"
+    {{#if hasResultTooltip}}title="{{resultTooltip}}"{{/if}}
+  >
+    {{finalResult}}
+  </div>
+
+  <div class="interface-chat-card__quality">{{resultLabel}}</div>
+
+  {{#if showMargin}}
+    <div class="interface-chat-card__margin">{{marginLabel}}</div>
+  {{/if}}
+
+  {{#if showForceDamage}}
+    <button
+      type="button"
+      class="interface-chat-card__action interface-chat-card__action--gm"
+      data-interface-action="force-damage"
+      hidden
+    >
+      {{forceDamageLabel}}
+    </button>
+  {{/if}}
+</article>
