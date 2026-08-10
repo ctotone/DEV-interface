@@ -38,7 +38,7 @@ Couleurs fonctionnelles validées :
 super échec critique (100)        #dc00c9
 réussite normale / automatique    #009700
 réussite critique                 #0082ff
-super réussite critique (1)       #fffe00
+super réussite critique (1)       #f3b600
 ```
 
 Pour un jet standard, le nom public du jet est le Talent sélectionné ; le calcul conserve naturellement la Compétence associée dans la source technique.

@@ -132,7 +132,10 @@ async function renderCard(type, data) {
 function messageFlags(card) {
   return {
     [SYSTEM_ID]: {
-      card
+      // Les DataModels Foundry nettoient et peuvent réécrire les données
+      // candidates pendant la construction du Document. Ne jamais leur
+      // transmettre directement notre enveloppe interne gelée.
+      card: structuredClone(card)
     }
   };
 }

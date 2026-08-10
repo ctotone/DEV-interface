@@ -187,6 +187,25 @@ globalThis.Actor = class Actor {
     return true;
   }
 
+  async rollInitiative(options = {}) {
+    this.initiativeRollCalls ??= [];
+    this.initiativeRollCalls.push(structuredClone(options));
+
+    const combat = globalThis.game?.combat;
+    if (
+      combat
+      && options.createCombatants === true
+      && combat.getCombatantsByActor(this).length === 0
+    ) {
+      combat._combatants.set(this, {
+        id: `combatant-${this.id}`,
+        actor: this,
+        initiative: null
+      });
+    }
+    return combat ?? null;
+  }
+
   getFlag(scope, key) {
     return getByPath(this.flags?.[scope], key);
   }
@@ -218,6 +237,17 @@ class FakeChatMessage {
   }
 
   static async create(data) {
+    // Régression B1 — Foundry V14 nettoie les flags à la construction et peut
+    // réassigner des propriétés imbriquées (trace réelle : card.publicData).
+    // Le payload transmis au Document doit donc être mutable.
+    const interfaceCard = data.flags?.interface?.card;
+    if (interfaceCard?.publicData !== undefined) {
+      interfaceCard.publicData = structuredClone(interfaceCard.publicData);
+    }
+    if (interfaceCard?.gmData !== undefined) {
+      interfaceCard.gmData = structuredClone(interfaceCard.gmData);
+    }
+
     const message = new FakeChatMessage(data);
     publishedMessages.push(message);
     game.messages.contents.push(message);
@@ -303,6 +333,7 @@ globalThis.CONFIG = {
 };
 
 globalThis.game = {
+  combat: null,
   user: {
     id: "user-test",
     isGM: true
@@ -793,6 +824,66 @@ rollingActor.system = {
     initiativeBonus: 5
   }
 };
+
+game.combat = {
+  _combatants: new Map(),
+  initiativeRollCalls: [],
+  getCombatantsByActor(candidate) {
+    const combatant = this._combatants.get(candidate);
+    return combatant ? [combatant] : [];
+  },
+  async rollInitiative(ids) {
+    this.initiativeRollCalls.push([...ids]);
+    for (const combatant of this._combatants.values()) {
+      if (ids.includes(combatant.id)) combatant.initiative = 7;
+    }
+    return this;
+  }
+};
+
+const initiativeSheet = new characterSheetModule.InterfaceCharacterSheet();
+initiativeSheet.actor = rollingActor;
+const initiativeTarget = {
+  disabled: false,
+  isConnected: true
+};
+const initiativeEvent = {
+  preventDefault() {}
+};
+
+await characterSheetModule.InterfaceCharacterSheet.DEFAULT_OPTIONS.actions
+  .rollInitiative.call(
+    initiativeSheet,
+    initiativeEvent,
+    initiativeTarget
+  );
+
+assert.deepEqual(rollingActor.initiativeRollCalls.at(-1), {
+  createCombatants: true,
+  rerollInitiative: false
+});
+assert.equal(
+  game.combat.getCombatantsByActor(rollingActor).length,
+  1,
+  "Le clic d’initiative doit ajouter l’Actor au Combat actif."
+);
+assert.deepEqual(
+  game.combat.initiativeRollCalls.at(-1),
+  [`combatant-${rollingActor.id}`],
+  "Un Combatant créé sans initiative doit être roulé explicitement."
+);
+assert.equal(
+  game.combat.getCombatantsByActor(rollingActor)[0].initiative,
+  7,
+  "L’initiative du Combatant doit être renseignée."
+);
+assert.equal(
+  initiativeTarget.disabled,
+  true,
+  "L’action doit redevenir inactive une fois l’Actor présent dans le tracker."
+);
+
+game.combat = null;
 
 fakeRollResults.push([42]);
 const standardResult = await rollingActor.rollStandardD100({

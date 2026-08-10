@@ -36,7 +36,9 @@ const {
   latestDamageResultForSelector
 } = await import("../../scripts/chat/chat-card-controller.mjs");
 const {
-  initiativeTieForCombatant
+  canRollInitiativeFromSheet,
+  initiativeTieForCombatant,
+  rollActorInitiativeFromSheet
 } = await import("../../scripts/services/initiative-service.mjs");
 const {
   DEFAULT_INTERFACE_THEME,
@@ -269,6 +271,138 @@ assert.equal(
     combatants[2]
   ),
   null
+);
+
+const initiativeUser = { id: "owner" };
+const initiativeCombatant = {
+  id: "combatant-init",
+  actor: null,
+  initiative: null
+};
+const initiativeCombat = {
+  actorPresent: false,
+  rollCalls: [],
+  getCombatantsByActor(candidate) {
+    return this.actorPresent && candidate === initiativeActor
+      ? [initiativeCombatant]
+      : [];
+  },
+  async rollInitiative(ids) {
+    this.rollCalls.push([...ids]);
+    initiativeCombatant.initiative = 8;
+    return this;
+  }
+};
+const initiativeActor = {
+  id: "actor-init",
+  rollCalls: [],
+  canUserModify(user, permission) {
+    return user === initiativeUser && permission === "update";
+  },
+  async rollInitiative(options) {
+    this.rollCalls.push(structuredClone(options));
+
+    // Reproduit le comportement observé sous Foundry :
+    // le Combatant est créé mais son initiative reste vide.
+    initiativeCombat.actorPresent = true;
+    initiativeCombatant.actor = this;
+    initiativeCombatant.initiative = null;
+    return initiativeCombat;
+  }
+};
+
+assert.equal(
+  canRollInitiativeFromSheet(initiativeActor, {
+    combat: null,
+    user: initiativeUser
+  }),
+  false
+);
+assert.equal(
+  canRollInitiativeFromSheet(initiativeActor, {
+    combat: initiativeCombat,
+    user: initiativeUser
+  }),
+  true
+);
+
+const initiativeRollResult = await rollActorInitiativeFromSheet(
+  initiativeActor,
+  {
+    combat: initiativeCombat,
+    user: initiativeUser
+  }
+);
+assert.equal(initiativeRollResult, initiativeCombat);
+assert.deepEqual(initiativeActor.rollCalls.at(-1), {
+  createCombatants: true,
+  rerollInitiative: false
+});
+assert.deepEqual(
+  initiativeCombat.rollCalls.at(-1),
+  ["combatant-init"],
+  "Un Combatant créé sans initiative doit être roulé explicitement."
+);
+assert.equal(
+  initiativeCombatant.initiative,
+  8,
+  "Le fallback Combat#rollInitiative doit renseigner l’initiative."
+);
+
+assert.equal(
+  canRollInitiativeFromSheet(initiativeActor, {
+    combat: initiativeCombat,
+    user: initiativeUser
+  }),
+  false
+);
+assert.equal(
+  await rollActorInitiativeFromSheet(initiativeActor, {
+    combat: initiativeCombat,
+    user: initiativeUser
+  }),
+  null
+);
+
+assert.equal(
+  canRollInitiativeFromSheet(
+    {
+      ...initiativeActor,
+      canUserModify() {
+        return false;
+      }
+    },
+    {
+      combat: initiativeCombat,
+      user: initiativeUser
+    }
+  ),
+  false
+);
+
+// Aucun double jet si Actor#rollInitiative a déjà rempli l’initiative.
+initiativeCombat.actorPresent = false;
+initiativeCombatant.initiative = null;
+initiativeCombat.rollCalls.length = 0;
+initiativeActor.rollInitiative = async function(options) {
+  this.rollCalls.push(structuredClone(options));
+  initiativeCombat.actorPresent = true;
+  initiativeCombatant.actor = this;
+  initiativeCombatant.initiative = 9;
+  return initiativeCombat;
+};
+
+await rollActorInitiativeFromSheet(
+  initiativeActor,
+  {
+    combat: initiativeCombat,
+    user: initiativeUser
+  }
+);
+assert.equal(
+  initiativeCombat.rollCalls.length,
+  0,
+  "Le fallback ne doit pas relancer si l’initiative a déjà été renseignée."
 );
 
 assert.equal(DEFAULT_INTERFACE_THEME, "default");

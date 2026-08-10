@@ -1,16 +1,16 @@
 # État du projet — Système D100 Interface
 
-**Dernière mise à jour :** 7 août 2026  
-**Statut global :** Phase 04 validée — Phase 05 prochaine, à recalibrer  
+**Dernière mise à jour :** 10 août 2026  
+**Statut global :** Phase 05 validée — Phase 06 prochaine, à recalibrer  
 **Coordinateur :** GPT Pilote  
-**Spécialiste principal :** GPT Foundry  
+**Spécialiste technique principal :** GPT Foundry  
 **Dépôt :** `ctotone/DEV-interface`  
 **Branche :** `main`  
 **Commit de clôture de la phase 03 :** `72a2d32ff51661e548f3900792fca263e8b75b98`  
 **Commit d’intégration du complément compendiums :** `cf83489710fce2e186b0f78bbc25bcdbaf791dec`  
-**Base de départ de la phase 04 :** `386c71c5e73f9d9833905430c6d341344cfaf717`  
-**Commit technique observé après arbitrage compendiums :** `eb6dc6196a71e3413f851d876a1b617dba3938af`  
-**Commit de clôture documentaire de la phase 04 :** à communiquer après intégration et push  
+**Commit de clôture de la phase 04 :** `a56d68838a93398fffdb35aa7ee9feed3eb5dc71`  
+**Commit pré-test Phase 05 observé :** `0fe3cdbe35e42d4f1c891640a033c1ca02bf98d4`  
+**Commit de clôture documentaire Phase 05 :** à communiquer après intégration et push  
 **Identifiant technique :** `interface`  
 **Version package :** `0.1.0`  
 **Version de schéma :** `1`
@@ -29,15 +29,15 @@ Phase 02 — Architecture Foundry : VALIDÉE
 Phase 03 — Première tranche jouable : VALIDÉE ET CLÔTURÉE
 Complément post-clôture — Compendiums d’armes et d’objets : VALIDÉ
 Phase 04 — États, Destin et réglages MJ : VALIDÉE
-Phase 05 — Conflits, initiative et armes : PROCHAINE, PÉRIMÈTRE À RECALIBRER
-Phase 06 — Ergonomie et identité visuelle : PLANIFIÉE, SOCLE PARTIELLEMENT ANTICIPÉ
+Phase 05 — Conflits, initiative et armes : VALIDÉE
+Phase 06 — Ergonomie et identité visuelle : PROCHAINE — À RECALIBRER
 Phase 07 — Tests et stabilisation : PLANIFIÉE
 Phase 08 — Préparation de diffusion : PLANIFIÉE, NON ENGAGÉE
 ```
 
 ## État technique réel
 
-Le système est installable sous Foundry VTT V14 et la base de test réelle reste le build `14.365`.
+Le système est installable sous Foundry VTT V14 et la base de test réelle documentée reste le build `14.365`.
 
 Sont actuellement produits :
 
@@ -51,31 +51,36 @@ Sont actuellement produits :
 - assistant de création ;
 - fiche Actor et fiche Item ;
 - sections Inventaire et Armes ;
-- formules de dégâts persistées sur les armes ;
-- deux compendiums validés et reconstructibles.
+- cartes de chat D100 fonctionnelles ;
+- projection publique / MJ filtrée ;
+- snapshots d’armes ;
+- sélecteur de dégâts réutilisable ;
+- dégâts normaux et maximum ;
+- forçage MJ après échec ;
+- initiative native complète depuis la fiche ;
+- deux compendiums validés et reconstructibles, actuellement désactivés pendant le développement.
 
-## Phase 04 — résultat
+## Phase 05 — résultat
 
 ```text
-Audit de complétude : TERMINÉ
-Lacunes fonctionnelles : AUCUNE
-Patch fonctionnel requis : NON
-Contrôles hors Foundry : 708 OK
-Tests Foundry antérieurs pertinents : VALIDÉS
+Développement : TERMINÉ
+Validation fonctionnelle utilisateur : OUI
+Contrôles hors Foundry : 762 OK
+Modules JavaScript vérifiés : 29
+Tests unitaires : 4
+Test multijoueur simultané F2 : NON EXÉCUTÉ
+Publication : NON
 ```
 
-Arbitrages validés :
-
-- confidentialité actuelle du D100 secret Destin acceptée ;
-- comportement après baisse du plafond Destin accepté.
+Le test F2 reste explicitement non validé et est reporté à la Phase 07.
 
 ## Compendiums — mode développement
 
-Les compendiums restent validés mais sont temporairement inactifs pendant le développement.
+Les compendiums restent validés mais temporairement inactifs :
 
 ```text
 system.json
-→ aucune propriété packs pendant le développement
+→ aucune propriété packs
 
 packs-src/
 → source d’autorité du contenu
@@ -111,37 +116,46 @@ TODO_evilbram.md
 
 ## Éléments ouverts
 
-### Phase 05
+### Phase 06
 
-- initiative complète ;
-- cartes de chat fonctionnelles ;
-- sélection des armes depuis le chat ;
-- dégâts normaux et maximum ;
-- permissions et réutilisation des actions ;
-- tests de conflit sans automatisation tactique.
-
-### Plus tard
+À recalibrer en tenant compte de l’existant :
 
 - identité visuelle finale ;
-- progression assistée ;
-- Dice So Nice ;
-- migrations ;
-- concurrence multijoueur globale ;
-- stabilisation ;
-- publication.
+- cohérence visuelle fiche / cartes ;
+- affinage du halo Destin ;
+- accessibilité et lisibilité ;
+- responsive et finitions ;
+- éventuel arbitrage sur la persistance des thèmes uniquement si un choix de thème utilisateur est réellement introduit.
 
-## Sources d’autorité
+### Phase 07
+
+- tests fonctionnels globaux ;
+- non-régression ;
+- permissions et sauvegarde/rechargement ;
+- multijoueur ;
+- test simultané F2 ;
+- concurrence ;
+- correction des blocages.
+
+### Phase 08
+
+- préparation de diffusion ;
+- réactivation et reconstruction des compendiums ;
+- contrôles avant candidate / release `1.0.0` ;
+- publication uniquement après décision utilisateur.
+
+## Sources d’autorité principales
 
 ```text
 .project/specification/PHASE_00A_TRANSMISSION_FOUNDRY_RESOLUTION_JETS_INTERFACE.md
 .project/specification/PHASE_01_SPECIFICATION_FONCTIONNELLE_PERSONNAGE_EQUIPEMENT_CONFLITS_INTERFACE.md
 .project/specification/PHASE_02_ARCHITECTURE_FOUNDRY_INTERFACE.md
-.project/decisions/PHASE_03_PREMIERE_TRANCHE_JOUABLE.md
-.project/decisions/COMPENDIUMS_SYSTEME_OBJETS_ARMES.md
-.project/decisions/GESTION_COMPENDIUMS_MODE_DEVELOPPEMENT.md
 .project/decisions/PHASE_04_ETATS_DESTIN_REGLAGES_MJ.md
+.project/decisions/PHASE_05_CARTES_CHAT_ERGONOMIE.md
+.project/decisions/PHASE_05_CONFLITS_INITIATIVE_ARMES.md
+.project/decisions/GESTION_COMPENDIUMS_MODE_DEVELOPPEMENT.md
 ```
 
 ## Prochaine étape
 
-Après le commit de clôture de la Phase 04, recalibrer la Phase 05 à partir de la base réelle avant tout nouveau développement.
+Après le commit de clôture de la Phase 05, cadrer et recalibrer la Phase 06 à partir de la base réelle.

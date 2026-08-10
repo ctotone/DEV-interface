@@ -1,8 +1,10 @@
 # Transmission courante — Système D100 Interface
 
-**Dernière mise à jour :** 7 août 2026  
+**Dernière mise à jour :** 10 août 2026  
 **Coordinateur :** GPT Pilote  
-**Spécialiste principal de la prochaine phase :** GPT Foundry  
+**Prochaine phase :** 06 — Ergonomie et identité visuelle  
+**GPT principal technique :** GPT Foundry  
+**Contributeur prévu :** GPT Visuel  
 **Identifiant technique :** `interface`  
 **Dépôt :** `ctotone/DEV-interface`  
 **Branche :** `main`  
@@ -12,46 +14,76 @@
 ## Statut
 
 ```text
-Phases 00A à 04 : VALIDÉES
+Phases 00A à 05 : VALIDÉES
 Complément compendiums : VALIDÉ
-Phase 05 : PROCHAINE — À RECALIBRER
+Phase 06 : PROCHAINE — À RECALIBRER
 Publication : NON ENGAGÉE
 ```
 
 ## Base de reprise
 
 ```text
-Base de départ Phase 04 :
-386c71c5e73f9d9833905430c6d341344cfaf717
+Commit de clôture Phase 04 :
+a56d68838a93398fffdb35aa7ee9feed3eb5dc71
 
-Commit technique observé après mise en place du protocole compendiums :
-eb6dc6196a71e3413f851d876a1b617dba3938af
+Commit pré-test Phase 05 observé dans l’archive entrante :
+0fe3cdbe35e42d4f1c891640a033c1ca02bf98d4
 
-Commit de clôture documentaire Phase 04 :
+Commit de clôture documentaire Phase 05 :
 à communiquer après intégration et push utilisateur
 ```
 
-Après le prochain push, le nouveau hash remplacera l’archive comme base distante de reprise.
+Le prochain hash communiqué après push deviendra la base distante de référence de la Phase 06.
 
 ## Ordre de lecture
 
 1. présent fichier ;
 2. `.project/PROJECT_STATE.md` ;
 3. `.project/ROADMAP.md` ;
-4. `.project/decisions/PHASE_04_ETATS_DESTIN_REGLAGES_MJ.md` ;
-5. `.project/decisions/GESTION_COMPENDIUMS_MODE_DEVELOPPEMENT.md` ;
-6. spécifications 00A, 01 et 02 selon le sujet.
+4. `.project/decisions/PHASE_05_CONFLITS_INITIATIVE_ARMES.md` ;
+5. `.project/decisions/PHASE_05_CARTES_CHAT_ERGONOMIE.md` ;
+6. `.project/decisions/GESTION_COMPENDIUMS_MODE_DEVELOPPEMENT.md` ;
+7. spécifications 00A, 01 et 02 selon le sujet.
 
-## État stable
+## État stable après Phase 05
 
-- États Blessures / Stress conformes ;
-- malus d’état conforme ;
-- settings monde conformes ;
-- Destin conforme ;
-- persistance et permissions du domaine conformes ;
-- confidentialité actuelle du Destin acceptée ;
-- comportement de baisse du plafond Destin accepté ;
-- aucune lacune Phase 04 restante.
+- moteur D100, États, Destin et settings conformes ;
+- cartes D100 fonctionnelles ;
+- projections publiques filtrées ;
+- cartes de dégâts réutilisables ;
+- snapshots d’armes persistants ;
+- dégâts normaux et maximum ;
+- forçage MJ après échec ;
+- permissions revérifiées au clic ;
+- initiative native complète depuis la fiche ;
+- aucune application automatique de dégâts ou Blessures ;
+- aucune architecture tactique ajoutée.
+
+## Preuve Phase 05
+
+```text
+Contrôles hors Foundry : 762 OK
+Modules JavaScript : 29
+Tests unitaires : 4
+
+Foundry utilisateur :
+B1 à B5 : OK
+C1 à C5 : OK
+D1 à D2 : OK
+E1 à E4 : OK
+F1 : OK
+F2 : NON TESTÉ
+Initiative finale : OK
+```
+
+Ne jamais présenter F2 comme testé.
+
+## Limites à conserver
+
+- simultanéité multijoueur F2 non testée ;
+- détail secret Destin issu d’un jet joueur non persisté dans une carte MJ séparée ;
+- halo Destin à reprendre visuellement ;
+- thème `default` uniquement, sans source persistée de choix de thème.
 
 ## Compendiums pendant le développement
 
@@ -63,59 +95,53 @@ packs-src/
 → source d’autorité
 
 packs/
-→ conservé dans l’état validé
+→ conservé et versionné
 ```
 
-Ne pas recréer ni réactiver les compendiums pendant le développement sauf besoin explicite de modification ou de test.
+Ne pas réactiver les compendiums pendant le développement sans besoin explicite.
 
-### Avant candidate / release 1.0.0
+Avant candidate / release `1.0.0` :
 
-Obligatoire :
-
-1. rétablir les deux déclarations dans `system.json` ;
-2. conserver `interface.objects` et `interface.weapons` ;
-3. reconstruire via `tools/build-compendiums.mjs` ;
-4. exécuter `tests/static/check-project.mjs` ;
-5. tester les compendiums sous Foundry ;
-6. seulement ensuite préparer la candidate / release.
+```text
+réactiver
+→ reconstruire
+→ contrôler
+→ tester sous Foundry
+```
 
 ## Conventions opérationnelles DEV-interface
 
 - écart de hash ZIP / commit : normal sauf divergence réelle ;
 - suffixe automatique de ZIP : sans signification fonctionnelle ;
 - `.git/` et `.gitignore` : ignorés silencieusement dans les archives entrantes ;
-- `TODO_evilbram.md` : personnel, non autoritatif, non modifié, non inclus dans les ZIP livrés ;
+- `TODO_evilbram.md` : personnel, non autoritatif, non modifié et non inclus dans les ZIP livrés ;
 - utilisateur : tests réels, commits, push, releases et publication.
 
-## Phase 05 — périmètre à recalibrer
+## Phase 06 — recalibrage attendu
 
-Déjà produit :
+Une partie du socle ergonomique a déjà été produite en Phase 03 et en Phase 05.
 
-- Corps à corps, Distance et Verbal ;
-- bonus d’initiative dérivé ;
-- Items `ordinary | weapon` ;
-- sections Inventaire et Armes ;
-- formules de dégâts persistées ;
-- compendiums d’objets et d’armes validés, actuellement désactivés.
+Avant toute modification, auditer au minimum :
 
-Reste principalement à examiner :
+```text
+fiche Actor
+fiche Item
+assistant de création
+cartes D100
+cartes de dégâts
+halo Destin
+thème default
+responsive
+lisibilité
+accessibilité
+assets existants
+cohérence visuelle globale
+```
 
-- initiative complète dans Foundry ;
-- cartes de chat fonctionnelles ;
-- sélection d’armes depuis le chat ;
-- dégâts normaux et maximum ;
-- permissions et réutilisation des actions ;
-- tests de conflit sans automatisation tactique.
+Le design fonctionnel validé de la Phase 05 ne doit pas être cassé pour une amélioration esthétique gratuite.
 
-Hors périmètre tactique :
-
-- ciblage ;
-- défense automatisée ;
-- résistance ;
-- armure calculée ;
-- portée tactique ;
-- application automatique des dégâts.
+Le test simultané multijoueur F2 reste destiné à la Phase 07.
 
 ## Prochaine action exacte
 
-Après communication du commit de clôture Phase 04, ouvrir la Phase 05 par un audit de complétude et un recalibrage du périmètre réel avant toute modification.
+Après communication du commit de clôture Phase 05, ouvrir la Phase 06 par un audit de l’existant ergonomique et visuel avant toute modification.

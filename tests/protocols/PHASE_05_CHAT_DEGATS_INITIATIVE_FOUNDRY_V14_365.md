@@ -98,7 +98,7 @@ Forcer ou reproduire les six familles suivantes :
 super échec critique (100)        #dc00c9
 réussite normale / automatique    #009700
 réussite critique                 #0082ff
-super réussite critique (1)       #fffe00
+super réussite critique (1)       #f3b600
 ```
 
 Attendu : résultat, qualification et marge éventuelle utilisent la famille de couleur correspondante.
@@ -253,20 +253,27 @@ Attendu :
 
 ## G. Initiative native
 
-### G1 — Formule
+### G1 — Initiative depuis la fiche et formule
 
-1. Placer un Actor en Combat.
-2. Vérifier sa valeur `Distance`.
-3. Calculer manuellement `round(Distance / 10)`.
-4. Lancer l’initiative depuis le tracker.
+1. Ouvrir la fiche d’un personnage propriétaire alors qu’aucun Combat n’est actif.
+2. Vérifier que l’affichage `Initiative` n’est pas cliquable.
+3. Le MJ crée/active un Combat depuis le tracker.
+4. Vérifier que `Initiative` devient cliquable sur la fiche tant que le personnage n’est pas dans le Combat.
+5. Vérifier la valeur `Distance` et calculer manuellement `round(Distance / 10)`.
+6. Cliquer sur `Initiative` depuis la fiche.
 
 Attendu :
+
+- le personnage est ajouté au Combat Tracker ;
+- son initiative est lancée avec :
 
 ```text
 1d10 + round(Distance / 10)
 ```
 
-Le malus Blessure/Stress n’intervient pas.
+- le malus Blessure/Stress n’intervient pas ;
+- une fois le personnage présent dans le Combat, `Initiative` redevient non cliquable ;
+- supprimer le personnage du Combat rend de nouveau l’action disponible tant que le Combat reste actif.
 
 ### G2 — Relance et permissions
 

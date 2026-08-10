@@ -539,6 +539,22 @@ check(
   "Le bandeau noir doit regrouper les états et l’initiative."
 );
 check(
+  characterTemplate.includes('data-action="rollInitiative"')
+    && characterTemplate.includes("data-interface-initiative-action")
+    && characterApplication.includes("canRollInitiativeFromSheet")
+    && characterApplication.includes("rollActorInitiativeFromSheet")
+    && read("scripts/services/initiative-service.mjs").includes(
+      "createCombatants: true"
+    )
+    && read("scripts/services/initiative-service.mjs").includes(
+      "rerollInitiative: false"
+    )
+    && read("scripts/services/initiative-service.mjs").includes(
+      "targetCombat.rollInitiative(pendingIds)"
+    ),
+  "La fiche doit permettre l’initiative vers un Combat actif, compléter le jet si nécessaire et désactiver l’action après ajout."
+);
+check(
   characterTemplate.includes("interface-state-label")
     && characterTemplate.includes("woundState.label")
     && characterTemplate.includes("stressState.label"),
@@ -1013,7 +1029,7 @@ check(
     "--interface-result-super-critical-failure: #dc00c9",
     "--interface-result-success: #009700",
     "--interface-result-critical-success: #0082ff",
-    "--interface-result-super-critical-success: #fffe00"
+    "--interface-result-super-critical-success: #f3b600"
   ].every(token => read("styles/interface.css").includes(token)),
   "Les six couleurs fonctionnelles validées des cartes D100 doivent rester exactes."
 );

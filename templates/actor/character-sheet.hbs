@@ -1,4 +1,8 @@
-<div class="interface-sheet__content interface-character {{#if readOnly}}interface-character--read-only{{/if}}" data-interface-theme="{{theme}}">
+<div
+  class="interface-sheet__content interface-character {{#if readOnly}}interface-character--read-only{{/if}}"
+  data-interface-theme="{{theme}}"
+  data-interface-actor-uuid="{{actor.uuid}}"
+>
   <header class="interface-identity-grid interface-character__identity">
     <div class="interface-identity__portrait">
       {{#if editable}}
@@ -150,8 +154,22 @@
       </div>
 
       <div class="interface-state-band__initiative">
-        <span>{{localize "INTERFACE.Derived.Initiative"}}</span>
-        <strong>+{{derived.initiativeBonus}}</strong>
+        {{#if editable}}
+          <button
+            type="button"
+            class="interface-state-band__initiative-action"
+            data-action="rollInitiative"
+            data-interface-initiative-action
+            title="{{localize "INTERFACE.Initiative.Roll"}}"
+            {{#unless initiativeCanRoll}}disabled{{/unless}}
+          >
+            <span>{{localize "INTERFACE.Derived.Initiative"}}</span>
+            <strong>+{{derived.initiativeBonus}}</strong>
+          </button>
+        {{else}}
+          <span>{{localize "INTERFACE.Derived.Initiative"}}</span>
+          <strong>+{{derived.initiativeBonus}}</strong>
+        {{/if}}
       </div>
 
       <div class="interface-state-band__resource interface-state-band__resource--stress">

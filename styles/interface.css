@@ -459,6 +459,46 @@
   font-size: 1.65rem;
 }
 
+.interface .interface-state-band__initiative-action {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: center;
+  text-transform: inherit;
+}
+
+.interface .interface-state-band__initiative-action > span {
+  font-size: 0.92rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+}
+
+.interface .interface-state-band__initiative-action > strong {
+  margin-top: 0.22rem;
+  font-size: 1.65rem;
+}
+
+.interface .interface-state-band__initiative-action:not(:disabled) {
+  cursor: pointer;
+}
+
+.interface .interface-state-band__initiative-action:not(:disabled):hover > span,
+.interface .interface-state-band__initiative-action:not(:disabled):focus-visible > span {
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+}
+
+.interface .interface-state-band__initiative-action:disabled {
+  cursor: default;
+  opacity: 1;
+}
+
 .interface .interface-state-band .interface-resource__readonly {
   display: grid;
   width: 3.8rem;
@@ -2031,7 +2071,7 @@
   --interface-result-super-critical-failure: #dc00c9;
   --interface-result-success: #009700;
   --interface-result-critical-success: #0082ff;
-  --interface-result-super-critical-success: #fffe00;
+  --interface-result-super-critical-success: #f3b600;
   --interface-destiny-halo: rgba(0, 130, 255, 0.42);
 }
 

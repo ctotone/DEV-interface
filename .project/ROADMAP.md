@@ -1,6 +1,6 @@
 # Roadmap — Système D100 Interface pour Foundry VTT
 
-**Dernière mise à jour :** 7 août 2026
+**Dernière mise à jour :** 10 août 2026
 **Statut :** validée par l’utilisateur
 **Identifiant technique :** `interface`
 **Principe :** une phase planifiée ne prouve pas qu’elle est produite, testée ou validée.
@@ -251,58 +251,56 @@ Ils devront être réactivés, reconstruits, contrôlés et testés avant la can
 
 ## Phase 05 — Conflits, initiative et armes
 
-**Statut :** PROCHAINE — PÉRIMÈTRE À RECALIBRER
+**Statut :** VALIDÉE
 
-**GPT principal :** GPT Foundry
+**GPT principal :** GPT Foundry  
+**Tests réels :** utilisateur
 
-### Déjà produit
+### Résultat
 
-- Corps à corps, Distance et Verbal ;
-- bonus d’initiative dérivé ;
-- Items `ordinary | weapon` ;
-- sections Inventaire et Armes ;
-- formules de dégâts persistées sur les armes ;
-- compendium `interface.weapons` validé avec 42 armes ;
-- compendium `interface.objects` validé avec 60 objets.
+- cartes D100 fonctionnelles ;
+- projection publique / MJ filtrée ;
+- contrôleur d’actions de chat ;
+- snapshots d’armes ;
+- sélecteur de dégâts réutilisable ;
+- dégâts normaux ;
+- dégâts maximum sur critique et super-critique ;
+- forçage MJ après échec ;
+- permissions revérifiées au clic ;
+- initiative native complète depuis la fiche ;
+- égalités signalées au MJ ;
+- aucune automatisation tactique ou application automatique de Blessures.
 
-Les compendiums restent désactivés pendant le développement et ne doivent pas être réactivés pour cette phase sans besoin explicite.
-
-### Travail préalable obligatoire
-
-Comparer le périmètre prévu à la base réelle avant toute modification.
-
-Classer chaque exigence comme :
+### Validation
 
 ```text
-DÉJÀ PRODUIT ET TESTÉ
-PRODUIT MAIS À RETESTER
-MANQUANT
-REPORTÉ
+Contrôles hors Foundry : 762 OK
+Modules JavaScript : 29
+Tests unitaires : 4
+
+B1 à B5 : OK
+C1 à C5 : OK
+D1 à D2 : OK
+E1 à E4 : OK
+F1 : OK
+F2 : NON TESTÉ
+Initiative finale : OK
 ```
 
-### Reste principalement à traiter
+F2 est reporté à la Phase 07.
 
-- initiative complète dans Foundry ;
-- cartes de chat fonctionnelles ;
-- sélection des armes depuis le chat ;
-- dégâts normaux et maximum ;
-- permissions et réutilisation des actions ;
-- tests de conflit sans automatisation tactique.
+### Décisions
 
-### Hors périmètre
-
-- ciblage ;
-- défense automatisée ;
-- résistance ;
-- armure calculée ;
-- portée tactique ;
-- application automatique des dégâts.
+```text
+.project/decisions/PHASE_05_CONFLITS_INITIATIVE_ARMES.md
+.project/decisions/PHASE_05_CARTES_CHAT_ERGONOMIE.md
+```
 
 ---
 
 ## Phase 06 — Ergonomie et identité visuelle
 
-**Statut :** PLANIFIÉE — SOCLE PARTIELLEMENT ANTICIPÉ
+**Statut :** PROCHAINE — PÉRIMÈTRE À RECALIBRER
 
 **GPT principal technique :** GPT Foundry  
 **Contributeur visuel :** GPT Visuel
@@ -315,16 +313,37 @@ REPORTÉ
 - sections repliables ;
 - séparation Armes / Inventaire ;
 - premiers assets par défaut ;
-- premières règles de lisibilité et d’espacement.
+- cartes D100 fonctionnelles ;
+- cartes de dégâts fonctionnelles ;
+- six familles de couleurs fonctionnelles validées ;
+- halo Destin fonctionnel mais jugé trop discret ;
+- point d’extension de thème `default` sans persistance.
+
+### Travail préalable obligatoire
+
+Auditer l’existant avant toute refonte.
+
+Distinguer :
+
+```text
+VALIDÉ À CONSERVER
+FONCTIONNEL À HABILLER
+À AMÉLIORER
+NOUVEL ARBITRAGE NÉCESSAIRE
+REPORTÉ
+```
 
 ### Reste principalement à traiter
 
 - identité visuelle finale ;
-- cartes de chat ;
-- cohérence graphique complète ;
-- accessibilité ;
+- cohérence visuelle fiche / cartes ;
+- affinage du halo Destin ;
+- lisibilité et accessibilité ;
 - responsive et finitions ;
-- arbitrages avec GPT Visuel.
+- direction visuelle des assets et composants ;
+- arbitrage sur la source persistée d’un thème uniquement si un vrai choix de thème utilisateur est introduit.
+
+Le design fonctionnel déjà validé ne doit pas être modifié silencieusement sous prétexte d’amélioration visuelle.
 
 ---
 
@@ -346,6 +365,7 @@ Obtenir une candidate stable et jouable.
 - sauvegarde et rechargement ;
 - non-régression ;
 - multijoueur et concurrence ;
+- test simultané F2 resté non exécuté en Phase 05 ;
 - correction des blocages ;
 - documentation des limites connues.
 

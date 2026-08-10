@@ -13,6 +13,10 @@ import {
 import { D100_MODES } from "../rules/d100/constants.mjs";
 import { standardTalentsForSkill } from "../services/d100-roll-service.mjs";
 import { resolveActorTheme } from "../services/theme-service.mjs";
+import {
+  canRollInitiativeFromSheet,
+  rollActorInitiativeFromSheet
+} from "../services/initiative-service.mjs";
 
 const { ActorSheetV2 } = foundry.applications.sheets;
 const {
@@ -536,6 +540,33 @@ async function rollDerivedAction(event, target) {
   });
 }
 
+async function rollInitiativeAction(event, target) {
+  event.preventDefault();
+
+  if (!canRollInitiativeFromSheet(this.actor)) return null;
+
+  target.disabled = true;
+  try {
+    await this.submit();
+    return await rollActorInitiativeFromSheet(this.actor);
+  } catch (error) {
+    console.error(
+      "D100 Interface | Échec du jet d’initiative depuis la fiche",
+      error
+    );
+    ui.notifications.error(
+      game.i18n.format("INTERFACE.Initiative.RollError", {
+        message: error?.message ?? String(error)
+      })
+    );
+    return null;
+  } finally {
+    if (target.isConnected) {
+      target.disabled = !canRollInitiativeFromSheet(this.actor);
+    }
+  }
+}
+
 export class InterfaceCharacterSheet extends HandlebarsApplicationMixin(ActorSheetV2) {
   sectionState = { ...DEFAULT_SECTION_STATE };
 
@@ -579,7 +610,8 @@ export class InterfaceCharacterSheet extends HandlebarsApplicationMixin(ActorShe
       choosePortrait: choosePortraitAction,
       rollSkill: rollSkillAction,
       rollTalent: rollTalentAction,
-      rollDerived: rollDerivedAction
+      rollDerived: rollDerivedAction,
+      rollInitiative: rollInitiativeAction
     },
     form: {
       closeOnSubmit: false,
@@ -616,6 +648,7 @@ export class InterfaceCharacterSheet extends HandlebarsApplicationMixin(ActorShe
       theme: resolveActorTheme(this.actor),
       readOnly,
       derived,
+      initiativeCanRoll: canRollInitiativeFromSheet(this.actor),
       sections: this.sectionState,
       woundState: buildStatePresentation("wounds", derived.levels.wounds),
       stressState: buildStatePresentation("stress", derived.levels.stress),

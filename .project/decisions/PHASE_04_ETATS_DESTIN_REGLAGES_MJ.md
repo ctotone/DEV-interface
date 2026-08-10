@@ -11,7 +11,7 @@
 - **Branche :** `main`
 - **Base de départ :** `386c71c5e73f9d9833905430c6d341344cfaf717`
 - **Commit technique observé :** `eb6dc6196a71e3413f851d876a1b617dba3938af`
-- **Commit de clôture documentaire :** à renseigner après intégration et push par l’utilisateur
+- **Commit de clôture documentaire :** `a56d68838a93398fffdb35aa7ee9feed3eb5dc71`
 - **Foundry de référence :** V14 build `14.365`
 
 # 1. Objectif de la phase

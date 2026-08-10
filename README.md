@@ -10,9 +10,9 @@ Version package                    : 0.1.0
 Version schéma                     : 1
 Commit de clôture de la phase 03   : 72a2d32ff51661e548f3900792fca263e8b75b98
 Commit d’intégration compendiums   : cf83489710fce2e186b0f78bbc25bcdbaf791dec
-Base de départ de la phase 04      : 386c71c5e73f9d9833905430c6d341344cfaf717
-Commit technique Phase 04 observé  : eb6dc6196a71e3413f851d876a1b617dba3938af
-Commit de clôture Phase 04         : à communiquer après push
+Commit de clôture Phase 04         : a56d68838a93398fffdb35aa7ee9feed3eb5dc71
+Commit pré-test Phase 05 observé   : 0fe3cdbe35e42d4f1c891640a033c1ca02bf98d4
+Commit de clôture Phase 05         : à communiquer après push
 ```
 
 Le commit de clôture historique de la phase 03 est fixé. Le complément compendiums attend son propre commit d’intégration.
@@ -27,7 +27,8 @@ Phase 02 — Architecture Foundry : VALIDÉE
 Phase 03 — Première tranche jouable : VALIDÉE ET CLÔTURÉE
 Complément post-clôture — Compendiums : VALIDÉ
 Phase 04 — États, Destin et réglages MJ : VALIDÉE
-Phase 05 — Conflits, initiative et armes : PROCHAINE, À RECALIBRER
+Phase 05 — Conflits, initiative et armes : VALIDÉE
+Phase 06 — Ergonomie et identité visuelle : PROCHAINE, À RECALIBRER
 Publication : NON ENGAGÉE
 ```
 
@@ -50,7 +51,12 @@ La version `0.1.0` comprend :
 - des assets WebP par défaut ;
 - deux compendiums système natifs : **Objets** et **Armes** ;
 - 60 objets ordinaires et 42 armes illustrés ;
-- un premier rendu technique des jets dans le chat.
+- des cartes D100 fonctionnelles dans le chat ;
+- des cartes de dégâts réutilisables ;
+- des snapshots d’armes ;
+- des dégâts normaux et maximum ;
+- un forçage MJ après échec ;
+- une initiative native complète depuis la fiche.
 
 
 ## Compendiums système
@@ -162,7 +168,11 @@ Document d’autorité :
 ├── PHASE_01_PERSONNAGE_EQUIPEMENT_CONFLITS.md
 ├── PHASE_02_ARCHITECTURE_FOUNDRY.md
 ├── PHASE_03_PREMIERE_TRANCHE_JOUABLE.md
-└── COMPENDIUMS_SYSTEME_OBJETS_ARMES.md
+├── COMPENDIUMS_SYSTEME_OBJETS_ARMES.md
+├── GESTION_COMPENDIUMS_MODE_DEVELOPPEMENT.md
+├── PHASE_04_ETATS_DESTIN_REGLAGES_MJ.md
+├── PHASE_05_CARTES_CHAT_ERGONOMIE.md
+└── PHASE_05_CONFLITS_INITIATIVE_ARMES.md
 ```
 
 La référence historique des règles est désormais disponible en Markdown :
@@ -187,15 +197,22 @@ tests/          contrôles, tests unitaires et protocoles Foundry
 
 ## Travail restant
 
-### Phase 05 — prochaine
+### Phase 06 — prochaine
 
-- recalibrer le périmètre réel ;
-- initiative complète ;
-- cartes de chat fonctionnelles ;
-- sélection d’armes depuis le chat ;
-- dégâts normaux et maximum ;
-- permissions et réutilisation des actions ;
-- tests de conflit sans automatisation tactique.
+- recalibrer l’existant ergonomique et visuel ;
+- identité visuelle finale ;
+- cohérence fiche / cartes ;
+- halo Destin ;
+- accessibilité et lisibilité ;
+- responsive et finitions ;
+- éventuel choix persistant de thème uniquement si réellement nécessaire.
+
+### Phase 07
+
+- tests globaux ;
+- non-régression ;
+- multijoueur et concurrence ;
+- test simultané F2 non exécuté en Phase 05.
 
 ### Avant release 1.0.0
 
@@ -213,7 +230,8 @@ Lire dans cet ordre :
 .project/TRANSMISSION_CURRENT.md
 .project/PROJECT_STATE.md
 .project/ROADMAP.md
-.project/decisions/PHASE_03_PREMIERE_TRANCHE_JOUABLE.md
+.project/decisions/PHASE_05_CONFLITS_INITIATIVE_ARMES.md
+.project/decisions/PHASE_05_CARTES_CHAT_ERGONOMIE.md
 ```
 
-Après le commit d’intégration des compendiums, recalibrer les phases 04 à 06 afin de ne pas reproduire les éléments déjà validés en phase 03 ni le complément post-clôture.
+Après le commit de clôture Phase 05, ouvrir la Phase 06 par un audit de l’existant ergonomique et visuel.
