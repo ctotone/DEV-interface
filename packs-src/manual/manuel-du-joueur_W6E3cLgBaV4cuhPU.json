@@ -1,0 +1,301 @@
+{
+  "name": "Manuel du joueur",
+  "pages": [
+    {
+      "sort": 100000,
+      "name": "TABLE DES MATIÈRES",
+      "type": "text",
+      "_id": "0OKx1puY5NIEtIWE",
+      "system": {},
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "image": {},
+      "text": {
+        "format": 1,
+        "content": "<ol data-spread=\"false\"><li><p><span><strong>Découvrir Interface</strong></span></p><ul data-spread=\"false\"><li><p><span>1.1 Qu’est-ce qu’Interface ?</span></p></li><li><p><span>1.2 Philosophie de jeu</span></p></li></ul></li><li><p><span><strong>Créer son personnage</strong></span></p><ul data-spread=\"false\"><li><p><span>2.1 Identité</span></p></li><li><p><span>2.2 Les six Compétences</span></p></li><li><p><span>2.3 Les Talents</span></p></li><li><p><span>2.4 Spécialisations</span></p></li></ul></li><li><p><span><strong>Faire un test</strong></span></p><ul data-spread=\"false\"><li><p><span>3.1 Test standard</span></p></li><li><p><span>3.2 Choisir le bon Talent</span></p></li><li><p><span>3.3 Résultats automatiques et critiques</span></p></li><li><p><span>3.4 Les doubles</span></p></li><li><p><span>3.5 Avantage et désavantage</span></p></li><li><p><span>3.6 Les marges</span></p></li><li><p><span>3.7 Exemple complet de test</span></p></li><li><p><span>3.8 Exemple avec avantage</span></p></li></ul></li><li><p><span><strong>Blessures, Stress et Destin</strong></span></p><ul data-spread=\"false\"><li><p><span>4.1 Blessures et Stress</span></p></li><li><p><span>4.2 Paliers de Blessures et de Stress</span></p></li><li><p><span>4.3 Ce qui se passe à 15</span></p></li><li><p><span>4.4 Le Destin</span></p></li></ul></li><li><p><span><strong>Conflits</strong></span></p><ul data-spread=\"false\"><li><p><span>5.1 Valeurs de conflit</span></p></li><li><p><span>5.2 Initiative</span></p></li><li><p><span>5.3 Attaquer</span></p></li><li><p><span>5.4 Dégâts des armes</span></p></li><li><p><span>5.5 Critiques et dégâts</span></p></li><li><p><span>5.6 Armes non létales</span></p></li></ul></li><li><p><span><strong>Progression</strong></span></p><ul data-spread=\"false\"><li><p><span>6.1 Progression de Compétence</span></p></li><li><p><span>6.2 Progression de Talents</span></p></li><li><p><span>6.3 Nouvelle Spécialisation</span></p></li><li><p><span>6.4 Fin de la progression standard</span></p></li></ul></li><li><p><span><strong>Aide-mémoire</strong></span></p><ul data-spread=\"false\"><li><p><span>7.1 Ce qu’il faut retenir</span></p></li></ul></li></ol>"
+      },
+      "video": {
+        "controls": true,
+        "volume": 0.5
+      },
+      "src": null,
+      "category": null,
+      "ownership": {
+        "default": -1
+      },
+      "flags": {},
+      "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "interface",
+        "systemVersion": "0.1.0",
+        "createdTime": 1786620284881,
+        "modifiedTime": 1786620293115,
+        "lastModifiedBy": null
+      },
+      "_key": "!journal.pages!W6E3cLgBaV4cuhPU.0OKx1puY5NIEtIWE"
+    },
+    {
+      "sort": 275000,
+      "name": "Créer son personnage",
+      "type": "text",
+      "_id": "pEA966a6sK9uGj4C",
+      "system": {},
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "image": {},
+      "text": {
+        "format": 1,
+        "content": "<p></p><hr><h2><span>2.1 Identité</span></h2><p><span>Un personnage possède librement :</span></p><ul data-spread=\"false\"><li><p><span>un nom ;</span></p></li><li><p><span>un âge ;</span></p></li><li><p><span>une profession ;</span></p></li><li><p><span>éventuellement une spécialisation professionnelle ;</span></p></li><li><p><span>un inventaire ;</span></p></li><li><p><span>des notes personnelles.</span></p></li></ul><p><span>La profession et les informations d’identité décrivent le personnage mais n’accordent pas automatiquement de bonus chiffré.</span></p><p></p><div><hr></div><h2><span>2.2 Les six Compétences</span></h2><p><span>Chaque personnage possède six grandes Compétences.</span></p><p></p><table><tbody><tr><th><p><span>Compétence</span></p></th><th><p><span>Ce qu’elle représente</span></p></th></tr><tr><td><p><span><strong>Carrure</strong></span></p></td><td><p><span>Force physique, résistance, puissance corporelle</span></p></td></tr><tr><td><p><span><strong>Agilité</strong></span></p></td><td><p><span>Coordination, précision gestuelle, rapidité</span></p></td></tr><tr><td><p><span><strong>Perception</strong></span></p></td><td><p><span>Sens, attention, intuition perceptive</span></p></td></tr><tr><td><p><span><strong>Mental</strong></span></p></td><td><p><span>Volonté, sang-froid, détermination</span></p></td></tr><tr><td><p><span><strong>Intellect</strong></span></p></td><td><p><span>Raisonnement, connaissances, imagination</span></p></td></tr><tr><td><p><span><strong>Charisme</strong></span></p></td><td><p><span>Présence, expression et influence sociale</span></p></td></tr></tbody></table><p></p><h3><span>Répartition standard à la création</span></h3><p><span>La création standard utilise les valeurs suivantes :</span></p><pre dir=\"ltr\"><code>20 / 30 / 30 / 40 / 40 / 50</code></pre><p><span>Vous répartissez ces six valeurs entre les six Compétences.</span></p><p></p><p><span>Exemple :</span></p><pre dir=\"ltr\"><code>Carrure      30\nAgilité      40\nPerception   50\nMental       40\nIntellect    30\nCharisme     20</code></pre><p><span>Cette répartition définit les grandes forces et faiblesses du personnage.</span></p><p></p><div><hr></div><h2><span>2.3 Les Talents</span></h2><p><span>Chaque Compétence est associée à trois Talents. </span></p><p><span>Ils précisent <strong>la manière dont le personnage mobilise cette Compétence</strong>.</span></p><p></p><h3><span>Carrure</span></h3><table><tbody><tr><td><p><span>Talent</span></p></td><td><p><span>Ce qu’il représente</span></p></td></tr><tr><td><p><span><strong>Endurance</strong></span></p></td><td><p><span>Soutenir un effort prolongé, résister à la fatigue et continuer malgré l’épuisement physique.</span></p></td></tr><tr><td><p><span><strong>Force brute</strong></span></p></td><td><p><span>Déployer une puissance musculaire immédiate pour pousser, soulever, arracher, enfoncer ou contraindre.</span></p></td></tr><tr><td><p><span><strong>Robustesse</strong></span></p></td><td><p><span>Encaisser les chocs, supporter des conditions physiques difficiles et résister aux agressions corporelles.</span></p></td></tr></tbody></table><p></p><h3><span>Agilité</span></h3><table><tbody><tr><td><p><span>Talent</span></p></td><td><p><span>Ce qu’il représente</span></p></td></tr><tr><td><p><span><strong>Agilité corporelle</strong></span></p></td><td><p><span>Maîtriser ses mouvements, son équilibre, sa souplesse et les actions physiques demandant coordination.</span></p></td></tr><tr><td><p><span><strong>Précision</strong></span></p></td><td><p><span>Effectuer un geste avec exactitude, viser juste ou manipuler quelque chose avec finesse.</span></p></td></tr><tr><td><p><span><strong>Réflexe</strong></span></p></td><td><p><span>Réagir rapidement à un danger, un changement soudain ou une situation exigeant une réponse immédiate.</span></p></td></tr></tbody></table><p></p><h3><span>Perception</span></h3><table><tbody><tr><td><p><span>Talent</span></p></td><td><p><span>Ce qu’il représente</span></p></td></tr><tr><td><p><span><strong>Acuité sensorielle</strong></span></p></td><td><p><span>Exploiter efficacement la vue, l’ouïe, l’odorat et les autres sens pour percevoir des détails.</span></p></td></tr><tr><td><p><span><strong>Sixième sens</strong></span></p></td><td><p><span>Ressentir qu’une situation, une présence ou un détail semble anormal sans disposer immédiatement d’une preuve évidente.</span></p></td></tr><tr><td><p><span><strong>Vigilance</strong></span></p></td><td><p><span>Maintenir son attention, surveiller son environnement et repérer une menace ou un changement significatif.</span></p></td></tr></tbody></table><p></p><h3><span>Mental</span></h3><table><tbody><tr><td><p><span>Talent</span></p></td><td><p><span>Ce qu’il représente</span></p></td></tr><tr><td><p><span><strong>Décision</strong></span></p></td><td><p><span>Trancher, choisir une ligne d’action et agir lorsque l’hésitation ou la pression compliquent la décision.</span></p></td></tr><tr><td><p><span><strong>Détermination</strong></span></p></td><td><p><span>Persévérer, tenir bon et poursuivre un objectif malgré les difficultés, la peur ou l’opposition.</span></p></td></tr><tr><td><p><span><strong>Équilibre mental</strong></span></p></td><td><p><span>Conserver son sang-froid, maîtriser ses réactions et résister aux fortes pressions psychologiques.</span></p></td></tr></tbody></table><p></p><h3><span>Intellect</span></h3><table><tbody><tr><td><p><span>Talent</span></p></td><td><p><span>Ce qu’il représente</span></p></td></tr><tr><td><p><span><strong>Créativité</strong></span></p></td><td><p><span>Imaginer une solution originale, établir des associations inhabituelles ou concevoir une approche nouvelle.</span></p></td></tr><tr><td><p><span><strong>Érudition</strong></span></p></td><td><p><span>Mobiliser des connaissances apprises, une culture générale ou un savoir théorique pertinent.</span></p></td></tr><tr><td><p><span><strong>Logique</strong></span></p></td><td><p><span>Analyser des informations, raisonner, établir des liens et tirer des conclusions cohérentes.</span></p></td></tr></tbody></table><p></p><h3><span>Charisme</span></h3><table><tbody><tr><td><p><span>Talent</span></p></td><td><p><span>Ce qu’il représente</span></p></td></tr><tr><td><p><span><strong>Aura</strong></span></p></td><td><p><span>Imposer naturellement une présence, attirer l’attention ou produire une impression forte sur autrui.</span></p></td></tr><tr><td><p><span><strong>Communication expressive</strong></span></p></td><td><p><span>Transmettre clairement une idée, une intention ou une émotion par la parole, le ton, le geste ou l’attitude.</span></p></td></tr><tr><td><p><span><strong>Persuasion</strong></span></p></td><td><p><span>Convaincre, négocier ou amener quelqu’un à considérer favorablement un argument ou une proposition.</span></p></td></tr></tbody></table><p></p><h3><span>Répartition des Talents à la création</span></h3><p><span>Vous disposez normalement de :</span></p><pre dir=\"ltr\"><code>100 points de Talents</code></pre><p><span>à répartir entre les 18 Talents.</span></p><p></p><p><span>Un Talent possède une valeur comprise entre :</span></p><pre dir=\"ltr\"><code>0 et 30</code></pre><p><span>Cette limite de <code dir=\"ltr\">30</code> est absolue.</span></p><p></p><p><span>Les Talents permettent à deux personnages possédant la même Compétence de jouer très différemment.</span></p><p><span>Un personnage avec une forte Agilité peut par exemple être surtout doué en <strong>Précision</strong>, tandis qu’un autre sera meilleur en <strong>Réflexe</strong> ou en <strong>Agilité corporelle</strong>.</span></p><p></p><div><hr></div><h2><span>2.4 Spécialisations</span></h2><p><span>Les Spécialisations sont écrites librement.</span></p><p><span>Elles représentent des domaines particuliers dans lesquels le personnage possède une expérience ou une maîtrise identifiable.</span></p><p></p><p><span>Exemples :</span></p><ul><li><p>Médecine d'urgence</p></li><li><p>Pilotage d'hélicoptère</p></li><li><p>Archéologie romaine</p></li><li><p>Sécurité informatique</p></li><li><p>Négociation de crise</p></li></ul><p></p><p><span>Une Spécialisation ne donne pas automatiquement un bonus fixe.</span></p><p><span>Lorsqu’elle est réellement pertinente, elle peut cependant justifier un <strong>avantage</strong> ou influencer la manière dont le MJ interprète la situation.</span></p><p><span>Une Spécialisation doit donc être envisagée comme une compétence narrative précise, et non comme un simple bonus mathématique.</span></p>"
+      },
+      "video": {
+        "controls": true,
+        "volume": 0.5
+      },
+      "src": null,
+      "category": null,
+      "ownership": {
+        "default": -1
+      },
+      "flags": {},
+      "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "interface",
+        "systemVersion": "0.1.0",
+        "createdTime": 1786620304365,
+        "modifiedTime": 1786620762454,
+        "lastModifiedBy": null
+      },
+      "_key": "!journal.pages!W6E3cLgBaV4cuhPU.pEA966a6sK9uGj4C"
+    },
+    {
+      "sort": 300000,
+      "name": "Faire un test",
+      "type": "text",
+      "_id": "220QsU3Sl0zMogRA",
+      "system": {},
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "image": {},
+      "text": {
+        "format": 1,
+        "content": "<p></p><hr><h2><span>3.1 Test standard</span></h2><p><span>Lorsqu’une action mérite un jet :</span></p><p><span><strong>🎲 Valeur de base = Compétence + Talent associé</strong></span></p><p><span>Après application des éventuels modificateurs, cette valeur devient votre <strong>seuil de réussite</strong> : c’est la limite qui sépare normalement la réussite de l’échec.</span></p><p></p><p><span>Vous lancez ensuite :</span></p><p><span><strong>🎲 1D100</strong></span></p><p><span>Si le résultat est inférieur ou égal à votre <strong>seuil de réussite</strong>, l’action réussit.</span></p><p></p><p><span>Exemple :</span></p><pre dir=\"ltr\"><code>Perception : 40\nVigilance : 20\n\nValeur de base : 60</code></pre><p><span>Vous surveillez discrètement une entrée.</span></p><p><span><strong>🎲 1D100 → 47</strong></span></p><p><span><code dir=\"ltr\">47 ≤ 60</code></span></p><p><span>L’action réussit.</span></p><p></p><div><hr></div><h2><span>3.2 Choisir le bon Talent</span></h2><p><span>Il n’existe pas de test utilisant uniquement une Compétence.</span></p><p></p><p><span>Une action associe toujours :</span></p><pre dir=\"ltr\"><code>une Compétence\n+\nun Talent</code></pre><p></p><p><span>Le Talent dépend de <strong>la manière dont vous accomplissez l’action</strong>.</span></p><p></p><p><span>Exemple : une porte est bloquée.</span></p><p><span>Vous pourriez tenter de l’ouvrir avec :</span></p><ul data-spread=\"false\"><li><p><span><strong>Carrure + Force brute</strong> pour l’enfoncer ;</span></p></li><li><p><span><strong>Agilité + Précision</strong> pour intervenir délicatement sur son mécanisme ;</span></p></li><li><p><span><strong>Intellect + Logique</strong> pour comprendre comment elle est verrouillée.</span></p></li></ul><p><span>Ce ne sont pas trois façons garanties de résoudre n’importe quelle porte : l’approche doit rester cohérente avec la situation.</span></p><p><span>Le joueur peut proposer le Talent qui correspond à son action. Le MJ valide l’association ou indique un Talent plus approprié lorsque la description ne correspond pas.</span></p><p></p><div><hr></div><h2><span>3.3 Résultats automatiques et critiques</span></h2><p><span>Certains résultats naturels du D100 ont une signification particulière.</span></p><p></p><table><tbody><tr><td style=\"text-align:right\"><p><span>Résultat naturel</span></p></td><td><p><span>Effet</span></p></td></tr><tr><td style=\"text-align:right\"><p><span><strong>1</strong></span></p></td><td><p><span>Réussite supercritique automatique</span></p></td></tr><tr><td style=\"text-align:right\"><p><span><strong>2 à 5</strong></span></p></td><td><p><span>Réussite automatique</span></p></td></tr><tr><td style=\"text-align:right\"><p><span><strong>96 à 98</strong></span></p></td><td><p><span>Échec automatique</span></p></td></tr><tr><td style=\"text-align:right\"><p><span><strong>99</strong></span></p></td><td><p><span>Échec critique automatique</span></p></td></tr><tr><td style=\"text-align:right\"><p><span><strong>100</strong></span></p></td><td><p><span>Échec supercritique automatique</span></p></td></tr></tbody></table><p></p><p><span>Ces résultats s’appliquent même si votre <strong>seuil de réussite</strong> devrait normalement conduire à un autre résultat.</span></p><p></p><div><hr></div><h2><span>3.4 Les doubles</span></h2><p><span>Les doubles peuvent transformer un résultat en critique.</span></p><p></p><p><span>Exemples :</span></p><pre dir=\"ltr\"><code>11\n22\n33\n44\n55\n66\n77\n88\n99</code></pre><p><span>Pour un double ordinaire :</span></p><ul data-spread=\"false\"><li><p><span>si le jet est une réussite, il devient une <strong>réussite critique</strong> ;</span></p></li><li><p><span>si le jet est un échec, il devient un <strong>échec critique</strong>.</span></p></li></ul><p></p><p><span>Exemple :</span></p><pre dir=\"ltr\"><code>Seuil de réussite : 65\n🎲 Résultat : 44</code></pre><p><span><code dir=\"ltr\">44 ≤ 65</code> et le résultat est un double.</span></p><p><span>Il s’agit donc d’une <strong>réussite critique</strong>.</span></p><p><span>Avec un seuil de réussite de <code dir=\"ltr\">35</code>, le même <code dir=\"ltr\">44</code> serait un <strong>échec critique</strong>.</span></p><p></p><div><hr></div><h2><span>3.5 Avantage et désavantage</span></h2><p><span>Certaines circonstances peuvent rendre une action particulièrement favorable ou défavorable.</span></p><p></p><h3><span>Avantage</span></h3><p><span>Avec un avantage :</span></p><p><span><strong>🎲 Lancez 2D100 et conservez le meilleur résultat.</strong></span></p><p></p><h3><span>Désavantage</span></h3><p><span>Avec un désavantage :</span></p><p><span><strong>🎲 Lancez 2D100 et conservez le moins bon résultat.</strong></span></p><p></p><p></p><p><span>Le système ne compare pas seulement les nombres.</span></p><p><span>Il regarde d’abord la <strong>qualité mécanique</strong> des deux résultats : réussite, critique, échec, etc.</span></p><p><span>Lorsque les deux jets ont la même qualité :</span></p><ul data-spread=\"false\"><li><p><span>avec avantage, on conserve normalement le plus bas ;</span></p></li><li><p><span>avec désavantage, on conserve normalement le plus haut.</span></p></li></ul><p><span>Une Spécialisation pertinente peut notamment justifier un avantage lorsque le MJ considère qu’elle apporte un bénéfice réel dans la situation.</span></p><p></p><div><hr></div><h2><span>3.6 Les marges</span></h2><p><span>Lorsque la précision du résultat compte, Interface peut mesurer une marge en <strong>dizaines complètes</strong>.</span></p><p></p><p><span>L’idée est simple :</span></p><ul data-spread=\"false\"><li><p><span>plus une réussite est éloignée du seuil de réussite, plus elle est nette ;</span></p></li><li><p><span>plus un échec dépasse ce seuil, plus il est important.</span></p><p></p></li></ul><p><span>Exemple :</span></p><pre dir=\"ltr\"><code>Seuil de réussite : 63\n🎲 Résultat : 41</code></pre><p><span>L’écart est de <code dir=\"ltr\">22</code>.</span></p><p><span>Cela représente <strong>2 dizaines complètes de marge de réussite</strong>.</span></p><p><span>Les marges servent surtout lorsque le degré de réussite ou d’échec apporte quelque chose à la scène.</span></p><p></p><div><hr></div><h2><span>3.7 Exemple complet de test</span></h2><p></p><p><span>Un personnage possède :</span></p><pre dir=\"ltr\"><code>Intellect : 40\nLogique : 18\nBlessures : 4\nStress : 2</code></pre><p><span>Sa valeur de base pour une analyse logique est :</span></p><pre dir=\"ltr\"><code>40 + 18 = 58</code></pre><p><span>Ses états donnent :</span></p><pre dir=\"ltr\"><code>Blessures 4 → niveau 2\nStress 2 → niveau 1\n\nTotal des niveaux : 3\nPénalité standard : 9</code></pre><p><span>Son seuil de réussite devient :</span></p><pre dir=\"ltr\"><code>58 - 9 = 49\n\n</code></pre><p></p><p><span>Le joueur lance :</span></p><p><span><strong>🎲 1D100 → 33</strong></span></p><p><span><code dir=\"ltr\">33 ≤ 49</code></span></p><p><span>C’est une réussite.</span></p><p><span>Comme <code dir=\"ltr\">33</code> est un double, cette réussite devient une <strong>réussite critique</strong>.</span></p><p></p><div><hr></div><h2><span>3.8 Exemple avec avantage</span></h2><p><span>Un personnage tente d’identifier une substance et possède une Spécialisation directement pertinente.</span></p><p><span>Le MJ lui accorde un avantage.</span></p><p><span>Son seuil de réussite est <code dir=\"ltr\">57</code>.</span></p><p></p><p><span>Le joueur lance :</span></p><pre dir=\"ltr\"><code>🎲 2D100\n→ 62\n→ 44</code></pre><p><span><code dir=\"ltr\">62</code> est un échec.</span></p><p><span><code dir=\"ltr\">44</code> est une réussite et un double : c’est donc une réussite critique.</span></p><p><span>Avec l’avantage, le joueur conserve <strong>44</strong>.</span></p>"
+      },
+      "video": {
+        "controls": true,
+        "volume": 0.5
+      },
+      "src": null,
+      "category": null,
+      "ownership": {
+        "default": -1
+      },
+      "flags": {},
+      "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "interface",
+        "systemVersion": "0.1.0",
+        "createdTime": 1786620310308,
+        "modifiedTime": 1786620924029,
+        "lastModifiedBy": null
+      },
+      "_key": "!journal.pages!W6E3cLgBaV4cuhPU.220QsU3Sl0zMogRA"
+    },
+    {
+      "sort": 400000,
+      "name": "Blessures, Stress et Destin",
+      "type": "text",
+      "_id": "OWonMkagx6b9mku6",
+      "system": {},
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "image": {},
+      "text": {
+        "format": 1,
+        "content": "<p></p><hr><h2><span>4.1 Blessures et Stress</span></h2><p><span>Interface possède deux jauges distinctes :</span></p><pre dir=\"ltr\"><code>Blessures : 0 à 15\nStress    : 0 à 15</code></pre><p></p><h3><span>Blessures</span></h3><p><span>Les Blessures représentent l’état physique du personnage :</span></p><ul data-spread=\"false\"><li><p><span>coups ;</span></p></li><li><p><span>blessures ;</span></p></li><li><p><span>traumatismes ;</span></p></li><li><p><span>épuisement physique grave ;</span></p></li><li><p><span>conséquences corporelles similaires.</span></p></li></ul><p></p><h3><span>Stress</span></h3><p><span>Le Stress représente la pression mentale et émotionnelle :</span></p><ul data-spread=\"false\"><li><p><span>peur ;</span></p></li><li><p><span>choc ;</span></p></li><li><p><span>tension ;</span></p></li><li><p><span>surcharge ;</span></p></li><li><p><span>traumatisme psychologique ;</span></p></li><li><p><span>pression extrême.</span></p></li></ul><p><span>Les deux jauges utilisent la même logique mécanique mais représentent des réalités narratives différentes.</span></p><p></p><div><hr></div><h2><span>4.2 Paliers de Blessures et de Stress</span></h2><p><span>Chaque jauge progresse par paliers.</span></p><p></p><table><tbody><tr><td style=\"text-align:right\"><p><span>Valeur</span></p></td><td style=\"text-align:right\"><p><span>Niveau</span></p></td></tr><tr><td style=\"text-align:right\"><p><span><code dir=\"ltr\">0</code></span></p></td><td style=\"text-align:right\"><p><span>0</span></p></td></tr><tr><td style=\"text-align:right\"><p><span><code dir=\"ltr\">1–3</code></span></p></td><td style=\"text-align:right\"><p><span>1</span></p></td></tr><tr><td style=\"text-align:right\"><p><span><code dir=\"ltr\">4–6</code></span></p></td><td style=\"text-align:right\"><p><span>2</span></p></td></tr><tr><td style=\"text-align:right\"><p><span><code dir=\"ltr\">7–9</code></span></p></td><td style=\"text-align:right\"><p><span>3</span></p></td></tr><tr><td style=\"text-align:right\"><p><span><code dir=\"ltr\">10–12</code></span></p></td><td style=\"text-align:right\"><p><span>4</span></p></td></tr><tr><td style=\"text-align:right\"><p><span><code dir=\"ltr\">13–15</code></span></p></td><td style=\"text-align:right\"><p><span>5</span></p></td></tr></tbody></table><p></p><p><span>Dans la règle standard, chaque niveau cumulé de Blessures ou de Stress réduit les chances de réussite.</span></p><p><span><strong>🎲 Pénalité standard = (niveau de Blessures + niveau de Stress) × 3</strong></span></p><p></p><p><span>Exemple :</span></p><pre dir=\"ltr\"><code>Blessures : 5 → niveau 2\nStress : 2 → niveau 1\n\nNiveau total : 3\nPénalité : 3 × 3 = 9</code></pre><p><span>Un seuil de réussite normalement fixé à <code dir=\"ltr\">62</code> devient donc :</span></p><pre dir=\"ltr\"><code>62 - 9 = 53</code></pre><p><span>Le seuil de réussite final est <code dir=\"ltr\">53</code>.</span></p><p></p><div><hr></div><h2><span>4.3 Ce qui se passe à 15</span></h2><p><span>Atteindre <code dir=\"ltr\">15</code> en Blessures ou en Stress représente un état extrêmement grave.</span></p><p></p><p><span>Cela <strong>ne provoque cependant pas automatiquement</strong> :</span></p><ul data-spread=\"false\"><li><p><span>la mort ;</span></p></li><li><p><span>l’inconscience ;</span></p></li><li><p><span>l’incapacité ;</span></p></li><li><p><span>la panique ;</span></p></li><li><p><span>la perte de contrôle du personnage.</span></p></li></ul><p><span>La situation narrative décide de ce que signifie cet état.</span></p><p><span>Interface évite qu’une jauge impose seule une conséquence qui ne correspondrait pas à la fiction en cours.</span></p><p></p><div><hr></div><h2><span>4.4 Le Destin</span></h2><p><span>Le Destin représente ce petit moment où les choses finissent parfois par tourner en faveur d’un personnage malmené par les événements.</span></p><p><span>Lorsqu’un personnage accumule des échecs, il peut progressivement gagner un <strong>petit bonus cumulatif de Destin</strong>.</span></p><p><span>Cette réserve peut ensuite intervenir sur un lancer ultérieur pour donner au personnage un coup de pouce et transformer une situation défavorable en résultat plus clément.</span></p><p><span>Le Destin :</span></p><ul data-spread=\"false\"><li><p><span>se construit progressivement après les échecs ;</span></p></li><li><p><span>aide surtout lorsque les dés se montrent durablement défavorables ;</span></p></li><li><p><span>ne transforme pas une situation en réussite critique spectaculaire ;</span></p></li><li><p><span>ne peut pas annuler les résultats d’échec automatique les plus extrêmes ;</span></p></li><li><p><span>se réinitialise lorsque la dynamique du personnage redevient favorable.</span></p></li></ul><p><span>Le Destin est donc une protection légère contre les longues séries de malchance, pas une ressource permettant de garantir une réussite à volonté.</span></p>"
+      },
+      "video": {
+        "controls": true,
+        "volume": 0.5
+      },
+      "src": null,
+      "category": null,
+      "ownership": {
+        "default": -1
+      },
+      "flags": {},
+      "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "interface",
+        "systemVersion": "0.1.0",
+        "createdTime": 1786620317372,
+        "modifiedTime": 1786620980695,
+        "lastModifiedBy": null
+      },
+      "_key": "!journal.pages!W6E3cLgBaV4cuhPU.OWonMkagx6b9mku6"
+    },
+    {
+      "sort": 500000,
+      "name": "Conflits",
+      "type": "text",
+      "_id": "6gi6tLetMjH7rEJi",
+      "system": {},
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "image": {},
+      "text": {
+        "format": 1,
+        "content": "<p></p><hr><h2><span>5.1 Valeurs de conflit</span></h2><p><span>Interface utilise trois valeurs dérivées principales pour les conflits :</span></p><ul data-spread=\"false\"><li><p><span><strong>Corps à corps</strong></span></p></li><li><p><span><strong>Distance</strong></span></p></li><li><p><span><strong>Verbal</strong></span></p></li></ul><p><span>Ces valeurs sont calculées à partir des Compétences et Talents du personnage.</span></p><p><span>Elles représentent sa capacité générale à agir dans ces trois formes de confrontation.</span></p><p><span>La formule exacte de calcul n’a pas besoin d’être connue pour jouer : elles évoluent directement avec les caractéristiques dont elles dépendent.</span></p><p></p><div><hr></div><h2><span>5.2 Initiative</span></h2><p><span>Au début d’un conflit nécessitant un ordre d’action :</span></p><p><span><strong>🎲 Initiative = 1D10 + bonus lié à Distance</strong></span></p><p></p><p><span>Le bonus correspond à la valeur de Distance ramenée à une échelle plus petite.</span></p><p><span>L’initiative est normalement déterminée une fois au début du conflit, puis l’ordre reste stable.</span></p><p><span>Blessures et Stress ne réduisent pas l’initiative.</span></p><p></p><div><hr></div><h2><span>5.3 Attaquer</span></h2><p><span>Lors d’un conflit, utilisez la valeur correspondant au type d’action :</span></p><ul data-spread=\"false\"><li><p><span><strong>Corps à corps</strong> pour une attaque physique rapprochée ;</span></p></li><li><p><span><strong>Distance</strong> pour une attaque à distance ;</span></p></li><li><p><span><strong>Verbal</strong> pour une confrontation sociale directe lorsque cette mécanique est utilisée.</span></p></li></ul><p><span>Les pénalités de Blessures et de Stress s’appliquent normalement à ces tests.</span></p><p><span>Après une attaque réussie avec une arme, celle-ci détermine les dégâts à infliger.</span></p><p></p><div><hr></div><h2><span>5.4 Dégâts des armes</span></h2><p><span>Chaque arme possède sa propre formule de dégâts.</span></p><p></p><p><span>Exemples génériques :</span></p><pre dir=\"ltr\"><code>🎲 1D6\n🎲 1D8+1\n🎲 2D6\n🎲 3D8+2</code></pre><p><span>Les dégâts sont ajoutés aux Blessures lorsque l’attaque provoque effectivement une blessure physique.</span></p><p><span>La jauge reste limitée à <code dir=\"ltr\">15</code>.</span></p><p><span>Une arme très puissante peut cependant produire un résultat supérieur à <code dir=\"ltr\">15</code>. Ce dépassement indique simplement que l’impact dépasse ce que la jauge peut représenter.</span></p><p><span>Le contexte reste déterminant : toucher quelqu’un avec une arme légère et recevoir un impact d’artillerie ne racontent évidemment pas la même chose, même si la jauge s’arrête dans les deux cas au même maximum.</span></p><p></p><div><hr></div><h2><span>5.5 Critiques et dégâts</span></h2><p><span>Une réussite critique ou supercritique représente un résultat particulièrement favorable.</span></p><p><span>Lorsqu’une attaque réussie bénéficie d’un tel résultat, les dégâts de l’arme peuvent être traités à leur valeur maximale plutôt que par un lancer ordinaire.</span></p><p></p><p><span>Exemple :</span></p><pre dir=\"ltr\"><code>Arme : 🎲 1D8+1\nDégâts maximaux : 9</code></pre><p><span>Une réussite critique permet donc de faire peser pleinement la dangerosité de l’arme.</span></p><p></p><div><hr></div><h2><span>5.6 Armes non létales</span></h2><p><span>Une arme explicitement non létale possède :</span></p><pre dir=\"ltr\"><code>Dégâts : 0</code></pre><p><span>Elle peut néanmoins avoir un effet narratif important :</span></p><ul data-spread=\"false\"><li><p><span>immobiliser ;</span></p></li><li><p><span>neutraliser ;</span></p></li><li><p><span>faire lâcher un objet ;</span></p></li><li><p><span>interrompre une action ;</span></p></li><li><p><span>permettre une capture.</span></p></li></ul><p><span>Ces conséquences dépendent de la situation et de la décision du MJ.</span></p>"
+      },
+      "video": {
+        "controls": true,
+        "volume": 0.5
+      },
+      "src": null,
+      "category": null,
+      "ownership": {
+        "default": -1
+      },
+      "flags": {},
+      "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "interface",
+        "systemVersion": "0.1.0",
+        "createdTime": 1786620323777,
+        "modifiedTime": 1786621050407,
+        "lastModifiedBy": null
+      },
+      "_key": "!journal.pages!W6E3cLgBaV4cuhPU.6gi6tLetMjH7rEJi"
+    },
+    {
+      "sort": 600000,
+      "name": "Progression",
+      "type": "text",
+      "_id": "5hmugsONsukocAC1",
+      "system": {},
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "image": {},
+      "text": {
+        "format": 1,
+        "content": "<p></p><hr><p><span>La progression d’Interface est volontairement limitée et significative.</span></p><p><span>Le MJ décide quand les personnages gagnent de l’expérience et à quel rythme.</span></p><p><span>Le personnage dispose de trois types de progression.</span></p><p></p><hr><h2><span>6.1 Progression de Compétence</span></h2><p><span>Un gain de Compétence permet :</span></p><pre dir=\"ltr\"><code>+5 dans une Compétence</code></pre><p><span>Les différents gains peuvent être investis plusieurs fois dans la même Compétence.</span></p><p></p><hr><h2><span>6.2 Progression de Talents</span></h2><p><span>Un gain de Talents accorde :</span></p><pre dir=\"ltr\"><code>15 points de Talents</code></pre><p><span>Ces 15 points peuvent être répartis librement entre un ou plusieurs Talents.</span></p><p><span>La limite absolue de <code dir=\"ltr\">30</code> par Talent reste toujours applicable.</span></p><p></p><hr><h2><span>6.3 Nouvelle Spécialisation</span></h2><p><span>Un gain de Spécialisation permet d’ajouter une nouvelle Spécialisation narrative au personnage.</span></p><p><span>Cette Spécialisation est définie avec le MJ afin qu’elle représente réellement quelque chose que le personnage a appris, développé ou consolidé pendant ses aventures.</span></p><p></p><hr><h2><span>6.4 Fin de la progression standard</span></h2><p><span>La progression normale comporte au maximum :</span></p><ul data-spread=\"false\"><li><p><span><strong>3 améliorations de Compétence</strong> ;</span></p></li><li><p><span><strong>3 améliorations de Talents</strong> ;</span></p></li><li><p><span><strong>3 nouvelles Spécialisations</strong>.</span></p></li></ul><p><span>Soit :</span></p><pre dir=\"ltr\"><code>9 évolutions majeures</code></pre><p><span>Après ces neuf évolutions, la progression mécanique standard du personnage est considérée comme terminée.</span></p><p><span>Cela ne signifie évidemment pas que son histoire ou son évolution narrative doivent s’arrêter.</span></p>"
+      },
+      "video": {
+        "controls": true,
+        "volume": 0.5
+      },
+      "src": null,
+      "category": null,
+      "ownership": {
+        "default": -1
+      },
+      "flags": {},
+      "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "interface",
+        "systemVersion": "0.1.0",
+        "createdTime": 1786620329741,
+        "modifiedTime": 1786621113956,
+        "lastModifiedBy": null
+      },
+      "_key": "!journal.pages!W6E3cLgBaV4cuhPU.5hmugsONsukocAC1"
+    },
+    {
+      "sort": 700000,
+      "name": "Aide-mémoire",
+      "type": "text",
+      "_id": "vqPfZeglHaDDaB8G",
+      "system": {},
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "image": {},
+      "text": {
+        "format": 1,
+        "content": "<p></p><hr><h2><span>7.1 Ce qu’il faut retenir</span></h2><p><span>Pour commencer à jouer à Interface, retenez surtout ceci :</span></p><ol data-spread=\"false\"><li><p><span><strong>Décrivez ce que fait votre personnage.</strong></span></p></li><li><p><span>Associez une <strong>Compétence</strong> et un <strong>Talent</strong> cohérents.</span></p></li><li><p><span><strong>🎲 Lancez 1D100</strong> sous votre seuil de réussite.</span></p></li><li><p><span>Les petits résultats sont généralement meilleurs, mais les critiques et résultats automatiques comptent aussi.</span></p></li><li><p><span>Blessures et Stress réduisent progressivement vos chances d’agir.</span></p></li><li><p><span>L’avantage et le désavantage utilisent <strong>🎲 2D100</strong>.</span></p></li><li><p><span>Les Spécialisations servent surtout à donner du poids narratif à l’expertise du personnage.</span></p></li><li><p><span>Le Destin aide à amortir les longues séries de malchance.</span></p></li><li><p><span>Une jauge à <code dir=\"ltr\">15</code> indique une situation extrême, mais n’impose pas à elle seule la mort ou la perte de contrôle.</span></p></li><li><p><span>La fiction reste toujours plus importante que l’application aveugle d’un chiffre.</span></p></li></ol>"
+      },
+      "video": {
+        "controls": true,
+        "volume": 0.5
+      },
+      "src": null,
+      "category": null,
+      "ownership": {
+        "default": -1
+      },
+      "flags": {},
+      "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "interface",
+        "systemVersion": "0.1.0",
+        "createdTime": 1786620336173,
+        "modifiedTime": 1786621137530,
+        "lastModifiedBy": null
+      },
+      "_key": "!journal.pages!W6E3cLgBaV4cuhPU.vqPfZeglHaDDaB8G"
+    },
+    {
+      "sort": 250000,
+      "name": "Découvrir Interface",
+      "type": "text",
+      "_id": "Tfx3Z333ACdUju3o",
+      "system": {},
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "image": {},
+      "text": {
+        "format": 1,
+        "content": "<p></p><hr><h2><span>1.1 Qu’est-ce qu’Interface ?</span></h2><p></p><p><span><strong>Interface</strong> est un système de jeu de rôle au <strong>D100</strong>.</span></p><p><span>La plupart des actions importantes reposent sur une idée simple :</span></p><p></p><pre dir=\"ltr\"><code>\n\nCompétence + Talent\n\n</code></pre><pre dir=\"ltr\"><code>→ on lance 1D100</code></pre><pre dir=\"ltr\"><code>→ il faut obtenir un résultat égal ou inférieur à cette valeur</code></pre><p></p><p><span>Le système cherche à laisser une place importante à la description de l’action.</span></p><p><span>Vous ne choisissez pas uniquement une statistique parce qu’elle possède le meilleur score : vous décrivez ce que fait votre personnage, puis vous utilisez le Talent qui correspond réellement à cette approche.</span></p><p><span>Interface distingue notamment :</span></p><ul data-spread=\"false\"><li><p><span>les <strong>Compétences</strong>, qui représentent les grandes capacités du personnage ;</span></p></li><li><p><span>les <strong>Talents</strong>, qui précisent sa manière d’agir ;</span></p></li><li><p><span>les <strong>Spécialisations</strong>, qui représentent ses domaines particuliers ;</span></p></li><li><p><span>les <strong>Blessures</strong> et le <strong>Stress</strong>, qui rendent les actions plus difficiles lorsque le personnage est éprouvé ;</span></p></li><li><p><span>le <strong>Destin</strong>, qui peut donner un coup de pouce après une série de difficultés.</span></p><p></p></li></ul><hr><h2><span>1.2 Philosophie de jeu</span></h2><p><span>Interface n’essaie pas de prévoir mécaniquement chaque circonstance.</span></p><p><span>Les règles donnent une structure :</span></p><p></p><pre dir=\"ltr\"><code>description</code></pre><pre dir=\"ltr\"><code>→ choix d’une approche</code></pre><pre dir=\"ltr\"><code>→ résolution</code></pre><pre dir=\"ltr\"><code>→ conséquence adaptée à la fiction</code></pre><p></p><p></p><p><span>Le joueur garde la maîtrise des décisions de son personnage.</span></p><p><span>Le MJ arbitre les situations, valide les associations de Talents et adapte les conséquences au contexte.</span></p><p><span>Les dés disent comment une tentative se déroule.</span></p><p><span>Ils ne remplacent ni la description, ni les décisions, ni la fiction créée autour de la table.</span></p>"
+      },
+      "video": {
+        "controls": true,
+        "volume": 0.5
+      },
+      "src": null,
+      "category": null,
+      "ownership": {
+        "default": -1
+      },
+      "flags": {},
+      "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "interface",
+        "systemVersion": "0.1.0",
+        "createdTime": 1786620348998,
+        "modifiedTime": 1786620538373,
+        "lastModifiedBy": null
+      },
+      "_key": "!journal.pages!W6E3cLgBaV4cuhPU.Tfx3Z333ACdUju3o"
+    }
+  ],
+  "folder": null,
+  "categories": [],
+  "ownership": {
+    "default": 0
+  },
+  "flags": {},
+  "_stats": {
+    "coreVersion": "14.365",
+    "systemId": "interface",
+    "systemVersion": "0.1.0",
+    "createdTime": 1786620272105,
+    "modifiedTime": 1786620272106,
+    "lastModifiedBy": null
+  },
+  "_id": "W6E3cLgBaV4cuhPU",
+  "_key": "!journal!W6E3cLgBaV4cuhPU"
+}

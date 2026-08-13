@@ -40,5 +40,31 @@
     }
   },
   "initiative": "1d10 + @derived.initiativeBonus",
-  "media": []
+  "media": [],
+  "packs": [
+    {
+      "name": "objects",
+      "label": "Objets",
+      "path": "packs/objects",
+      "type": "Item",
+      "system": "interface",
+      "banner": "systems/interface/assets/banners/banniere_item.webp"
+    },
+    {
+      "name": "weapons",
+      "label": "Armes",
+      "path": "packs/weapons",
+      "type": "Item",
+      "system": "interface",
+      "banner": "systems/interface/assets/banners/banniere_armes.webp"
+    },
+    {
+      "name": "manual",
+      "label": "Manuel du joueur",
+      "path": "packs/manual",
+      "type": "JournalEntry",
+      "system": "interface",
+      "banner": "systems/interface/assets/banners/banniere_manuel.webp"
+    }
+  ]
 }

@@ -6,7 +6,7 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const BLOCK_SIZE = 32768;
 const HEADER_SIZE = 7;
 const RECORD = Object.freeze({ FULL: 1, FIRST: 2, MIDDLE: 3, LAST: 4 });
-const PACKS = Object.freeze(["weapons", "objects"]);
+const PACKS = Object.freeze(["weapons", "objects", "manual"]);
 
 function buildCrc32cTable() {
   const table = new Uint32Array(256);
@@ -145,12 +145,13 @@ function sourceFiles(directory) {
 
 function readSources(packName) {
   const sourceDirectory = path.join(ROOT, "packs-src", packName);
-  const entries = sourceFiles(sourceDirectory).map(file => {
+  const entries = sourceFiles(sourceDirectory).flatMap(file => {
     const document = JSON.parse(fs.readFileSync(file, "utf8"));
     const key = document._key;
-    if (typeof key !== "string" || !/^!(folders|items)![A-Za-z0-9]{16}$/.test(key)) {
+    if (typeof key !== "string" || !/^!(folders|items|journal)![A-Za-z0-9]{16}$/.test(key)) {
       throw new Error(`Clé absente ou invalide dans ${path.relative(ROOT, file)}.`);
     }
+
     if (key.startsWith("!items!")) {
       const description = document.system?.description;
       if (typeof description !== "string" || !description.trim()) {
@@ -159,10 +160,45 @@ function readSources(packName) {
       if (/[<>]/.test(description)) {
         throw new Error(`Balise HTML interdite dans la description de ${path.relative(ROOT, file)}.`);
       }
+      delete document._key;
+      return [[key, document]];
     }
+
+    if (key.startsWith("!journal!")) {
+      const journalId = document._id;
+      if (!/^[A-Za-z0-9]{16}$/.test(journalId ?? "") || key !== `!journal!${journalId}`) {
+        throw new Error(`Identité JournalEntry incohérente dans ${path.relative(ROOT, file)}.`);
+      }
+      if (!Array.isArray(document.pages)) {
+        throw new Error(`Collection pages absente dans ${path.relative(ROOT, file)}.`);
+      }
+
+      const pages = document.pages.map(page => {
+        const pageId = page?._id;
+        const expectedKey = `!journal.pages!${journalId}.${pageId}`;
+        if (!/^[A-Za-z0-9]{16}$/.test(pageId ?? "") || page?._key !== expectedKey) {
+          throw new Error(`Clé JournalEntryPage absente ou invalide dans ${path.relative(ROOT, file)} : ${page?.name ?? pageId}.`);
+        }
+        const value = structuredClone(page);
+        delete value._key;
+        return [expectedKey, value];
+      });
+
+      const value = structuredClone(document);
+      delete value._key;
+      value.pages = document.pages.map(page => page._id);
+      if (Array.isArray(value.categories)) {
+        value.categories = value.categories.map(category => (
+          typeof category === "object" && category !== null ? category._id : category
+        ));
+      }
+      return [[key, value], ...pages];
+    }
+
     delete document._key;
-    return [key, document];
+    return [[key, document]];
   });
+
   entries.sort(([a], [b]) => a.localeCompare(b, "en"));
   const keys = new Set(entries.map(([key]) => key));
   if (keys.size !== entries.length) {
@@ -295,7 +331,9 @@ function verifyPack(packName) {
   return {
     total: entries.length,
     folders: entries.filter(([key]) => key.startsWith("!folders!")).length,
-    items: entries.filter(([key]) => key.startsWith("!items!")).length
+    items: entries.filter(([key]) => key.startsWith("!items!")).length,
+    journals: entries.filter(([key]) => key.startsWith("!journal!")).length,
+    pages: entries.filter(([key]) => key.startsWith("!journal.pages!")).length
   };
 }
 
@@ -307,6 +345,6 @@ for (const pack of PACKS) {
   const total = compilePack(pack);
   const result = verifyPack(pack);
   console.log(
-    `${pack}: ${result.items} Items, ${result.folders} dossiers, ${total} entrées compilées.`
+    `${pack}: ${result.items} Items, ${result.folders} dossiers, ${result.journals} Journaux, ${result.pages} pages, ${total} entrées compilées.`
   );
 }

@@ -49,7 +49,7 @@ La version `0.1.0` comprend :
 - un assistant de création de personnage ;
 - une fiche Actor et une fiche Item utilisables ;
 - des assets WebP par défaut ;
-- deux compendiums système natifs : **Objets** et **Armes** ;
+- trois compendiums système natifs : **Objets**, **Armes** et **Manuel du joueur** ;
 - 60 objets ordinaires et 42 armes illustrés ;
 - des cartes D100 fonctionnelles dans le chat ;
 - des cartes de dégâts réutilisables ;
@@ -61,16 +61,17 @@ La version `0.1.0` comprend :
 
 ## Compendiums système
 
-Les deux compendiums restent fonctionnellement validés mais sont **désactivés pendant le développement** afin d’éviter les réécritures LevelDB parasites dans Git.
+Les compendiums **Objets**, **Armes** et **Manuel du joueur** sont réactivés dans la candidate de gel pré-1.0.0. Le dépôt Git est désormais maintenu hors du dossier Foundry afin d’éviter les réécritures LevelDB parasites pendant les tests.
 
 ```text
 Objets  : interface.objects
 Armes   : interface.weapons
+Manuel  : interface.manual
 
 Source d’autorité : packs-src/
 Builder           : tools/build-compendiums.mjs
 Artefacts          : packs/
-Manifeste dev      : aucune propriété packs
+Manifeste pré-1.0.0 : propriété packs active (objects, weapons, manual)
 ```
 
 Avant candidate / release `1.0.0`, ils devront obligatoirement être réactivés, reconstruits, contrôlés et testés sous Foundry.
@@ -216,7 +217,7 @@ tests/          contrôles, tests unitaires et protocoles Foundry
 
 ### Avant release 1.0.0
 
-- réactiver les deux compendiums ;
+- valider les trois compendiums réactivés ;
 - reconstruire les packs ;
 - exécuter les contrôles ;
 - tester sous Foundry ;

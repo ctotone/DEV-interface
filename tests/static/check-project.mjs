@@ -131,13 +131,21 @@ const expectedPacks = [
     type: "Item",
     system: "interface",
     banner: "systems/interface/assets/banners/banniere_armes.webp"
+  },
+  {
+    name: "manual",
+    label: "Manuel du joueur",
+    path: "packs/manual",
+    type: "JournalEntry",
+    system: "interface",
+    banner: "systems/interface/assets/banners/banniere_manuel.webp"
   }
 ];
 
 check(
   manifest.packs === undefined
     || JSON.stringify(manifest.packs) === JSON.stringify(expectedPacks),
-  "system.json: si les packs sont activés, Objets et Armes doivent conserver leurs identifiants, titres, chemins et bannières validés."
+  "system.json: si les packs sont activés, Objets, Armes et Manuel doivent conserver leurs identifiants, titres, chemins et bannières validés."
 );
 
 for (const pack of expectedPacks) {
@@ -176,10 +184,12 @@ function readPackSources(packName) {
 
 const weaponSources = readPackSources("weapons");
 const objectSources = readPackSources("objects");
+const manualSources = readPackSources("manual");
 const weaponFolders = weaponSources.filter(document => document._key?.startsWith("!folders!"));
 const objectFolders = objectSources.filter(document => document._key?.startsWith("!folders!"));
 const weaponItems = weaponSources.filter(document => document._key?.startsWith("!items!"));
 const objectItems = objectSources.filter(document => document._key?.startsWith("!items!"));
+const manualJournals = manualSources.filter(document => document._key?.startsWith("!journal!"));
 
 check(
   weaponItems.length === 42 && weaponFolders.length === 3,
@@ -188,6 +198,33 @@ check(
 check(
   objectItems.length === 60 && objectFolders.length === 8,
   "Le pack Objets doit contenir 60 Items et 8 dossiers."
+);
+check(
+  manualJournals.length === 1,
+  "Le pack Manuel doit contenir exactement un JournalEntry."
+);
+const manualJournal = manualJournals[0];
+check(
+  manualJournal?._id === "W6E3cLgBaV4cuhPU"
+    && manualJournal?.name === "Manuel du joueur"
+    && Array.isArray(manualJournal?.pages)
+    && manualJournal.pages.length === 8,
+  "Le Journal du manuel doit conserver son ID, son nom et ses 8 pages validées."
+);
+check(
+  new Set(manualJournal?.pages?.map(page => page._id)).size === 8,
+  "Les 8 pages du Manuel doivent conserver des identifiants uniques."
+);
+check(
+  manualJournal?.pages?.every(page => page._key === `!journal.pages!${manualJournal._id}.${page._id}`),
+  "Chaque page du Manuel doit posséder sa clé LevelDB embarquée !journal.pages!<journal>.<page>."
+);
+check(
+  !JSON.stringify(manualJournal ?? {}).includes("interface-dev")
+    && !JSON.stringify(manualJournal ?? {}).includes("qaLih26HieSoRwSR")
+    && !JSON.stringify(manualJournal ?? {}).includes("@UUID[")
+    && !JSON.stringify(manualJournal ?? {}).includes("@Compendium["),
+  "Le Manuel ne doit pas conserver de références au monde DEV, à l'utilisateur DEV ou de liens UUID/Compendium."
 );
 
 check(
@@ -263,7 +300,7 @@ check(
 );
 
 if (packsEnabled) {
-  for (const packName of ["objects", "weapons"]) {
+  for (const packName of ["objects", "weapons", "manual"]) {
     for (const file of ["CURRENT", "LOCK", "MANIFEST-000001", "000002.log"]) {
       check(exists(path.join("packs", packName, file)), `Fichier LevelDB absent : packs/${packName}/${file}`);
     }
