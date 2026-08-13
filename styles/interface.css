@@ -1,18 +1,131 @@
+@font-face {
+  font-family: "Electrolize";
+  src: url("../fonts/Electrolize.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+/*
+ * Phase 06A.5 — fondation technique multi-thèmes.
+ *
+ * Les propriétés --interface-theme-* sont les tokens sémantiques de skin.
+ * Les anciennes propriétés courtes restent des alias de compatibilité pour
+ * préserver le rendu actuel et éviter une refonte visuelle dans cette étape.
+ *
+ * Electrolize est disponible via deux rôles distincts (titre / texte courant)
+ * afin de pouvoir les différencier ultérieurement sans reprendre les templates.
+ */
 .interface {
   --interface-gap: 0.75rem;
-  --interface-border: 1px solid rgba(25, 25, 25, 0.24);
-  --interface-paper: #f4f1e9;
-  --interface-paper-strong: #e7e1d5;
-  --interface-ink: #242424;
-  --interface-muted: #6a675f;
-  --interface-black: #171717;
-  --interface-white: #f8f8f6;
-  --interface-corps: #b72d2d;
-  --interface-ame: #a98700;
-  --interface-esprit: #2f6794;
-  --interface-neutral: #5c5c5c;
+
+  /* Alias de compatibilité : valeurs de secours identiques au rendu Phase 05. */
+  --interface-border: 1px solid var(--interface-theme-border, rgba(25, 25, 25, 0.24));
+  --interface-paper: var(--interface-theme-surface, #f4f1e9);
+  --interface-paper-strong: var(--interface-theme-surface-strong, #e7e1d5);
+  --interface-ink: var(--interface-theme-text, #242424);
+  --interface-muted: var(--interface-theme-text-muted, #6a675f);
+  --interface-black: var(--interface-theme-surface-inverse, #171717);
+  --interface-white: var(--interface-theme-text-inverse, #f8f8f6);
+  --interface-corps: var(--interface-theme-tone-corps, #b72d2d);
+  --interface-ame: var(--interface-theme-tone-ame, #a98700);
+  --interface-esprit: var(--interface-theme-tone-esprit, #2f6794);
+  --interface-neutral: var(--interface-theme-tone-neutral, #5c5c5c);
+
   min-width: 0;
   color: var(--interface-ink);
+}
+
+.interface[data-interface-theme="default"],
+.interface [data-interface-theme="default"],
+.interface.interface-theme--default,
+.interface-chat-card[data-interface-theme="default"] {
+  /* Typographie : rôles séparés même lorsque la V1 partage Electrolize. */
+  --interface-theme-font-body: "Electrolize", sans-serif;
+  --interface-theme-font-title: "Electrolize", sans-serif;
+  --interface-theme-font-ui: var(--interface-theme-font-body);
+  --interface-theme-font-display: var(--interface-theme-font-title);
+
+  /* Surfaces et texte */
+  --interface-theme-surface: #f4f1e9;
+  --interface-theme-surface-strong: #e7e1d5;
+  --interface-theme-surface-inverse: #171717;
+  --interface-theme-text: #242424;
+  --interface-theme-text-muted: #6a675f;
+  --interface-theme-text-inverse: #f8f8f6;
+  --interface-theme-border: rgba(25, 25, 25, 0.24);
+  --interface-theme-border-strong: rgba(25, 25, 25, 0.35);
+  --interface-theme-accent: #5c5c5c;
+
+  /* Tons fonctionnels de la fiche */
+  --interface-theme-tone-corps: #b72d2d;
+  --interface-theme-tone-ame: #a98700;
+  --interface-theme-tone-esprit: #2f6794;
+  --interface-theme-tone-neutral: #5c5c5c;
+
+  /* États Blessures / Stress — mêmes valeurs que la Phase 05 */
+  --interface-theme-state-0: #7A7F87;
+  --interface-theme-state-1: #718F78;
+  --interface-theme-state-2: #B39A45;
+  --interface-theme-state-3: #C97932;
+  --interface-theme-state-4: #B84A3A;
+  --interface-theme-state-5: #762F3A;
+
+  /* États d'interaction */
+  --interface-theme-action: #d8d8d8;
+  --interface-theme-action-hover: #eeeeee;
+  --interface-theme-danger: #b84a3a;
+  --interface-theme-focus: #242424;
+  --interface-theme-disabled-opacity: 0.55;
+  --interface-theme-readonly-opacity: 1;
+  --interface-theme-error: #b84a3a;
+  --interface-theme-success: #009700;
+
+  /* Couleurs fonctionnelles D100 — valeurs validées, non modifiées */
+  --interface-result-failure: #ff006f;
+  --interface-result-critical-failure: #ff0000;
+  --interface-result-super-critical-failure: #dc00c9;
+  --interface-result-success: #009700;
+  --interface-result-critical-success: #0082ff;
+  --interface-result-super-critical-success: #f3b600;
+
+  /* Destin — token distinct des couleurs de résultat */
+  --interface-destiny-halo: rgba(0, 130, 255, 0.42);
+
+  /* Cartes de chat */
+  --interface-theme-card-border: rgba(25, 25, 25, 0.34);
+  --interface-card-paper: var(--interface-theme-surface);
+  --interface-card-paper-strong: var(--interface-theme-surface-strong);
+  --interface-card-ink: var(--interface-theme-text);
+  --interface-card-muted: var(--interface-theme-text-muted);
+  --interface-card-border: var(--interface-theme-card-border);
+  --interface-card-action: var(--interface-theme-action);
+  --interface-card-action-hover: var(--interface-theme-action-hover);
+}
+
+/* Palette de niveau : la logique conserve uniquement niveau + libellé en JS. */
+.interface [data-state-level="0"] {
+  --interface-state-color: var(--interface-theme-state-0, #7A7F87);
+}
+
+.interface [data-state-level="1"] {
+  --interface-state-color: var(--interface-theme-state-1, #718F78);
+}
+
+.interface [data-state-level="2"] {
+  --interface-state-color: var(--interface-theme-state-2, #B39A45);
+}
+
+.interface [data-state-level="3"] {
+  --interface-state-color: var(--interface-theme-state-3, #C97932);
+}
+
+.interface [data-state-level="4"] {
+  --interface-state-color: var(--interface-theme-state-4, #B84A3A);
+}
+
+.interface [data-state-level="5"] {
+  --interface-state-color: var(--interface-theme-state-5, #762F3A);
 }
 
 .interface.interface-sheet,
@@ -2059,20 +2172,16 @@
  * la logique des jets.
  */
 .interface-chat-card[data-interface-theme="default"] {
-  --interface-card-paper: #f4f1e9;
-  --interface-card-paper-strong: #e7e1d5;
-  --interface-card-ink: #242424;
-  --interface-card-muted: #6a675f;
-  --interface-card-border: rgba(25, 25, 25, 0.34);
-  --interface-card-action: #d8d8d8;
-  --interface-card-action-hover: #eeeeee;
-  --interface-result-failure: #ff006f;
-  --interface-result-critical-failure: #ff0000;
-  --interface-result-super-critical-failure: #dc00c9;
-  --interface-result-success: #009700;
-  --interface-result-critical-success: #0082ff;
-  --interface-result-super-critical-success: #f3b600;
-  --interface-destiny-halo: rgba(0, 130, 255, 0.42);
+  /* Conservé comme point d'extension explicite des cartes de chat.
+   * Les valeurs sont désormais centralisées dans la couche de thème ci-dessus.
+   */
+  --interface-card-paper: var(--interface-theme-surface);
+  --interface-card-paper-strong: var(--interface-theme-surface-strong);
+  --interface-card-ink: var(--interface-theme-text);
+  --interface-card-muted: var(--interface-theme-text-muted);
+  --interface-card-border: var(--interface-theme-card-border);
+  --interface-card-action: var(--interface-theme-action);
+  --interface-card-action-hover: var(--interface-theme-action-hover);
 }
 
 .interface-chat-card {
@@ -2324,4 +2433,2016 @@
 
 .interface-damage-choice-dialog p {
   margin: 0;
+}
+
+/* ==========================================================================
+ * Phase 06C — intégration visuelle V1
+ * Direction : graphite sombre, grain discret, ivoire, accents fonctionnels.
+ * Les rôles typographiques restent séparés même si Electrolize est utilisé
+ * pour les deux en V1 afin de permettre un ajustement ultérieur sans refonte.
+ * ========================================================================== */
+
+.interface.interface-character-sheet,
+.interface.interface-equipment-sheet,
+.interface.interface-preroll-dialog,
+.interface.interface-creation-warning-dialog,
+.interface.interface-delete-equipment-dialog,
+.interface.interface-equipment-choice-dialog,
+.interface.interface-damage-choice-dialog,
+.interface-chat-card {
+  --interface-theme-font-title: "Electrolize", sans-serif;
+  --interface-theme-font-body: "Electrolize", sans-serif;
+  --interface-theme-font-ui: var(--interface-theme-font-body);
+
+  --interface-theme-surface: #151518;
+  --interface-theme-surface-strong: #1d1d21;
+  --interface-theme-surface-inverse: #09090b;
+  --interface-theme-text: #e9e5da;
+  --interface-theme-text-muted: #aaa69d;
+  --interface-theme-text-inverse: #f7f3e9;
+  --interface-theme-border: rgba(235, 231, 220, 0.18);
+  --interface-theme-border-strong: rgba(235, 231, 220, 0.36);
+  --interface-theme-accent: #a8443f;
+
+  --interface-theme-tone-corps: #d35c55;
+  --interface-theme-tone-ame: #d2ad49;
+  --interface-theme-tone-esprit: #5b9fd0;
+  --interface-theme-tone-neutral: #9e9b95;
+
+  --interface-theme-action: #1d1d21;
+  --interface-theme-action-hover: #27272c;
+  --interface-theme-danger: #c4514b;
+  --interface-theme-focus: #57aef5;
+  --interface-theme-error: #df655f;
+  --interface-theme-success: #69bd8c;
+
+  /* Palette de lecture sur fond sombre, inspirée de la planche 1.
+   * Les anciennes couleurs fonctionnelles restent définies dans la fondation
+   * de thème ; seuls les composants sombres V1 utilisent cette projection. */
+  --interface-result-failure: #e66b8b;
+  --interface-result-critical-failure: #ef6154;
+  --interface-result-super-critical-failure: #c96bd8;
+  --interface-result-success: #69c18e;
+  --interface-result-critical-success: #59aef5;
+  --interface-result-super-critical-success: #e9bf50;
+
+  /* Halo Destin distinct du bleu de résultat critique. */
+  --interface-destiny-halo: rgba(83, 202, 255, 0.52);
+
+  --interface-theme-card-border: rgba(235, 231, 220, 0.22);
+  --interface-card-paper: #151518;
+  --interface-card-paper-strong: #1d1d21;
+  --interface-card-ink: #e9e5da;
+  --interface-card-muted: #aaa69d;
+  --interface-card-border: rgba(235, 231, 220, 0.22);
+  --interface-card-action: #1d1d21;
+  --interface-card-action-hover: #27272c;
+
+  --interface-paper: var(--interface-theme-surface);
+  --interface-paper-strong: var(--interface-theme-surface-strong);
+  --interface-ink: var(--interface-theme-text);
+  --interface-muted: var(--interface-theme-text-muted);
+  --interface-black: var(--interface-theme-surface-inverse);
+  --interface-white: var(--interface-theme-text-inverse);
+  --interface-corps: var(--interface-theme-tone-corps);
+  --interface-ame: var(--interface-theme-tone-ame);
+  --interface-esprit: var(--interface-theme-tone-esprit);
+  --interface-neutral: var(--interface-theme-tone-neutral);
+
+  font-family: var(--interface-theme-font-body);
+}
+
+/* Utilitaires explicites : les deux rôles peuvent diverger plus tard. */
+.interface .interface-font--title,
+.interface-chat-card .interface-font--title {
+  font-family: var(--interface-theme-font-title);
+}
+
+.interface .interface-font--body,
+.interface-chat-card .interface-font--body {
+  font-family: var(--interface-theme-font-body);
+}
+
+/* ---------- Fiche Actor ---------- */
+
+.interface.interface-character-sheet .window-content,
+.interface.interface-equipment-sheet .window-content {
+  background: #101012;
+  color: var(--interface-ink);
+}
+
+.interface .interface-character {
+  color: var(--interface-ink);
+  background:
+    radial-gradient(circle at 12% 18%, rgba(255, 255, 255, 0.035) 0 0.7px, transparent 0.8px) 0 0 / 5px 5px,
+    radial-gradient(circle at 78% 62%, rgba(255, 255, 255, 0.022) 0 0.55px, transparent 0.7px) 2px 1px / 7px 7px,
+    linear-gradient(145deg, rgba(30, 30, 34, 0.98), rgba(14, 14, 17, 0.99));
+}
+
+.interface.interface-character-sheet input,
+.interface.interface-character-sheet select,
+.interface.interface-character-sheet textarea,
+.interface.interface-equipment-sheet input,
+.interface.interface-equipment-sheet select,
+.interface.interface-equipment-sheet textarea {
+  border-color: rgba(235, 231, 220, 0.24);
+  background: rgba(5, 5, 7, 0.48);
+  color: var(--interface-ink);
+}
+
+.interface.interface-character-sheet input:focus,
+.interface.interface-character-sheet select:focus,
+.interface.interface-character-sheet textarea:focus,
+.interface.interface-equipment-sheet input:focus,
+.interface.interface-equipment-sheet select:focus,
+.interface.interface-equipment-sheet textarea:focus {
+  border-color: #57aef5;
+  box-shadow: 0 0 0 1px rgba(87, 174, 245, 0.3);
+}
+
+.interface .interface-character__identity {
+  border: 1px solid rgba(235, 231, 220, 0.14);
+  border-bottom-color: rgba(168, 68, 63, 0.72);
+  background:
+    linear-gradient(90deg, rgba(168, 68, 63, 0.07), transparent 24%),
+    rgba(5, 5, 7, 0.22);
+  padding: 0.7rem;
+}
+
+.interface .interface-character__identity .interface-portrait-button,
+.interface .interface-character__identity .interface-portrait-static {
+  border-color: rgba(235, 231, 220, 0.38);
+  background: #0c0c0e;
+}
+
+.interface .interface-character__identity .interface-identity-field > span,
+.interface .interface-character__identity .interface-readonly-field > span {
+  color: var(--interface-muted);
+  font-family: var(--interface-theme-font-title);
+  font-weight: 400;
+}
+
+.interface .interface-character__identity .interface-character__name input,
+.interface .interface-character__identity .interface-character__name strong {
+  color: var(--interface-white);
+  font-family: var(--interface-theme-font-title);
+  font-weight: 400;
+  letter-spacing: 0.035em;
+}
+
+.interface .interface-skills h2 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  color: var(--interface-white);
+  font-family: var(--interface-theme-font-title);
+  font-weight: 400;
+}
+
+.interface .interface-skills h2::before {
+  width: 0.18rem;
+  height: 1rem;
+  border-radius: 999px;
+  background: #a8443f;
+  content: "";
+}
+
+.interface .interface-skill {
+  flex-direction: column-reverse;
+  border: 1px solid color-mix(in srgb, var(--interface-tone) 82%, #ffffff 18%);
+  border-top-width: 1px;
+  border-radius: 0.22rem;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.025), transparent 60%),
+    #151518;
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, var(--interface-tone) 14%, transparent),
+    0 2px 7px rgba(0, 0, 0, 0.2);
+}
+
+.interface .interface-skill input,
+.interface .interface-skill__value {
+  color: var(--interface-tone);
+  font-family: var(--interface-theme-font-title);
+  font-weight: 400;
+}
+
+.interface .interface-skill input {
+  background: transparent;
+}
+
+.interface .interface-skill__label {
+  min-height: 1.8rem;
+  color: var(--interface-tone);
+  font-family: var(--interface-theme-font-title);
+  font-weight: 400;
+  letter-spacing: 0.055em;
+}
+
+/* Blessures / Initiative / Stress : structure conservée, skin uniquement. */
+.interface .interface-state-band {
+  border: 1px solid rgba(235, 231, 220, 0.16);
+  background:
+    radial-gradient(circle at 25% 25%, rgba(255, 255, 255, 0.025) 0 0.55px, transparent 0.7px) 0 0 / 6px 6px,
+    linear-gradient(145deg, #17171a, #0e0e10);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.025);
+}
+
+.interface .interface-state-band__meta,
+.interface .interface-state-band__resource--stress .interface-state-band__meta {
+  align-items: center;
+  text-align: center;
+}
+
+.interface .interface-state-band__label,
+.interface .interface-state-band__initiative > span,
+.interface .interface-state-band__initiative-action > span {
+  font-family: var(--interface-theme-font-title);
+  font-weight: 400;
+}
+
+.interface .interface-state-label {
+  justify-content: center;
+  color: var(--interface-muted);
+  font-weight: 400;
+}
+
+.interface .interface-state-label strong {
+  font-weight: 400;
+}
+
+.interface .interface-resource__controls--dark input,
+.interface .interface-resource__controls--dark button,
+.interface .interface-state-band .interface-resource__readonly {
+  border-color: rgba(235, 231, 220, 0.32);
+  background: #111114;
+  color: var(--interface-white);
+}
+
+.interface .interface-state-band__initiative {
+  border-inline-color: rgba(235, 231, 220, 0.25);
+}
+
+/* Sections repliables : liseré rouge discret ; contenu décalé de 10px. */
+.interface .interface-fold {
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+
+.interface .interface-fold > summary {
+  border: 0;
+  border-left: 3px solid #a8443f;
+  border-bottom: 1px solid rgba(235, 231, 220, 0.11);
+  background: linear-gradient(90deg, rgba(168, 68, 63, 0.08), transparent 34%);
+  color: var(--interface-white);
+}
+
+.interface .interface-fold > summary > span {
+  font-family: var(--interface-theme-font-title);
+  font-weight: 400;
+  letter-spacing: 0.09em;
+}
+
+.interface .interface-fold > summary::after {
+  color: rgba(235, 231, 220, 0.62);
+  font-weight: 400;
+}
+
+.interface .interface-fold__content {
+  width: calc(100% - 10px);
+  margin-left: 10px;
+  border: 1px solid rgba(235, 231, 220, 0.14);
+  border-top-color: rgba(168, 68, 63, 0.34);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.018), transparent 50%),
+    rgba(7, 7, 9, 0.24);
+}
+
+.interface .interface-fold__actions {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.interface .interface-fold__content-action {
+  width: auto;
+  min-height: 1.9rem;
+  border: 1px solid rgba(235, 231, 220, 0.3);
+  border-radius: 0.25rem;
+  background: #18181b;
+  color: var(--interface-ink);
+  padding: 0.28rem 0.6rem;
+  font-family: var(--interface-theme-font-body);
+  font-size: 0.75rem;
+}
+
+.interface .interface-fold__content-action:hover,
+.interface .interface-fold__content-action:focus-visible {
+  border-color: #a8443f;
+  background: rgba(168, 68, 63, 0.12);
+  color: var(--interface-white);
+}
+
+/* Talents */
+.interface .interface-talent-group {
+  border: 1px solid color-mix(in srgb, var(--interface-tone) 70%, transparent);
+  border-top-width: 1px;
+  border-radius: 0.22rem;
+  background: #151518;
+}
+
+.interface .interface-talent-group legend {
+  color: var(--interface-tone);
+  font-family: var(--interface-theme-font-title);
+  font-weight: 400;
+  letter-spacing: 0.045em;
+}
+
+.interface .interface-talent input,
+.interface .interface-talent__value {
+  border-color: rgba(235, 231, 220, 0.18);
+  background: rgba(5, 5, 7, 0.46);
+  color: var(--interface-ink);
+}
+
+/* Combat : même langage que les compétences. */
+.interface .interface-derived-card,
+.interface button.interface-derived-card {
+  border: 1px solid color-mix(in srgb, var(--interface-tone) 82%, #ffffff 18%);
+  border-top-width: 1px;
+  border-radius: 0.22rem;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.025), transparent),
+    #141417;
+  color: var(--interface-ink);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--interface-tone) 12%, transparent);
+}
+
+.interface .interface-derived-card span {
+  color: var(--interface-tone);
+  font-family: var(--interface-theme-font-title);
+  font-weight: 400;
+  letter-spacing: 0.055em;
+}
+
+.interface .interface-derived-card strong {
+  color: var(--interface-tone);
+  font-family: var(--interface-theme-font-title);
+  font-weight: 400;
+}
+
+.interface button.interface-derived-card:hover,
+.interface button.interface-derived-card:focus-visible {
+  border-color: var(--interface-tone);
+  background: color-mix(in srgb, var(--interface-tone) 8%, #151518);
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, var(--interface-tone) 24%, transparent),
+    0 0 0.55rem color-mix(in srgb, var(--interface-tone) 18%, transparent);
+}
+
+/* Armes / Inventaire */
+.interface .interface-item-row {
+  border-color: rgba(235, 231, 220, 0.16);
+  background: #141417;
+}
+
+.interface .interface-item-row img {
+  border: 1px solid rgba(235, 231, 220, 0.2);
+  border-radius: 0.18rem;
+}
+
+.interface .interface-item-row__name,
+.interface .interface-item-row__name:hover,
+.interface .interface-item-row__name:focus-visible {
+  color: var(--interface-ink);
+}
+
+.interface .interface-item-row__formula {
+  color: var(--interface-muted);
+}
+
+.interface .interface-item-row__delete {
+  border-color: rgba(196, 81, 75, 0.38);
+  color: #d96a63;
+}
+
+.interface .interface-empty {
+  color: var(--interface-muted);
+}
+
+/* Notes / lecture seule */
+.interface .interface-readonly-text {
+  border-color: rgba(235, 231, 220, 0.15);
+  background: rgba(5, 5, 7, 0.34);
+  color: var(--interface-ink);
+}
+
+/* Progression — structure et interactions conservées. */
+.interface .interface-progression__band {
+  border: 1px solid rgba(235, 231, 220, 0.16);
+  background: linear-gradient(145deg, #17171a, #0e0e10);
+}
+
+.interface .interface-progression__band > strong,
+.interface .interface-progression__choices legend {
+  font-family: var(--interface-theme-font-title);
+  font-weight: 400;
+}
+
+.interface .interface-progression__choices fieldset {
+  border-color: rgba(235, 231, 220, 0.14);
+  background: #151518;
+}
+
+.interface .interface-progression__gauge input:checked + span {
+  background: #e9e5da;
+  color: #111114;
+}
+
+.interface .interface-progression__choices input:checked + span {
+  border-color: #57aef5;
+  background: rgba(87, 174, 245, 0.18);
+  color: #e9e5da;
+}
+
+/* ---------- Fiche Item ---------- */
+
+.interface .interface-equipment {
+  min-height: 100%;
+  color: var(--interface-ink);
+  padding: 0.85rem;
+  background:
+    radial-gradient(circle at 18% 22%, rgba(255, 255, 255, 0.032) 0 0.65px, transparent 0.75px) 0 0 / 5px 5px,
+    radial-gradient(circle at 76% 64%, rgba(255, 255, 255, 0.018) 0 0.55px, transparent 0.65px) 2px 2px / 7px 7px,
+    linear-gradient(145deg, rgba(29, 29, 33, 0.99), rgba(13, 13, 16, 0.99));
+}
+
+.interface .interface-equipment__header {
+  border: 1px solid rgba(235, 231, 220, 0.15);
+  border-bottom-color: rgba(168, 68, 63, 0.72);
+  background: rgba(5, 5, 7, 0.24);
+  padding: 0.65rem;
+}
+
+.interface .interface-equipment__image,
+.interface .interface-equipment__image .interface-portrait-button,
+.interface .interface-equipment__image .interface-portrait-static {
+  aspect-ratio: 1 / 1;
+}
+
+.interface .interface-equipment__image .interface-portrait-button,
+.interface .interface-equipment__image .interface-portrait-static {
+  border-color: rgba(235, 231, 220, 0.32);
+  background: #0d0d10;
+}
+
+.interface .interface-equipment__header .interface-character__name span,
+.interface .interface-equipment__type,
+.interface .interface-field > span {
+  color: var(--interface-muted);
+  font-family: var(--interface-theme-font-title);
+  font-weight: 400;
+  letter-spacing: 0.055em;
+}
+
+.interface .interface-equipment__header .interface-character__name input {
+  color: var(--interface-white);
+  font-family: var(--interface-theme-font-title);
+  font-weight: 400;
+}
+
+.interface .interface-panel--equipment {
+  border-color: rgba(235, 231, 220, 0.15);
+  background: rgba(5, 5, 7, 0.24);
+}
+
+.interface .interface-equipment[data-interface-item-category="weapon"] .interface-panel--equipment {
+  box-shadow: inset 3px 0 0 rgba(168, 68, 63, 0.78);
+}
+
+.interface .interface-equipment[data-interface-item-category="ordinary"] .interface-panel--equipment {
+  box-shadow: inset 3px 0 0 rgba(235, 231, 220, 0.24);
+}
+
+.interface .interface-sheet__footer {
+  border-top-color: rgba(235, 231, 220, 0.14);
+}
+
+.interface .interface-sheet__footer button {
+  border: 1px solid rgba(87, 174, 245, 0.72);
+  background: rgba(87, 174, 245, 0.08);
+  color: var(--interface-white);
+}
+
+.interface .interface-sheet__footer button:hover,
+.interface .interface-sheet__footer button:focus-visible {
+  border-color: #57aef5;
+  background: rgba(87, 174, 245, 0.16);
+}
+
+/* ---------- Dialogs V1 ---------- */
+
+.interface.interface-preroll-dialog .window-content,
+.interface.interface-creation-warning-dialog .window-content,
+.interface.interface-delete-equipment-dialog .window-content,
+.interface.interface-equipment-choice-dialog .window-content,
+.interface.interface-damage-choice-dialog .window-content {
+  color: var(--interface-ink);
+  background:
+    radial-gradient(circle at 24% 22%, rgba(255, 255, 255, 0.03) 0 0.6px, transparent 0.7px) 0 0 / 5px 5px,
+    linear-gradient(145deg, #1c1c20, #101013);
+  font-family: var(--interface-theme-font-body);
+}
+
+.interface.interface-preroll-dialog .window-title,
+.interface.interface-creation-warning-dialog .window-title,
+.interface.interface-delete-equipment-dialog .window-title,
+.interface.interface-equipment-choice-dialog .window-title,
+.interface.interface-damage-choice-dialog .window-title {
+  color: var(--interface-white);
+  font-family: var(--interface-theme-font-title);
+  font-weight: 400;
+  letter-spacing: 0.045em;
+}
+
+.interface.interface-preroll-dialog .form-footer button,
+.interface.interface-creation-warning-dialog .form-footer button,
+.interface.interface-delete-equipment-dialog .form-footer button,
+.interface.interface-equipment-choice-dialog .form-footer button,
+.interface.interface-damage-choice-dialog .form-footer button {
+  border: 1px solid rgba(235, 231, 220, 0.32);
+  background: #1b1b1f;
+  color: var(--interface-ink);
+  font-family: var(--interface-theme-font-body);
+}
+
+.interface.interface-preroll-dialog .form-footer button:hover,
+.interface.interface-preroll-dialog .form-footer button:focus-visible,
+.interface.interface-creation-warning-dialog .form-footer button:hover,
+.interface.interface-creation-warning-dialog .form-footer button:focus-visible,
+.interface.interface-delete-equipment-dialog .form-footer button:hover,
+.interface.interface-delete-equipment-dialog .form-footer button:focus-visible,
+.interface.interface-equipment-choice-dialog .form-footer button:hover,
+.interface.interface-equipment-choice-dialog .form-footer button:focus-visible,
+.interface.interface-damage-choice-dialog .form-footer button:hover,
+.interface.interface-damage-choice-dialog .form-footer button:focus-visible {
+  border-color: #a8443f;
+  background: rgba(168, 68, 63, 0.12);
+  color: var(--interface-white);
+}
+
+.interface.interface-preroll-dialog .form-footer button {
+  border-color: rgba(87, 174, 245, 0.78);
+  box-shadow: 0 0 0.5rem rgba(87, 174, 245, 0.08);
+}
+
+.interface.interface-preroll-dialog .form-footer button:hover,
+.interface.interface-preroll-dialog .form-footer button:focus-visible {
+  border-color: #57aef5;
+  background: rgba(87, 174, 245, 0.13);
+  box-shadow: 0 0 0.7rem rgba(87, 174, 245, 0.18);
+}
+
+.interface.interface-delete-equipment-dialog .form-footer button:first-child {
+  border-color: rgba(196, 81, 75, 0.75);
+}
+
+.interface-creation-warning-dialog .interface-creation-warning,
+.interface-delete-equipment-dialog [data-interface-theme],
+.interface-equipment-choice-dialog [data-interface-theme],
+.interface-damage-choice-dialog [data-interface-theme] {
+  color: var(--interface-ink);
+}
+
+.interface-creation-warning-dialog .interface-creation-warning p,
+.interface-delete-equipment-dialog p,
+.interface-equipment-choice-dialog p,
+.interface-damage-choice-dialog p {
+  color: var(--interface-ink);
+  line-height: 1.45;
+}
+
+.interface-preroll-dialog .interface-preroll__source {
+  border-left-color: #a8443f;
+  background: rgba(168, 68, 63, 0.09);
+  color: var(--interface-white);
+  font-family: var(--interface-theme-font-title);
+  font-weight: 400;
+}
+
+.interface-preroll-dialog .interface-preroll__mode legend,
+.interface-preroll-dialog .interface-preroll__field > span {
+  color: var(--interface-muted);
+  font-family: var(--interface-theme-font-title);
+  font-weight: 400;
+}
+
+.interface-preroll-dialog .interface-preroll-mode {
+  min-height: 2.6rem;
+  padding-bottom: 0;
+}
+
+.interface-preroll-dialog .interface-preroll-mode__option {
+  border-color: rgba(235, 231, 220, 0.22);
+  background: #17171a;
+  color: var(--interface-ink);
+  opacity: 0.72;
+}
+
+.interface-preroll-dialog .interface-preroll-mode__option--disadvantage {
+  color: #d96a63;
+}
+
+.interface-preroll-dialog .interface-preroll-mode__option--advantage {
+  color: #73bd91;
+}
+
+.interface-preroll-dialog .interface-preroll-mode__option:has(input:checked),
+.interface-preroll-dialog .interface-preroll-mode__option--disadvantage:has(input:checked),
+.interface-preroll-dialog .interface-preroll-mode__option--advantage:has(input:checked) {
+  border-color: #57aef5;
+  background: rgba(87, 174, 245, 0.1);
+  box-shadow:
+    inset 0 0 0 1px rgba(87, 174, 245, 0.18),
+    0 0 0.65rem rgba(87, 174, 245, 0.12);
+  opacity: 1;
+}
+
+.interface-preroll-dialog .interface-preroll-mode__option:has(input:focus-visible) {
+  outline-color: #57aef5;
+}
+
+.interface-preroll-dialog .interface-preroll__field input {
+  border-color: rgba(235, 231, 220, 0.28);
+  background: #111114;
+  color: var(--interface-white);
+}
+
+/* ---------- Cartes de chat ---------- */
+
+.interface-chat-card {
+  position: relative;
+  overflow: hidden;
+  border-color: rgba(235, 231, 220, 0.2);
+  background:
+    radial-gradient(circle at 18% 24%, rgba(255, 255, 255, 0.03) 0 0.6px, transparent 0.7px) 0 0 / 5px 5px,
+    radial-gradient(circle at 77% 68%, rgba(255, 255, 255, 0.018) 0 0.5px, transparent 0.65px) 2px 1px / 7px 7px,
+    linear-gradient(145deg, #1c1c20, #101013);
+  color: var(--interface-card-ink);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.025),
+    0 2px 8px rgba(0, 0, 0, 0.26);
+  font-family: var(--interface-theme-font-body);
+}
+
+.interface-chat-card__portrait {
+  border-color: rgba(235, 231, 220, 0.3);
+}
+
+.interface-chat-card__actor,
+.interface-chat-card__jet-title,
+.interface-chat-card__selector-label,
+.interface-chat-card__damage-actor,
+.interface-chat-card__damage-title,
+.interface-chat-card__damage-weapon-label,
+.interface-chat-card__damage-weapon-name {
+  font-family: var(--interface-theme-font-title);
+  font-weight: 400;
+}
+
+.interface-chat-card__actor {
+  color: var(--interface-card-ink);
+  letter-spacing: 0.035em;
+}
+
+.interface-chat-card__jet-title {
+  margin-top: 0.65rem;
+  padding: 0.42rem 0.55rem;
+  border-left: 3px solid #a8443f;
+  background: rgba(168, 68, 63, 0.07);
+  color: var(--interface-card-ink);
+  font-size: 1rem;
+  line-height: 1.15;
+  text-align: center;
+  overflow-wrap: anywhere;
+}
+
+.interface-chat-card__jet-title--compact {
+  font-size: 0.9rem;
+}
+
+.interface-chat-card__roll {
+  color: inherit;
+  font-family: var(--interface-theme-font-title);
+  font-weight: 400;
+  letter-spacing: 0.02em;
+}
+
+.interface-chat-card__quality,
+.interface-chat-card__margin {
+  font-weight: 400;
+}
+
+.interface-chat-card--destiny {
+  border-color: rgba(104, 213, 255, 0.74);
+  box-shadow:
+    0 0 0 1px rgba(104, 213, 255, 0.3),
+    0 0 0.42rem var(--interface-destiny-halo),
+    0 0 1.15rem rgba(83, 202, 255, 0.36),
+    inset 0 0 1.15rem rgba(83, 202, 255, 0.06);
+}
+
+.interface-chat-card__action {
+  border-color: rgba(235, 231, 220, 0.28);
+  background: #1d1d21;
+  color: var(--interface-card-ink);
+}
+
+.interface-chat-card__action:hover {
+  border-color: #a8443f;
+  background: rgba(168, 68, 63, 0.12);
+}
+
+/* Carte 2 — sélection d'arme. */
+.interface-chat-card__selector-label {
+  margin-top: 0.7rem;
+  color: var(--interface-card-ink);
+  font-size: 0.82rem;
+  letter-spacing: 0.08em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.interface-chat-card__weapons {
+  gap: 0.42rem;
+}
+
+.interface-chat-card__weapon-button {
+  grid-template-columns: 2.45rem minmax(0, 1fr);
+  min-height: 3rem;
+  border-color: rgba(245, 242, 234, 0.72);
+  background: #17171a;
+  color: var(--interface-card-ink);
+  transition:
+    border-color 120ms ease,
+    background-color 120ms ease,
+    box-shadow 120ms ease,
+    opacity 120ms ease;
+}
+
+.interface-chat-card__weapon-button:not(:disabled):hover,
+.interface-chat-card__weapon-button:not(:disabled):focus-visible {
+  border-color: #b94742;
+  background: rgba(185, 71, 66, 0.1);
+  box-shadow:
+    inset 0 0 0 1px rgba(185, 71, 66, 0.16),
+    0 0 0.55rem rgba(185, 71, 66, 0.12);
+}
+
+.interface-chat-card__weapon-button:disabled {
+  border-color: rgba(245, 242, 234, 0.35);
+  background: #141417;
+  opacity: 0.48;
+}
+
+.interface-chat-card__weapon-img {
+  grid-row: auto;
+  width: 2.45rem;
+  height: 2.45rem;
+  border: 1px solid rgba(235, 231, 220, 0.2);
+}
+
+.interface-chat-card__weapon-name {
+  color: var(--interface-card-ink);
+  font-family: var(--interface-theme-font-title);
+  font-weight: 400;
+  letter-spacing: 0.025em;
+}
+
+/* Carte 3 — résultat de dégâts autonome. */
+.interface-chat-card--damage-result {
+  min-height: 13.25rem;
+  border-color: rgba(190, 70, 64, 0.48);
+  padding: 0.78rem;
+}
+
+.interface-chat-card__damage-header {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.6rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid rgba(235, 231, 220, 0.11);
+}
+
+.interface-chat-card__damage-actor {
+  min-width: 0;
+  color: var(--interface-card-ink);
+  font-size: 0.86rem;
+  letter-spacing: 0.035em;
+  overflow-wrap: anywhere;
+}
+
+.interface-chat-card__damage-actor--compact {
+  font-size: 0.78rem;
+}
+
+.interface-chat-card__damage-title {
+  flex: 0 0 auto;
+  color: #c9645e;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.interface-chat-card__damage-total {
+  position: relative;
+  z-index: 2;
+  margin: 0.7rem 0 0.62rem;
+  color: #f4f0e7;
+  font-family: var(--interface-theme-font-title);
+  font-size: 4.1rem;
+  font-weight: 400;
+  line-height: 0.95;
+  text-align: center;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.42);
+}
+
+.interface-chat-card__damage-weapon {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: 3.45rem minmax(0, 1fr);
+  align-items: center;
+  gap: 0.65rem;
+  border: 1px solid rgba(235, 231, 220, 0.16);
+  border-left-color: rgba(185, 71, 66, 0.78);
+  background: rgba(7, 7, 9, 0.42);
+  padding: 0.5rem;
+}
+
+.interface-chat-card__damage-weapon-img {
+  display: block;
+  width: 3.45rem;
+  height: 3.45rem;
+  border: 1px solid rgba(235, 231, 220, 0.28);
+  border-radius: 0.22rem;
+  object-fit: cover;
+}
+
+.interface-chat-card__damage-weapon-copy {
+  display: grid;
+  min-width: 0;
+  gap: 0.12rem;
+}
+
+.interface-chat-card__damage-weapon-label {
+  color: #c9645e;
+  font-size: 0.62rem;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+}
+
+.interface-chat-card__damage-weapon-name {
+  color: var(--interface-card-ink);
+  font-size: 0.94rem;
+  line-height: 1.1;
+  overflow-wrap: anywhere;
+}
+
+.interface-chat-card__damage-formula {
+  width: fit-content;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  background: transparent;
+  color: var(--interface-card-muted);
+  font-family: var(--interface-theme-font-body);
+  font-size: 0.76rem;
+}
+
+.interface-chat-card__damage-mode {
+  position: relative;
+  z-index: 2;
+  width: fit-content;
+  margin: 0.52rem auto 0;
+  border: 1px solid rgba(235, 231, 220, 0.18);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.025);
+  color: var(--interface-card-muted);
+  padding: 0.18rem 0.5rem;
+  font-size: 0.66rem;
+  letter-spacing: 0.055em;
+  text-transform: uppercase;
+}
+
+/* Petite tache de sang décorative, sans asset externe. */
+.interface-chat-card__blood-mark {
+  position: absolute;
+  top: 0.15rem;
+  right: 0.2rem;
+  z-index: 1;
+  width: 4.3rem;
+  height: 3.45rem;
+  opacity: 0.56;
+  pointer-events: none;
+  transform: rotate(9deg);
+  background:
+    radial-gradient(circle at 62% 31%, rgba(126, 16, 17, 0.76) 0 9%, transparent 10%),
+    radial-gradient(circle at 47% 42%, rgba(153, 20, 19, 0.72) 0 16%, transparent 17%),
+    radial-gradient(circle at 72% 52%, rgba(121, 15, 16, 0.7) 0 8%, transparent 9%),
+    radial-gradient(circle at 37% 60%, rgba(111, 13, 15, 0.68) 0 7%, transparent 8%),
+    radial-gradient(ellipse at 55% 47%, rgba(133, 17, 18, 0.46) 0 29%, transparent 31%);
+  filter: blur(0.15px);
+}
+
+/* L'ancienne zone de projection de dégâts de la carte 2 n'est plus utilisée
+ * en Phase 06C : chaque clic valide produit une nouvelle carte 3 visible. */
+.interface-chat-card--damage .interface-chat-card__damage-output {
+  display: none;
+}
+
+
+
+/* Les composants V1 portent data-interface-theme sur leur contenu.
+ * On réhérite explicitement les tokens sombres de l'Application afin que la
+ * fondation multi-thèmes reste la source de contexte sans réécrire le thème
+ * des surfaces non concernées (réglages, assistant complet, etc.). */
+.interface.interface-character-sheet [data-interface-theme="default"],
+.interface.interface-equipment-sheet [data-interface-theme="default"],
+.interface.interface-preroll-dialog [data-interface-theme="default"],
+.interface.interface-creation-warning-dialog [data-interface-theme="default"],
+.interface.interface-delete-equipment-dialog [data-interface-theme="default"],
+.interface.interface-equipment-choice-dialog [data-interface-theme="default"],
+.interface.interface-damage-choice-dialog [data-interface-theme="default"] {
+  --interface-theme-font-title: inherit;
+  --interface-theme-font-body: inherit;
+  --interface-theme-font-ui: inherit;
+  --interface-theme-surface: inherit;
+  --interface-theme-surface-strong: inherit;
+  --interface-theme-surface-inverse: inherit;
+  --interface-theme-text: inherit;
+  --interface-theme-text-muted: inherit;
+  --interface-theme-text-inverse: inherit;
+  --interface-theme-border: inherit;
+  --interface-theme-border-strong: inherit;
+  --interface-theme-accent: inherit;
+  --interface-theme-tone-corps: inherit;
+  --interface-theme-tone-ame: inherit;
+  --interface-theme-tone-esprit: inherit;
+  --interface-theme-tone-neutral: inherit;
+  --interface-theme-action: inherit;
+  --interface-theme-action-hover: inherit;
+  --interface-theme-danger: inherit;
+  --interface-theme-focus: inherit;
+  --interface-theme-error: inherit;
+  --interface-theme-success: inherit;
+}
+
+/* ==========================================================================
+ * Phase 06C — passe V1.1 après validation visuelle dans Foundry
+ * Corrections ciblées : identité sombre, grain organique, intensité des tons,
+ * simplification progression/initiative, lisibilité chat et carte dégâts.
+ * ========================================================================== */
+
+/* Fiche Actor : grain organique sans trame de points régulière. */
+.interface .interface-character {
+  background-color: #111114;
+  background-image:
+    url("../assets/ui/grain.png"),
+    radial-gradient(ellipse at 18% 12%, rgba(255, 255, 255, 0.026), transparent 34%),
+    radial-gradient(ellipse at 82% 72%, rgba(168, 68, 63, 0.025), transparent 38%),
+    linear-gradient(145deg, rgba(29, 29, 33, 0.985), rgba(13, 13, 16, 0.995));
+  background-repeat: repeat, no-repeat, no-repeat, no-repeat;
+  background-size: 256px 256px, 100% 100%, 100% 100%, 100% 100%;
+}
+
+/* Identité : Nom / Profession / Âge rejoignent réellement le thème sombre. */
+.interface .interface-character__identity .interface-identity-field {
+  border-color: rgba(235, 231, 220, 0.16);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.018), transparent 54%),
+    #17171a;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.018);
+}
+
+.interface .interface-character__identity .interface-identity-field > span {
+  border-bottom-color: rgba(235, 231, 220, 0.11);
+  background: rgba(255, 255, 255, 0.015);
+  color: #aaa69d;
+}
+
+.interface .interface-character__identity .interface-identity-field > input,
+.interface .interface-character__identity .interface-identity-field > strong,
+.interface .interface-character__identity .interface-character__name input,
+.interface .interface-character__identity .interface-character__name strong,
+.interface .interface-character__identity .interface-identity__age input,
+.interface .interface-character__identity .interface-identity__age strong {
+  background: transparent;
+  color: #eeeae1;
+}
+
+.interface .interface-character__identity .interface-identity-field > input:focus {
+  background: rgba(87, 174, 245, 0.035);
+}
+
+/* Compétences / Combat : mêmes tons, mais moins agressifs que la première passe. */
+.interface .interface-skill {
+  border-color: color-mix(in srgb, var(--interface-tone) 58%, transparent);
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, var(--interface-tone) 8%, transparent),
+    0 2px 7px rgba(0, 0, 0, 0.18);
+}
+
+.interface .interface-skill input,
+.interface .interface-skill__value,
+.interface .interface-skill__label {
+  color: color-mix(in srgb, var(--interface-tone) 78%, transparent);
+}
+
+.interface .interface-derived-card,
+.interface button.interface-derived-card {
+  border-color: color-mix(in srgb, var(--interface-tone) 58%, transparent);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--interface-tone) 8%, transparent);
+}
+
+.interface .interface-derived-card span,
+.interface .interface-derived-card strong {
+  color: color-mix(in srgb, var(--interface-tone) 78%, transparent);
+}
+
+.interface button.interface-derived-card:hover,
+.interface button.interface-derived-card:focus-visible {
+  border-color: color-mix(in srgb, var(--interface-tone) 82%, transparent);
+  background: color-mix(in srgb, var(--interface-tone) 6%, #151518);
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, var(--interface-tone) 16%, transparent),
+    0 0 0.45rem color-mix(in srgb, var(--interface-tone) 10%, transparent);
+}
+
+/* Initiative : le bouton garde son comportement, seul le libellé reste visible. */
+.interface .interface-state-band__initiative-action,
+.interface .interface-state-band__initiative {
+  min-height: 6.5rem;
+}
+
+/* Armes : quantité volontairement masquée de cette section uniquement. */
+.interface .interface-item-list--weapons .interface-item-row {
+  grid-template-columns: 2rem minmax(8rem, 1fr) minmax(4rem, auto) 1.85rem;
+}
+
+/* Progression : la jauge n'a plus de texte explicatif redondant. */
+.interface .interface-progression__band {
+  grid-template-columns: auto auto;
+  justify-content: start;
+}
+
+/* Pied Actor : il ne reste que l'indication d'auto-enregistrement. */
+.interface .interface-character .interface-sheet__footer {
+  justify-content: flex-start;
+}
+
+.interface .interface-character .interface-autosave {
+  margin-right: 0;
+}
+
+/* Fiche Item : description plus compacte pour éviter le scroll de fenêtre. */
+.interface .interface-equipment textarea[name="system.description"] {
+  min-height: 8rem;
+  height: 8rem;
+}
+
+/* Cartes de chat : le sélecteur [data-interface-theme] de la fondation était
+ * plus spécifique que la skin sombre. On fixe ici explicitement les tokens V1
+ * afin que les textes neutres restent lisibles sur fond graphite. */
+.interface-chat-card[data-interface-theme="default"] {
+  --interface-theme-font-title: "Electrolize", sans-serif;
+  --interface-theme-font-body: "Electrolize", sans-serif;
+  --interface-theme-font-ui: var(--interface-theme-font-body);
+  --interface-theme-surface: #151518;
+  --interface-theme-surface-strong: #1d1d21;
+  --interface-theme-text: #eeeae1;
+  --interface-theme-text-muted: #c0bbb1;
+  --interface-theme-text-inverse: #f8f4eb;
+  --interface-theme-card-border: rgba(235, 231, 220, 0.24);
+  --interface-theme-action: #1d1d21;
+  --interface-theme-action-hover: #29292e;
+
+  --interface-result-failure: #e66b8b;
+  --interface-result-critical-failure: #ef6154;
+  --interface-result-super-critical-failure: #c96bd8;
+  --interface-result-success: #69c18e;
+  --interface-result-critical-success: #59aef5;
+  --interface-result-super-critical-success: #e9bf50;
+  --interface-destiny-halo: rgba(83, 202, 255, 0.52);
+
+  --interface-card-paper: #151518;
+  --interface-card-paper-strong: #1d1d21;
+  --interface-card-ink: #eeeae1;
+  --interface-card-muted: #c0bbb1;
+  --interface-card-border: rgba(235, 231, 220, 0.24);
+  --interface-card-action: #1d1d21;
+  --interface-card-action-hover: #29292e;
+}
+
+.interface-chat-card__actor,
+.interface-chat-card__jet-title,
+.interface-chat-card__selector-label,
+.interface-chat-card__weapon-name,
+.interface-chat-card__damage-actor,
+.interface-chat-card__damage-title,
+.interface-chat-card__damage-weapon-label,
+.interface-chat-card__damage-weapon-name {
+  color: #eeeae1;
+}
+
+.interface-chat-card__penalty,
+.interface-chat-card__notice,
+.interface-chat-card__damage-formula,
+.interface-chat-card__damage-mode {
+  color: #c0bbb1;
+}
+
+/* Carte 3 : carte de dégâts simplifiée.
+ * Le nombre reste au centre-gauche, l'image est illustratrice sur la droite,
+ * le nom de l'arme est seul en bas et l'indication « dégâts max. activés »
+ * n'apparaît qu'en cas de maximum. */
+.interface-chat-card--damage-result {
+  min-height: 12.8rem;
+  padding: 0.78rem;
+}
+
+.interface-chat-card__damage-stage {
+  position: relative;
+  z-index: 2;
+  min-height: 6.15rem;
+  margin-top: 0.3rem;
+  padding-right: 7.2rem;
+}
+
+.interface-chat-card__damage-total {
+  display: grid;
+  min-height: 5.85rem;
+  place-items: center;
+  margin: 0;
+  padding-left: 0.15rem;
+  color: #f4f0e7;
+  font-size: 4.3rem;
+  line-height: 1;
+  text-align: center;
+}
+
+.interface-chat-card__damage-illustration {
+  position: absolute;
+  top: -0.65rem;
+  right: 0.1rem;
+  z-index: 4;
+  width: 6.95rem;
+  height: 6.35rem;
+  pointer-events: none;
+}
+
+.interface-chat-card__damage-weapon-img {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  display: block;
+  width: 6.25rem;
+  height: 5.3rem;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  object-fit: contain;
+  object-position: center;
+  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.48));
+  rotate: 5deg;
+}
+
+.interface-chat-card__blood-mark {
+  top: 0;
+  right: -0.85rem;
+  z-index: 1;
+  width: 3.25rem;
+  height: 2.65rem;
+  opacity: 0.48;
+}
+
+.interface-chat-card__damage-footer {
+  position: relative;
+  z-index: 2;
+  display: block;
+  min-height: 2.1rem;
+  margin-top: 0.15rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid rgba(235, 231, 220, 0.14);
+}
+
+.interface-chat-card__damage-weapon-name {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  color: #eeeae1;
+  font-family: var(--interface-theme-font-title, "Electrolize", sans-serif);
+  font-size: 1.08rem;
+  letter-spacing: 0.04em;
+  line-height: 1.08;
+  text-transform: uppercase;
+  overflow-wrap: anywhere;
+}
+
+.interface-chat-card__damage-weapon-name--compact {
+  font-size: 0.95rem;
+}
+
+.interface-chat-card__damage-weapon-name--extra-compact {
+  font-size: 0.82rem;
+}
+
+.interface-chat-card__damage-mode-row {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 0.42rem;
+}
+
+.interface-chat-card__damage-mode {
+  margin: 0;
+  color: #cfc8bb;
+  font-size: 0.6rem;
+  letter-spacing: 0.02em;
+  text-align: right;
+}
+
+/* Phase 06C V1.5 — homogénéisation Compétences, âge et progression XP. */
+
+/* COMPÉTENCES reprend le langage des titres de sections, sans devenir repliable. */
+.interface .interface-skills > .interface-section-heading {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: 2.45rem;
+  margin: 0;
+  border: 0;
+  border-left: 3px solid #a8443f;
+  border-bottom: 1px solid rgba(235, 231, 220, 0.11);
+  border-radius: 0;
+  background: linear-gradient(90deg, rgba(168, 68, 63, 0.08), transparent 34%);
+  padding: 0.58rem 0.75rem;
+  color: var(--interface-white);
+  font-family: var(--interface-theme-font-title);
+  font-size: inherit;
+  font-weight: 400;
+  letter-spacing: 0.09em;
+  text-align: left;
+  text-transform: uppercase;
+}
+
+.interface .interface-skills > .interface-section-heading::before {
+  display: none;
+  content: none;
+}
+
+/* COMPÉTENCES adopte maintenant la même architecture visuelle que les blocs,
+ * avec un contenu légèrement décalé vers la droite, sans devenir repliable. */
+.interface .interface-skills__grid {
+  width: calc(100% - 10px);
+  margin-left: 10px;
+  border: 1px solid rgba(235, 231, 220, 0.14);
+  border-top-color: rgba(168, 68, 63, 0.34);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.018), transparent 50%),
+    rgba(7, 7, 9, 0.24);
+  padding: 0.72rem;
+  box-sizing: border-box;
+}
+
+/* Âge : la valeur profite pleinement de la hauteur du cartouche. */
+.interface .interface-character__identity .interface-identity__age input,
+.interface .interface-character__identity .interface-identity__age strong {
+  font-size: 3rem;
+  line-height: 1;
+  text-align: center;
+}
+
+/* Le message n'existe dans le bandeau que lorsque la jauge atteint 3. */
+.interface .interface-progression__band {
+  grid-template-columns: auto auto minmax(0, 1fr);
+  justify-content: start;
+}
+
+.interface .interface-progression__prompt {
+  grid-column: 1 / -1;
+  margin: 0.05rem 0 0;
+  border-top: 1px solid rgba(235, 231, 220, 0.1);
+  padding-top: 0.48rem;
+  color: #cfc8bb;
+  font-size: 0.72rem;
+  line-height: 1.35;
+}
+
+/* Les gains restent les trois booléens persistés existants, présentés comme
+ * une progression de cases à cocher de gauche à droite. */
+.interface .interface-progression__choices fieldset > div {
+  width: 50%;
+  margin: 0.65rem auto 0;
+  justify-content: space-between;
+  gap: 0.55rem;
+}
+
+.interface .interface-progression__choices .interface-progression__gain span,
+.interface .interface-progression__choices .interface-progression__readonly-check {
+  position: relative;
+  display: grid;
+  width: 1.15rem;
+  height: 1.15rem;
+  place-items: center;
+  border: 1px solid rgba(235, 231, 220, 0.48);
+  border-radius: 0.18rem;
+  background: rgba(8, 8, 10, 0.52);
+  color: #e9e5da;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.018);
+}
+
+.interface .interface-progression__choices .interface-progression__gain input:checked + span,
+.interface .interface-progression__choices .interface-progression__readonly-check.is-current {
+  border-color: #57aef5;
+  background: rgba(87, 174, 245, 0.2);
+  box-shadow:
+    inset 0 0 0 1px rgba(87, 174, 245, 0.18),
+    0 0 0.45rem rgba(87, 174, 245, 0.12);
+}
+
+.interface .interface-progression__choices .interface-progression__gain input:checked + span::after,
+.interface .interface-progression__choices .interface-progression__readonly-check.is-current::after {
+  content: "✓";
+  color: #e9e5da;
+  font-family: var(--interface-theme-font-body);
+  font-size: 0.78rem;
+  line-height: 1;
+}
+
+.interface .interface-progression__choices .interface-progression__gain.is-locked {
+  cursor: not-allowed;
+  opacity: 0.34;
+}
+
+
+/* ==========================================================================
+ * Phase 06C V1.8 — assistant de création + Compétences Actor repliables.
+ * ========================================================================== */
+
+/* Fiche Actor : COMPÉTENCES utilise désormais l'architecture des sections. */
+.interface .interface-skills.interface-fold .interface-skills__content {
+  padding: 0.72rem;
+}
+
+.interface .interface-skills.interface-fold .interface-skills__grid {
+  width: 100%;
+  margin: 0;
+  border: 0;
+  background: transparent;
+  padding: 0;
+}
+
+/* Assistant de création : même palette sombre que la fiche Actor. */
+.interface.interface-character-creation {
+  --interface-theme-font-title: "Electrolize", sans-serif;
+  --interface-theme-font-body: "Electrolize", sans-serif;
+  --interface-theme-font-ui: var(--interface-theme-font-body);
+  --interface-theme-surface: #151518;
+  --interface-theme-surface-strong: #1d1d21;
+  --interface-theme-surface-inverse: #09090b;
+  --interface-theme-text: #e9e5da;
+  --interface-theme-text-muted: #aaa69d;
+  --interface-theme-text-inverse: #f7f3e9;
+  --interface-theme-border: rgba(235, 231, 220, 0.18);
+  --interface-theme-border-strong: rgba(235, 231, 220, 0.36);
+  --interface-theme-accent: #a8443f;
+  --interface-theme-tone-corps: #d35c55;
+  --interface-theme-tone-ame: #d2ad49;
+  --interface-theme-tone-esprit: #5b9fd0;
+  --interface-theme-tone-neutral: #9e9b95;
+  --interface-theme-action: #1d1d21;
+  --interface-theme-action-hover: #27272c;
+  --interface-theme-danger: #c4514b;
+  --interface-theme-focus: #57aef5;
+  --interface-theme-error: #df655f;
+  --interface-theme-success: #69bd8c;
+  color: var(--interface-ink);
+  font-family: var(--interface-theme-font-body);
+}
+
+.interface.interface-character-creation [data-interface-theme="default"] {
+  --interface-theme-font-title: inherit;
+  --interface-theme-font-body: inherit;
+  --interface-theme-font-ui: inherit;
+  --interface-theme-surface: inherit;
+  --interface-theme-surface-strong: inherit;
+  --interface-theme-surface-inverse: inherit;
+  --interface-theme-text: inherit;
+  --interface-theme-text-muted: inherit;
+  --interface-theme-text-inverse: inherit;
+  --interface-theme-border: inherit;
+  --interface-theme-border-strong: inherit;
+  --interface-theme-accent: inherit;
+  --interface-theme-tone-corps: inherit;
+  --interface-theme-tone-ame: inherit;
+  --interface-theme-tone-esprit: inherit;
+  --interface-theme-tone-neutral: inherit;
+  --interface-theme-action: inherit;
+  --interface-theme-action-hover: inherit;
+  --interface-theme-danger: inherit;
+  --interface-theme-focus: inherit;
+  --interface-theme-error: inherit;
+  --interface-theme-success: inherit;
+}
+
+.interface.interface-character-creation .window-content {
+  background: #101012;
+  color: var(--interface-ink);
+}
+
+.interface.interface-character-creation .window-title {
+  color: var(--interface-white);
+  font-family: var(--interface-theme-font-title);
+  font-weight: 400;
+  letter-spacing: 0.04em;
+}
+
+.interface .interface-character-creation__content {
+  box-sizing: border-box;
+  padding: 0.75rem;
+  color: var(--interface-ink);
+  background-color: #111114;
+  background-image:
+    url("../assets/ui/grain.png"),
+    radial-gradient(ellipse at 18% 12%, rgba(255, 255, 255, 0.026), transparent 34%),
+    radial-gradient(ellipse at 82% 72%, rgba(168, 68, 63, 0.025), transparent 38%),
+    linear-gradient(145deg, rgba(29, 29, 33, 0.985), rgba(12, 12, 15, 0.995));
+  background-blend-mode: soft-light, normal, normal, normal;
+}
+
+.interface.interface-character-creation input,
+.interface.interface-character-creation textarea {
+  border-color: rgba(235, 231, 220, 0.22);
+  background: rgba(5, 5, 7, 0.5);
+  color: var(--interface-ink);
+  font-family: var(--interface-theme-font-body);
+}
+
+.interface.interface-character-creation input:focus,
+.interface.interface-character-creation textarea:focus {
+  border-color: #57aef5;
+  box-shadow: 0 0 0 1px rgba(87, 174, 245, 0.28);
+}
+
+/* Identité */
+.interface .interface-creation-identity {
+  border: 1px solid rgba(235, 231, 220, 0.14);
+  border-top: 1px solid rgba(235, 231, 220, 0.14);
+  border-bottom-color: rgba(168, 68, 63, 0.72);
+  background:
+    linear-gradient(90deg, rgba(168, 68, 63, 0.07), transparent 24%),
+    rgba(5, 5, 7, 0.22);
+  padding: 0.7rem;
+}
+
+.interface .interface-creation-identity .interface-identity__portrait {
+  aspect-ratio: 1 / 1;
+}
+
+.interface .interface-creation-identity .interface-portrait-button {
+  border-color: rgba(235, 231, 220, 0.38);
+  background: #0c0c0e;
+}
+
+.interface .interface-creation-identity .interface-identity__main > label,
+.interface .interface-creation-identity > .interface-identity__age {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  gap: 0;
+  overflow: hidden;
+  border: 1px solid rgba(235, 231, 220, 0.18);
+  border-radius: 3px;
+  background: rgba(5, 5, 7, 0.34);
+}
+
+.interface .interface-creation-identity .interface-identity__main > label > span,
+.interface .interface-creation-identity > .interface-identity__age > span {
+  border-bottom: 1px solid rgba(235, 231, 220, 0.12);
+  background: rgba(255, 255, 255, 0.025);
+  color: var(--interface-muted);
+  padding: 0.38rem 0.6rem;
+  font-family: var(--interface-theme-font-title);
+  font-size: 0.75rem;
+  font-weight: 400;
+  letter-spacing: 0.055em;
+  text-transform: uppercase;
+}
+
+.interface .interface-creation-identity input {
+  min-height: 2.7rem;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  padding: 0.5rem 0.65rem;
+}
+
+.interface .interface-creation-identity .interface-character__name input {
+  color: var(--interface-white);
+  font-family: var(--interface-theme-font-title);
+  font-size: 1.45rem;
+  font-weight: 400;
+  letter-spacing: 0.035em;
+}
+
+.interface .interface-creation-identity .interface-identity__age input {
+  font-size: 3rem;
+  line-height: 1;
+  text-align: center;
+}
+
+/* Blocs non repliables de l'assistant : même hiérarchie visuelle que l'Actor. */
+.interface .interface-creation-block {
+  border: 0;
+  background: transparent;
+  padding: 0;
+}
+
+.interface .interface-creation-block__heading {
+  min-height: 2.45rem;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.75rem;
+  margin: 0 0 0.55rem;
+  border-left: 3px solid #a8443f;
+  border-bottom: 1px solid rgba(235, 231, 220, 0.11);
+  background: linear-gradient(90deg, rgba(168, 68, 63, 0.08), transparent 34%);
+  padding: 0.58rem 0.75rem;
+  text-align: left;
+}
+
+.interface .interface-creation-block__heading h2,
+.interface .interface-creation-recap h2 {
+  color: var(--interface-white);
+  font-family: var(--interface-theme-font-title);
+  font-size: 0.9rem;
+  font-weight: 400;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+.interface .interface-creation-block__heading small {
+  color: var(--interface-muted);
+  font-size: 0.72rem;
+}
+
+.interface .interface-creation-talents__total {
+  margin-left: auto;
+  color: var(--interface-muted);
+  font-size: 0.72rem;
+  font-weight: 400;
+}
+
+.interface .interface-creation-talents__total span {
+  color: var(--interface-white);
+}
+
+.interface .interface-creation-talents__total span.is-negative {
+  color: var(--interface-theme-error);
+}
+
+.interface .interface-creation-block > :not(.interface-creation-block__heading) {
+  box-sizing: border-box;
+  width: calc(100% - 10px);
+  margin-left: 10px;
+}
+
+/* Banque de jetons */
+.interface .interface-skill-token-bank {
+  margin-top: 0;
+  margin-right: 0;
+  margin-bottom: 0.55rem;
+  border-color: rgba(235, 231, 220, 0.3);
+  background: rgba(7, 7, 9, 0.42);
+  color: var(--interface-ink);
+}
+
+.interface .interface-skill-token-bank > strong {
+  color: var(--interface-muted);
+  font-family: var(--interface-theme-font-title);
+  font-weight: 400;
+}
+
+.interface .interface-skill-token {
+  border: 1px solid rgba(235, 231, 220, 0.58);
+  background: #17171a;
+  color: var(--interface-white);
+  font-family: var(--interface-theme-font-title);
+  font-weight: 400;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.28);
+}
+
+.interface .interface-skill-token:hover,
+.interface .interface-skill-token:focus-visible {
+  border-color: #57aef5;
+}
+
+.interface .interface-skill-token-bank.is-drag-over {
+  border-color: #57aef5;
+  background: rgba(87, 174, 245, 0.07);
+}
+
+/* Cadres internes */
+.interface .interface-creation-skill-columns,
+.interface .interface-creation-talent-columns,
+.interface .interface-creation-derived__cards {
+  border: 1px solid rgba(235, 231, 220, 0.14);
+  border-top-color: rgba(168, 68, 63, 0.34);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.018), transparent 50%),
+    rgba(7, 7, 9, 0.24);
+  padding: 0.72rem;
+}
+
+/* Compétences */
+.interface .interface-creation-skill {
+  border: 1px solid color-mix(in srgb, var(--interface-tone) 66%, #ffffff 8%);
+  border-top-width: 1px;
+  border-radius: 0.22rem;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.025), transparent 60%),
+    #151518;
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, var(--interface-tone) 12%, transparent),
+    0 2px 7px rgba(0, 0, 0, 0.2);
+}
+
+.interface .interface-creation-skill > span,
+.interface .interface-creation-skill__value input {
+  color: color-mix(in srgb, var(--interface-tone) 82%, #e9e5da 18%);
+  font-family: var(--interface-theme-font-title);
+  font-weight: 400;
+}
+
+.interface .interface-creation-skill__value input {
+  border: 1px solid rgba(235, 231, 220, 0.2);
+  background: rgba(5, 5, 7, 0.52);
+}
+
+.interface .interface-creation-skill.is-drag-over {
+  background: color-mix(in srgb, var(--interface-tone) 10%, #151518);
+  box-shadow: inset 0 0 0 2px color-mix(in srgb, var(--interface-tone) 82%, white 18%);
+}
+
+/* Talents */
+.interface .interface-creation-talent-group {
+  border: 1px solid color-mix(in srgb, var(--interface-tone) 62%, #ffffff 7%);
+  border-top-width: 1px;
+  border-radius: 0.22rem;
+  background: #151518;
+}
+
+.interface .interface-creation-talent-group legend,
+.interface .interface-creation-talent-group label > span {
+  color: color-mix(in srgb, var(--interface-tone) 80%, #e9e5da 20%);
+  font-family: var(--interface-theme-font-title);
+  font-weight: 400;
+}
+
+.interface .interface-creation-talent-group label {
+  border-bottom-color: rgba(235, 231, 220, 0.09);
+}
+
+.interface .interface-creation-talent-group input {
+  border-color: rgba(235, 231, 220, 0.2);
+  background: rgba(5, 5, 7, 0.52);
+  color: var(--interface-white);
+  font-family: var(--interface-theme-font-title);
+}
+
+/* Attributs dérivés */
+.interface .interface-creation-derived__cards .interface-derived-card {
+  border-width: 1px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.02), transparent 58%),
+    #151518;
+}
+
+/* Spécialisations */
+.interface .interface-creation-specializations textarea {
+  min-height: 6rem;
+  border-color: rgba(235, 231, 220, 0.2);
+  background: rgba(7, 7, 9, 0.42);
+  color: var(--interface-ink);
+  padding: 0.65rem;
+}
+
+/* Récapitulatif et validation */
+.interface .interface-creation-recap,
+.interface .interface-creation-submit {
+  border: 1px solid rgba(235, 231, 220, 0.16);
+  border-top: 1px solid rgba(235, 231, 220, 0.16);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.018), transparent 55%),
+    rgba(7, 7, 9, 0.38);
+  color: var(--interface-ink);
+}
+
+.interface .interface-creation-recap {
+  border-top-color: rgba(168, 68, 63, 0.55);
+}
+
+.interface .interface-creation-recap.has-warning {
+  border-top-color: #c98a3f;
+}
+
+.interface .interface-creation-recap h2 {
+  margin-bottom: 0.65rem;
+  border-left: 3px solid #a8443f;
+  border-bottom: 1px solid rgba(235, 231, 220, 0.1);
+  background: linear-gradient(90deg, rgba(168, 68, 63, 0.08), transparent 48%);
+  padding: 0.45rem 0.65rem;
+  text-align: left;
+}
+
+.interface .interface-creation-recap dl > div {
+  border-bottom-color: rgba(235, 231, 220, 0.1);
+}
+
+.interface .interface-creation-recap dt {
+  color: var(--interface-muted);
+  font-weight: 400;
+}
+
+.interface .interface-creation-recap dd {
+  color: var(--interface-white);
+  font-family: var(--interface-theme-font-title);
+  font-weight: 400;
+}
+
+.interface .interface-creation-recap dd.is-negative {
+  color: var(--interface-theme-error);
+}
+
+.interface .interface-creation-submit {
+  border-top-color: rgba(87, 174, 245, 0.42);
+}
+
+.interface .interface-creation-submit button {
+  border: 1px solid rgba(87, 174, 245, 0.74);
+  background:
+    linear-gradient(180deg, rgba(87, 174, 245, 0.08), transparent 60%),
+    #17171b;
+  color: var(--interface-white);
+  font-family: var(--interface-theme-font-title);
+  font-weight: 400;
+}
+
+.interface .interface-creation-submit button:hover,
+.interface .interface-creation-submit button:focus-visible {
+  border-color: #57aef5;
+  background:
+    linear-gradient(180deg, rgba(87, 174, 245, 0.14), transparent 62%),
+    #202026;
+  box-shadow: 0 0 0 1px rgba(87, 174, 245, 0.2);
+}
+
+.interface .interface-creation-submit small {
+  color: var(--interface-muted);
+}
+
+@media (max-width: 980px) {
+  .interface .interface-creation-block__heading {
+    align-items: flex-start;
+  }
+
+  .interface .interface-creation-talents__total {
+    width: 100%;
+    margin-left: 0;
+  }
+}
+
+
+/* Phase 06C V1.9 — correctif de placement du portrait dans l'assistant.
+ * Le portrait reste carré mais ne peut plus dépasser sa colonne et recouvrir
+ * les champs Nom / Profession. */
+.interface .interface-creation-identity .interface-identity__portrait {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  align-self: start;
+  aspect-ratio: 1 / 1;
+}
+
+.interface .interface-creation-identity .interface-portrait-button,
+.interface .interface-creation-identity .interface-portrait-static {
+  width: 100%;
+  height: auto;
+  min-height: 0;
+  aspect-ratio: 1 / 1;
+}
+
+.interface .interface-creation-identity .interface-portrait-button img,
+.interface .interface-creation-identity .interface-portrait-static img {
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  object-fit: cover;
+}
+
+
+/* Phase 06C V1.10 — identité de création équilibrée :
+ * portrait et bloc ÂGE utilisent la même largeur. */
+.interface .interface-creation-identity {
+  grid-template-columns: 10rem minmax(0, 1fr) 10rem;
+}
+
+
+/* -------------------------------------------------------------------------- */
+/* Phase 06C V1.12 — skin sombre des réglages système, sans changer la mise   */
+/* en page ni la logique.                                                      */
+/* -------------------------------------------------------------------------- */
+.interface.interface-settings .window-content {
+  background: #101012;
+  color: var(--interface-ink);
+}
+
+.interface.interface-settings .window-title {
+  color: var(--interface-white);
+  font-family: var(--interface-theme-font-title, "Electrolize", sans-serif);
+  font-weight: 400;
+  letter-spacing: 0.04em;
+}
+
+.interface.interface-settings .interface-settings__content {
+  box-sizing: border-box;
+  color: var(--interface-ink);
+  background-color: #111114;
+  background-image:
+    url("../assets/ui/grain.png"),
+    radial-gradient(ellipse at 18% 12%, rgba(255, 255, 255, 0.026), transparent 34%),
+    radial-gradient(ellipse at 82% 72%, rgba(168, 68, 63, 0.025), transparent 38%),
+    linear-gradient(145deg, rgba(29, 29, 33, 0.985), rgba(12, 12, 15, 0.995));
+  background-blend-mode: soft-light, normal, normal, normal;
+  padding: 0.75rem;
+}
+
+.interface.interface-settings .interface-settings__body {
+  gap: 0.8rem;
+  padding-right: 0.35rem;
+}
+
+.interface.interface-settings .interface-panel {
+  border: 1px solid rgba(235, 231, 220, 0.14);
+  border-top-color: rgba(168, 68, 63, 0.48);
+  border-radius: 3px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.018), transparent 55%),
+    rgba(7, 7, 9, 0.38);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.015);
+  padding: 0.72rem;
+}
+
+.interface.interface-settings .interface-panel h2 {
+  display: flex;
+  align-items: center;
+  min-height: 2.3rem;
+  margin: 0 0 0.72rem;
+  border-left: 3px solid #a8443f;
+  border-bottom: 1px solid rgba(235, 231, 220, 0.11);
+  background: linear-gradient(90deg, rgba(168, 68, 63, 0.08), transparent 34%);
+  padding: 0.52rem 0.72rem;
+  color: var(--interface-white);
+  font-family: var(--interface-theme-font-title, "Electrolize", sans-serif);
+  font-size: 0.92rem;
+  font-weight: 400;
+  letter-spacing: 0.085em;
+  text-transform: uppercase;
+}
+
+.interface.interface-settings .interface-field > span,
+.interface.interface-settings .interface-checkbox > span,
+.interface.interface-settings fieldset legend {
+  color: var(--interface-muted);
+  font-family: var(--interface-theme-font-title, "Electrolize", sans-serif);
+  font-size: 0.78rem;
+  font-weight: 400;
+  letter-spacing: 0.055em;
+  text-transform: uppercase;
+}
+
+.interface.interface-settings .interface-field {
+  gap: 0.28rem;
+}
+
+.interface.interface-settings input,
+.interface.interface-settings select,
+.interface.interface-settings textarea {
+  border: 1px solid rgba(235, 231, 220, 0.2);
+  background: rgba(5, 5, 7, 0.52);
+  color: var(--interface-ink);
+}
+
+.interface.interface-settings input:focus,
+.interface.interface-settings select:focus,
+.interface.interface-settings textarea:focus {
+  border-color: #57aef5;
+  box-shadow: 0 0 0 1px rgba(87, 174, 245, 0.28);
+}
+
+.interface.interface-settings .hint,
+.interface.interface-settings small {
+  color: var(--interface-muted);
+  font-size: 0.75rem;
+}
+
+.interface.interface-settings .interface-selection-grid fieldset {
+  min-width: 0;
+  margin: 0;
+  border: 1px solid rgba(235, 231, 220, 0.18);
+  border-top-color: rgba(168, 68, 63, 0.38);
+  border-radius: 3px;
+  background: rgba(5, 5, 7, 0.24);
+  padding: 0.55rem 0.72rem 0.68rem;
+}
+
+.interface.interface-settings fieldset legend {
+  padding: 0 0.28rem;
+  color: var(--interface-white);
+}
+
+.interface.interface-settings .interface-checkbox {
+  gap: 0.6rem;
+}
+
+.interface.interface-settings .interface-checkbox input {
+  accent-color: #57aef5;
+}
+
+.interface.interface-settings .notification.info {
+  margin: 0.7rem 0 0;
+  border: 1px solid rgba(87, 174, 245, 0.42);
+  border-left: 4px solid #57aef5;
+  border-radius: 3px;
+  background: rgba(35, 90, 150, 0.18);
+  color: var(--interface-white);
+  padding: 0.62rem 0.75rem;
+}
+
+.interface.interface-settings .interface-settings__footer {
+  border-top: 1px solid rgba(235, 231, 220, 0.12);
+  padding-top: 0.8rem;
+}
+
+.interface.interface-settings .interface-settings__footer button {
+  min-height: 2.35rem;
+  border: 1px solid rgba(235, 231, 220, 0.28);
+  border-radius: 3px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.02), transparent 58%),
+    #17171b;
+  color: var(--interface-white);
+  font-family: var(--interface-theme-font-title, "Electrolize", sans-serif);
+  font-weight: 400;
+  letter-spacing: 0.035em;
+}
+
+.interface.interface-settings .interface-settings__footer button:hover,
+.interface.interface-settings .interface-settings__footer button:focus-visible {
+  border-color: rgba(87, 174, 245, 0.75);
+  box-shadow: 0 0 0 1px rgba(87, 174, 245, 0.18);
+}
+
+.interface.interface-settings .interface-settings__footer button[type="submit"] {
+  border-color: rgba(243, 182, 0, 0.48);
+  background:
+    linear-gradient(180deg, rgba(243, 182, 0, 0.06), transparent 58%),
+    #17171b;
+}
+
+.interface.interface-settings .interface-settings__footer button[type="submit"]:hover,
+.interface.interface-settings .interface-settings__footer button[type="submit"]:focus-visible {
+  border-color: rgba(243, 182, 0, 0.78);
+  box-shadow: 0 0 0 1px rgba(243, 182, 0, 0.16);
+}
+
+
+/* -------------------------------------------------------------------------- */
+/* Phase 06C V1.13 — lisibilité réglages + intervention du Destin.            */
+/* -------------------------------------------------------------------------- */
+
+/* Même couleur de saisie que les champs de la fiche Actor. */
+.interface.interface-settings input,
+.interface.interface-settings select,
+.interface.interface-settings textarea {
+  color: #eeeae1;
+}
+
+/* L'intervention du Destin reçoit un contour explicite et immédiatement lisible. */
+.interface-chat-card--destiny {
+  border: 2px solid rgb(11 180 245);
 }

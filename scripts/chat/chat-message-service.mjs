@@ -197,13 +197,12 @@ function selectorView(actor, publicData) {
 
   return {
     ...commonView(actor),
-    title: localize("INTERFACE.Chat.Damage.Title"),
+    chooseWeaponLabel: localize("INTERFACE.Chat.Damage.ChooseWeapon"),
     weapons,
     hasWeapons: weapons.length > 0,
     hasRollableWeapons: rollableWeapons.length > 0,
     noWeaponsLabel: localize("INTERFACE.Chat.Damage.NoWeapons"),
-    undefinedDamageLabel,
-    waitingLabel: localize("INTERFACE.Chat.Damage.Waiting")
+    undefinedDamageLabel
   };
 }
 
@@ -391,16 +390,18 @@ export async function createDamageResultMessage({
     actorUuid: actor?.uuid,
     publicData
   });
+  const weaponName = String(weapon?.name ?? "");
   const content = await renderCard(CHAT_CARD_TYPES.DAMAGE_RESULT, {
     ...commonView(actor),
-    title: localize("INTERFACE.Chat.Damage.Title"),
-    weaponName: weapon.name,
-    resultLabel: format("INTERFACE.Chat.Damage.Result", {
-      value: total
-    }),
+    title: localize("INTERFACE.Chat.Damage.ResultTitle"),
+    total,
+    weaponName,
+    weaponImg: weapon.img,
+    compactWeaponName: weaponName.length > 18,
+    extraCompactWeaponName: weaponName.length > 28,
     modeLabel: mode === DAMAGE_MODES.MAXIMUM
-      ? localize("INTERFACE.Chat.Damage.Maximum")
-      : localize("INTERFACE.Chat.Damage.Normal")
+      ? localize("INTERFACE.Chat.Damage.MaximumActivated")
+      : ""
   });
 
   return foundry.documents.ChatMessage.create(

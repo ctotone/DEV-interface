@@ -5,6 +5,7 @@ import {
   SYSTEM_ID,
   TALENTS
 } from "../constants.mjs";
+import { resolveInterfaceTheme } from "../services/theme-service.mjs";
 
 const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api;
 
@@ -181,6 +182,7 @@ export class InterfaceSettingsApplication extends HandlebarsApplicationMixin(App
 
     return {
       ...context,
+      theme: resolveInterfaceTheme(),
       settings: {
         [SETTING_KEYS.STATE_PENALTY_COEFFICIENT]: game.settings.get(
           SYSTEM_ID,

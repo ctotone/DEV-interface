@@ -18,6 +18,11 @@ import {
   calculateCreationDiagnostics,
   calculateFixedDerivedScores
 } from "../rules/derived-values.mjs";
+import {
+  interfaceThemeClass,
+  normalizeInterfaceTheme,
+  resolveActorTheme
+} from "../services/theme-service.mjs";
 
 const {
   ApplicationV2,
@@ -130,20 +135,26 @@ function validateRanges({ skills, talents }) {
   return null;
 }
 
-async function confirmCreationWarnings(diagnostics) {
+async function confirmCreationWarnings(diagnostics, theme) {
   const messages = diagnostics.warnings.map(
     code => creationWarningMessage(code, diagnostics)
   );
 
+  const resolvedTheme = normalizeInterfaceTheme(theme);
+
   return DialogV2.wait({
-    classes: ["interface", "interface-creation-warning-dialog"],
+    classes: [
+      "interface",
+      interfaceThemeClass(resolvedTheme),
+      "interface-creation-warning-dialog"
+    ],
     window: {
       title: game.i18n.localize(
         "INTERFACE.CreationAssistant.WarningTitle"
       )
     },
     content: `
-      <div class="interface-creation-warning">
+      <div class="interface-creation-warning" data-interface-theme="${resolvedTheme}">
         <p>${game.i18n.localize(
           "INTERFACE.CreationAssistant.WarningIntro"
         )}</p>
@@ -201,7 +212,10 @@ async function submitCreation(event, form) {
 
   const diagnostics = calculateCreationDiagnostics(snapshot);
   if (diagnostics.warnings.length > 0) {
-    const confirmed = await confirmCreationWarnings(diagnostics);
+    const confirmed = await confirmCreationWarnings(
+      diagnostics,
+      resolveActorTheme(this.actor)
+    );
     if (confirmed !== true) return;
   }
 
@@ -679,6 +693,7 @@ export class InterfaceCharacterCreationApplication
 
     return {
       ...context,
+      theme: resolveActorTheme(this.actor),
       identity: {
         name: String(this.actor.name ?? ""),
         age: String(system.identity?.age ?? ""),
@@ -690,6 +705,7 @@ export class InterfaceCharacterCreationApplication
       },
       groups: TALENT_GROUPS.map(group => ({
         ...group,
+        title: SKILLS.find(skill => skill.key === group.skill)?.title ?? "",
         skillValue: skills[group.skill],
         talents: group.talents.map(talent => ({
           ...talent,

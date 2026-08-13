@@ -9,9 +9,6 @@
       <strong class="interface-chat-card__actor{{#if compactActorName}} interface-chat-card__actor--compact{{/if}}">
         {{actorName}}
       </strong>
-      <div class="interface-chat-card__jet{{#if compactJetName}} interface-chat-card__jet--compact{{/if}}">
-        {{jetName}} ({{score}})
-      </div>
       {{#if hasPenalty}}
         <div class="interface-chat-card__penalty" title="{{penaltyTooltip}}">
           {{localize "INTERFACE.Chat.Penalty.Label" value=penaltyTotal}}
@@ -19,6 +16,10 @@
       {{/if}}
     </div>
   </header>
+
+  <div class="interface-chat-card__jet-title{{#if compactJetName}} interface-chat-card__jet-title--compact{{/if}}">
+    {{jetName}} ({{score}})
+  </div>
 
   <div
     class="interface-chat-card__roll"

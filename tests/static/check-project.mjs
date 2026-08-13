@@ -505,6 +505,7 @@ check(
 );
 
 for (const section of [
+  "skills",
   "talents",
   "combat",
   "weapons",
@@ -526,6 +527,17 @@ check(
   characterTemplate.includes("system.progression.{{../key}}.{{key}}"),
   "Les neuf cases de progression doivent utiliser les clés de groupe préparées."
 );
+check(
+  characterTemplate.includes("INTERFACE.Progression.ReadyPrompt")
+    && characterApplication.includes("progressionReady: system.progression.gauge === 3"),
+  "Le message d’XP complet doit être conditionné à une jauge égale à 3."
+);
+check(
+  characterTemplate.includes("interface-progression__gain")
+    && characterTemplate.includes("{{#if disabled}}disabled{{/if}}")
+    && characterApplication.includes("disabled: checked ? nextChecked : !previousChecked"),
+  "Les gains d’XP doivent imposer une progression contiguë de gauche à droite sans nouvelle donnée persistée."
+);
 for (const key of ["skillGains", "talentGains", "specializationGains"]) {
   check(
     characterApplication.includes(`"${key}"`),
@@ -535,8 +547,9 @@ for (const key of ["skillGains", "talentGains", "specializationGains"]) {
 
 check(
   characterTemplate.includes("interface-state-band")
-    && characterTemplate.includes("derived.initiativeBonus"),
-  "Le bandeau noir doit regrouper les états et l’initiative."
+    && characterTemplate.includes('data-action="rollInitiative"')
+    && !characterTemplate.includes("derived.initiativeBonus"),
+  "Le bandeau noir doit regrouper les états et l’initiative sans afficher le bonus sous le libellé."
 );
 check(
   characterTemplate.includes('data-action="rollInitiative"')
@@ -574,8 +587,12 @@ for (const color of [
   "#762F3A"
 ]) {
   check(
-    characterApplication.includes(color),
-    `Couleur d’état absente du contexte de fiche : ${color}.`
+    read("styles/interface.css").includes(color),
+    `Couleur d’état absente de la couche de thème CSS : ${color}.`
+  );
+  check(
+    !characterApplication.includes(color),
+    `La palette d’état ne doit plus être portée par le JavaScript : ${color}.`
   );
 }
 for (const key of [
@@ -654,6 +671,14 @@ check(
     && equipmentTemplate.includes('data-action="chooseImage"')
     && equipmentTemplate.includes('src="{{image}}"'),
   "La fiche Item doit afficher et permettre de modifier l’image de l’équipement."
+);
+check(
+  equipmentApplication.includes("saveAndCloseAction")
+    && equipmentApplication.includes("await this.submit()")
+    && equipmentApplication.includes("return this.close()")
+    && equipmentTemplate.includes('data-action="saveAndClose"')
+    && equipmentTemplate.includes('rows="8"'),
+  "Le bouton Enregistrer de la fiche Item doit sauvegarder puis fermer la fenêtre, avec une description plus compacte."
 );
 check(
   (characterTemplate.match(/<img src="{{img}}" alt="{{name}}">/g) ?? []).length === 2,
@@ -834,10 +859,10 @@ check(
 check(
   characterTemplate.includes('data-section="weapons"')
     && characterTemplate.includes('data-action="createEquipment"')
-    && characterTemplate.includes('title="{{localize "INTERFACE.Inventory.AddWeapon"}}"')
+    && characterTemplate.includes("interface-fold__content-action")
     && characterTemplate.indexOf('data-section="weapons"')
       > characterTemplate.indexOf('data-section="combat"'),
-  "Les Armes doivent disposer d’une section autonome repliable avec un petit bouton d’ajout."
+  "Les Armes doivent disposer d’une section autonome repliable avec l’action d’ajout dans le contenu ouvert."
 );
 check(
   characterTemplate.includes('data-action="chooseEquipmentCategory"')
@@ -856,19 +881,49 @@ check(
   "L’Inventaire doit afficher uniquement les objets ordinaires, sans compteur dans son titre."
 );
 check(
+  characterTemplate.indexOf('data-section="weapons"')
+    < characterTemplate.indexOf('data-section="inventory"')
+    && characterTemplate.indexOf('data-section="inventory"')
+      < characterTemplate.indexOf('data-section="specializations"'),
+  "L’ordre V1 doit placer Inventaire immédiatement après Armes et avant Spécialisations."
+);
+check(
   !characterTemplate.includes("INTERFACE.Specializations.Hint")
     && !characterTemplate.includes("INTERFACE.Notes.Hint"),
   "Les textes d’aide des sections Spécialisations et Notes doivent être absents de la fiche."
 );
 check(
   read("styles/interface.css").includes("calc(1rem + 10px)")
-    && read("styles/interface.css").includes(".interface .interface-fold__add"),
-  "La fiche Actor doit conserver une marge intérieure globale renforcée et des boutons d’ajout compacts."
+    && read("styles/interface.css").includes(".interface .interface-fold__content-action")
+    && read("styles/interface.css").includes("margin-left: 10px"),
+  "La fiche Actor doit conserver sa marge globale et décaler de 10px le contenu ouvert avec les actions d’ajout à l’intérieur."
 );
 check(
   characterApplication.includes("skillValue: system.skills[group.skill]")
     && characterTemplate.includes("{{skillValue}}"),
   "Chaque groupe de Talents doit rappeler la valeur de sa Compétence."
+);
+check(
+  characterApplication.includes("TALENT_DISPLAY_ORDER")
+    && characterApplication.includes('"carrure"')
+    && characterApplication.includes('"perception"')
+    && characterApplication.includes('"intellect"')
+    && characterApplication.includes('"agilite"')
+    && characterApplication.includes('"mental"')
+    && characterApplication.includes('"charisme"'),
+  "L’ordre visuel des Talents doit être Carrure / Perception / Intellect puis Agilité / Mental / Charisme."
+);
+check(
+  !characterTemplate.includes('INTERFACE.Progression.GaugeHint')
+    && !characterTemplate.includes('INTERFACE.Progression.ManualHint'),
+  "Les deux textes explicatifs redondants de Progression doivent être absents de la fiche."
+);
+check(
+  !characterTemplate.slice(
+    characterTemplate.indexOf('data-section="weapons"'),
+    characterTemplate.indexOf('data-section="inventory"')
+  ).includes('×{{quantity}}'),
+  "La section Armes ne doit plus afficher la quantité possédée."
 );
 check(
   !characterTemplate.includes('<small>{{localize "INTERFACE.Section.Derived"}}</small>'),
@@ -896,9 +951,10 @@ check(
 check(
   characterTemplate.includes("interface-state-band__resource--wounds")
     && characterTemplate.includes("interface-state-band__resource--stress")
-    && characterTemplate.includes("INTERFACE.State.Label")
-    && read("styles/interface.css").includes("border-inline: 2px solid"),
-  "Le bandeau Blessures / Initiative / Stress doit suivre la disposition validée."
+    && !characterTemplate.includes("INTERFACE.State.Label")
+    && read("styles/interface.css").includes("border-inline: 2px solid")
+    && read("styles/interface.css").includes("align-items: center"),
+  "Le bandeau Blessures / Initiative / Stress doit conserver sa disposition, sans préfixe « État : »."
 );
 check(
   !fs.existsSync(path.join(root, "assets/items/item_default.png"))
@@ -918,24 +974,11 @@ check(
     && characterApplication.includes("interface-preroll-mode__option--advantage")
     && characterApplication.includes("checked")
     && !characterApplication.includes('<select name="mode">')
+    && !characterApplication.includes("data-interface-mode-slider")
+    && !characterApplication.includes("activatePreRollModeSlider")
     && characterApplication.includes('name="modifier"')
     && characterApplication.includes("INTERFACE.D100.PreRoll.Roll"),
-  "La fenêtre pré-lancer doit proposer une réglette trois positions, le bonus/malus et le lancement."
-);
-
-check(
-  characterApplication.includes("activatePreRollModeSlider")
-    && characterApplication.includes("data-interface-mode-slider")
-    && characterApplication.includes("render: activatePreRollModeSlider")
-    && characterApplication.includes('addEventListener("pointerdown"')
-    && characterApplication.includes('addEventListener("pointermove"')
-    && characterApplication.includes('addEventListener("pointerup"')
-    && characterApplication.includes("setPointerCapture")
-    && characterApplication.includes("releasePointerCapture")
-    && characterApplication.includes('style.setProperty(')
-    && characterApplication.includes('style.removeProperty("--interface-slider-position")')
-    && characterApplication.includes("Math.round(ratio * (PRE_ROLL_MODE_ORDER.length - 1))"),
-  "La réglette pré-lancer doit être réellement déplaçable à la souris entre les trois positions."
+  "La fenêtre pré-lancer V1 doit proposer trois boutons de mode, le bonus/malus et le lancement, sans réglette."
 );
 
 check(
@@ -1023,6 +1066,20 @@ check(
   "Le diagnostic secret du Destin doit être séparé dans une carte MJ chuchotée."
 );
 check(
+  chatCardController.includes("await createDamageResultMessage")
+    && !chatCardController.includes("projectDamageResult(cardRoot, damageCard.publicData)")
+    && !chatCardController.includes("    renderDamageRecord(message, html, card);")
+    && read("templates/chat/damage-result.hbs").includes("interface-chat-card__damage-total")
+    && read("templates/chat/damage-result.hbs").includes("interface-chat-card__blood-mark"),
+  "Chaque dégât valide doit produire une carte 3 autonome visible, sans reprojection dans le sélecteur."
+);
+check(
+  !read("templates/chat/weapon-selector.hbs").includes("data-interface-damage-output")
+    && read("templates/chat/weapon-selector.hbs").includes("interface-chat-card__weapon-img")
+    && read("templates/chat/weapon-selector.hbs").includes("interface-chat-card__weapon-name"),
+  "La carte 2 doit rester un sélecteur réutilisable affichant uniquement image et nom des armes."
+);
+check(
   [
     "--interface-result-critical-failure: #ff0000",
     "--interface-result-failure: #ff006f",
@@ -1042,6 +1099,78 @@ check(
       '.interface-chat-card[data-interface-theme="default"]'
     ),
   "Le point d’extension de thème doit rester commun à la fiche et aux cartes sans persistance."
+);
+
+const themeService = read("scripts/services/theme-service.mjs");
+const themeCss = read("styles/interface.css");
+const settingsTemplate = read("templates/settings/interface-settings.hbs");
+const settingsApplication = read("scripts/applications/interface-settings-application.mjs");
+
+check(
+  exists("fonts/Electrolize.woff2")
+    && themeCss.includes('url("../fonts/Electrolize.woff2")')
+    && themeCss.includes('font-family: "Electrolize"')
+    && themeCss.includes("--interface-theme-font-display"),
+  "Electrolize doit être techniquement disponible depuis fonts/Electrolize.woff2 sans être imposée au rendu."
+);
+check(
+  [
+    "--interface-theme-surface",
+    "--interface-theme-text",
+    "--interface-theme-text-muted",
+    "--interface-theme-border",
+    "--interface-theme-accent",
+    "--interface-theme-tone-corps",
+    "--interface-theme-tone-ame",
+    "--interface-theme-tone-esprit",
+    "--interface-theme-action",
+    "--interface-theme-danger",
+    "--interface-theme-focus",
+    "--interface-destiny-halo"
+  ].every(token => themeCss.includes(token)),
+  "La couche default doit exposer les principaux tokens sémantiques de thème."
+);
+check(
+  Array.from({ length: 6 }, (_value, index) => `--interface-theme-state-${index}`)
+    .every(token => themeCss.includes(token)),
+  "Les six paliers Blessures/Stress doivent être exposés comme tokens CSS."
+);
+check(
+  equipmentTemplate.includes('data-interface-theme="{{theme}}"')
+    && equipmentTemplate.includes('data-interface-item-category="{{itemCategory}}"')
+    && equipmentApplication.includes("resolveItemTheme(this.item)")
+    && equipmentApplication.includes("itemCategory: system.category"),
+  "La fiche Item doit exposer le thème et la catégorie ordinary/weapon sans nouveau type d’Item."
+);
+check(
+  characterCreationTemplate.includes('data-interface-theme="{{theme}}"')
+    && characterCreationApplication.includes("resolveActorTheme(this.actor)")
+    && settingsTemplate.includes('data-interface-theme="{{theme}}"')
+    && settingsApplication.includes("resolveInterfaceTheme()"),
+  "Le wizard et les réglages doivent exposer un contexte de thème explicite."
+);
+check(
+  characterApplication.includes("interface-equipment-choice-dialog")
+    && characterApplication.includes("interface-delete-equipment-dialog")
+    && characterApplication.includes("interface-preroll-dialog")
+    && characterCreationApplication.includes("interface-creation-warning-dialog")
+    && chatCardController.includes("interface-damage-choice-dialog")
+    && [characterApplication, characterCreationApplication, chatCardController]
+      .every(source => source.includes("interfaceThemeClass")),
+  "Les DialogV2 actifs de la Phase 06 doivent recevoir une classe de contexte de thème."
+);
+check(
+  !themeService.includes("game.settings")
+    && !themeService.includes("setFlag")
+    && !themeService.includes("getFlag")
+    && !themeService.includes("update("),
+  "Le service de thème ne doit introduire aucune persistance en Phase 06A.5."
+);
+check(
+  !characterTemplate.includes("woundState.color")
+    && !characterTemplate.includes("stressState.color")
+    && !characterApplication.includes("color: presentation.color"),
+  "La palette Blessures/Stress doit être sortie du contexte JavaScript et du style inline."
 );
 check(
   /structuredClone/.test(d100Engine)
@@ -1114,13 +1243,9 @@ check(
   read("styles/interface.css").includes("interface-preroll-dialog")
     && read("styles/interface.css").includes("interface-preroll__field")
     && read("styles/interface.css").includes("interface-preroll-mode")
-    && read("styles/interface.css").includes("interface-preroll-mode__rail")
-    && read("styles/interface.css").includes("interface-preroll-mode__thumb")
-    && read("styles/interface.css").includes("--interface-slider-position")
-    && read("styles/interface.css").includes("cursor: grab")
-    && read("styles/interface.css").includes("touch-action: none")
-    && read("styles/interface.css").includes(":has("),
-  "La fenêtre pré-lancer doit disposer d’un style compact dédié et d’une réglette déplaçable."
+    && read("styles/interface.css").includes("border-color: #57aef5")
+    && read("styles/interface.css").includes(":has(input:checked)"),
+  "La fenêtre pré-lancer doit disposer d’un style compact dédié avec un état sélectionné à bordure bleue."
 );
 
 const runtimeText = [

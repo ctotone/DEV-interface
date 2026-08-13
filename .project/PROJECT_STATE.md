@@ -1,7 +1,7 @@
 # État du projet — Système D100 Interface
 
-**Dernière mise à jour :** 10 août 2026  
-**Statut global :** Phase 05 validée — Phase 06 prochaine, à recalibrer  
+**Dernière mise à jour :** 13 août 2026
+**Statut global :** Phase 06 validée et clôturée — Phase 07 prochaine
 **Coordinateur :** GPT Pilote  
 **Spécialiste technique principal :** GPT Foundry  
 **Dépôt :** `ctotone/DEV-interface`  
@@ -30,8 +30,8 @@ Phase 03 — Première tranche jouable : VALIDÉE ET CLÔTURÉE
 Complément post-clôture — Compendiums d’armes et d’objets : VALIDÉ
 Phase 04 — États, Destin et réglages MJ : VALIDÉE
 Phase 05 — Conflits, initiative et armes : VALIDÉE
-Phase 06 — Ergonomie et identité visuelle : PROCHAINE — À RECALIBRER
-Phase 07 — Tests et stabilisation : PLANIFIÉE
+Phase 06 — Ergonomie et identité visuelle : VALIDÉE ET CLÔTURÉE
+Phase 07 — Tests et stabilisation : PROCHAINE
 Phase 08 — Préparation de diffusion : PLANIFIÉE, NON ENGAGÉE
 ```
 
@@ -159,3 +159,23 @@ TODO_evilbram.md
 ## Prochaine étape
 
 Après le commit de clôture de la Phase 05, cadrer et recalibrer la Phase 06 à partir de la base réelle.
+
+
+## Phase 06 — clôture
+
+```text
+Design : VALIDÉ
+Intégration : TERMINÉE
+Validation utilisateur Foundry : OUI
+Contrôles hors Foundry : 790 OK
+Modules JavaScript : 29
+Tests unitaires : 5
+F2 multijoueur simultané : NON TESTÉ
+Publication : NON
+```
+
+Le REX ciblé Foundry sur la valeur de GPT Visuel est une activité d'architecture IA séparée et non bloquante pour le projet.
+
+## Prochaine phase
+
+Phase 07 — Tests et stabilisation.

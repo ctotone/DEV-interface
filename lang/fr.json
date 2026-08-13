@@ -83,7 +83,7 @@
     },
     "Equipment": {
       "Category": "Catégorie",
-      "CategoryOrdinary": "Objet ordinaire",
+      "CategoryOrdinary": "Objet",
       "CategoryWeapon": "Arme",
       "Quantity": "Quantité",
       "DamageFormula": "Formule de dégâts",
@@ -193,15 +193,17 @@
       "DropHint": "Tu peux aussi glisser un Item Équipement depuis la barre latérale vers cette fiche.",
       "WeaponsDuplicatedHint": "Une arme reste visible dans l’Inventaire et apparaît également dans cette zone.",
       "Add": "Ajouter un objet ou une arme",
-      "AddTitle": "Ajouter à l’inventaire",
-      "AddPrompt": "Que veux-tu ajouter ?",
+      "AddTitle": "Ajouter à l’inventaire...",
+      "AddPrompt": "Quel type d'objet ajouter à la fiche ?",
       "DeleteOrdinary": "Supprimer cet objet",
       "DeleteWeapon": "Supprimer cette arme",
       "DeleteTitle": "Supprimer l’équipement",
       "DeletePrompt": "Supprimer définitivement « {name} » de cette fiche ?",
       "DeleteWarning": "Cette suppression est irréversible.",
       "DeleteConfirm": "Supprimer",
-      "DeleteCancel": "Annuler"
+      "DeleteCancel": "Annuler",
+      "DialogOrdinary": "Objet",
+      "DialogWeapon": "Arme"
     },
     "Specializations": {
       "Hint": "Une spécialisation par ligne"
@@ -222,7 +224,8 @@
       "TalentGainDetail": "+15 points à répartir entre les Talents",
       "SpecializationGain": "Nouvelle Spécialisation",
       "SpecializationGainDetail": "Ajouter une Spécialisation décidée avec le MJ",
-      "ManualHint": "La jauge et les neuf cases sont déclaratives. Cette tranche n’applique encore aucun gain automatiquement."
+      "ManualHint": "La jauge et les neuf cases sont déclaratives. Cette tranche n’applique encore aucun gain automatiquement.",
+      "ReadyPrompt": "XP complet : choisissez un gain ci-dessous, appliquez-le manuellement à votre fiche, puis cochez le choix correspondant."
     },
     "D100": {
       "Mode": {
@@ -325,13 +328,19 @@
         "Result": "{value} dégâts",
         "Normal": "Dégâts normaux",
         "Maximum": "Dégâts maximum",
-        "ChooseModeTitle": "Choisir les dégâts",
-        "ChooseModeHint": "Ce résultat critique autorise des dégâts normaux ou maximum.",
+        "ChooseModeTitle": "Réussite critique !",
+        "ChooseModeHint": "Ce résultat peut donner lieu à des dégâts spéciaux, validez cela avec le MJ puis choisissez si les dégâts sont :",
         "ActionAlreadyRunning": "Cette action est déjà en cours.",
         "InvalidSnapshot": "Les données de cette arme ne sont plus exploitables.",
         "InvalidFormula": "La formule de dégâts de cette arme est invalide.",
         "RollError": "Le jet de dégâts n'a pas pu être finalisé : {message}",
-        "SelectorError": "La carte de dégâts n'a pas pu être créée : {message}"
+        "SelectorError": "La carte de dégâts n'a pas pu être créée : {message}",
+        "NormalButton": "Normaux",
+        "MaximumButton": "Maximum",
+        "ChooseWeapon": "Choisir arme",
+        "ResultTitle": "Dégâts",
+        "WeaponUsed": "Arme utilisée",
+        "MaximumActivated": "Dégâts max. activés"
       },
       "GM": {
         "Title": "Détail MJ — Destin",
@@ -354,6 +363,36 @@
       "Tie": "Égalité d'initiative à {value} : {names}. Le MJ peut départager avec les outils natifs du Combat.",
       "Roll": "Lancer l’initiative",
       "RollError": "L’initiative n’a pas pu être lancée : {message}"
+    },
+    "Tooltip": {
+      "Skill": {
+        "Carrure": "Capacité à mobiliser sa force\nphysique, soutenir l’effort et imposer\nsa puissance corporelle.",
+        "Agilite": "Capacité à coordonner ses gestes, agir\navec précision et réagir rapidement\naux situations.",
+        "Perception": "Capacité à remarquer, interpréter et\nanticiper les informations fournies\npar les sens et l’attention.",
+        "Mental": "Capacité à décider, résister à la\npression et maintenir sa stabilité\nintérieure face aux difficultés.",
+        "Intellect": "Capacité à comprendre, raisonner,\napprendre et élaborer des solutions\nadaptées à une situation.",
+        "Charisme": "Capacité à influencer, convaincre et\ncommuniquer efficacement par sa\nprésence, son attitude et son\nexpression."
+      },
+      "Talent": {
+        "Endurance": "Capacité à soutenir un effort\nprolongé, résister à la fatigue et\npoursuivre malgré l’épuisement\nphysique.",
+        "ForceBrute": "Capacité à produire un effort physique\nintense pour pousser, soulever, briser\nou déplacer quelque chose.",
+        "Robustesse": "Capacité à encaisser les contraintes\nphysiques, résister aux agressions et\nsupporter des conditions difficiles.",
+        "AgiliteCorporelle": "Capacité à contrôler son corps avec\nsouplesse, équilibre et coordination\ndans des mouvements complexes.",
+        "Precision": "Capacité à exécuter un geste fin,\ncontrôlé et exact lorsqu’une grande\njustesse est nécessaire.",
+        "Reflexe": "Capacité à réagir rapidement face à un\névénement soudain, une menace ou un\nchangement imprévu.",
+        "AcuiteSensorielle": "Capacité à percevoir des détails fins\ngrâce aux sens, même lorsqu’ils sont\ndiscrets ou difficiles à distinguer.",
+        "SixiemeSens": "Capacité à pressentir intuitivement un\ndanger, une anomalie ou un élément\ninhabituel avant de l’identifier\nclairement.",
+        "Vigilance": "Capacité à rester attentif à son\nenvironnement et à repérer rapidement\nun changement ou une menace.",
+        "Decision": "Capacité à choisir rapidement une\nligne d’action et à s’y engager malgré\nl’incertitude ou la pression.",
+        "Determination": "Capacité à poursuivre un objectif\nmalgré les obstacles, les difficultés\nou les tentatives de découragement.",
+        "EquilibreMental": "Capacité à conserver son calme, sa\nlucidité et sa stabilité face au\nstress ou aux chocs émotionnels.",
+        "Creativite": "Capacité à imaginer des idées\noriginales, détourner les solutions\nhabituelles et trouver des approches\nnouvelles.",
+        "Erudition": "Capacité à mobiliser des connaissances\nacquises, reconnaître des références\net restituer des informations\nspécialisées.",
+        "Logique": "Capacité à analyser des informations,\nétablir des relations cohérentes et\ndéduire une conclusion rationnelle.",
+        "Aura": "Capacité à imposer naturellement sa\nprésence, attirer l’attention et\nproduire une impression marquante sur\nautrui.",
+        "CommunicationExpressive": "Capacité à transmettre clairement une\nidée, une émotion ou une intention par\nson expression et son attitude.",
+        "Persuasion": "Capacité à influencer le jugement\nd’autrui par des arguments, une\nnégociation ou une approche adaptée."
+      }
     }
   }
 }

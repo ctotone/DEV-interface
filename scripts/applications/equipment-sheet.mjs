@@ -2,6 +2,7 @@ import {
   DEFAULT_IMAGES,
   EQUIPMENT_CATEGORIES
 } from "../constants.mjs";
+import { resolveItemTheme } from "../services/theme-service.mjs";
 
 const { ItemSheetV2 } = foundry.applications.sheets;
 const { HandlebarsApplicationMixin } = foundry.applications.api;
@@ -9,6 +10,14 @@ const { FilePicker } = foundry.applications.apps;
 
 function canUpdateItem(sheet) {
   return sheet.item?.canUserModify?.(game.user, "update") ?? true;
+}
+
+
+async function saveAndCloseAction() {
+  if (!canUpdateItem(this)) return null;
+
+  await this.submit();
+  return this.close();
 }
 
 async function chooseImageAction() {
@@ -37,7 +46,8 @@ export class InterfaceEquipmentSheet extends HandlebarsApplicationMixin(ItemShee
       resizable: true
     },
     actions: {
-      chooseImage: chooseImageAction
+      chooseImage: chooseImageAction,
+      saveAndClose: saveAndCloseAction
     },
     form: {
       closeOnSubmit: false,
@@ -60,6 +70,8 @@ export class InterfaceEquipmentSheet extends HandlebarsApplicationMixin(ItemShee
       ...context,
       item: this.item,
       system,
+      theme: resolveItemTheme(this.item),
+      itemCategory: system.category,
       image: String(this.item.img ?? "").trim()
         || DEFAULT_IMAGES.EQUIPMENT[system.category],
       categories: [

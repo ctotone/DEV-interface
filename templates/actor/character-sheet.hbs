@@ -84,30 +84,6 @@
 
   <div class="interface-sheet__body">
 
-    <section class="interface-skills" aria-labelledby="{{rootId}}-skills">
-      <h2 id="{{rootId}}-skills">{{localize "INTERFACE.Section.Skills"}}</h2>
-      <div class="interface-skills__grid">
-        {{#each skills}}
-          <div class="interface-skill interface-tone--{{tone}}">
-            {{#if ../editable}}
-              <input
-                type="number"
-                name="system.skills.{{key}}"
-                value="{{value}}"
-                min="0"
-                max="100"
-                step="1"
-              >
-              <span class="interface-skill__label">{{localize label}}</span>
-            {{else}}
-              <strong class="interface-skill__value">{{value}}</strong>
-              <span class="interface-skill__label">{{localize label}}</span>
-            {{/if}}
-          </div>
-        {{/each}}
-      </div>
-    </section>
-
     <section class="interface-state-band" aria-label="{{localize "INTERFACE.Section.Resources"}}">
       <div class="interface-state-band__resource interface-state-band__resource--wounds">
         <div class="interface-state-band__meta">
@@ -115,10 +91,8 @@
           <div
             class="interface-state-label"
             data-state-level="{{woundState.level}}"
-            style="--interface-state-color: {{woundState.color}};"
             aria-label="{{localize "INTERFACE.State.Level"}} {{woundState.level}} : {{localize woundState.label}}"
           >
-            <span>{{localize "INTERFACE.State.Label"}} :</span>
             <strong>{{localize woundState.label}}</strong>
           </div>
         </div>
@@ -164,11 +138,9 @@
             {{#unless initiativeCanRoll}}disabled{{/unless}}
           >
             <span>{{localize "INTERFACE.Derived.Initiative"}}</span>
-            <strong>+{{derived.initiativeBonus}}</strong>
           </button>
         {{else}}
           <span>{{localize "INTERFACE.Derived.Initiative"}}</span>
-          <strong>+{{derived.initiativeBonus}}</strong>
         {{/if}}
       </div>
 
@@ -207,15 +179,41 @@
           <div
             class="interface-state-label"
             data-state-level="{{stressState.level}}"
-            style="--interface-state-color: {{stressState.color}};"
             aria-label="{{localize "INTERFACE.State.Level"}} {{stressState.level}} : {{localize stressState.label}}"
           >
-            <span>{{localize "INTERFACE.State.Label"}} :</span>
             <strong>{{localize stressState.label}}</strong>
           </div>
         </div>
       </div>
     </section>
+
+    <details class="interface-fold interface-skills" data-section="skills" {{#if sections.skills}}open{{/if}}>
+      <summary>
+        <span>{{localize "INTERFACE.Section.Skills"}}</span>
+      </summary>
+      <div class="interface-fold__content interface-skills__content">
+        <div class="interface-skills__grid">
+          {{#each skills}}
+            <div class="interface-skill interface-tone--{{tone}}" title="{{localize title}}">
+              {{#if ../editable}}
+                <input
+                  type="number"
+                  name="system.skills.{{key}}"
+                  value="{{value}}"
+                  min="0"
+                  max="100"
+                  step="1"
+                >
+                <span class="interface-skill__label">{{localize label}}</span>
+              {{else}}
+                <strong class="interface-skill__value">{{value}}</strong>
+                <span class="interface-skill__label">{{localize label}}</span>
+              {{/if}}
+            </div>
+          {{/each}}
+        </div>
+      </div>
+    </details>
 
     <details class="interface-fold" data-section="talents" {{#if sections.talents}}open{{/if}}>
       <summary>
@@ -236,7 +234,7 @@
                       tabindex="-1"
                       data-skill-key="{{../skill}}"
                       data-talent-key="{{key}}"
-                      title="{{localize "INTERFACE.D100.RollTalentTitle"}}"
+                      title="{{localize title}}"
                     >{{localize label}}</button>
                     <input
                       type="number"
@@ -247,7 +245,7 @@
                       step="1"
                     >
                   {{else}}
-                    <span class="interface-talent__label">{{localize label}}</span>
+                    <span class="interface-talent__label" title="{{localize title}}">{{localize label}}</span>
                     <strong class="interface-talent__value">{{value}}</strong>
                   {{/if}}
                 </div>
@@ -271,7 +269,7 @@
                 class="interface-derived-card interface-tone--{{tone}}"
                 data-action="rollDerived"
                 data-derived-key="{{key}}"
-                title="{{localize "INTERFACE.D100.RollDerivedTitle"}}"
+                title="{{localize "INTERFACE.D100.PreRoll.Roll"}}"
               >
                 <span>{{localize label}}</span>
                 <strong>{{value}}</strong>
@@ -319,23 +317,22 @@
 
     <details class="interface-fold" data-section="weapons" {{#if sections.weapons}}open{{/if}}>
       <summary>
-        <span class="interface-fold__title-row">
-          <span>{{localize "INTERFACE.Section.Weapons"}}</span>
-          {{#if editable}}
-            <button
-              type="button"
-              class="interface-fold__add"
-              data-action="createEquipment"
-              data-category="{{categories.WEAPON}}"
-              title="{{localize "INTERFACE.Inventory.AddWeapon"}}"
-              aria-label="{{localize "INTERFACE.Inventory.AddWeapon"}}"
-            >
-              <i class="fa-solid fa-plus" aria-hidden="true"></i>
-            </button>
-          {{/if}}
-        </span>
+        <span>{{localize "INTERFACE.Section.Weapons"}}</span>
       </summary>
       <div class="interface-fold__content">
+        {{#if editable}}
+          <div class="interface-fold__actions">
+            <button
+              type="button"
+              class="interface-fold__content-action"
+              data-action="createEquipment"
+              data-category="{{categories.WEAPON}}"
+            >
+              <i class="fa-solid fa-plus" aria-hidden="true"></i>
+              {{localize "INTERFACE.Inventory.AddWeapon"}}
+            </button>
+          </div>
+        {{/if}}
         {{#if hasWeapons}}
           <ol class="interface-item-list interface-item-list--weapons">
             {{#each weapons}}
@@ -350,7 +347,6 @@
                 {{else}}
                   <span class="interface-item-row__name interface-item-row__name--readonly">{{name}}</span>
                 {{/if}}
-                <span>×{{quantity}}</span>
                 <span class="interface-item-row__formula">{{damageFormula}}</span>
                 {{#if ../editable}}
                   <button
@@ -372,37 +368,23 @@
       </div>
     </details>
 
-    <details class="interface-fold" data-section="specializations" {{#if sections.specializations}}open{{/if}}>
+    <details class="interface-fold" data-section="inventory" {{#if sections.inventory}}open{{/if}}>
       <summary>
-        <span>{{localize "INTERFACE.Section.Specializations"}}</span>
+        <span>{{localize "INTERFACE.Section.Inventory"}}</span>
       </summary>
       <div class="interface-fold__content">
         {{#if editable}}
-          <textarea name="system.identity.specializations" rows="6">{{system.identity.specializations}}</textarea>
-        {{else}}
-          <div class="interface-readonly-text">{{#if system.identity.specializations}}{{system.identity.specializations}}{{else}}—{{/if}}</div>
-        {{/if}}
-      </div>
-    </details>
-
-    <details class="interface-fold" data-section="inventory" {{#if sections.inventory}}open{{/if}}>
-      <summary>
-        <span class="interface-fold__title-row">
-          <span>{{localize "INTERFACE.Section.Inventory"}}</span>
-          {{#if editable}}
+          <div class="interface-fold__actions">
             <button
               type="button"
-              class="interface-fold__add"
+              class="interface-fold__content-action"
               data-action="chooseEquipmentCategory"
-              title="{{localize "INTERFACE.Inventory.Add"}}"
-              aria-label="{{localize "INTERFACE.Inventory.Add"}}"
             >
               <i class="fa-solid fa-plus" aria-hidden="true"></i>
+              {{localize "INTERFACE.Inventory.Add"}}
             </button>
-          {{/if}}
-        </span>
-      </summary>
-      <div class="interface-fold__content">
+          </div>
+        {{/if}}
 
         {{#if hasInventory}}
           <ol class="interface-item-list interface-item-list--inventory">
@@ -439,6 +421,20 @@
       </div>
     </details>
 
+    <details class="interface-fold" data-section="specializations" {{#if sections.specializations}}open{{/if}}>
+      <summary>
+        <span>{{localize "INTERFACE.Section.Specializations"}}</span>
+      </summary>
+      <div class="interface-fold__content">
+        {{#if editable}}
+          <textarea name="system.identity.specializations" rows="6">{{system.identity.specializations}}</textarea>
+        {{else}}
+          <div class="interface-readonly-text">{{#if system.identity.specializations}}{{system.identity.specializations}}{{else}}—{{/if}}</div>
+        {{/if}}
+      </div>
+    </details>
+
+
     <details class="interface-fold" data-section="notes" {{#if sections.notes}}open{{/if}}>
       <summary>
         <span>{{localize "INTERFACE.Section.Notes"}}</span>
@@ -472,7 +468,9 @@
             {{/if}}
           {{/each}}
         </div>
-        <span>{{localize "INTERFACE.Progression.GaugeHint"}}</span>
+        {{#if progressionReady}}
+          <p class="interface-progression__prompt">{{localize "INTERFACE.Progression.ReadyPrompt"}}</p>
+        {{/if}}
       </div>
 
       <div class="interface-progression__choices">
@@ -483,23 +481,23 @@
             <div>
               {{#each gains}}
                 {{#if ../../editable}}
-                  <label>
+                  <label class="interface-progression__gain{{#if disabled}} is-locked{{/if}}" title="{{index}}">
                     <input
                       type="checkbox"
                       name="system.progression.{{../key}}.{{key}}"
                       {{#if checked}}checked{{/if}}
+                      {{#if disabled}}disabled{{/if}}
                     >
-                    <span>{{index}}</span>
+                    <span aria-hidden="true"></span>
                   </label>
                 {{else}}
-                  <span class="interface-progression__readonly-dot {{#if checked}}is-current{{/if}}">{{index}}</span>
+                  <span class="interface-progression__readonly-check {{#if checked}}is-current{{/if}}" aria-label="{{index}}"></span>
                 {{/if}}
               {{/each}}
             </div>
           </fieldset>
         {{/each}}
       </div>
-      <p class="hint">{{localize "INTERFACE.Progression.ManualHint"}}</p>
     </section>
   </div>
 
@@ -509,10 +507,6 @@
       <i class="fa-solid fa-arrows-rotate" aria-hidden="true"></i>
       {{localize "INTERFACE.Common.AutoSaveActive"}}
     </span>
-    <button type="submit">
-      <i class="fa-solid fa-floppy-disk" aria-hidden="true"></i>
-      {{localize "INTERFACE.Common.Save"}}
-    </button>
   </footer>  {{/if}}
 
 </div>

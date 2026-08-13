@@ -30,12 +30,12 @@ export const DEFAULT_IMAGES = Object.freeze({
 });
 
 export const SKILLS = Object.freeze([
-  { key: "carrure", label: "INTERFACE.Skill.Carrure", tone: "corps" },
-  { key: "agilite", label: "INTERFACE.Skill.Agilite", tone: "corps" },
-  { key: "perception", label: "INTERFACE.Skill.Perception", tone: "ame" },
-  { key: "mental", label: "INTERFACE.Skill.Mental", tone: "ame" },
-  { key: "intellect", label: "INTERFACE.Skill.Intellect", tone: "esprit" },
-  { key: "charisme", label: "INTERFACE.Skill.Charisme", tone: "esprit" }
+  { key: "carrure", label: "INTERFACE.Skill.Carrure", title: "INTERFACE.Tooltip.Skill.Carrure", tone: "corps" },
+  { key: "agilite", label: "INTERFACE.Skill.Agilite", title: "INTERFACE.Tooltip.Skill.Agilite", tone: "corps" },
+  { key: "perception", label: "INTERFACE.Skill.Perception", title: "INTERFACE.Tooltip.Skill.Perception", tone: "ame" },
+  { key: "mental", label: "INTERFACE.Skill.Mental", title: "INTERFACE.Tooltip.Skill.Mental", tone: "ame" },
+  { key: "intellect", label: "INTERFACE.Skill.Intellect", title: "INTERFACE.Tooltip.Skill.Intellect", tone: "esprit" },
+  { key: "charisme", label: "INTERFACE.Skill.Charisme", title: "INTERFACE.Tooltip.Skill.Charisme", tone: "esprit" }
 ]);
 
 export const TALENT_GROUPS = Object.freeze([
@@ -44,9 +44,9 @@ export const TALENT_GROUPS = Object.freeze([
     label: "INTERFACE.Skill.Carrure",
     tone: "corps",
     talents: [
-      { key: "endurance", label: "INTERFACE.Talent.Endurance" },
-      { key: "forceBrute", label: "INTERFACE.Talent.ForceBrute" },
-      { key: "robustesse", label: "INTERFACE.Talent.Robustesse" }
+      { key: "endurance", label: "INTERFACE.Talent.Endurance", title: "INTERFACE.Tooltip.Talent.Endurance" },
+      { key: "forceBrute", label: "INTERFACE.Talent.ForceBrute", title: "INTERFACE.Tooltip.Talent.ForceBrute" },
+      { key: "robustesse", label: "INTERFACE.Talent.Robustesse", title: "INTERFACE.Tooltip.Talent.Robustesse" }
     ]
   },
   {
@@ -54,9 +54,9 @@ export const TALENT_GROUPS = Object.freeze([
     label: "INTERFACE.Skill.Agilite",
     tone: "corps",
     talents: [
-      { key: "agiliteCorporelle", label: "INTERFACE.Talent.AgiliteCorporelle" },
-      { key: "precision", label: "INTERFACE.Talent.Precision" },
-      { key: "reflexe", label: "INTERFACE.Talent.Reflexe" }
+      { key: "agiliteCorporelle", label: "INTERFACE.Talent.AgiliteCorporelle", title: "INTERFACE.Tooltip.Talent.AgiliteCorporelle" },
+      { key: "precision", label: "INTERFACE.Talent.Precision", title: "INTERFACE.Tooltip.Talent.Precision" },
+      { key: "reflexe", label: "INTERFACE.Talent.Reflexe", title: "INTERFACE.Tooltip.Talent.Reflexe" }
     ]
   },
   {
@@ -64,9 +64,9 @@ export const TALENT_GROUPS = Object.freeze([
     label: "INTERFACE.Skill.Perception",
     tone: "ame",
     talents: [
-      { key: "acuiteSensorielle", label: "INTERFACE.Talent.AcuiteSensorielle" },
-      { key: "sixiemeSens", label: "INTERFACE.Talent.SixiemeSens" },
-      { key: "vigilance", label: "INTERFACE.Talent.Vigilance" }
+      { key: "acuiteSensorielle", label: "INTERFACE.Talent.AcuiteSensorielle", title: "INTERFACE.Tooltip.Talent.AcuiteSensorielle" },
+      { key: "sixiemeSens", label: "INTERFACE.Talent.SixiemeSens", title: "INTERFACE.Tooltip.Talent.SixiemeSens" },
+      { key: "vigilance", label: "INTERFACE.Talent.Vigilance", title: "INTERFACE.Tooltip.Talent.Vigilance" }
     ]
   },
   {
@@ -74,9 +74,9 @@ export const TALENT_GROUPS = Object.freeze([
     label: "INTERFACE.Skill.Mental",
     tone: "ame",
     talents: [
-      { key: "decision", label: "INTERFACE.Talent.Decision" },
-      { key: "determination", label: "INTERFACE.Talent.Determination" },
-      { key: "equilibreMental", label: "INTERFACE.Talent.EquilibreMental" }
+      { key: "decision", label: "INTERFACE.Talent.Decision", title: "INTERFACE.Tooltip.Talent.Decision" },
+      { key: "determination", label: "INTERFACE.Talent.Determination", title: "INTERFACE.Tooltip.Talent.Determination" },
+      { key: "equilibreMental", label: "INTERFACE.Talent.EquilibreMental", title: "INTERFACE.Tooltip.Talent.EquilibreMental" }
     ]
   },
   {
@@ -84,9 +84,9 @@ export const TALENT_GROUPS = Object.freeze([
     label: "INTERFACE.Skill.Intellect",
     tone: "esprit",
     talents: [
-      { key: "creativite", label: "INTERFACE.Talent.Creativite" },
-      { key: "erudition", label: "INTERFACE.Talent.Erudition" },
-      { key: "logique", label: "INTERFACE.Talent.Logique" }
+      { key: "creativite", label: "INTERFACE.Talent.Creativite", title: "INTERFACE.Tooltip.Talent.Creativite" },
+      { key: "erudition", label: "INTERFACE.Talent.Erudition", title: "INTERFACE.Tooltip.Talent.Erudition" },
+      { key: "logique", label: "INTERFACE.Talent.Logique", title: "INTERFACE.Tooltip.Talent.Logique" }
     ]
   },
   {
@@ -94,9 +94,9 @@ export const TALENT_GROUPS = Object.freeze([
     label: "INTERFACE.Skill.Charisme",
     tone: "esprit",
     talents: [
-      { key: "aura", label: "INTERFACE.Talent.Aura" },
-      { key: "communicationExpressive", label: "INTERFACE.Talent.CommunicationExpressive" },
-      { key: "persuasion", label: "INTERFACE.Talent.Persuasion" }
+      { key: "aura", label: "INTERFACE.Talent.Aura", title: "INTERFACE.Tooltip.Talent.Aura" },
+      { key: "communicationExpressive", label: "INTERFACE.Talent.CommunicationExpressive", title: "INTERFACE.Tooltip.Talent.CommunicationExpressive" },
+      { key: "persuasion", label: "INTERFACE.Talent.Persuasion", title: "INTERFACE.Tooltip.Talent.Persuasion" }
     ]
   }
 ]);

@@ -28,7 +28,7 @@ Phase 03 — Première tranche jouable : VALIDÉE ET CLÔTURÉE
 Complément post-clôture — Compendiums : VALIDÉ
 Phase 04 — États, Destin et réglages MJ : VALIDÉE
 Phase 05 — Conflits, initiative et armes : VALIDÉE
-Phase 06 — Ergonomie et identité visuelle : PROCHAINE, À RECALIBRER
+Phase 06 — Ergonomie et identité visuelle : VALIDÉE ET CLÔTURÉE
 Publication : NON ENGAGÉE
 ```
 

@@ -1,8 +1,8 @@
 # Transmission courante — Système D100 Interface
 
-**Dernière mise à jour :** 10 août 2026  
+**Dernière mise à jour :** 13 août 2026
 **Coordinateur :** GPT Pilote  
-**Prochaine phase :** 06 — Ergonomie et identité visuelle  
+**Prochaine phase :** 07 — Tests et stabilisation
 **GPT principal technique :** GPT Foundry  
 **Contributeur prévu :** GPT Visuel  
 **Identifiant technique :** `interface`  
@@ -145,3 +145,46 @@ Le test simultané multijoueur F2 reste destiné à la Phase 07.
 ## Prochaine action exacte
 
 Après communication du commit de clôture Phase 05, ouvrir la Phase 06 par un audit de l’existant ergonomique et visuel avant toute modification.
+
+
+## Clôture Phase 06
+
+```text
+Phase 06 : VALIDÉE ET CLÔTURÉE
+Base distante connue avant Phase 06 : 1c8dde5f2f9b8855ca2e886a919619f1b5d1961e
+Commit de clôture Phase 06 : à communiquer après intégration et push
+Publication : NON
+F2 : NON TESTÉ
+```
+
+Décision :
+
+```text
+.project/decisions/PHASE_06_ERGONOMIE_IDENTITE_VISUELLE.md
+```
+
+Transmission technique de clôture :
+
+```text
+.project/reports/TRANSMISSION_GPT_FOUNDRY_VERS_GPT_PILOTE_PHASE_06_ERGONOMIE_IDENTITE_VISUELLE.md
+```
+
+## Phase 07
+
+Priorités :
+
+- non-régression globale ;
+- sauvegarde / rechargement ;
+- permissions ;
+- multijoueur ;
+- concurrence ;
+- F2 simultané ;
+- correction des blocages réellement observés.
+
+Ne pas rouvrir gratuitement les décisions visuelles validées en Phase 06.
+
+## REX architecture IA
+
+Le retour complémentaire de GPT Foundry sur la valeur du passage par GPT Visuel est hors chemin critique projet.
+
+Il alimentera séparément le REX transversal destiné à GPT Architecte.

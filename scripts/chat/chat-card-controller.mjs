@@ -1,6 +1,11 @@
 import { SYSTEM_ID } from "../constants.mjs";
 import { rollWeaponDamage } from "../services/damage-service.mjs";
 import {
+  DEFAULT_INTERFACE_THEME,
+  interfaceThemeClass,
+  normalizeInterfaceTheme
+} from "../services/theme-service.mjs";
+import {
   isUsableWeaponSnapshot,
   snapshotActorWeapons
 } from "../services/weapon-snapshot-service.mjs";
@@ -64,24 +69,29 @@ async function withActionLock(key, callback) {
   }
 }
 
-async function requestDamageMode() {
+async function requestDamageMode(theme) {
   const DialogV2 = foundry.applications.api.DialogV2;
+  const resolvedTheme = normalizeInterfaceTheme(theme);
   return DialogV2.wait({
-    classes: ["interface", "interface-damage-choice-dialog"],
+    classes: [
+      "interface",
+      interfaceThemeClass(resolvedTheme),
+      "interface-damage-choice-dialog"
+    ],
     window: {
       title: localize("INTERFACE.Chat.Damage.ChooseModeTitle")
     },
-    content: `<p>${localize("INTERFACE.Chat.Damage.ChooseModeHint")}</p>`,
+    content: `<div data-interface-theme="${resolvedTheme}"><p>${localize("INTERFACE.Chat.Damage.ChooseModeHint")}</p></div>`,
     modal: true,
     buttons: [
       {
         action: DAMAGE_MODES.NORMAL,
-        label: localize("INTERFACE.Chat.Damage.Normal"),
+        label: localize("INTERFACE.Chat.Damage.NormalButton"),
         default: true
       },
       {
         action: DAMAGE_MODES.MAXIMUM,
-        label: localize("INTERFACE.Chat.Damage.Maximum")
+        label: localize("INTERFACE.Chat.Damage.MaximumButton")
       }
     ],
     rejectClose: false
@@ -262,7 +272,9 @@ async function rollDamage(message, card, actor, button) {
   await withActionLock(key, async () => {
     let mode = DAMAGE_MODES.NORMAL;
     if (card.publicData?.allowMaximum === true) {
-      mode = await requestDamageMode();
+      const theme = button.closest("[data-interface-theme]")?.dataset.interfaceTheme
+        ?? DEFAULT_INTERFACE_THEME;
+      mode = await requestDamageMode(theme);
       if (!mode) return;
     }
 
@@ -270,18 +282,13 @@ async function rollDamage(message, card, actor, button) {
       const damage = await rollWeaponDamage(snapshot, {
         maximize: mode === DAMAGE_MODES.MAXIMUM
       });
-      const damageMessage = await createDamageResultMessage({
+      await createDamageResultMessage({
         actor,
         parentMessageId: message.id,
         weapon: snapshot,
         total: damage.total,
         mode
       });
-      const damageCard = getCard(damageMessage);
-      const cardRoot = button.closest?.("[data-interface-card]");
-      if (damageCard?.publicData) {
-        projectDamageResult(cardRoot, damageCard.publicData);
-      }
     } catch (error) {
       console.error("D100 Interface | Échec du jet de dégâts", error);
       const keyByCode = {
@@ -365,11 +372,6 @@ export function renderInterfaceChatMessage(message, html) {
     return;
   }
 
-  if (card.type === CHAT_CARD_TYPES.DAMAGE_RESULT) {
-    renderDamageRecord(message, html, card);
-    return;
-  }
-
   const cardRoot = html.querySelector?.("[data-interface-card]");
   if (!cardRoot) return;
 
@@ -383,9 +385,6 @@ export function renderInterfaceChatMessage(message, html) {
 
   configureActions(cardRoot, message, card, actor);
 
-  if (card.type === CHAT_CARD_TYPES.WEAPON_SELECTOR) {
-    refreshSelectorProjection(cardRoot, message);
-  }
 }
 
 export function registerChatCardHooks() {

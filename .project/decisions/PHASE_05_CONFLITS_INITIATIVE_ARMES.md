@@ -9,7 +9,7 @@
 - **Branche :** `main`
 - **Base de départ :** `a56d68838a93398fffdb35aa7ee9feed3eb5dc71`
 - **Commit pré-test observé dans l’archive entrante :** `0fe3cdbe35e42d4f1c891640a033c1ca02bf98d4`
-- **Commit de clôture documentaire :** à renseigner après intégration et push par l’utilisateur
+- **Commit de clôture documentaire :** `1c8dde5f2f9b8855ca2e886a919619f1b5d1961e`
 - **Foundry de référence :** V14 build `14.365`
 
 # 1. Objectif de la phase

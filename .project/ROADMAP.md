@@ -1,6 +1,6 @@
 # Roadmap — Système D100 Interface pour Foundry VTT
 
-**Dernière mise à jour :** 10 août 2026
+**Dernière mise à jour :** 13 août 2026
 **Statut :** validée par l’utilisateur
 **Identifiant technique :** `interface`
 **Principe :** une phase planifiée ne prouve pas qu’elle est produite, testée ou validée.
@@ -300,56 +300,46 @@ F2 est reporté à la Phase 07.
 
 ## Phase 06 — Ergonomie et identité visuelle
 
-**Statut :** PROCHAINE — PÉRIMÈTRE À RECALIBRER
+**Statut :** VALIDÉE ET CLÔTURÉE
 
 **GPT principal technique :** GPT Foundry  
-**Contributeur visuel :** GPT Visuel
+**Contributeur visuel :** GPT Visuel  
+**Validation réelle :** utilisateur
 
-### Déjà produit
+### Résultat
 
-- adaptation fonctionnelle de la fiche ;
-- assistant de création ;
-- organisation de l’identité ;
-- sections repliables ;
-- séparation Armes / Inventaire ;
-- premiers assets par défaut ;
-- cartes D100 fonctionnelles ;
-- cartes de dégâts fonctionnelles ;
-- six familles de couleurs fonctionnelles validées ;
-- halo Destin fonctionnel mais jugé trop discret ;
-- point d’extension de thème `default` sans persistance.
+- audit ergonomique et visuel ;
+- fondation multi-thèmes ;
+- identité sombre V1 ;
+- Actor, wizard, Items, dialogs et settings harmonisés ;
+- cartes D100 sombres ;
+- signal Destin renforcé ;
+- flux de dégâts en trois cartes ;
+- tests utilisateurs réels au fil des itérations.
 
-### Travail préalable obligatoire
-
-Auditer l’existant avant toute refonte.
-
-Distinguer :
+### Validation
 
 ```text
-VALIDÉ À CONSERVER
-FONCTIONNEL À HABILLER
-À AMÉLIORER
-NOUVEL ARBITRAGE NÉCESSAIRE
-REPORTÉ
+790 contrôles hors Foundry : OK
+29 modules JavaScript
+5 tests unitaires
+Foundry utilisateur : VALIDÉ
+F2 multijoueur simultané : NON TESTÉ
 ```
 
-### Reste principalement à traiter
+### Décision
 
-- identité visuelle finale ;
-- cohérence visuelle fiche / cartes ;
-- affinage du halo Destin ;
-- lisibilité et accessibilité ;
-- responsive et finitions ;
-- direction visuelle des assets et composants ;
-- arbitrage sur la source persistée d’un thème uniquement si un vrai choix de thème utilisateur est introduit.
+```text
+.project/decisions/PHASE_06_ERGONOMIE_IDENTITE_VISUELLE.md
+```
 
-Le design fonctionnel déjà validé ne doit pas être modifié silencieusement sous prétexte d’amélioration visuelle.
+Le REX ciblé sur l'articulation GPT Visuel / GPT Foundry relève de l'architecture IA et n'est pas bloquant pour la clôture projet.
 
 ---
 
 ## Phase 07 — Tests et stabilisation
 
-**Statut :** PLANIFIÉE
+**Statut :** PROCHAINE
 
 **GPT principal :** GPT Foundry  
 **Tests réels :** utilisateur

@@ -1,4 +1,8 @@
-<div class="interface-sheet__content interface-equipment">
+<div
+  class="interface-sheet__content interface-equipment"
+  data-interface-theme="{{theme}}"
+  data-interface-item-category="{{itemCategory}}"
+>
   <header class="interface-equipment__header">
     <div class="interface-equipment__image">
       {{#if editable}}
@@ -76,7 +80,7 @@
 
       <label class="interface-field">
         <span>{{localize "INTERFACE.Equipment.Description"}}</span>
-        <textarea name="system.description" rows="12">{{system.description}}</textarea>
+        <textarea name="system.description" rows="8">{{system.description}}</textarea>
       </label>
     </section>
   </div>
@@ -86,7 +90,7 @@
       <i class="fa-solid fa-arrows-rotate" aria-hidden="true"></i>
       {{localize "INTERFACE.Common.AutoSaveActive"}}
     </span>
-    <button type="submit">
+    <button type="button" data-action="saveAndClose">
       <i class="fa-solid fa-floppy-disk" aria-hidden="true"></i>
       {{localize "INTERFACE.Common.Save"}}
     </button>

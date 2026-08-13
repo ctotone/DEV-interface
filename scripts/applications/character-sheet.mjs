@@ -12,7 +12,11 @@ import {
 } from "../constants.mjs";
 import { D100_MODES } from "../rules/d100/constants.mjs";
 import { standardTalentsForSkill } from "../services/d100-roll-service.mjs";
-import { resolveActorTheme } from "../services/theme-service.mjs";
+import {
+  interfaceThemeClass,
+  normalizeInterfaceTheme,
+  resolveActorTheme
+} from "../services/theme-service.mjs";
 import {
   canRollInitiativeFromSheet,
   rollActorInitiativeFromSheet
@@ -27,6 +31,7 @@ const { FilePicker } = foundry.applications.apps;
 
 const RESOURCE_KEYS = new Set(["wounds", "stress"]);
 const DEFAULT_SECTION_STATE = Object.freeze({
+  skills: true,
   talents: true,
   combat: true,
   weapons: true,
@@ -84,32 +89,26 @@ function itemView(item) {
 
 const STATE_PRESENTATION = Object.freeze([
   Object.freeze({
-    color: "#7A7F87",
     wounds: "INTERFACE.State.Wounds.Indemne",
     stress: "INTERFACE.State.Stress.Stable"
   }),
   Object.freeze({
-    color: "#718F78",
     wounds: "INTERFACE.State.Wounds.Touche",
     stress: "INTERFACE.State.Stress.Tendu"
   }),
   Object.freeze({
-    color: "#B39A45",
     wounds: "INTERFACE.State.Wounds.Meurtri",
     stress: "INTERFACE.State.Stress.Eprouve"
   }),
   Object.freeze({
-    color: "#C97932",
     wounds: "INTERFACE.State.Wounds.Blesse",
     stress: "INTERFACE.State.Stress.Ebranle"
   }),
   Object.freeze({
-    color: "#B84A3A",
     wounds: "INTERFACE.State.Wounds.Brisse",
     stress: "INTERFACE.State.Stress.Submerge"
   }),
   Object.freeze({
-    color: "#762F3A",
     wounds: "INTERFACE.State.Wounds.Critique",
     stress: "INTERFACE.State.Stress.Rupture"
   })
@@ -123,21 +122,33 @@ function buildStatePresentation(resource, level) {
 
   return {
     level: normalizedLevel,
-    label: presentation[resource],
-    color: presentation.color
+    label: presentation[resource]
   };
 }
 
 function buildProgressionGroup(system, key, label, detail) {
+  const gainKeys = ["first", "second", "third"];
+  const checkedStates = gainKeys.map(gain => (
+    system.progression[key][gain] === true
+  ));
+
   return {
     key,
     label,
     detail,
-    gains: ["first", "second", "third"].map((gain, index) => ({
-      key: gain,
-      index: index + 1,
-      checked: system.progression[key][gain] === true
-    }))
+    gains: gainKeys.map((gain, index) => {
+      const checked = checkedStates[index];
+      const previousChecked = index === 0 || checkedStates[index - 1] === true;
+      const nextChecked = index < checkedStates.length - 1
+        && checkedStates[index + 1] === true;
+
+      return {
+        key: gain,
+        index: index + 1,
+        checked,
+        disabled: checked ? nextChecked : !previousChecked
+      };
+    })
   };
 }
 
@@ -193,21 +204,23 @@ async function chooseEquipmentCategoryAction(event) {
   event.stopPropagation();
   if (!canUpdateActor(this)) return null;
 
+  const theme = normalizeInterfaceTheme(resolveActorTheme(this.actor));
   const category = await DialogV2.wait({
+    classes: ["interface", interfaceThemeClass(theme), "interface-equipment-choice-dialog"],
     window: {
       title: game.i18n.localize("INTERFACE.Inventory.AddTitle")
     },
-    content: `<p>${game.i18n.localize("INTERFACE.Inventory.AddPrompt")}</p>`,
+    content: `<div data-interface-theme="${theme}"><p>${game.i18n.localize("INTERFACE.Inventory.AddPrompt")}</p></div>`,
     buttons: [
       {
         action: EQUIPMENT_CATEGORIES.ORDINARY,
-        label: game.i18n.localize("INTERFACE.Inventory.AddOrdinary"),
+        label: game.i18n.localize("INTERFACE.Inventory.DialogOrdinary"),
         default: true,
         callback: () => EQUIPMENT_CATEGORIES.ORDINARY
       },
       {
         action: EQUIPMENT_CATEGORIES.WEAPON,
-        label: game.i18n.localize("INTERFACE.Inventory.AddWeapon"),
+        label: game.i18n.localize("INTERFACE.Inventory.DialogWeapon"),
         callback: () => EQUIPMENT_CATEGORIES.WEAPON
       }
     ],
@@ -235,15 +248,19 @@ async function deleteEmbeddedItemAction(event, target) {
   const item = this.actor.items.get(row?.dataset.itemId);
   if (!item) return null;
 
+  const theme = normalizeInterfaceTheme(resolveActorTheme(this.actor));
   const confirmed = await DialogV2.confirm({
+    classes: ["interface", interfaceThemeClass(theme), "interface-delete-equipment-dialog"],
     window: {
       title: game.i18n.localize("INTERFACE.Inventory.DeleteTitle")
     },
     content: `
+      <div data-interface-theme="${theme}">
       <p>${game.i18n.format("INTERFACE.Inventory.DeletePrompt", {
         name: escapeHtml(item.name)
       })}</p>
       <p class="hint">${game.i18n.localize("INTERFACE.Inventory.DeleteWarning")}</p>
+      </div>
     `,
     yes: {
       label: game.i18n.localize("INTERFACE.Inventory.DeleteConfirm"),
@@ -260,6 +277,19 @@ async function deleteEmbeddedItemAction(event, target) {
   await item.delete();
   return item;
 }
+
+const TALENT_DISPLAY_ORDER = Object.freeze([
+  "carrure",
+  "perception",
+  "intellect",
+  "agilite",
+  "mental",
+  "charisme"
+]);
+
+const TALENT_DISPLAY_INDEX = new Map(
+  TALENT_DISPLAY_ORDER.map((key, index) => [key, index])
+);
 
 function standardRollLabel(skillKey, talentKey) {
   const skill = SKILLS.find(entry => entry.key === skillKey);
@@ -283,84 +313,14 @@ function derivedRollLabel(key) {
   return definition ? game.i18n.localize(definition.label) : "";
 }
 
-const PRE_ROLL_MODE_ORDER = Object.freeze([
-  D100_MODES.DISADVANTAGE,
-  D100_MODES.NORMAL,
-  D100_MODES.ADVANTAGE
-]);
-
-function activatePreRollModeSlider(event, dialog) {
-  const slider = dialog.element.querySelector("[data-interface-mode-slider]");
-  if (!slider || slider.dataset.interfaceSliderReady === "true") return;
-
-  const group = slider.closest(".interface-preroll-mode");
-  if (!group) return;
-
-  const inputs = PRE_ROLL_MODE_ORDER.map(mode => (
-    group.querySelector(`input[name="mode"][value="${mode}"]`)
-  ));
-  if (inputs.some(input => !input)) return;
-
-  slider.dataset.interfaceSliderReady = "true";
-  let activePointerId = null;
-
-  const selectFromPointer = (clientX, { dragging = false } = {}) => {
-    const rect = slider.getBoundingClientRect();
-    if (!(rect.width > 0)) return;
-
-    const ratio = Math.min(1, Math.max(0, (clientX - rect.left) / rect.width));
-    if (dragging) {
-      slider.style.setProperty(
-        "--interface-slider-position",
-        `${ratio * 100}%`
-      );
-    }
-
-    const index = Math.round(ratio * (PRE_ROLL_MODE_ORDER.length - 1));
-    const input = inputs[index];
-    if (input.checked) return;
-
-    input.checked = true;
-    input.dispatchEvent(new Event("change", { bubbles: true }));
-  };
-
-  slider.addEventListener("pointerdown", pointerEvent => {
-    if (pointerEvent.button !== 0) return;
-
-    activePointerId = pointerEvent.pointerId;
-    slider.classList.add("is-dragging");
-    slider.setPointerCapture?.(activePointerId);
-    selectFromPointer(pointerEvent.clientX, { dragging: true });
-    pointerEvent.preventDefault();
-  });
-
-  slider.addEventListener("pointermove", pointerEvent => {
-    if (pointerEvent.pointerId !== activePointerId) return;
-
-    selectFromPointer(pointerEvent.clientX, { dragging: true });
-    pointerEvent.preventDefault();
-  });
-
-  const finishDrag = pointerEvent => {
-    if (pointerEvent.pointerId !== activePointerId) return;
-
-    selectFromPointer(pointerEvent.clientX, { dragging: true });
-    if (slider.hasPointerCapture?.(activePointerId)) {
-      slider.releasePointerCapture(activePointerId);
-    }
-    activePointerId = null;
-    slider.classList.remove("is-dragging");
-    slider.style.removeProperty("--interface-slider-position");
-    pointerEvent.preventDefault();
-  };
-
-  slider.addEventListener("pointerup", finishDrag);
-  slider.addEventListener("pointercancel", finishDrag);
-}
-
-async function requestRollOptions(sourceLabel) {
+async function requestRollOptions(sourceLabel, theme) {
+  const resolvedTheme = normalizeInterfaceTheme(theme);
   const result = await DialogV2.input({
-    classes: ["interface", "interface-preroll-dialog"],
+    classes: [
+      "interface",
+      interfaceThemeClass(resolvedTheme),
+      "interface-preroll-dialog"
+    ],
     window: {
       title: game.i18n.format("INTERFACE.D100.PreRoll.Title", {
         source: sourceLabel
@@ -370,7 +330,7 @@ async function requestRollOptions(sourceLabel) {
       width: 380
     },
     content: `
-      <div class="interface-preroll">
+      <div class="interface-preroll" data-interface-theme="${resolvedTheme}">
         <div class="interface-preroll__source">${escapeHtml(sourceLabel)}</div>
         <fieldset class="interface-preroll__mode">
           <legend>${game.i18n.localize("INTERFACE.D100.PreRoll.Mode")}</legend>
@@ -400,15 +360,7 @@ async function requestRollOptions(sourceLabel) {
               >
               <span>${game.i18n.localize("INTERFACE.D100.Mode.Advantage")}</span>
             </label>
-            <div
-              class="interface-preroll-mode__rail"
-              data-interface-mode-slider
-              aria-hidden="true"
-            >
-              <span class="interface-preroll-mode__thumb"></span>
-            </div>
           </div>
-          <small>${game.i18n.localize("INTERFACE.D100.PreRoll.ModeHint")}</small>
         </fieldset>
         <label class="interface-preroll__field">
           <span>${game.i18n.localize("INTERFACE.D100.PreRoll.Modifier")}</span>
@@ -421,8 +373,7 @@ async function requestRollOptions(sourceLabel) {
       label: game.i18n.localize("INTERFACE.D100.PreRoll.Roll")
     },
     rejectClose: false,
-    modal: true,
-    render: activatePreRollModeSlider
+    modal: true
   });
 
   if (!result) return null;
@@ -460,7 +411,8 @@ async function rollTalentAction(event, target) {
 
   return executeRoll(this, target, async () => {
     const options = await requestRollOptions(
-      standardRollLabel(skillKey, talentKey)
+      standardRollLabel(skillKey, talentKey),
+      resolveActorTheme(this.actor)
     );
     if (!options) return null;
 
@@ -512,7 +464,8 @@ async function rollSkillAction(event, target) {
     if (!talentKey) return null;
 
     const options = await requestRollOptions(
-      standardRollLabel(skillKey, talentKey)
+      standardRollLabel(skillKey, talentKey),
+      resolveActorTheme(this.actor)
     );
     if (!options) return null;
 
@@ -530,7 +483,10 @@ async function rollDerivedAction(event, target) {
   const key = target.dataset.derivedKey;
 
   return executeRoll(this, target, async () => {
-    const options = await requestRollOptions(derivedRollLabel(key));
+    const options = await requestRollOptions(
+      derivedRollLabel(key),
+      resolveActorTheme(this.actor)
+    );
     if (!options) return null;
 
     return this.actor.rollDerivedD100({
@@ -670,18 +626,24 @@ export class InterfaceCharacterSheet extends HandlebarsApplicationMixin(ActorShe
         ...skill,
         value: system.skills[skill.key]
       })),
-      talentGroups: TALENT_GROUPS.map(group => ({
-        ...group,
-        skillValue: system.skills[group.skill],
-        talents: group.talents.map(talent => ({
-          ...talent,
-          value: system.talents[talent.key]
-        }))
-      })),
+      talentGroups: [...TALENT_GROUPS]
+        .sort((left, right) => (
+          (TALENT_DISPLAY_INDEX.get(left.skill) ?? 99)
+          - (TALENT_DISPLAY_INDEX.get(right.skill) ?? 99)
+        ))
+        .map(group => ({
+          ...group,
+          skillValue: system.skills[group.skill],
+          talents: group.talents.map(talent => ({
+            ...talent,
+            value: system.talents[talent.key]
+          }))
+        })),
       progressionGauge: [0, 1, 2, 3].map(value => ({
         value,
         checked: system.progression.gauge === value
       })),
+      progressionReady: system.progression.gauge === 3,
       progressionGroups: [
         buildProgressionGroup(
           system,

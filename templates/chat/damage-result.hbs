@@ -3,17 +3,29 @@
   data-interface-card
   data-interface-theme="{{theme}}"
 >
-  <header class="interface-chat-card__header">
-    <img class="interface-chat-card__portrait" src="{{actorImg}}" alt="{{actorName}}">
-    <div class="interface-chat-card__identity">
-      <strong class="interface-chat-card__actor{{#if compactActorName}} interface-chat-card__actor--compact{{/if}}">
-        {{actorName}}
-      </strong>
-      <div class="interface-chat-card__jet">{{title}}</div>
-    </div>
+  <header class="interface-chat-card__damage-header">
+    <strong class="interface-chat-card__damage-actor{{#if compactActorName}} interface-chat-card__damage-actor--compact{{/if}}">
+      {{actorName}}
+    </strong>
+    <span class="interface-chat-card__damage-title">{{title}}</span>
   </header>
-  <div class="interface-chat-card__damage-output" data-state="result">
-    {{resultLabel}}
+
+  <div class="interface-chat-card__damage-stage">
+    <div class="interface-chat-card__damage-total">{{total}}</div>
+
+    <div class="interface-chat-card__damage-illustration" aria-hidden="true">
+      <span class="interface-chat-card__blood-mark"></span>
+      <img class="interface-chat-card__damage-weapon-img" src="{{weaponImg}}" alt="">
+    </div>
   </div>
-  <div class="interface-chat-card__damage-detail">{{weaponName}} — {{modeLabel}}</div>
+
+  <div class="interface-chat-card__damage-footer">
+    <strong class="interface-chat-card__damage-weapon-name{{#if compactWeaponName}} interface-chat-card__damage-weapon-name--compact{{/if}}{{#if extraCompactWeaponName}} interface-chat-card__damage-weapon-name--extra-compact{{/if}}">{{weaponName}}</strong>
+  </div>
+
+  {{#if modeLabel}}
+    <div class="interface-chat-card__damage-mode-row">
+      <div class="interface-chat-card__damage-mode">{{modeLabel}}</div>
+    </div>
+  {{/if}}
 </article>

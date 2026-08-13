@@ -1,4 +1,7 @@
-<div class="interface-character-creation__content">
+<div
+  class="interface-character-creation__content"
+  data-interface-theme="{{theme}}"
+>
   <div class="interface-character-creation__body">
     <header class="interface-identity-grid interface-creation-identity">
       <div class="interface-identity__portrait">
@@ -84,6 +87,7 @@
           <label
             class="interface-creation-skill interface-tone--{{tone}}"
             data-skill-drop="{{skill}}"
+            title="{{localize title}}"
           >
             <span>{{localize label}}</span>
             <div class="interface-creation-skill__value">
@@ -121,7 +125,7 @@
           <fieldset class="interface-creation-talent-group interface-tone--{{tone}}">
             <legend>{{localize label}}</legend>
             {{#each talents}}
-              <label>
+              <label title="{{localize title}}">
                 <span>{{localize label}}</span>
                 <input
                   type="number"
