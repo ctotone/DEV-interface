@@ -2,7 +2,7 @@
   "_id": "y6ImZc9Gw0WkeUlx",
   "name": "Filtre à eau",
   "type": "equipment",
-  "img": "systems/interface/assets/compendiums/objects/survival/2.filtre a eau.webp",
+  "img": "systems/interface/assets/compendiums/objects/survival/2.filtre-a-eau.webp",
   "system": {
     "description": "Dispositif permettant de rendre une eau plus sûre à consommer.",
     "category": "ordinary",

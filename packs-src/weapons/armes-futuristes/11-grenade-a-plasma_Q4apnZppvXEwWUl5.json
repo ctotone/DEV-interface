@@ -2,7 +2,7 @@
   "_id": "Q4apnZppvXEwWUl5",
   "name": "Grenade à plasma",
   "type": "equipment",
-  "img": "systems/interface/assets/compendiums/weapons/futuristic/3.Grenade à plasma.webp",
+  "img": "systems/interface/assets/compendiums/weapons/futuristic/3.grenade-a-plasma.webp",
   "system": {
     "description": "Charge énergétique produisant une déflagration thermique concentrée.",
     "category": "weapon",

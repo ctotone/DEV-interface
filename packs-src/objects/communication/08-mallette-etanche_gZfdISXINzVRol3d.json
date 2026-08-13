@@ -2,7 +2,7 @@
   "_id": "gZfdISXINzVRol3d",
   "name": "Mallette étanche",
   "type": "equipment",
-  "img": "systems/interface/assets/compendiums/objects/communication/5.Mallette étanche.webp",
+  "img": "systems/interface/assets/compendiums/objects/communication/5.mallette-etanche.webp",
   "system": {
     "description": "Contenant rigide protégeant son contenu contre les chocs et l’humidité.",
     "category": "ordinary",

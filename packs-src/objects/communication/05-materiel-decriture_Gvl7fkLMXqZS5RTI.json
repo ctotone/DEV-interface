@@ -2,7 +2,7 @@
   "_id": "Gvl7fkLMXqZS5RTI",
   "name": "Matériel d’écriture",
   "type": "equipment",
-  "img": "systems/interface/assets/compendiums/objects/communication/5.Matériel d’écriture.webp",
+  "img": "systems/interface/assets/compendiums/objects/communication/5.materiel-d-ecriture.webp",
   "system": {
     "description": "Carnet, papier et instruments permettant de prendre des notes.",
     "category": "ordinary",

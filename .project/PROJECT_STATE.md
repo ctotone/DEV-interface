@@ -1,23 +1,38 @@
-# État du projet — Système D100 Interface
+# État du projet — Système Interface
 
-**Dernière mise à jour :** 13 août 2026
-**Statut global :** Phase 06 validée et clôturée — Phase 07 prochaine
+**Dernière mise à jour :** 13 août 2026  
+**Statut global :** VERSION 1.0.0 PRODUITE ET VALIDÉE DEPUIS LE DÉPÔT PROD  
 **Coordinateur :** GPT Pilote  
 **Spécialiste technique principal :** GPT Foundry  
-**Dépôt :** `ctotone/DEV-interface`  
-**Branche :** `main`  
-**Commit de clôture de la phase 03 :** `72a2d32ff51661e548f3900792fca263e8b75b98`  
-**Commit d’intégration du complément compendiums :** `cf83489710fce2e186b0f78bbc25bcdbaf791dec`  
-**Commit de clôture de la phase 04 :** `a56d68838a93398fffdb35aa7ee9feed3eb5dc71`  
-**Commit pré-test Phase 05 observé :** `0fe3cdbe35e42d4f1c891640a033c1ca02bf98d4`  
-**Commit de clôture documentaire Phase 05 :** à communiquer après intégration et push  
 **Identifiant technique :** `interface`  
-**Version package :** `0.1.0`  
+**Nom affiché :** `Système Interface`  
+**Version package :** `1.0.0`  
 **Version de schéma :** `1`
 
-## Finalité
+## Dépôts
 
-Créer un système Foundry VTT générique, léger et orienté narration pour le Système D100 Interface.
+### DEV
+
+```text
+Dépôt   : ctotone/DEV-interface
+Branche : main
+Phase 06 clôture : 39ae4e11c553a10ca04dce0efeecb461c86ae16f
+Dernier hash DEV communiqué avant correctif final des assets :
+e5796091dac6cf6f6991ca9e893faf4d6014c84e
+
+Hash DEV final 1.0.0 :
+à renseigner après intégration et push utilisateur
+```
+
+### PROD
+
+```text
+Dépôt   : https://github.com/ctotone/interface-ga
+Branche : main
+Commit  : 665d698a686fcbd6d0d519390a9b7b5e5d9864bc
+Tag     : 1.0.0
+Release : https://github.com/ctotone/interface-ga/releases/tag/1.0.0
+```
 
 ## État des phases
 
@@ -27,155 +42,99 @@ Phase 00B — Cadrage produit et dépôt : VALIDÉE
 Phase 01 — Personnage, équipement et conflits : VALIDÉE
 Phase 02 — Architecture Foundry : VALIDÉE
 Phase 03 — Première tranche jouable : VALIDÉE ET CLÔTURÉE
-Complément post-clôture — Compendiums d’armes et d’objets : VALIDÉ
+Complément compendiums : VALIDÉ
 Phase 04 — États, Destin et réglages MJ : VALIDÉE
 Phase 05 — Conflits, initiative et armes : VALIDÉE
 Phase 06 — Ergonomie et identité visuelle : VALIDÉE ET CLÔTURÉE
-Phase 07 — Tests et stabilisation : PROCHAINE
-Phase 08 — Préparation de diffusion : PLANIFIÉE, NON ENGAGÉE
+Phase 07 — Finitions, stabilisation et gel pré-1.0.0 : VALIDÉE ET CLÔTURÉE
+Phase 08 — Préparation de diffusion : objectifs absorbés dans la séquence finale 1.0.0
 ```
 
-## État technique réel
+## Release 1.0.0
 
-Le système est installable sous Foundry VTT V14 et la base de test réelle documentée reste le build `14.365`.
-
-Sont actuellement produits :
-
-- Actor `character` et Item `equipment` ;
-- six Compétences et dix-huit Talents ;
-- Blessures, Stress, Destin et progression persistés ;
-- valeurs dérivées et malus d’état ;
-- settings monde ;
-- moteur D100 normal, avantage et désavantage ;
-- automatiques, critiques, super-critiques, Destin et marges ;
-- assistant de création ;
-- fiche Actor et fiche Item ;
-- sections Inventaire et Armes ;
-- cartes de chat D100 fonctionnelles ;
-- projection publique / MJ filtrée ;
-- snapshots d’armes ;
-- sélecteur de dégâts réutilisable ;
-- dégâts normaux et maximum ;
-- forçage MJ après échec ;
-- initiative native complète depuis la fiche ;
-- deux compendiums validés et reconstructibles, actuellement désactivés pendant le développement.
-
-## Phase 05 — résultat
+Validation utilisateur :
 
 ```text
-Développement : TERMINÉ
-Validation fonctionnelle utilisateur : OUI
-Contrôles hors Foundry : 762 OK
-Modules JavaScript vérifiés : 29
-Tests unitaires : 4
-Test multijoueur simultané F2 : NON EXÉCUTÉ
-Publication : NON
+Installation depuis manifeste distant : OK
+Background : OK
+Actor : OK
+Item : OK
+Jets D100 : OK
+Compendium Objets : OK
+Compendium Armes : OK
+Compendium Manuel du joueur : OK
+Images compendiums : OK
+Manuel 8 pages : OK
 ```
 
-Le test F2 reste explicitement non validé et est reporté à la Phase 07.
+Foundry testé : `V14.365`.
 
-## Compendiums — mode développement
+## Compendiums
 
-Les compendiums restent validés mais temporairement inactifs :
+```text
+interface.objects  → 60 Items / 8 dossiers
+interface.weapons  → 42 Items / 3 dossiers
+interface.manual   → 1 JournalEntry / 8 pages
+```
+
+Sources :
+
+```text
+packs-src/
+```
+
+Artefacts runtime :
+
+```text
+packs/
+```
+
+## Distribution
+
+Le dépôt PROD est construit par liste blanche et exclut les éléments de développement.
+
+Runtime public :
 
 ```text
 system.json
-→ aucune propriété packs
-
-packs-src/
-→ source d’autorité du contenu
-
+assets/
+fonts/
+lang/
 packs/
-→ artefacts LevelDB conservés et versionnés
-
-avant candidate / release 1.0.0
-→ réactivation
-→ reconstruction
-→ contrôles
-→ tests Foundry
+scripts/
+styles/
+templates/
 ```
 
-Identifiants structurants :
+## Contrôles finaux rapportés
 
 ```text
-interface.objects
-interface.weapons
+913 / 913 contrôles hors Foundry : OK
+29 modules JavaScript vérifiés
+5 tests unitaires : OK
+Smoke D100 : OK
+Assets compendium non sûrs : 0
 ```
 
-## Conventions de livraison
-
-Les ZIP techniques doivent exclure :
+## Limite connue
 
 ```text
-.git/
-.gitignore
-TODO_evilbram.md
+F2 — simultanéité multijoueur : NON TESTÉ
 ```
 
-`TODO_evilbram.md` est personnel à l’utilisateur et n’est jamais une source d’autorité.
+Ce risque a été accepté implicitement pour la version personnelle `1.0.0`, l'installation et les fonctions principales ayant été validées par l'utilisateur.
 
-## Éléments ouverts
-
-### Phase 06
-
-À recalibrer en tenant compte de l’existant :
-
-- identité visuelle finale ;
-- cohérence visuelle fiche / cartes ;
-- affinage du halo Destin ;
-- accessibilité et lisibilité ;
-- responsive et finitions ;
-- éventuel arbitrage sur la persistance des thèmes uniquement si un choix de thème utilisateur est réellement introduit.
-
-### Phase 07
-
-- tests fonctionnels globaux ;
-- non-régression ;
-- permissions et sauvegarde/rechargement ;
-- multijoueur ;
-- test simultané F2 ;
-- concurrence ;
-- correction des blocages.
-
-### Phase 08
-
-- préparation de diffusion ;
-- réactivation et reconstruction des compendiums ;
-- contrôles avant candidate / release `1.0.0` ;
-- publication uniquement après décision utilisateur.
-
-## Sources d’autorité principales
+## Sources d'autorité de clôture
 
 ```text
-.project/specification/PHASE_00A_TRANSMISSION_FOUNDRY_RESOLUTION_JETS_INTERFACE.md
-.project/specification/PHASE_01_SPECIFICATION_FONCTIONNELLE_PERSONNAGE_EQUIPEMENT_CONFLITS_INTERFACE.md
-.project/specification/PHASE_02_ARCHITECTURE_FOUNDRY_INTERFACE.md
-.project/decisions/PHASE_04_ETATS_DESTIN_REGLAGES_MJ.md
-.project/decisions/PHASE_05_CARTES_CHAT_ERGONOMIE.md
-.project/decisions/PHASE_05_CONFLITS_INITIATIVE_ARMES.md
-.project/decisions/GESTION_COMPENDIUMS_MODE_DEVELOPPEMENT.md
+.project/decisions/PHASE_07_FINITIONS_STABILISATION_GEL_PRE_1_0_0.md
+.project/releases/RELEASE_1.0.0.md
+.project/releases/RELEASE_MAP.md
+.project/reports/TRANSMISSION_GPT_FOUNDRY_VERS_GPT_PILOTE_PHASE_07_CLOTURE_1_0_0.md
 ```
 
-## Prochaine étape
+## Prochaine action
 
-Après le commit de clôture de la Phase 05, cadrer et recalibrer la Phase 06 à partir de la base réelle.
+Renseigner le hash DEV final après push de l'archive consolidée.
 
-
-## Phase 06 — clôture
-
-```text
-Design : VALIDÉ
-Intégration : TERMINÉE
-Validation utilisateur Foundry : OUI
-Contrôles hors Foundry : 790 OK
-Modules JavaScript : 29
-Tests unitaires : 5
-F2 multijoueur simultané : NON TESTÉ
-Publication : NON
-```
-
-Le REX ciblé Foundry sur la valeur de GPT Visuel est une activité d'architecture IA séparée et non bloquante pour le projet.
-
-## Prochaine phase
-
-Phase 07 — Tests et stabilisation.
+Toute nouvelle évolution du système devra être traitée comme une nouvelle version après `1.0.0`.

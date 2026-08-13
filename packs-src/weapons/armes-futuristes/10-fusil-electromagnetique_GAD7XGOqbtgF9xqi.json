@@ -2,7 +2,7 @@
   "_id": "GAD7XGOqbtgF9xqi",
   "name": "Fusil électromagnétique",
   "type": "equipment",
-  "img": "systems/interface/assets/compendiums/weapons/futuristic/3.Fusil électromagnétique.webp",
+  "img": "systems/interface/assets/compendiums/weapons/futuristic/3.fusil-electromagnetique.webp",
   "system": {
     "description": "Arme de précision propulsant un projectile à très haute vitesse.",
     "category": "weapon",

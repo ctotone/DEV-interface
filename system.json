@@ -2,7 +2,7 @@
   "id": "interface",
   "title": "Système Interface",
   "type": "system",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Système D100 générique, léger et orienté narration.",
   "background": "systems/interface/assets/system-background.webp",
   "compatibility": {
@@ -66,5 +66,14 @@
       "system": "interface",
       "banner": "systems/interface/assets/banners/banniere_manuel.webp"
     }
-  ]
+  ],
+  "authors": [
+    {
+      "name": "Evilbram"
+    }
+  ],
+  "url": "https://github.com/ctotone/interface-ga",
+  "bugs": "https://github.com/ctotone/interface-ga/issues",
+  "manifest": "https://raw.githubusercontent.com/ctotone/interface-ga/main/system.json",
+  "download": "https://github.com/ctotone/interface-ga/releases/download/1.0.0/interface-1.0.0.zip"
 }

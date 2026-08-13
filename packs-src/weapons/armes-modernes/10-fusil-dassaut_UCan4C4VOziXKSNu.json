@@ -2,7 +2,7 @@
   "_id": "UCan4C4VOziXKSNu",
   "name": "Fusil d’assaut",
   "type": "equipment",
-  "img": "systems/interface/assets/compendiums/weapons/modern/3.fusil d'assaut.webp",
+  "img": "systems/interface/assets/compendiums/weapons/modern/3.fusil-d-assaut.webp",
   "system": {
     "description": "Arme longue automatique polyvalente destinée au combat général.",
     "category": "weapon",

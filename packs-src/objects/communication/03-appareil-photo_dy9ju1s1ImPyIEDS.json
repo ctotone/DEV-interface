@@ -2,7 +2,7 @@
   "_id": "dy9ju1s1ImPyIEDS",
   "name": "Appareil photo",
   "type": "equipment",
-  "img": "systems/interface/assets/compendiums/objects/communication/5.Appareil photo.webp",
+  "img": "systems/interface/assets/compendiums/objects/communication/5.appareil-photo.webp",
   "system": {
     "description": "Dispositif permettant de conserver une image d’un lieu, objet ou événement.",
     "category": "ordinary",

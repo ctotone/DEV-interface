@@ -2,7 +2,7 @@
   "_id": "qPwpRe4rNnvveSNU",
   "name": "Outil polyvalent",
   "type": "equipment",
-  "img": "systems/interface/assets/compendiums/objects/tools/3.Outil polyvalent.webp",
+  "img": "systems/interface/assets/compendiums/objects/tools/3.outil-polyvalent.webp",
   "system": {
     "description": "Outil compact regroupant plusieurs fonctions pratiques.",
     "category": "ordinary",

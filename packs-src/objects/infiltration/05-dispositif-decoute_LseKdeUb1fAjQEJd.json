@@ -2,7 +2,7 @@
   "_id": "LseKdeUb1fAjQEJd",
   "name": "Dispositif d’écoute",
   "type": "equipment",
-  "img": "systems/interface/assets/compendiums/objects/security/7.Dispositif d’écoute.webp",
+  "img": "systems/interface/assets/compendiums/objects/security/7.dispositif-d-ecoute.webp",
   "system": {
     "description": "Petit équipement permettant de capter ou transmettre discrètement des sons.",
     "category": "ordinary",

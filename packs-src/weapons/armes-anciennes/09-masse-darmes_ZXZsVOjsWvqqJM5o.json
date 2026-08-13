@@ -2,7 +2,7 @@
   "_id": "ZXZsVOjsWvqqJM5o",
   "name": "Masse d’armes",
   "type": "equipment",
-  "img": "systems/interface/assets/compendiums/weapons/ancient/3.masse d'arme.webp",
+  "img": "systems/interface/assets/compendiums/weapons/ancient/3.masse-d-arme.webp",
   "system": {
     "description": "Arme contondante lourde conçue pour briser et écraser.",
     "category": "weapon",

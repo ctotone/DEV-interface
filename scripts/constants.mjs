@@ -1,5 +1,5 @@
 export const SYSTEM_ID = "interface";
-export const PACKAGE_VERSION = "0.1.0";
+export const PACKAGE_VERSION = "1.0.0";
 export const SCHEMA_VERSION = 1;
 
 export const FLAG_KEYS = Object.freeze({

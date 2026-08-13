@@ -2,7 +2,7 @@
   "_id": "Z8MLLZ1s0ub60rOD",
   "name": "Nécessaire pour le feu",
   "type": "equipment",
-  "img": "systems/interface/assets/compendiums/objects/survival/2.necessaire feu.webp",
+  "img": "systems/interface/assets/compendiums/objects/survival/2.necessaire-feu.webp",
   "system": {
     "description": "Ensemble simple permettant d’allumer ou entretenir un feu.",
     "category": "ordinary",

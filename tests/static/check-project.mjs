@@ -83,7 +83,7 @@ const french = JSON.parse(read("lang/fr.json"));
 
 check(manifest.id === "interface", "system.json: id doit être « interface ».");
 check(manifest.type === "system", "system.json: type doit être « system ».");
-check(manifest.version === "0.1.0", "system.json: version doit être « 0.1.0 ».");
+check(manifest.version === "1.0.0", "system.json: version doit être « 1.0.0 ».");
 check(
   manifest.compatibility?.minimum === "14"
     && manifest.compatibility?.verified === "14"
@@ -285,6 +285,10 @@ for (const item of allCompendiumItems) {
     `Image de compendium absente pour ${item.name} : ${item.img}.`
   );
   check(
+    /^[A-Za-z0-9._/-]+$/.test(imagePath ?? ""),
+    `Chemin d’image de compendium non sûr pour le web (espaces/caractères spéciaux interdits) : ${item.img}.`
+  );
+  check(
     typeof item.system?.description === "string"
       && item.system.description.trim().length > 0
       && !/[<>]/.test(item.system.description),
@@ -341,7 +345,7 @@ const constantsModule = await import(
 );
 
 check(constantsModule.SYSTEM_ID === "interface", "Constante SYSTEM_ID incohérente.");
-check(constantsModule.PACKAGE_VERSION === "0.1.0", "Constante PACKAGE_VERSION incohérente.");
+check(constantsModule.PACKAGE_VERSION === "1.0.0", "Constante PACKAGE_VERSION incohérente.");
 check(constantsModule.SCHEMA_VERSION === 1, "Version du premier schéma attendue : 1.");
 check(constantsModule.SKILLS.length === 6, "Six Compétences sont attendues.");
 check(constantsModule.TALENTS.length === 18, "Dix-huit Talents sont attendus.");

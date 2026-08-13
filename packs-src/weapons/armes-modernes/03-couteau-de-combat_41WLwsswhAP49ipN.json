@@ -2,7 +2,7 @@
   "_id": "41WLwsswhAP49ipN",
   "name": "Couteau de combat",
   "type": "equipment",
-  "img": "systems/interface/assets/compendiums/weapons/modern/3.Couteau de combat.webp",
+  "img": "systems/interface/assets/compendiums/weapons/modern/3.couteau-de-combat.webp",
   "system": {
     "description": "Lame compacte adaptée au combat rapproché.",
     "category": "weapon",

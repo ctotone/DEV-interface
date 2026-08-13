@@ -2,7 +2,7 @@
   "_id": "7gEQ9QBcsp1ix7Bx",
   "name": "Détecteur de mouvement",
   "type": "equipment",
-  "img": "systems/interface/assets/compendiums/objects/security/7.Détecteur de mouvement.webp",
+  "img": "systems/interface/assets/compendiums/objects/security/7.detecteur-de-mouvement.webp",
   "system": {
     "description": "Appareil signalant une présence ou un déplacement dans une zone.",
     "category": "ordinary",

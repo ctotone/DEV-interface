@@ -2,7 +2,7 @@
   "_id": "Lp9fcgBKQFnwYjwh",
   "name": "Kit de prélèvement",
   "type": "equipment",
-  "img": "systems/interface/assets/compendiums/objects/investigation/6.kit de prelevement.webp",
+  "img": "systems/interface/assets/compendiums/objects/investigation/6.kit-de-prelevement.webp",
   "system": {
     "description": "Matériel destiné à recueillir proprement des traces ou échantillons.",
     "category": "ordinary",

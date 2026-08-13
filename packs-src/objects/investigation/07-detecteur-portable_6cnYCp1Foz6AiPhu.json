@@ -2,7 +2,7 @@
   "_id": "6cnYCp1Foz6AiPhu",
   "name": "Détecteur portable",
   "type": "equipment",
-  "img": "systems/interface/assets/compendiums/objects/investigation/6.Détecteur portable.webp",
+  "img": "systems/interface/assets/compendiums/objects/investigation/6.detecteur-portable.webp",
   "system": {
     "description": "Appareil générique recherchant une substance, une énergie ou une anomalie.",
     "category": "ordinary",

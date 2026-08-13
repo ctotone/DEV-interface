@@ -2,7 +2,7 @@
   "_id": "Dh2bpOPUjGR2B31Q",
   "name": "Pistolet à plasma",
   "type": "equipment",
-  "img": "systems/interface/assets/compendiums/weapons/futuristic/3.Pistolet à plasma.webp",
+  "img": "systems/interface/assets/compendiums/weapons/futuristic/3.pistolet-a-plasma.webp",
   "system": {
     "description": "Arme de poing projetant une charge thermique particulièrement dangereuse.",
     "category": "weapon",

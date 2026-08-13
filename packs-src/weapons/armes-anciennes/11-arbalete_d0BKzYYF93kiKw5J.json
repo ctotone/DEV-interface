@@ -2,7 +2,7 @@
   "_id": "d0BKzYYF93kiKw5J",
   "name": "Arbalète",
   "type": "equipment",
-  "img": "systems/interface/assets/compendiums/weapons/ancient/3.Arbalète.webp",
+  "img": "systems/interface/assets/compendiums/weapons/ancient/3.arbalete.webp",
   "system": {
     "description": "Arme de trait puissante, lente mais particulièrement dangereuse.",
     "category": "weapon",

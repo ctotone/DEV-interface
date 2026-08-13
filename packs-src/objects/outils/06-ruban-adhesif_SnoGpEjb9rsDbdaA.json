@@ -2,7 +2,7 @@
   "_id": "SnoGpEjb9rsDbdaA",
   "name": "Ruban adhésif",
   "type": "equipment",
-  "img": "systems/interface/assets/compendiums/objects/tools/3.Ruban adhésif.webp",
+  "img": "systems/interface/assets/compendiums/objects/tools/3.ruban-adhesif.webp",
   "system": {
     "description": "Matériau de fixation rapide permettant de renforcer ou réparer provisoirement.",
     "category": "ordinary",

@@ -2,7 +2,7 @@
   "_id": "GToFpwso4sZgEu2z",
   "name": "Pistolet laser",
   "type": "equipment",
-  "img": "systems/interface/assets/compendiums/weapons/futuristic/3.Pistolet laser.webp",
+  "img": "systems/interface/assets/compendiums/weapons/futuristic/3.pistolet-laser.webp",
   "system": {
     "description": "Arme de poing énergétique précise et comparable à une arme standard de son époque.",
     "category": "weapon",

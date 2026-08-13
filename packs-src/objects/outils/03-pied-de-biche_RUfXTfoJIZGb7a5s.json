@@ -2,7 +2,7 @@
   "_id": "RUfXTfoJIZGb7a5s",
   "name": "Pied-de-biche",
   "type": "equipment",
-  "img": "systems/interface/assets/compendiums/objects/tools/3.Pied de biche.webp",
+  "img": "systems/interface/assets/compendiums/objects/tools/3.pied-de-biche.webp",
   "system": {
     "description": "Barre solide utilisée pour forcer, soulever ou dégager.",
     "category": "ordinary",

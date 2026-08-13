@@ -2,7 +2,7 @@
   "_id": "x5xr8JA3LPGolJ4g",
   "name": "Fusil à plasma",
   "type": "equipment",
-  "img": "systems/interface/assets/compendiums/weapons/futuristic/3.Fusil à plasma.webp",
+  "img": "systems/interface/assets/compendiums/weapons/futuristic/3.fusil-a-plasma.webp",
   "system": {
     "description": "Arme lourde projetant une masse d’énergie thermique destructrice.",
     "category": "weapon",

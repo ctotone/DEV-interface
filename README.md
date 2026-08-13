@@ -6,13 +6,15 @@ Dépôt de développement du **Système D100 Interface** pour Foundry VTT.
 Identifiant technique              : interface
 Dépôt                              : ctotone/DEV-interface
 Branche                            : main
-Version package                    : 0.1.0
+Version package                    : 1.0.0
 Version schéma                     : 1
 Commit de clôture de la phase 03   : 72a2d32ff51661e548f3900792fca263e8b75b98
 Commit d’intégration compendiums   : cf83489710fce2e186b0f78bbc25bcdbaf791dec
 Commit de clôture Phase 04         : a56d68838a93398fffdb35aa7ee9feed3eb5dc71
 Commit pré-test Phase 05 observé   : 0fe3cdbe35e42d4f1c891640a033c1ca02bf98d4
-Commit de clôture Phase 05         : à communiquer après push
+Commit de clôture Phase 05         : 1c8dde5f2f9b8855ca2e886a919619f1b5d1961e
+Commit de clôture Phase 06         : 39ae4e11c553a10ca04dce0efeecb461c86ae16f
+Commit PROD 1.0.0                  : 665d698a686fcbd6d0d519390a9b7b5e5d9864bc
 ```
 
 Le commit de clôture historique de la phase 03 est fixé. Le complément compendiums attend son propre commit d’intégration.
@@ -29,12 +31,13 @@ Complément post-clôture — Compendiums : VALIDÉ
 Phase 04 — États, Destin et réglages MJ : VALIDÉE
 Phase 05 — Conflits, initiative et armes : VALIDÉE
 Phase 06 — Ergonomie et identité visuelle : VALIDÉE ET CLÔTURÉE
-Publication : NON ENGAGÉE
+Phase 08 — Préparation de diffusion : OBJECTIFS ABSORBÉS DANS LA SÉQUENCE 1.0.0
+Publication : VERSION 1.0.0 PUBLIÉE ET INSTALLATION DISTANTE VALIDÉE
 ```
 
 ## Base jouable actuelle
 
-La version `0.1.0` comprend :
+La version `1.0.0` comprend :
 
 - un système installable sous Foundry VTT V14 ;
 - un Actor `character` et un Item `equipment` ;
@@ -71,10 +74,10 @@ Manuel  : interface.manual
 Source d’autorité : packs-src/
 Builder           : tools/build-compendiums.mjs
 Artefacts          : packs/
-Manifeste pré-1.0.0 : propriété packs active (objects, weapons, manual)
+Manifeste 1.0.0      : propriété packs active (objects, weapons, manual)
 ```
 
-Avant candidate / release `1.0.0`, ils devront obligatoirement être réactivés, reconstruits, contrôlés et testés sous Foundry.
+Pour la release `1.0.0`, ils ont été reconstruits, contrôlés et testés sous Foundry VTT 14.365. Les sources restent conservées dans `packs-src/` pour les versions futures.
 
 Décision d’autorité :
 
@@ -196,32 +199,17 @@ templates/      feuilles et settings
 tests/          contrôles, tests unitaires et protocoles Foundry
 ```
 
-## Travail restant
+## Après 1.0.0
 
-### Phase 06 — prochaine
+Aucune phase de développement n'est actuellement ouverte.
 
-- recalibrer l’existant ergonomique et visuel ;
-- identité visuelle finale ;
-- cohérence fiche / cartes ;
-- halo Destin ;
-- accessibilité et lisibilité ;
-- responsive et finitions ;
-- éventuel choix persistant de thème uniquement si réellement nécessaire.
+Toute correction ou évolution future doit partir de la base DEV finale, recevoir un nouveau numéro de version adapté, être testée puis seulement propagée vers le dépôt PROD.
 
-### Phase 07
+Limite connue :
 
-- tests globaux ;
-- non-régression ;
-- multijoueur et concurrence ;
-- test simultané F2 non exécuté en Phase 05.
-
-### Avant release 1.0.0
-
-- valider les trois compendiums réactivés ;
-- reconstruire les packs ;
-- exécuter les contrôles ;
-- tester sous Foundry ;
-- préparer seulement ensuite la candidate / release.
+```text
+F2 — simultanéité multijoueur : NON TESTÉ
+```
 
 ## Reprise
 

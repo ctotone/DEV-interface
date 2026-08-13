@@ -2,7 +2,7 @@
   "_id": "6fW2Ne2cQhz5Rslz",
   "name": "Sac à dos",
   "type": "equipment",
-  "img": "systems/interface/assets/compendiums/objects/communication/5.Sac à dos.webp",
+  "img": "systems/interface/assets/compendiums/objects/communication/5.sac-a-dos.webp",
   "system": {
     "description": "Contenant porté permettant de transporter plusieurs objets.",
     "category": "ordinary",

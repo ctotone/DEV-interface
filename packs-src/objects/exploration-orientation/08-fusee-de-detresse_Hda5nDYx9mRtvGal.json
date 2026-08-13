@@ -2,7 +2,7 @@
   "_id": "Hda5nDYx9mRtvGal",
   "name": "Fusée de détresse",
   "type": "equipment",
-  "img": "systems/interface/assets/compendiums/objects/exploration/1.fusée.webp",
+  "img": "systems/interface/assets/compendiums/objects/exploration/1.fusee.webp",
   "system": {
     "description": "Dispositif lumineux utilisé pour signaler une position ou un danger.",
     "category": "ordinary",

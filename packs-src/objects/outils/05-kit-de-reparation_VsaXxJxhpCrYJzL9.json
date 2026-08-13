@@ -2,7 +2,7 @@
   "_id": "VsaXxJxhpCrYJzL9",
   "name": "Kit de réparation",
   "type": "equipment",
-  "img": "systems/interface/assets/compendiums/objects/tools/3.Kit de réparation.webp",
+  "img": "systems/interface/assets/compendiums/objects/tools/3.kit-de-reparation.webp",
   "system": {
     "description": "Petit nécessaire pour réparer vêtements, équipements ou objets simples.",
     "category": "ordinary",

@@ -2,7 +2,7 @@
   "_id": "Dxv2AWwMoHwOyWbn",
   "name": "Téléphone ou terminal",
   "type": "equipment",
-  "img": "systems/interface/assets/compendiums/objects/communication/5. Téléphone.webp",
+  "img": "systems/interface/assets/compendiums/objects/communication/5.telephone.webp",
   "system": {
     "description": "Appareil personnel de communication et d’accès à l’information.",
     "category": "ordinary",

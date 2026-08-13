@@ -2,7 +2,7 @@
   "_id": "r8v1Vsmzbkxky1Ln",
   "name": "Pièces de rechange",
   "type": "equipment",
-  "img": "systems/interface/assets/compendiums/objects/technical/8.pieces de rechanges.webp",
+  "img": "systems/interface/assets/compendiums/objects/technical/8.pieces-de-rechanges.webp",
   "system": {
     "description": "Petit lot de composants génériques destinés aux réparations techniques.",
     "category": "ordinary",

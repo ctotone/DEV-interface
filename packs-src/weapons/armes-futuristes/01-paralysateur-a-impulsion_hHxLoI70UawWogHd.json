@@ -2,7 +2,7 @@
   "_id": "hHxLoI70UawWogHd",
   "name": "Paralysateur à impulsion",
   "type": "equipment",
-  "img": "systems/interface/assets/compendiums/weapons/futuristic/3.Paralysateur à impulsion.webp",
+  "img": "systems/interface/assets/compendiums/weapons/futuristic/3.paralysateur-a-impulsion.webp",
   "system": {
     "description": "Arme incapacitante projetant une impulsion neurologique ou électrique.",
     "category": "weapon",

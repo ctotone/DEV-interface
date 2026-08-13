@@ -2,7 +2,7 @@
   "_id": "j3M6uksLfv3bivNn",
   "name": "Fusil de précision",
   "type": "equipment",
-  "img": "systems/interface/assets/compendiums/weapons/modern/3.fusil de précision.webp",
+  "img": "systems/interface/assets/compendiums/weapons/modern/3.fusil-de-precision.webp",
   "system": {
     "description": "Arme longue conçue pour délivrer un tir précis et très puissant.",
     "category": "weapon",

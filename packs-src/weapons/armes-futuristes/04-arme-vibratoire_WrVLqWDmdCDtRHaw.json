@@ -2,7 +2,7 @@
   "_id": "WrVLqWDmdCDtRHaw",
   "name": "Arme vibratoire",
   "type": "equipment",
-  "img": "systems/interface/assets/compendiums/weapons/futuristic/3.Arme vibratoire.webp",
+  "img": "systems/interface/assets/compendiums/weapons/futuristic/3.arme-vibratoire.webp",
   "system": {
     "description": "Arme de mêlée amplifiant sa coupe ou son impact par vibration.",
     "category": "weapon",

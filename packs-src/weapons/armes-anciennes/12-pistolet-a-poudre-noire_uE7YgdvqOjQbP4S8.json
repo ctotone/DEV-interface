@@ -2,7 +2,7 @@
   "_id": "uE7YgdvqOjQbP4S8",
   "name": "Pistolet à poudre noire",
   "type": "equipment",
-  "img": "systems/interface/assets/compendiums/weapons/ancient/3.Pistolet à poudre.webp",
+  "img": "systems/interface/assets/compendiums/weapons/ancient/3.pistolet-a-poudre.webp",
   "system": {
     "description": "Arme à feu primitive de courte portée et forte détonation.",
     "category": "weapon",

@@ -2,7 +2,7 @@
   "_id": "9wsa4a4aEUJ5dD8L",
   "name": "Couchage portable",
   "type": "equipment",
-  "img": "systems/interface/assets/compendiums/objects/survival/2.sac couchage.webp",
+  "img": "systems/interface/assets/compendiums/objects/survival/2.sac-couchage.webp",
   "system": {
     "description": "Paillasse, sac de couchage ou équipement équivalent selon l’époque.",
     "category": "ordinary",

@@ -2,7 +2,7 @@
   "_id": "HweVcXEjtEQEKt1h",
   "name": "Craie ou marqueur",
   "type": "equipment",
-  "img": "systems/interface/assets/compendiums/objects/exploration/1.craie marqueur.webp",
+  "img": "systems/interface/assets/compendiums/objects/exploration/1.craie-marqueur.webp",
   "system": {
     "description": "Permet de laisser des signes, repères ou messages temporaires.",
     "category": "ordinary",
