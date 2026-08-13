@@ -1,9 +1,10 @@
 {
   "id": "interface",
-  "title": "D100 Interface",
+  "title": "Système Interface",
   "type": "system",
   "version": "0.1.0",
   "description": "Système D100 générique, léger et orienté narration.",
+  "background": "systems/interface/assets/system-background.webp",
   "compatibility": {
     "minimum": "14",
     "verified": "14",
